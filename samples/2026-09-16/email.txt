@@ -1,0 +1,28 @@
+AI 日报｜2026-09-16
+
+Gemini 3.8 Live 开放：语音对话中，可并行调用工具
+Google 发布 Gemini 3.8 Live 与 Live Extended Thinking，开发者可通过 Gemini API 和 Google AI Studio 使用。新模型支持在后台执行工具调用，同时继续语音对话；也支持结合实时视觉输入理解任务。
+适用条件：适合需要边对话、边执行任务的语音应用；以上是官方能力说明，本刊未实测延迟、准确率或具体账号的可用状态。
+来源：https://blog.google/innovation-and-ai/technology/developers-tools/build-real-time-voice-applications-gemini-audio/ · https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/
+
+Grok 4.6 非 Fast 版本服务降级已解除
+Cursor 状态页在北京时间 06:00 标记故障恢复；最终确认影响范围是 Cursor 中的 Grok 4.6 非 Fast 版本。
+适用条件：不能据此推断所有 Grok 模型或所有用户都经历了故障。
+来源：https://status.cursor.com/incidents/2bw21tcjqzg6
+
+创建仓库属性时，Copilot 可建议允许值
+企业或组织管理员创建仓库自定义属性时，可以让 Copilot 建议可选取值，再用这些属性配置规则集。
+适用条件：适用于 Copilot Business 和 Enterprise，目前处于公开预览；企业或组织所有者可通过策略控制开放。
+来源：https://github.blog/changelog/2026-09-15-github-copilot-suggests-custom-properties-definitions/
+
+评估 Agent，别只看一次成功
+IBM Research 团队建议重复运行相同任务，同时记录平均成功率和每次都成功的任务比例，以区分偶尔做对与稳定完成。
+适用条件：作者实验基于 AppWorld test_normal 的 168 个任务及 GPT-4.1 驱动的 ReAct Agent；本刊未独立复现。
+来源：https://huggingface.co/blog/ibm-research/altk-evolve-consistency
+
+CRM 更新默认先审批，插件仍需申请测试资格
+Salesforce in Claude 插件可辅助客户研究、会议准备和 CRM 更新；它沿用用户的 Salesforce 权限，默认在每次写入前请求批准。
+适用条件：需要 Claude 付费计划、最新版 Sales Cloud 企业版及 Salesforce 测试批准，管理员还需先完成接入。
+来源：https://claude.com/blog/salesforce-in-claude · https://support.claude.com/en/articles/16952184-set-up-salesforce-in-claude-for-your-organization
+
+网页版：https://statefulai.github.io/ai-daily-brief/editions/2026-09-16/

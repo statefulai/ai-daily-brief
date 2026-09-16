@@ -1,0 +1,6 @@
+【AI 日报｜2026-09-16】
+• Gemini 3.8 Live 开放：语音对话中，可并行调用工具
+• Grok 4.6 非 Fast 版本服务降级已解除
+• 创建仓库属性时，Copilot 可建议允许值
+另有 2 条，详见网页版。
+网页版：https://statefulai.github.io/ai-daily-brief/editions/2026-09-16/
