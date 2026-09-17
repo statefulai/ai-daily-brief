@@ -1,0 +1,4 @@
+{
+  "name": "AI Daily Brief",
+  "install": "pip install --user -r requirements.txt"
+}
