@@ -162,6 +162,7 @@ class EditionCITest(unittest.TestCase):
         )
         self.assertIn("Protect edition history on main push", workflow)
         self.assertIn('${{ github.event.before }}', workflow)
+        self.assertEqual(workflow.count('"contributions.py"'), 2)
         self.assertNotIn("enablement: true", workflow)
 
 

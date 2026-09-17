@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
-from main import filter_by_window, load_grok_contributions, write_legacy_outputs
+from main import filter_by_window, load_contributions, write_legacy_outputs
 from sources import NewsItem
 
 
@@ -36,21 +36,23 @@ class DailyInputWindowTest(unittest.TestCase):
 
         self.assertEqual([entry.title for entry in selected], ["start", "inside"])
 
-    def test_absent_optional_contribution_file_means_no_contribution(self):
+    def test_omitted_contribution_file_means_no_contribution(self):
+        self.assertEqual(load_contributions(None), [])
+
+    def test_explicit_missing_contribution_file_fails(self):
         with tempfile.TemporaryDirectory() as directory:
             missing = Path(directory) / "missing.json"
-            config = {"integrations": {"grok_bot": {"contributions_path": str(missing)}}}
 
-            self.assertEqual(load_grok_contributions(config), [])
+            with self.assertRaisesRegex(FileNotFoundError, "contribution file not found"):
+                load_contributions(str(missing))
 
     def test_invalid_contribution_file_still_fails(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "invalid.json"
             path.write_text(json.dumps({"items": [{"event": "missing fields"}]}))
-            config = {"integrations": {"grok_bot": {"contributions_path": str(path)}}}
 
             with self.assertRaisesRegex(ValueError, "primary_source"):
-                load_grok_contributions(config)
+                load_contributions(str(path))
 
 
 class LegacyMigrationTest(unittest.IsolatedAsyncioTestCase):

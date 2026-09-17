@@ -91,12 +91,6 @@ filter:
       - "本地部署"
     exclude: ["crypto", "nft", "blockchain"]
 
-# Optional, platform-neutral contribution adapter. The file stays outside
-# production editions and is never copied to Pages.
-integrations:
-  grok_bot:
-    contributions_path: null
-
 output:
   editions:
     directory: "editions"

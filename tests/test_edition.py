@@ -21,7 +21,7 @@ from edition import (
     validate_edition,
     write_edition,
 )
-from integrations.grok_bot.contributions import (
+from contributions import (
     event_overrides,
     filter_contributions_by_window,
     validate_contribution,

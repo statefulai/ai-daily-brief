@@ -6,6 +6,7 @@ Usage:
     python main.py                  # full pipeline
     python main.py --sources-only   # fetch sources only (no LLM)
     python main.py --dry-run        # print edition.json, don't write files
+    python main.py --contributions path/to/contributions.json
 """
 
 import asyncio
@@ -42,6 +43,12 @@ from outputs import (
 )
 from source_status import SourceResult, run_source
 from curate import assemble_curated_events
+from contributions import (
+    event_overrides as contribution_event_overrides,
+    extend_curation_items,
+    filter_contributions_by_window,
+    validate_contributions,
+)
 from verify import verify_event_primary_sources
 from edition import (
     acquire_edition_lock,
@@ -197,23 +204,15 @@ async def fetch_all_sources(config: dict) -> list[NewsItem]:
     return all_items
 
 
-def load_grok_contributions(config: dict) -> list[dict]:
-    """Load the optional Grok Bot adapter input; local users need no such file."""
-    path = (
-        config.get("integrations", {})
-        .get("grok_bot", {})
-        .get("contributions_path")
-    )
+def load_contributions(path: str | None) -> list[dict]:
+    """Load an optional contribution file supplied by any external system."""
     if not path:
         return []
     contribution_path = Path(path)
     if not contribution_path.exists():
-        logger.info("Optional Grok Bot contribution file is absent: %s", path)
-        return []
+        raise FileNotFoundError(f"contribution file not found: {path}")
     payload = json.loads(contribution_path.read_text(encoding="utf-8"))
     records = payload.get("items", payload) if isinstance(payload, dict) else payload
-    from integrations.grok_bot.contributions import validate_contributions
-
     return validate_contributions(records)
 
 
@@ -296,23 +295,16 @@ async def run(args: argparse.Namespace):
             print(f"[{item.source}] {item.title} ({item.url})")
         return
 
-    contributions = load_grok_contributions(config)
+    contributions = load_contributions(args.contributions)
     if contributions:
-        from integrations.grok_bot.contributions import filter_contributions_by_window
-
         contributions = filter_contributions_by_window(
             contributions, window_start, cutoff
         )
     curation_items = items
     event_overrides = {}
     if contributions:
-        from integrations.grok_bot.contributions import (
-            event_overrides as grok_event_overrides,
-            extend_curation_items,
-        )
-
         curation_items = extend_curation_items(items, contributions)
-        event_overrides = grok_event_overrides(contributions)
+        event_overrides = contribution_event_overrides(contributions)
 
     curation_result = {"candidates": [], "brief": {}}
     generation_error = None
@@ -377,6 +369,10 @@ async def run(args: argparse.Namespace):
 def main():
     parser = argparse.ArgumentParser(description="AI Daily Brief")
     parser.add_argument("--config", default="config.yaml", help="Config file path")
+    parser.add_argument(
+        "--contributions",
+        help="Optional path to a platform-neutral contribution JSON file",
+    )
     parser.add_argument("--sources-only", action="store_true", help="Fetch sources only, no LLM")
     parser.add_argument("--dry-run", action="store_true", help="Print results, don't write files")
     args = parser.parse_args()

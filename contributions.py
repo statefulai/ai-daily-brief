@@ -1,4 +1,4 @@
-"""Adapt checked Grok Bot contributions to the generic local curation contract."""
+"""Validate and merge optional, platform-neutral contribution files."""
 
 from __future__ import annotations
 

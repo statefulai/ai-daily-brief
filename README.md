@@ -80,13 +80,16 @@ python main.py --dry-run
 
 # 使用另一份配置
 python main.py --config path/to/config.yaml
+
+# 合并一份可选供稿；不传该参数时只使用公开来源
+python main.py --contributions path/to/contributions.json
 ```
 
 每天的正式期次采用北京时间 `[前一日 08:00, 当日 08:00)` 半开区间；08:00 前手动运行时仍指向最近一个已经闭合的窗口。`config.yaml` 控制数据源、模型和输出目录，环境变量优先于其中的模型端点与模型名。
 
 ## 可选供稿
 
-`integrations/grok_bot/` 是可选适配层，不是本地运行的硬依赖。配置 `integrations.grok_bot.contributions_path` 后，可把已初筛供稿与公开采集放进同一次策展；文件缺失等同于本期没有供稿。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选，入选后仍会重新抓取一手来源；格式或 schema 错误仍会终止生成。
+`--contributions` 接收任意外部系统整理出的 JSON 文件，与公开采集进入同一次策展。不传参数时只使用公开来源；显式传入的文件如果缺失、格式错误或不符合契约，生成会直接失败。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选，入选后仍会重新抓取一手来源。
 
 最小记录包含事件、一手来源、带时区的来源时间、已核对事实、适用条件和敏感性：
 
@@ -139,9 +142,10 @@ edition.py                 # 期次 schema、hash、状态与同日期互斥
 curate.py                  # 把模型结果装配为可变篇数事件
 verify.py                  # 一手来源核验
 source_status.py           # 来源四态
+contributions.py           # 通用供稿契约、过滤与策展接入
 templates/                 # 固定网页与邮件模板
 delivery/                  # 本地 dogfood 与私有投递状态契约
-integrations/grok_bot/     # 可选供稿适配层
+integrations/grok_bot/     # Grok Bot 到通用供稿文件的桥接说明
 scripts/edition_ci.py      # CI 校验与 Pages 构建
 samples/2026-09-16/        # 本地验收样刊，不是生产期次
 tests/                     # schema、渲染、CI、来源与投递测试
