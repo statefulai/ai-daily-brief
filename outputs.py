@@ -305,8 +305,6 @@ def render_group_message(document: dict, public_url: str, max_items: int = 3) ->
     lines = [f"【AI 日报｜{edition['edition_id']}】"]
     for event in edition["events"][:max_items]:
         lines.append(f"• {event['title']}")
-        for item in _ranges_plain_lines(event):
-            lines.append(item)
     remaining = len(edition["events"]) - max_items
     if remaining > 0:
         lines.append(f"另有 {remaining} 条，详见网页版。")

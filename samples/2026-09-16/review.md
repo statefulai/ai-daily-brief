@@ -36,8 +36,8 @@
 | Gemini 3.8 Live | [Google 开发者公告](https://blog.google/innovation-and-ai/technology/developers-tools/build-real-time-voice-applications-gemini-audio/) 的 JSON-LD `datePublished` 及 `published_time` 为 `2026-09-15T17:00:00+00:00`，即北京时间 09-16 01:00 | 通栏焦点。与[模型发布文章](https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/)合并为一个事件；不把上月发布的 Transcribe 算作本次新增。未采用榜单优胜或性能营销结论。 |
 | GitHub 仓库属性建议 | [GitHub 原文](https://github.blog/changelog/2026-09-15-github-copilot-suggests-custom-properties-definitions/) JSON-LD 给出 `2026-09-15T19:07:47+00:00`，另有等价 `12:07:47-07:00`，即北京时间 09-16 03:07:47 | 工具短条。保留 Business/Enterprise 与公开预览限制，不写成全量开放。 |
 | Cursor 服务恢复 | [官方事件页](https://status.cursor.com/incidents/2bw21tcjqzg6) 明确记录 09-15 21:26、21:41、22:00 UTC；对应北京时间 09-16 05:26、05:41、06:00 | 服务短条。以最终的非 Fast 影响范围表述，保留中途调查记录；不把调查时间当实际故障起点。 |
-| Agent 一致性评估 | [IBM Research 作者文章](https://huggingface.co/blog/ibm-research/altk-evolve-consistency) 标注 September 15, 2026；未取得可靠具体时区 | 新闻速览近期选读，不计入上面的 3 条。作者实验结果与编辑建议分开；实验设置放适用范围，未复现说明放来源核验。 |
-| Salesforce in Claude | [发布文章](https://claude.com/blog/salesforce-in-claude)只给 Sep 15, 2026；[接入指南](https://support.claude.com/en/articles/16952184-set-up-salesforce-in-claude-for-your-organization)补充资格条件 | 近期工作流，不计入窗口内事件。付费、企业版、申请与默认审批条件均直接可见。 |
+| Agent 一致性评估 | [IBM Research 作者文章](https://huggingface.co/blog/ibm-research/altk-evolve-consistency) 标注 September 15, 2026；未取得可靠具体时区 | 新闻速览近期选读，不计入上面的 3 条。作者实验结果与编辑建议分开；实验设置放背景，未复现说明放来源核验。 |
+| Salesforce in Claude | [发布文章](https://claude.com/blog/salesforce-in-claude)只给 Sep 15, 2026；[接入指南](https://support.claude.com/en/articles/16952184-set-up-salesforce-in-claude-for-your-organization)补充资格条件 | 新闻速览近期选读，不计入窗口内事件。付费、企业版、申请与默认审批条件均直接可见；本期无合格实操作，省略该栏。 |
 
 正文和日期核验使用官方网页及其公开元数据，时区转换另用标准库复核。只凭页面显示“9 月 15 日”既不能判定过期，也不能断言属于北京时间近 24 小时。
 
@@ -51,10 +51,10 @@ Chrome 153.0.8010.47，已有 Playwright 1.63.0，通过 file:// 渲染；未安
 | --- | --- | --- |
 | 390 | 单栏 | 页面随内容自然增高，无横向溢出 |
 | 680 | 单栏 | 页面随内容自然增高，无横向溢出 |
-| 681 | 双栏 | 页面随内容自然增高，无横向溢出 |
-| 1440 | 双栏 | 页面随内容自然增高，无横向溢出 |
+| 681 | 单栏 | 本期无实操作，副栏省略；页面随内容自然增高，无横向溢出 |
+| 1440 | 单栏 | 本期无实操作，副栏省略；页面随内容自然增高，无横向溢出 |
 
-以上为当前 schema 驱动样稿的复验结果。三处背景可展开；目录包含焦点、新闻速览和实操问答三个锚点。适用范围与来源不随折叠隐藏。桌面与手机截图已重新生成并实际查看。页面不依赖脚本、字体下载或其他外部资源。
+以上为当前 schema 驱动样稿的复验结果。三处背景可展开；目录包含焦点和新闻速览两个锚点。适用范围与来源不随折叠隐藏。桌面与手机截图已重新生成并实际查看。页面不依赖脚本、字体下载或其他外部资源。
 
 报头修正前，另在临时浏览器 DOM 中做了短稿和长稿容量检查：短稿只保留焦点，长稿追加 10 个明确标注“非新闻”的布局占位。390/1440 两种宽度均无横向溢出；长稿在手机达到 6134px。这证明布局能容纳更多条目，也说明“技术上放得下”不能替代二次选稿。占位未写入交付 HTML，截图与实际文章没有虚构新闻。
 

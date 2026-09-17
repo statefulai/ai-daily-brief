@@ -6,8 +6,8 @@ Google 发布 Gemini 3.8 Live 与 Live Extended Thinking，开发者可通过 Ge
 核验说明（Google 开发者公告）：以上为官方能力说明，未实测延迟、准确率或具体账号可用状态。
 
 Grok 4.6 非 Fast 版本服务降级已解除
-Cursor 状态页在北京时间 06:00 标记故障恢复；最终确认影响范围是 Cursor 中的 Grok 4.6 非 Fast 版本。
-适用范围：不能据此推断所有 Grok 模型或所有用户都经历了故障。
+Cursor 状态页在北京时间 06:00 标记故障恢复。
+适用范围：已确认的影响范围仅为 Cursor 中的 Grok 4.6 非 Fast 版本。
 来源：https://status.cursor.com/incidents/2bw21tcjqzg6
 
 创建仓库属性时，Copilot 可建议允许值
@@ -20,7 +20,6 @@ Cursor 状态页在北京时间 06:00 标记故障恢复；最终确认影响范
 
 评估 Agent，别只看一次成功
 IBM Research 团队建议重复运行相同任务，同时记录平均成功率和每次都成功的任务比例，以区分偶尔做对与稳定完成。
-适用范围：作者实验基于 AppWorld test_normal 的 168 个任务，以及 GPT-4.1 驱动的 ReAct 代理。
 来源：https://huggingface.co/blog/ibm-research/altk-evolve-consistency
 核验说明（IBM Research 作者原文）：来源只给出日期，未取得可靠具体时区。未独立复现实验结论。
 

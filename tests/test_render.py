@@ -111,13 +111,26 @@ class RenderTest(unittest.TestCase):
         self.assertNotIn("sha256:", email_html)
         self.assertIn("网页版：https://example.com/editions/2026-09-16/", email_text)
         self.assertIn("适用范围：仅适用于已开放账号。", email_text)
-        self.assertIn("适用范围：仅适用于已开放账号。", group)
+        self.assertIn('<p class="condition"><strong>适用范围：</strong>仅适用于已开放账号。</p>', render_web_edition(document))
+        self.assertIn("<strong>适用范围：</strong>仅适用于已开放账号。", email_html)
+        self.assertNotIn("适用范围", group)
         self.assertNotIn("适用条件：", email_html)
         self.assertNotIn("适用条件：", email_text)
         self.assertNotIn("适用条件：", group)
         self.assertNotIn("。；", email_html)
         self.assertNotIn("。；", email_text)
         self.assertIn("另有 1 条，详见网页版。", group)
+        self.assertEqual(
+            group.splitlines(),
+            [
+                "【AI 日报｜2026-09-16】",
+                "• 第 1 条新闻 <script>alert(1)</script>",
+                "• 第 2 条新闻 <script>alert(1)</script>",
+                "• 第 3 条新闻 <script>alert(1)</script>",
+                "另有 1 条，详见网页版。",
+                "网页版：https://example.com/editions/2026-09-16/",
+            ],
+        )
         self.assertNotIn("<img", email_html)
         self.assertNotIn("附件", email_html)
 
@@ -155,7 +168,16 @@ class RenderTest(unittest.TestCase):
                 "核验说明（官方来源）：仅确认到日期。",
             ],
         )
-        self.assertIn("适用范围：\n适用于付费计划。\n目前处于公开预览。", group)
+        self.assertNotIn("适用范围", group)
+        self.assertNotIn("适用条件：", group)
+        self.assertEqual(
+            group.splitlines()[:3],
+            [
+                "【AI 日报｜2026-09-16】",
+                "• 第 1 条新闻 <script>alert(1)</script>",
+                "网页版：https://example.com/editions/2026-09-16/",
+            ],
+        )
         self.assertNotIn("。；", html)
         self.assertNotIn("。；", email_html)
         self.assertNotIn("。；", email_text)

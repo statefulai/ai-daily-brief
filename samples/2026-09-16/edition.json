@@ -79,10 +79,10 @@
       "title": "Grok 4.6 非 Fast 版本服务降级已解除",
       "kicker": "Cursor",
       "facts": [
-        "Cursor 状态页在北京时间 06:00 标记故障恢复；最终确认影响范围是 Cursor 中的 Grok 4.6 非 Fast 版本。"
+        "Cursor 状态页在北京时间 06:00 标记故障恢复。"
       ],
       "conditions": [
-        "不能据此推断所有 Grok 模型或所有用户都经历了故障。"
+        "已确认的影响范围仅为 Cursor 中的 Grok 4.6 非 Fast 版本。"
       ],
       "background": [
         "05:26 开始调查，05:41 缩小影响范围，06:00 标记恢复；调查时间不等同于实际故障开始时间。"
@@ -133,10 +133,9 @@
       "facts": [
         "IBM Research 团队建议重复运行相同任务，同时记录平均成功率和每次都成功的任务比例，以区分偶尔做对与稳定完成。"
       ],
-      "conditions": [
-        "作者实验基于 AppWorld test_normal 的 168 个任务，以及 GPT-4.1 驱动的 ReAct 代理。"
-      ],
+      "conditions": [],
       "background": [
+        "作者实验基于 AppWorld test_normal 的 168 个任务，以及 GPT-4.1 驱动的 ReAct 代理。",
         "Mean@5 是五次运行的平均成功率，Pass⁵ 是五次全部成功的任务比例，Pass@5 则看五次中至少成功一次。"
       ],
       "sources": [
@@ -152,7 +151,7 @@
     },
     {
       "id": "salesforce-claude",
-      "placement": "desk",
+      "placement": "story",
       "window": "recent",
       "title": "CRM 更新默认先审批，插件仍需申请测试资格",
       "kicker": "Claude × Salesforce",
@@ -188,5 +187,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:faf9c83203fe47395c40f67de2c29368f5987702def74d29b11301370046d02d"
+  "content_hash": "sha256:795e86666c105afe2a2c191775fee78931f684f4a60d068454707f5e7095273f"
 }
