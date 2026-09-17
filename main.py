@@ -14,6 +14,7 @@ import json
 import logging
 import re
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import yaml
@@ -44,9 +45,9 @@ from curate import assemble_curated_events
 from verify import verify_event_primary_sources
 from edition import (
     acquire_edition_lock,
-    beijing_today,
     build_edition,
     edition_id_for,
+    edition_window,
     next_attempt,
     release_edition_lock,
     write_edition,
@@ -70,9 +71,22 @@ def load_config(path: str = "config.yaml") -> dict:
         return yaml.safe_load(f) or {}
 
 
-def filter_by_age(items: list[NewsItem], max_age_hours: float) -> list[NewsItem]:
-    """Filter items by age."""
-    return [item for item in items if item.age_hours <= max_age_hours]
+def filter_by_window(
+    items: list[NewsItem],
+    start_at: datetime,
+    cutoff_at: datetime,
+) -> list[NewsItem]:
+    """Keep items published in the half-open interval [start, cutoff)."""
+    if start_at.tzinfo is None or cutoff_at.tzinfo is None:
+        raise ValueError("edition window datetimes must include a timezone")
+    selected = []
+    for item in items:
+        if item.published.tzinfo is None:
+            logger.warning("Skipping item with timezone-free published time: %s", item.url)
+            continue
+        if start_at <= item.published < cutoff_at:
+            selected.append(item)
+    return selected
 
 
 def filter_by_keywords(
@@ -194,17 +208,13 @@ def load_grok_contributions(config: dict) -> list[dict]:
         return []
     contribution_path = Path(path)
     if not contribution_path.exists():
-        raise FileNotFoundError(f"Grok Bot contribution file not found: {path}")
+        logger.info("Optional Grok Bot contribution file is absent: %s", path)
+        return []
     payload = json.loads(contribution_path.read_text(encoding="utf-8"))
-    records = payload.get("items", payload)
+    records = payload.get("items", payload) if isinstance(payload, dict) else payload
     from integrations.grok_bot.contributions import validate_contributions
 
     return validate_contributions(records)
-
-
-def default_cutoff_at(now=None) -> str:
-    current = beijing_today(now).replace(hour=14, minute=0, second=0, microsecond=0)
-    return current.isoformat()
 
 
 async def write_legacy_outputs(curation_result: dict, output_cfg: dict) -> int:
@@ -237,6 +247,8 @@ async def write_legacy_outputs(curation_result: dict, output_cfg: dict) -> int:
 async def run(args: argparse.Namespace):
     """Main pipeline."""
     config = load_config(args.config)
+    window_start, cutoff = edition_window()
+    edition_id = edition_id_for(cutoff)
 
     # 1. Fetch all sources
     logger.info("=== Fetching sources ===")
@@ -259,11 +271,15 @@ async def run(args: argparse.Namespace):
     items = cross_day_dedup(items, previous_urls)
     logger.info(f"After cross-day dedup: {len(items)}")
 
-    # 3. Filter by age
+    # 3. Keep the latest closed Beijing-time daily window.
     filter_cfg = config.get("filter", {})
-    max_age = filter_cfg.get("max_age_hours", 48)
-    items = filter_by_age(items, max_age)
-    logger.info(f"After age filter ({max_age}h): {len(items)}")
+    items = filter_by_window(items, window_start, cutoff)
+    logger.info(
+        "After edition window filter [%s, %s): %s",
+        window_start.isoformat(),
+        cutoff.isoformat(),
+        len(items),
+    )
 
     # 4. Keyword pre-filter
     keywords = filter_cfg.get("keywords", {})
@@ -281,6 +297,12 @@ async def run(args: argparse.Namespace):
         return
 
     contributions = load_grok_contributions(config)
+    if contributions:
+        from integrations.grok_bot.contributions import filter_contributions_by_window
+
+        contributions = filter_contributions_by_window(
+            contributions, window_start, cutoff
+        )
     curation_items = items
     event_overrides = {}
     if contributions:
@@ -308,12 +330,11 @@ async def run(args: argparse.Namespace):
     )
     if events:
         events = await verify_event_primary_sources(events)
-    edition_id = edition_id_for()
     editions_dir = Path(config.get("output", {}).get("editions", {}).get("directory", "editions"))
     source_records = [result.to_record() for result in source_results]
     edition = build_edition(
         edition_id=edition_id,
-        cutoff_at=default_cutoff_at(),
+        cutoff_at=cutoff.isoformat(),
         sources=source_records,
         events=events,
         attempt=next_attempt(editions_dir, edition_id) if args.dry_run else 1,
@@ -334,7 +355,7 @@ async def run(args: argparse.Namespace):
             # Read the retry counter only after winning the same-date mutex.
             edition = build_edition(
                 edition_id=edition_id,
-                cutoff_at=default_cutoff_at(),
+                cutoff_at=cutoff.isoformat(),
                 sources=source_records,
                 events=events,
                 attempt=next_attempt(editions_dir, edition_id),

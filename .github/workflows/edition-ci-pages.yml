@@ -4,22 +4,34 @@ on:
   pull_request:
     paths:
       - "editions/**"
+      - "main.py"
+      - "sources.py"
       - "edition.py"
+      - "config.yaml"
+      - "integrations/**"
       - "outputs.py"
       - "templates/**"
       - "scripts/edition_ci.py"
       - "tests/test_edition*.py"
+      - "tests/test_main.py"
+      - "tests/test_source_status.py"
       - "tests/test_render.py"
       - ".github/workflows/edition-ci-pages.yml"
   push:
     branches: [main]
     paths:
       - "editions/**"
+      - "main.py"
+      - "sources.py"
       - "edition.py"
+      - "config.yaml"
+      - "integrations/**"
       - "outputs.py"
       - "templates/**"
       - "scripts/edition_ci.py"
       - "tests/test_edition*.py"
+      - "tests/test_main.py"
+      - "tests/test_source_status.py"
       - "tests/test_render.py"
       - ".github/workflows/edition-ci-pages.yml"
   workflow_dispatch:

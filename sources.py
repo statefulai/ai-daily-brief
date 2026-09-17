@@ -161,9 +161,9 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
                             try:
                                 published = datetime.fromisoformat(pub_str.replace("Z", "+00:00"))
                             except ValueError:
-                                published = datetime.now(timezone.utc)
+                                continue
                         else:
-                            published = datetime.now(timezone.utc)
+                            continue
                         items.append(NewsItem(
                             title=paper_info.get("title", "Untitled"),
                             url=f"https://huggingface.co/papers/{paper_info.get('id', '')}",
@@ -193,9 +193,9 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
                             try:
                                 published = datetime.fromisoformat(mod_str.replace("Z", "+00:00"))
                             except ValueError:
-                                published = datetime.now(timezone.utc)
+                                continue
                         else:
-                            published = datetime.now(timezone.utc)
+                            continue
                         items.append(NewsItem(
                             title=f"🤗 {model.get('modelId', 'unknown')}",
                             url=f"https://huggingface.co/{model.get('modelId', '')}",
@@ -234,12 +234,16 @@ async def fetch_rss_feeds(config: dict) -> list[NewsItem]:
 
                 parsed = feedparser.parse(resp.text)
                 for entry in parsed.entries[:10]:
-                    published = datetime.now(timezone.utc)
-                    if hasattr(entry, "published_parsed") and entry.published_parsed:
-                        from calendar import timegm
-                        published = datetime.fromtimestamp(
-                            timegm(entry.published_parsed), tz=timezone.utc
-                        )
+                    published_parsed = getattr(entry, "published_parsed", None)
+                    updated_parsed = getattr(entry, "updated_parsed", None)
+                    timestamp = published_parsed or updated_parsed
+                    if not timestamp:
+                        continue
+                    from calendar import timegm
+
+                    published = datetime.fromtimestamp(
+                        timegm(timestamp), tz=timezone.utc
+                    )
 
                     summary = ""
                     if hasattr(entry, "summary"):
@@ -299,13 +303,14 @@ async def fetch_ruanyf_weekly(config: dict) -> list[NewsItem]:
 
             if not issue_num:
                 raise SourceFetchError("Could not find latest ruanyf/weekly issue number")
+            if commit_date is None:
+                raise SourceFetchError("Latest ruanyf/weekly issue has no commit timestamp")
 
             # P2: Skip if the issue commit is older than 7 days
-            if commit_date:
-                age_days = (datetime.now(timezone.utc) - commit_date).days
-                if age_days > 7:
-                    logger.info(f"阮一峰周刊 issue #{issue_num} is {age_days} days old, skipping")
-                    return []
+            age_days = (datetime.now(timezone.utc) - commit_date).days
+            if age_days > 7:
+                logger.info(f"阮一峰周刊 issue #{issue_num} is {age_days} days old, skipping")
+                return []
 
             # Fetch the markdown file
             file_resp = await client.get(
@@ -316,7 +321,7 @@ async def fetch_ruanyf_weekly(config: dict) -> list[NewsItem]:
 
             # Use commit date instead of now() for accurate age filtering
             items = _parse_ruanyf_markdown(file_resp.text, config, published=commit_date)
-            logger.info(f"阮一峰周刊: fetched {len(items)} items from issue #{issue_num} (age: {age_days if commit_date else '?'}d)")
+            logger.info(f"阮一峰周刊: fetched {len(items)} items from issue #{issue_num} (age: {age_days}d)")
 
         except SourceFetchError:
             raise

@@ -61,7 +61,6 @@ sources:
     min_score: 50
 
 filter:
-  max_age_hours: 36
   keywords:
     include:
       - "ai"

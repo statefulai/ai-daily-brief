@@ -1,7 +1,56 @@
+import json
+import tempfile
 import unittest
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
-from main import write_legacy_outputs
+from main import filter_by_window, load_grok_contributions, write_legacy_outputs
+from sources import NewsItem
+
+
+class DailyInputWindowTest(unittest.TestCase):
+    def test_public_items_use_the_same_half_open_daily_window(self):
+        beijing = timezone(timedelta(hours=8))
+        start = datetime(2026, 9, 16, 8, 0, tzinfo=beijing)
+        cutoff = datetime(2026, 9, 17, 8, 0, tzinfo=beijing)
+
+        def item(label: str, published: datetime) -> NewsItem:
+            return NewsItem(
+                title=label,
+                url=f"https://example.com/{label}",
+                source="Test",
+                published=published,
+            )
+
+        selected = filter_by_window(
+            [
+                item("before", start - timedelta(seconds=1)),
+                item("start", start.astimezone(timezone.utc)),
+                item("inside", cutoff - timedelta(seconds=1)),
+                item("cutoff", cutoff),
+            ],
+            start,
+            cutoff,
+        )
+
+        self.assertEqual([entry.title for entry in selected], ["start", "inside"])
+
+    def test_absent_optional_contribution_file_means_no_contribution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            missing = Path(directory) / "missing.json"
+            config = {"integrations": {"grok_bot": {"contributions_path": str(missing)}}}
+
+            self.assertEqual(load_grok_contributions(config), [])
+
+    def test_invalid_contribution_file_still_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "invalid.json"
+            path.write_text(json.dumps({"items": [{"event": "missing fields"}]}))
+            config = {"integrations": {"grok_bot": {"contributions_path": str(path)}}}
+
+            with self.assertRaisesRegex(ValueError, "primary_source"):
+                load_grok_contributions(config)
 
 
 class LegacyMigrationTest(unittest.IsolatedAsyncioTestCase):

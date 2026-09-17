@@ -29,8 +29,18 @@ def beijing_today(now: datetime | None = None) -> datetime:
     return current
 
 
+def edition_window(now: datetime | None = None) -> tuple[datetime, datetime]:
+    """Return the latest closed Beijing-time daily window [start, cutoff)."""
+    current = beijing_today(now)
+    cutoff = current.replace(hour=8, minute=0, second=0, microsecond=0)
+    if current < cutoff:
+        cutoff -= timedelta(days=1)
+    return cutoff - timedelta(days=1), cutoff
+
+
 def edition_id_for(now: datetime | None = None) -> str:
-    return beijing_today(now).strftime("%Y-%m-%d")
+    _, cutoff = edition_window(now)
+    return cutoff.strftime("%Y-%m-%d")
 
 
 def _require_mapping(value: Any, label: str) -> dict[str, Any]:

@@ -71,6 +71,28 @@ def validate_contributions(records: list[Mapping[str, Any]]) -> list[dict[str, A
     return [validate_contribution(item) for item in records]
 
 
+def filter_contributions_by_window(
+    records: list[dict[str, Any]],
+    start_at: datetime,
+    cutoff_at: datetime,
+) -> list[dict[str, Any]]:
+    """Keep public contributions whose source time is in [start, cutoff)."""
+    if start_at.tzinfo is None or cutoff_at.tzinfo is None:
+        raise EditionError("contribution window datetimes must include a timezone")
+    selected: list[dict[str, Any]] = []
+    for raw in records:
+        contribution = validate_contribution(raw)
+        source_time = datetime.fromisoformat(
+            contribution["source_time"].replace("Z", "+00:00")
+        )
+        if (
+            contribution["sensitivity"] == "public"
+            and start_at <= source_time < cutoff_at
+        ):
+            selected.append(contribution)
+    return selected
+
+
 def extend_curation_items(items: list[NewsItem], records: list[dict]) -> list[NewsItem]:
     """Return a copy with public, verified contributions added as ordinary candidates."""
     combined = list(items)

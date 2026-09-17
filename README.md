@@ -10,7 +10,7 @@
 
 </div>
 
-> 当前状态：新版期次、网页渲染、CI／Pages 骨架和本地投递预览已经完成；GitHub Pages、项目 Bot、邮件和群投递尚未启用。旧 Markdown 日更在首期切换前继续运行。
+> 当前状态：新版期次、网页渲染、CI／Pages 骨架和本地投递预览已经完成；`【开源】AI日报` 项目群与 `日刊` Bot 已建立，日例程保持停用。GitHub Pages、邮件和群投递尚未启用，旧 Markdown 日更在首期切换前继续运行。
 
 ## 这套链路做什么
 
@@ -82,11 +82,11 @@ python main.py --dry-run
 python main.py --config path/to/config.yaml
 ```
 
-`config.yaml` 控制数据源、时间窗口、模型和输出目录。环境变量优先于其中的模型端点与模型名。
+每天的正式期次采用北京时间 `[前一日 08:00, 当日 08:00)` 半开区间；08:00 前手动运行时仍指向最近一个已经闭合的窗口。`config.yaml` 控制数据源、模型和输出目录，环境变量优先于其中的模型端点与模型名。
 
 ## 可选供稿
 
-`integrations/grok_bot/` 是可选适配层，不是本地运行的硬依赖。配置 `integrations.grok_bot.contributions_path` 后，可把已核验供稿与公开采集放进同一次策展；仅 `sensitivity: public` 的记录会进入候选。
+`integrations/grok_bot/` 是可选适配层，不是本地运行的硬依赖。配置 `integrations.grok_bot.contributions_path` 后，可把已核验供稿与公开采集放进同一次策展；文件缺失等同于本期没有供稿。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选；格式或 schema 错误仍会终止生成。
 
 最小记录包含事件、一手来源、带时区的来源时间、已核对事实、适用条件和敏感性：
 

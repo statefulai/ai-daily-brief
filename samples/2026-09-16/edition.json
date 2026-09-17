@@ -2,8 +2,8 @@
   "schema_version": "1",
   "edition_id": "2026-09-16",
   "timezone": "Asia/Shanghai",
-  "cutoff_at": "2026-09-16T14:00:00+08:00",
-  "generated_at": "2026-09-16T14:05:00+08:00",
+  "cutoff_at": "2026-09-16T08:00:00+08:00",
+  "generated_at": "2026-09-16T08:05:00+08:00",
   "attempt": 1,
   "status": "published_candidate",
   "sources": [
@@ -185,5 +185,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:8070d672d52cf0ac17c7b9f0ffe7e91cb07b8302d05ec805278b25d4c326efd9"
+  "content_hash": "sha256:35a2e7d33587ec183328b25104018143989a13c453afcea2e75d2f20e2c9d662"
 }
