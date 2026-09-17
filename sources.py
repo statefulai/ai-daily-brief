@@ -15,6 +15,10 @@ from dataclasses import dataclass, field
 logger = logging.getLogger(__name__)
 
 
+class SourceFetchError(RuntimeError):
+    """Raised when a source request fails and must not look like an empty day."""
+
+
 @dataclass
 class NewsItem:
     title: str
@@ -43,6 +47,8 @@ async def fetch_hackernews(config: dict) -> list[NewsItem]:
 
     async with httpx.AsyncClient(timeout=30) as client:
         resp = await client.get("https://hacker-news.firebaseio.com/v0/topstories.json")
+        if resp.status_code != 200:
+            raise SourceFetchError(f"HackerNews topstories returned HTTP {resp.status_code}")
         story_ids = resp.json()[:top_n * 2]  # fetch extra to filter
 
         for sid in story_ids:
@@ -82,6 +88,7 @@ async def fetch_github_trending(config: dict) -> list[NewsItem]:
     languages = config.get("languages", ["python", "typescript"])
     since = config.get("since", "daily")
     items = []
+    errors: list[str] = []
 
     # Repos with very high star counts are "permanent fixtures" — filter them out
     # to prioritize genuinely new/trending projects
@@ -103,6 +110,7 @@ async def fetch_github_trending(config: dict) -> list[NewsItem]:
                 )
                 if resp.status_code != 200:
                     logger.warning(f"GitHub API returned {resp.status_code} for {lang}")
+                    errors.append(f"{lang}: HTTP {resp.status_code}")
                     continue
 
                 for repo in resp.json().get("items", [])[:5]:
@@ -122,7 +130,10 @@ async def fetch_github_trending(config: dict) -> list[NewsItem]:
                     ))
             except Exception as e:
                 logger.warning(f"Failed to fetch GitHub trending for {lang}: {e}")
+                errors.append(f"{lang}: {e}")
 
+    if not items and errors:
+        raise SourceFetchError("GitHub Trending failed: " + "; ".join(errors))
     logger.info(f"GitHub Trending: fetched {len(items)} repos")
     return items
 
@@ -133,11 +144,14 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
         return []
 
     items = []
+    errors: list[str] = []
     async with httpx.AsyncClient(timeout=30) as client:
         # Daily papers
         if config.get("daily_papers", True):
             try:
                 resp = await client.get("https://huggingface.co/api/daily_papers")
+                if resp.status_code != 200:
+                    errors.append(f"daily_papers: HTTP {resp.status_code}")
                 if resp.status_code == 200:
                     for paper in resp.json()[:config.get("top_n", 10)]:
                         paper_info = paper.get("paper", {})
@@ -147,9 +161,9 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
                             try:
                                 published = datetime.fromisoformat(pub_str.replace("Z", "+00:00"))
                             except ValueError:
-                                published = datetime.now(timezone.utc)
+                                continue
                         else:
-                            published = datetime.now(timezone.utc)
+                            continue
                         items.append(NewsItem(
                             title=paper_info.get("title", "Untitled"),
                             url=f"https://huggingface.co/papers/{paper_info.get('id', '')}",
@@ -160,6 +174,7 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
                         ))
             except Exception as e:
                 logger.warning(f"Failed to fetch HF daily papers: {e}")
+                errors.append(f"daily_papers: {e}")
 
         # Trending models
         if config.get("trending_models", True):
@@ -168,6 +183,8 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
                     "https://huggingface.co/api/models",
                     params={"sort": "trending", "limit": config.get("top_n", 10)},
                 )
+                if resp.status_code != 200:
+                    errors.append(f"trending_models: HTTP {resp.status_code}")
                 if resp.status_code == 200:
                     for model in resp.json():
                         # Use model's lastModified if available
@@ -176,9 +193,9 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
                             try:
                                 published = datetime.fromisoformat(mod_str.replace("Z", "+00:00"))
                             except ValueError:
-                                published = datetime.now(timezone.utc)
+                                continue
                         else:
-                            published = datetime.now(timezone.utc)
+                            continue
                         items.append(NewsItem(
                             title=f"🤗 {model.get('modelId', 'unknown')}",
                             url=f"https://huggingface.co/{model.get('modelId', '')}",
@@ -189,7 +206,10 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
                         ))
             except Exception as e:
                 logger.warning(f"Failed to fetch HF trending models: {e}")
+                errors.append(f"trending_models: {e}")
 
+    if not items and errors:
+        raise SourceFetchError("HuggingFace failed: " + "; ".join(errors))
     logger.info(f"HuggingFace: fetched {len(items)} items")
     return items
 
@@ -201,6 +221,7 @@ async def fetch_rss_feeds(config: dict) -> list[NewsItem]:
 
     items = []
     feeds = config.get("feeds", [])
+    errors: list[str] = []
 
     async with httpx.AsyncClient(timeout=20, follow_redirects=True) as client:
         for feed_cfg in feeds:
@@ -208,16 +229,21 @@ async def fetch_rss_feeds(config: dict) -> list[NewsItem]:
                 resp = await client.get(feed_cfg["url"])
                 if resp.status_code != 200:
                     logger.warning(f"RSS {feed_cfg['name']}: HTTP {resp.status_code}")
+                    errors.append(f"{feed_cfg['name']}: HTTP {resp.status_code}")
                     continue
 
                 parsed = feedparser.parse(resp.text)
                 for entry in parsed.entries[:10]:
-                    published = datetime.now(timezone.utc)
-                    if hasattr(entry, "published_parsed") and entry.published_parsed:
-                        from calendar import timegm
-                        published = datetime.fromtimestamp(
-                            timegm(entry.published_parsed), tz=timezone.utc
-                        )
+                    published_parsed = getattr(entry, "published_parsed", None)
+                    updated_parsed = getattr(entry, "updated_parsed", None)
+                    timestamp = published_parsed or updated_parsed
+                    if not timestamp:
+                        continue
+                    from calendar import timegm
+
+                    published = datetime.fromtimestamp(
+                        timegm(timestamp), tz=timezone.utc
+                    )
 
                     summary = ""
                     if hasattr(entry, "summary"):
@@ -235,7 +261,10 @@ async def fetch_rss_feeds(config: dict) -> list[NewsItem]:
                     ))
             except Exception as e:
                 logger.warning(f"Failed to fetch RSS {feed_cfg['name']}: {e}")
+                errors.append(f"{feed_cfg['name']}: {e}")
 
+    if feeds and not items and errors:
+        raise SourceFetchError("RSS feeds failed: " + "; ".join(errors))
     logger.info(f"RSS Feeds: fetched {len(items)} items from {len(feeds)} feeds")
     return items
 
@@ -257,8 +286,7 @@ async def fetch_ruanyf_weekly(config: dict) -> list[NewsItem]:
                 headers={"Accept": "application/vnd.github.v3+json"},
             )
             if resp.status_code != 200:
-                logger.warning(f"ruanyf/weekly commits API returned {resp.status_code}")
-                return []
+                raise SourceFetchError(f"ruanyf/weekly commits API returned {resp.status_code}")
 
             issue_num = None
             commit_date = None
@@ -274,30 +302,31 @@ async def fetch_ruanyf_weekly(config: dict) -> list[NewsItem]:
                     break
 
             if not issue_num:
-                logger.warning("Could not find latest ruanyf/weekly issue number")
-                return []
+                raise SourceFetchError("Could not find latest ruanyf/weekly issue number")
+            if commit_date is None:
+                raise SourceFetchError("Latest ruanyf/weekly issue has no commit timestamp")
 
             # P2: Skip if the issue commit is older than 7 days
-            if commit_date:
-                age_days = (datetime.now(timezone.utc) - commit_date).days
-                if age_days > 7:
-                    logger.info(f"阮一峰周刊 issue #{issue_num} is {age_days} days old, skipping")
-                    return []
+            age_days = (datetime.now(timezone.utc) - commit_date).days
+            if age_days > 7:
+                logger.info(f"阮一峰周刊 issue #{issue_num} is {age_days} days old, skipping")
+                return []
 
             # Fetch the markdown file
             file_resp = await client.get(
                 f"https://raw.githubusercontent.com/{repo}/master/docs/issue-{issue_num}.md"
             )
             if file_resp.status_code != 200:
-                logger.warning(f"Failed to fetch issue-{issue_num}.md: {file_resp.status_code}")
-                return []
+                raise SourceFetchError(f"Failed to fetch issue-{issue_num}.md: {file_resp.status_code}")
 
             # Use commit date instead of now() for accurate age filtering
             items = _parse_ruanyf_markdown(file_resp.text, config, published=commit_date)
-            logger.info(f"阮一峰周刊: fetched {len(items)} items from issue #{issue_num} (age: {age_days if commit_date else '?'}d)")
+            logger.info(f"阮一峰周刊: fetched {len(items)} items from issue #{issue_num} (age: {age_days}d)")
 
+        except SourceFetchError:
+            raise
         except Exception as e:
-            logger.warning(f"Failed to fetch ruanyf/weekly: {e}")
+            raise SourceFetchError(f"Failed to fetch ruanyf/weekly: {e}") from e
 
     if not items:
         logger.info("阮一峰周刊: fetched 0 items")
@@ -362,6 +391,7 @@ async def fetch_reddit(config: dict) -> list[NewsItem]:
     top_n = config.get("top_n", 15)
     min_score = config.get("min_score", 50)
     items = []
+    errors: list[str] = []
 
     async with httpx.AsyncClient(
         timeout=30,
@@ -376,6 +406,7 @@ async def fetch_reddit(config: dict) -> list[NewsItem]:
                 )
                 if resp.status_code != 200:
                     logger.warning(f"Reddit r/{sub} returned {resp.status_code}")
+                    errors.append(f"r/{sub}: HTTP {resp.status_code}")
                     continue
 
                 posts = resp.json().get("data", {}).get("children", [])
@@ -411,6 +442,9 @@ async def fetch_reddit(config: dict) -> list[NewsItem]:
 
             except Exception as e:
                 logger.warning(f"Failed to fetch Reddit r/{sub}: {e}")
+                errors.append(f"r/{sub}: {e}")
 
+    if not items and errors:
+        raise SourceFetchError("Reddit failed: " + "; ".join(errors))
     logger.info(f"Reddit: fetched {len(items)} posts")
     return items

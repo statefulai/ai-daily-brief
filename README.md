@@ -1,271 +1,169 @@
 <div align="center">
 
-<img src="assets/cover-readme-21x9.png" width="100%" alt="AI Daily Brief — 自动采集 · GPT 策展 · 零人工" />
+<img src="assets/cover-readme-21x9.png" width="100%" alt="AI Daily Brief" />
 
-# 🤖 AI Daily Brief
+# AI Daily Brief
 
-**不做信息搬运工，做有观点的策展人**
+从公开来源生成可核验、可变篇数的中文 AI 日报，并以固定 HTML 模板输出网页、邮件正文和群消息。
 
-每日从 6 大数据源（含 9 个 RSS 订阅）采集 150+ 条 AI / 开发者资讯<br>经过两阶段 GPT 策展，输出约 7 条精选 + 中文短标题 + 编辑评论
-
-[![Daily Update](https://github.com/statefulai/ai-daily-brief/actions/workflows/daily-news.yml/badge.svg)](https://github.com/statefulai/ai-daily-brief/actions/workflows/daily-news.yml)
-[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://python.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-**[📰 查看今日简报](./daily-brief.md)** · **[📚 往期归档](./archives/)**
+[查看本地样刊](./samples/2026-09-16/index.html) · [手机预览](./samples/2026-09-16/mobile.png) · [本地 dogfood](./samples/2026-09-16/dogfood.html)
 
 </div>
 
-> 💡 **什么是"策展"？** 借鉴艺术展策展人（curator）的工作方式 — 从大量素材中选出最有价值的，编排成有结构的展览。这里指 GPT 扮演"主编"角色：对新闻打分、聚类、选稿、写评论，而不是简单的 RSS 搬运。
+> 当前状态：新版期次、网页渲染、CI／Pages 骨架和本地投递预览已经完成；`【开源】AI日报` 项目群与 `日刊` Bot 已建立，日例程保持停用。GitHub Pages、邮件和群投递尚未启用，旧 Markdown 日更在首期切换前继续运行。
 
----
+## 本地运行链路
 
-## 📷 效果预览
+一次运行完成以下步骤：
 
-<details open>
-<summary><strong>每日简报 (daily-brief.md)</strong></summary>
+1. 并发读取已配置的公开来源，分别记录 `success`、`no_candidates`、`failed` 或 `skipped`。
+2. 合并可选的结构化供稿，过滤非公开内容。
+3. 使用一个 OpenAI 兼容模型完成可变篇数策展。
+4. 回到一手来源核对发布时间和事实依据。
+5. 生成严格的 `edition.json`，再由固定模板确定性渲染 `index.html`。
 
-每日简报包含 2 个基础板块；有明确内容时增加 1 个可选板块：
+生成结果只有三种：
 
-| 板块 | 说明 |
-|------|------|
-| 📌 **今日焦点** | 1 条最重要的新闻，附中文短标题和要点/影响点评 |
-| 🔥 **热点速览** | 5 条精选，每条附中文短标题和具体点评 |
-| 🛠️ **今日工具** | 0-2 个有明确当日入选依据的开源项目/工具 |
+- `published_candidate`：有可发布内容，写入期次目录。
+- `no_new_value`：来源读取成功但没有值得发布的新内容，不创建期次目录。
+- `failed`：来源、模型或核验失败；不能伪装成“今天没有新闻”。
 
-👉 [查看今日简报示例](./daily-brief.md)
+每个公开期次只包含：
 
-</details>
+```text
+editions/YYYY-MM-DD/
+├── edition.json
+└── index.html
+```
 
-<details>
-<summary><strong>飞书群推送卡片</strong></summary>
+原始供稿、发送凭据、收件人、群聊信息和投递账本不进入公开期次。
 
-默认不再定时推送；如有需要，可手动推送到飞书群。
+托管生产由 `日刊` 启动一个 Cloud Agent。Agent 直接使用自身模型完成公开采集、供稿合并和策展，写出结构化 `edition.json`，再调用仓库的固定渲染与校验命令；Python 不需要取得 Cloud Agent 的模型 API Key。`main.py` 的 OpenAI 兼容模型配置只用于本地独立运行。
 
-配置方式见下方 [📱 飞书推送](#-飞书推送可选) 章节。
+## 本地运行
 
-</details>
-
----
-
-## 🚀 快速开始
-
-### 1. 克隆 & 安装
+需要 Python 3.11 或更高版本。
 
 ```bash
 git clone https://github.com/statefulai/ai-daily-brief.git
 cd ai-daily-brief
-python -m venv .venv && source .venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-```
-
-### 2. 配置 API Key
-
-```bash
 cp .env.example .env
 ```
 
-编辑 `.env`，填入 OpenAI 兼容 API 的 Key：
+在 `.env` 中至少填写：
 
 ```env
-OPENAI_API_KEY=sk-your-key-here
-OPENAI_BASE_URL=https://api.openai.com/v1    # 或其他兼容端点
+OPENAI_API_KEY=your-api-key
 ```
 
-### 3. 运行
+若使用其他 OpenAI 兼容服务，再设置端点和模型：
+
+```env
+OPENAI_BASE_URL=https://your-provider.example/v1
+AI_NEWS_MODEL=your-model-name
+```
+
+本项目尚未对所有兼容服务做全新 clone 验收；如遇到响应格式差异，请提交可复现问题。
+
+运行命令：
 
 ```bash
-# 完整 pipeline（采集 + 策展 + 输出）
+# 完整流程；仅 published_candidate 会写 editions/<date>/
 python main.py
 
-# 仅拉取数据源，不调用 LLM
+# 只读取来源，不调用模型，也不写期次
 python main.py --sources-only
 
-# 预览策展结果（不写入文件）
+# 打印结构化结果，不写文件
 python main.py --dry-run
 
-# 使用自定义配置文件
-python main.py --config my-config.yaml
+# 使用另一份配置
+python main.py --config path/to/config.yaml
+
+# 合并一份可选供稿；不传该参数时只使用公开来源
+python main.py --contributions path/to/contributions.json
 ```
 
----
+每天的正式期次采用北京时间 `[前一日 08:00, 当日 08:00)` 半开区间；08:00 前手动运行时仍指向最近一个已经闭合的窗口。`config.yaml` 控制数据源、模型和输出目录，环境变量优先于其中的模型端点与模型名。
 
-## 💡 为什么用它
+## 可选供稿
 
-| | RSS 订阅器 | 手动整理 | **AI Daily Brief** |
-|---|:---:|:---:|:---:|
-| 数据来源 | 自选 feed | 手动浏览 | **6 源（含 9 个 RSS）自动采集** |
-| 筛选方式 | 全部展示 | 人工判断 | **GPT 两阶段打分 + 聚类** |
-| 编辑观点 | ❌ 无 | ✅ 有（耗时） | ✅ **每条附 AI 编辑评论** |
-| 去重 / 聚合 | ❌ 同新闻多次出现 | 人工去重 | ✅ **topic_key 自动聚合** |
-| 来源多样性 | 依赖订阅偏好 | 依赖个人习惯 | ✅ **单源 ≤5 条约束，反信息茧房** |
-| 维护成本 | 低 | 高 | **零人工，GitHub Actions 定时** |
+`--contributions` 接收任意外部系统整理出的 JSON 文件，与公开采集进入同一次策展。不传参数时只使用公开来源；显式传入的文件如果缺失、格式错误或不符合契约，生成会直接失败。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选，入选后仍会重新抓取一手来源。
 
----
+最小记录包含事件、一手来源、带时区的来源时间、已核对事实、适用范围和敏感性：
 
-## 📡 数据源
-
-| 来源 | 类型 | 更新频率 | 说明 |
-|------|------|---------|------|
-| [HackerNews](https://news.ycombinator.com) | 社区热帖 | 实时 | Top stories，min score 50 |
-| [GitHub Trending](https://github.com/trending) | 开源项目 | 每日 | Python / TypeScript / Rust / Go |
-| [HuggingFace](https://huggingface.co) | 论文 & 模型 | 每日 | Daily Papers + Trending Models |
-| [阮一峰周刊](https://github.com/ruanyf/weekly) | 中文精选 | 每周五 | 科技爱好者周刊，解析最新一期 |
-| [Reddit r/LocalLLaMA](https://reddit.com/r/LocalLLaMA) | 社区讨论 | 实时 | 本地大模型、量化、部署热帖 |
-| RSS 订阅 (9 源) | 官方博客 & 媒体 | 实时 | 见下方详细列表 |
-
-<details>
-<summary>📋 RSS 订阅源完整列表</summary>
-
-| 来源 | URL |
-|------|-----|
-| OpenAI Blog | `openai.com/blog/rss.xml` |
-| Anthropic | `anthropic.com/rss.xml` |
-| Google AI Blog | `blog.google/technology/ai/rss/` |
-| HuggingFace Blog | `huggingface.co/blog/feed.xml` |
-| GitHub Blog | `github.blog/feed/` |
-| The Verge AI | `theverge.com/rss/ai-artificial-intelligence/` |
-| TechCrunch AI | `techcrunch.com/category/artificial-intelligence/feed/` |
-| 机器之心 | `jiqizhixin.com/rss` |
-| arXiv cs.AI | `rss.arxiv.org/rss/cs.AI` |
-
-</details>
-
----
-
-## 🏗️ 工作原理
-
-```
-┌── 数据采集 · 6 源并发
-│
-│   HackerNews · GitHub · HuggingFace
-│   阮一峰周刊 · Reddit · RSS (x9)
-│   ⇣ 约 150 条/天
-│
-├──▶ 过滤去重
-│
-│    关键词白名单 + 黑名单
-│    36h 时效过滤 + URL 去重
-│    跨日去重（回溯 2 天归档）
-│    ⇣ 约 80 条
-│
-├──▶ Stage 1: 打分聚类 (LLM)
-│
-│    importance 评分 1-10
-│    分类 + topic_key 聚合
-│    来源多样性约束: 单源 ≤5 条
-│    ⇣ 20 候选
-│
-├──▶ Stage 2: 主编选稿 (LLM)
-│
-│    选焦点 + 写编辑评论
-│    5 条速览 + 推荐工具
-│    ⇣ 约 7 条精选
-│
-└──▶ daily-brief.md + archives/ + 飞书推送
+```json
+{
+  "event": "某项模型能力开放",
+  "primary_source": {
+    "title": "官方公告",
+    "url": "https://example.com/announcement",
+    "published_at": "2026-09-16T01:00:00+08:00"
+  },
+  "source_time": "2026-09-16T01:00:00+08:00",
+  "verified_facts": ["官方开放了该能力。"],
+  "conditions": ["仅适用于已开放账号。"],
+  "sensitivity": "public"
+}
 ```
 
----
+## 页面与投递输出
 
-## ⚙️ 配置
+- 网页：单页报纸版式；内容少时省略空栏，内容多时继续单页分组，不固定篇数或分页。
+- 邮件：同一期次生成内嵌 HTML 和纯文本兜底，不发送 HTML 附件或长图。
+- 群消息：日期、最多三条重点和网页版链接，不发送截图。
+- 投递状态：以 `edition_id + content_hash + channel + recipient_scope` 分渠道记录；`sent` 和 `unknown` 都阻止直接重发。
 
-所有配置在 `config.yaml`，无需改代码：
+仓库只提供渲染器、状态契约和本地 dogfood。真实群与邮件凭据由外部托管环境持有，不写入仓库。
 
-| 配置项 | 默认值 | 说明 |
-|--------|--------|------|
-| `llm.model` | `gpt-5.4` | Stage 1 (打分) 使用的模型 |
-| `llm.model_editorial` | `gpt-5.4` | Stage 2 (选稿) 使用的模型 |
-| `llm.base_url` | DuckCoding relay | API 端点（支持任意 OpenAI 兼容端点） |
-| `filter.max_age_hours` | `36` | 只保留 N 小时内的内容 |
-| `filter.keywords.include` | 24 个 AI 关键词 | 关键词白名单 |
-| `filter.keywords.exclude` | crypto, nft, blockchain | 关键词黑名单 |
-| `sources.reddit.subreddits` | `["LocalLLaMA"]` | Reddit 子版块列表 |
-| `sources.reddit.min_score` | `50` | Reddit 帖子最低分 |
-| `sources.ruanyf_weekly.max_items` | `20` | 每期周刊最多提取条数 |
+## CI 与 Pages
 
-<details>
-<summary>📋 完整配置文件示例</summary>
+`.github/workflows/edition-ci-pages.yml` 只负责：
 
-参见 [`config.yaml`](./config.yaml)
+- 校验 schema、来源状态、一手来源、内容 hash 和确定性 HTML；
+- 限制一次期次变更只能包含一个日期的 `edition.json + index.html`；
+- 阻止删除已经发布的期次；
+- 在 `main` 存在正式期次时构建并部署 Pages。
 
-</details>
+它不调用模型、不设置日报 cron，也不发送群或邮件。Pages 目前尚未启用；首次合并、部署和真实投递需要单独验收。
 
----
+## 迁移边界
 
-## 🚢 部署
+- `.github/workflows/daily-news.yml` 仍运行旧 Markdown 日更，首期新版成功前不会停用。
+- `.github/workflows/feishu-push.yml` 仍保留手动入口。
+- `daily-brief.md` 与 `archives/` 仍由旧链路更新；新版 Pages 不回填这些文件。
+- `config.yaml` 在迁移期继续启用旧 Markdown 与归档，避免代码合并后提前停掉旧日报；首期成功并正式切换时再关闭。
 
-### GitHub Actions（推荐）
+## 项目结构
 
-仓库已配置 GitHub Actions 自动运行：
-
-- **定时**: 每天 00:00 UTC (北京时间 08:00)
-- **手动触发**: Actions → Daily News → Run workflow
-
-在仓库 Settings → Secrets → Actions 中添加：
-
-| Secret | 必需 | 说明 |
-|--------|:---:|------|
-| `OPENAI_API_KEY` | ✅ | OpenAI 兼容 API Key |
-| `OPENAI_BASE_URL` | | API 端点（可选，默认 OpenAI 官方） |
-
-### 📱 飞书推送（可选）
-
-支持将每日简报以交互卡片推送到飞书群。Fork 用户只需 3 步启用：
-
-**1. 创建飞书群机器人**
-
-群设置 → 群机器人 → 添加机器人 → 自定义机器人 → 复制 Webhook URL
-
-**2. 设置 GitHub Secret**
-
-| Secret | 必需 | 说明 |
-|--------|:---:|------|
-| `FEISHU_WEBHOOK_URL` | ✅ | Webhook 地址 |
-| `FEISHU_WEBHOOK_SECRET` | | 签名密钥（可选，安全加固） |
-
-**3. 完成**
-
-默认不自动推送。如有需要，可在 Actions → Feishu Push → Run workflow 手动触发。
-
-> 💡 未设置 `FEISHU_WEBHOOK_URL` 时，workflow 会静默跳过（不影响其他 CI）。
-
----
-
-## 📁 项目结构
-
-```
-ai-daily-brief/
-├── main.py              # 入口：采集 → 过滤 → 去重 → 策展 → 输出
-├── sources.py           # 6 大数据源采集器
-├── summarizer.py        # 两阶段 GPT 策展引擎
-├── outputs.py           # 输出格式化（daily-brief + archive）
-├── feishu_push.py       # 飞书群推送（可选，独立运行）
-├── config.yaml          # 全量配置
-├── .env.example         # 环境变量模板
-├── .github/workflows/
-│   ├── daily-news.yml   # GitHub Actions 定时采集
-│   └── feishu-push.yml  # GitHub Actions 飞书推送
-├── daily-brief.md       # ← 每日简报输出
-├── archives/            # ← 历史归档 (YYYY-MM-DD.md)
-└── requirements.txt     # 依赖：openai, httpx, feedparser, pyyaml
+```text
+edition.py                 # 期次 schema、hash、状态与同日期互斥
+curate.py                  # 把模型结果装配为可变篇数事件
+verify.py                  # 一手来源核验
+source_status.py           # 来源四态
+contributions.py           # 通用供稿契约、过滤与策展接入
+templates/                 # 固定网页与邮件模板
+delivery/                  # 本地 dogfood 与私有投递状态契约
+integrations/grok_bot/     # Grok Bot 到通用供稿文件的桥接说明
+scripts/edition_ci.py      # CI 校验与 Pages 构建
+samples/2026-09-16/        # 本地验收样刊，不是生产期次
+tests/                     # schema、渲染、CI、来源与投递测试
 ```
 
----
+## 验证
 
-## 📊 性能参考
+```bash
+python -m unittest discover -s tests -v
+python scripts/edition_ci.py render --edition editions/<date>/edition.json
+python scripts/edition_ci.py validate
+python scripts/edition_ci.py build --output _site
+```
 
-| 阶段 | 耗时 |
-|------|------|
-| 数据采集 (6 源并发) | ~30s |
-| 过滤去重 | <1s |
-| Stage 1 (5 批 × 20 条) | ~90s |
-| Stage 2 (20 候选 → 约 7 条精选) | ~25s |
-| **总计** | **~2-3 分钟** |
+`validate` 在没有正式期次时会成功并报告 0 期；`_site/` 是本地构建目录，不进入版本库。
 
-> 实际耗时取决于模型和 API 响应速度。
+## License
 
----
-
-## 📄 License
-
-MIT
+[MIT](./LICENSE)

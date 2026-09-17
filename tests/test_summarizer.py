@@ -55,6 +55,19 @@ class SummarizerTest(unittest.TestCase):
             timeout=120.0,
         )
 
+    def test_create_client_uses_sdk_default_without_base_url(self):
+        with (
+            patch.dict(
+                os.environ,
+                {"OPENAI_API_KEY": "test-key"},
+                clear=True,
+            ),
+            patch("summarizer.OpenAI") as openai,
+        ):
+            create_client({})
+
+        openai.assert_called_once_with(api_key="test-key", timeout=120.0)
+
     def test_stage1_raises_instead_of_publishing_fallback_data(self):
         item = NewsItem(
             title="Test news",
@@ -186,6 +199,31 @@ class SummarizerTest(unittest.TestCase):
             result = _run_stage2(candidates, {})
 
         self.assertEqual(result, brief)
+
+    def test_stage2_accepts_variable_highlight_count(self):
+        candidates = [candidate(index) for index in range(8)]
+        brief = {
+            "focus": {
+                "index": 0,
+                "title_zh": "模型选择发生变化",
+                "editorial": "要点：新模型降低了推理延迟；影响：开发团队可重新评估生产选型。",
+            },
+            "highlights": [
+                {
+                    "index": 1,
+                    "title_zh": "只留一条速览",
+                    "editorial": "要点：工具更新了权限控制；影响：团队可减少人工配置步骤。",
+                }
+            ],
+            "tools": [],
+        }
+        client = MagicMock()
+        client.chat.completions.create.return_value = completion(brief)
+
+        with patch("summarizer.create_client", return_value=client):
+            result = _run_stage2(candidates, {})
+
+        self.assertEqual(len(result["highlights"]), 1)
 
     def test_stage2_rejects_selection_without_chinese_title(self):
         candidates = [candidate(index) for index in range(6)]

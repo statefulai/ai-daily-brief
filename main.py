@@ -5,7 +5,8 @@ AI News Aggregator - Main Entry Point
 Usage:
     python main.py                  # full pipeline
     python main.py --sources-only   # fetch sources only (no LLM)
-    python main.py --dry-run        # print items without writing files
+    python main.py --dry-run        # print edition.json, don't write files
+    python main.py --contributions path/to/contributions.json
 """
 
 import asyncio
@@ -14,6 +15,7 @@ import json
 import logging
 import re
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import yaml
@@ -31,8 +33,32 @@ from sources import (
     fetch_ruanyf_weekly,
     fetch_reddit,
 )
-from summarizer import curate_daily_brief
-from outputs import format_daily_brief, write_readme, write_archive, push_to_notion
+from summarizer import CurationError, curate_daily_brief
+from outputs import (
+    format_daily_brief,
+    push_to_notion,
+    write_archive,
+    write_readme,
+    write_web_edition,
+)
+from source_status import SourceResult, run_source
+from curate import assemble_curated_events
+from contributions import (
+    event_overrides as contribution_event_overrides,
+    extend_curation_items,
+    filter_contributions_by_window,
+    validate_contributions,
+)
+from verify import verify_event_primary_sources
+from edition import (
+    acquire_edition_lock,
+    build_edition,
+    edition_id_for,
+    edition_window,
+    next_attempt,
+    release_edition_lock,
+    write_edition,
+)
 
 logging.basicConfig(
     level=logging.INFO,
@@ -52,9 +78,22 @@ def load_config(path: str = "config.yaml") -> dict:
         return yaml.safe_load(f) or {}
 
 
-def filter_by_age(items: list[NewsItem], max_age_hours: float) -> list[NewsItem]:
-    """Filter items by age."""
-    return [item for item in items if item.age_hours <= max_age_hours]
+def filter_by_window(
+    items: list[NewsItem],
+    start_at: datetime,
+    cutoff_at: datetime,
+) -> list[NewsItem]:
+    """Keep items published in the half-open interval [start, cutoff)."""
+    if start_at.tzinfo is None or cutoff_at.tzinfo is None:
+        raise ValueError("edition window datetimes must include a timezone")
+    selected = []
+    for item in items:
+        if item.published.tzinfo is None:
+            logger.warning("Skipping item with timezone-free published time: %s", item.url)
+            continue
+        if start_at <= item.published < cutoff_at:
+            selected.append(item)
+    return selected
 
 
 def filter_by_keywords(
@@ -135,40 +174,90 @@ def cross_day_dedup(items: list[NewsItem], previous_urls: set[str]) -> list[News
     return filtered
 
 
+SOURCE_SPECS = (
+    ("hackernews", "HackerNews", fetch_hackernews),
+    ("github_trending", "GitHub", fetch_github_trending),
+    ("huggingface", "HuggingFace", fetch_huggingface),
+    ("rss_feeds", "RSS", fetch_rss_feeds),
+    ("ruanyf_weekly", "阮一峰周刊", fetch_ruanyf_weekly),
+    ("reddit", "Reddit", fetch_reddit),
+)
+
+
+async def fetch_all_source_results(config: dict) -> list[SourceResult]:
+    """Fetch every configured source and keep success / empty / failure distinct."""
+    sources_cfg = config.get("sources", {})
+    tasks = [
+        run_source(source_id, name, fetcher, sources_cfg.get(source_id, {}))
+        for source_id, name, fetcher in SOURCE_SPECS
+    ]
+    return list(await asyncio.gather(*tasks))
+
+
 async def fetch_all_sources(config: dict) -> list[NewsItem]:
     """Fetch from all configured sources concurrently."""
-    sources_cfg = config.get("sources", {})
-
-    tasks = [
-        fetch_hackernews(sources_cfg.get("hackernews", {})),
-        fetch_github_trending(sources_cfg.get("github_trending", {})),
-        fetch_huggingface(sources_cfg.get("huggingface", {})),
-        fetch_rss_feeds(sources_cfg.get("rss_feeds", {})),
-        fetch_ruanyf_weekly(sources_cfg.get("ruanyf_weekly", {})),
-        fetch_reddit(sources_cfg.get("reddit", {})),
-    ]
-
-    results = await asyncio.gather(*tasks, return_exceptions=True)
-
     all_items: list[NewsItem] = []
-    source_names = ["HackerNews", "GitHub", "HuggingFace", "RSS", "阮一峰周刊", "Reddit"]
-
-    for name, result in zip(source_names, results):
-        if isinstance(result, Exception):
-            logger.error(f"{name} source failed: {result}")
-        else:
-            all_items.extend(result)
-
+    for result in await fetch_all_source_results(config):
+        if result.status == "failed":
+            logger.error(f"{result.name} source failed: {result.error}")
+        all_items.extend(result.items)
     return all_items
+
+
+def load_contributions(path: str | None) -> list[dict]:
+    """Load an optional contribution file supplied by any external system."""
+    if not path:
+        return []
+    contribution_path = Path(path)
+    if not contribution_path.exists():
+        raise FileNotFoundError(f"contribution file not found: {path}")
+    payload = json.loads(contribution_path.read_text(encoding="utf-8"))
+    records = payload.get("items", payload) if isinstance(payload, dict) else payload
+    return validate_contributions(records)
+
+
+async def write_legacy_outputs(curation_result: dict, output_cfg: dict) -> int:
+    """Update the legacy Markdown path only after a valid curation result."""
+    candidates = curation_result.get("candidates", [])
+    brief = curation_result.get("brief", {})
+    focus = brief.get("focus", {}) if isinstance(brief, dict) else {}
+    focus_index = focus.get("index") if isinstance(focus, dict) else None
+    if (
+        not isinstance(candidates, list)
+        or type(focus_index) is not int
+        or not 0 <= focus_index < len(candidates)
+    ):
+        logger.info("Legacy outputs unchanged: no valid curated brief")
+        return 0
+
+    if output_cfg.get("github_readme", {}).get("enabled", True):
+        readme_content = format_daily_brief(
+            curation_result, output_cfg.get("github_readme", {})
+        )
+        readme_path = output_cfg.get("github_readme", {}).get(
+            "file", "daily-brief.md"
+        )
+        write_readme(readme_content, readme_path)
+    write_archive(curation_result, output_cfg.get("archive", {}))
+    await push_to_notion(candidates[:20], output_cfg.get("notion", {}))
+    return 1 + len(brief.get("highlights", [])) + len(brief.get("tools", []))
 
 
 async def run(args: argparse.Namespace):
     """Main pipeline."""
     config = load_config(args.config)
+    window_start, cutoff = edition_window()
+    edition_id = edition_id_for(cutoff)
 
     # 1. Fetch all sources
     logger.info("=== Fetching sources ===")
-    raw_items = await fetch_all_sources(config)
+    source_results = await fetch_all_source_results(config)
+    raw_items = [item for result in source_results for item in result.items]
+    for result in source_results:
+        logger.info(
+            f"{result.name}: {result.status}"
+            + (f" ({result.error})" if result.error else f" items={len(result.items)}")
+        )
     logger.info(f"Total raw items: {len(raw_items)}")
 
     # 2. Deduplicate (within same run)
@@ -181,11 +270,15 @@ async def run(args: argparse.Namespace):
     items = cross_day_dedup(items, previous_urls)
     logger.info(f"After cross-day dedup: {len(items)}")
 
-    # 3. Filter by age
+    # 3. Keep the latest closed Beijing-time daily window.
     filter_cfg = config.get("filter", {})
-    max_age = filter_cfg.get("max_age_hours", 48)
-    items = filter_by_age(items, max_age)
-    logger.info(f"After age filter ({max_age}h): {len(items)}")
+    items = filter_by_window(items, window_start, cutoff)
+    logger.info(
+        "After edition window filter [%s, %s): %s",
+        window_start.isoformat(),
+        cutoff.isoformat(),
+        len(items),
+    )
 
     # 4. Keyword pre-filter
     keywords = filter_cfg.get("keywords", {})
@@ -197,46 +290,89 @@ async def run(args: argparse.Namespace):
     logger.info(f"After keyword filter: {len(items)}")
 
     if args.sources_only:
+        print(json.dumps([result.to_record() for result in source_results], ensure_ascii=False, indent=2))
         for item in items:
             print(f"[{item.source}] {item.title} ({item.url})")
         return
 
-    # 5. Two-stage curation
-    logger.info("=== Two-Stage Curation ===")
-    curation_result = curate_daily_brief(items, config.get("llm", {}))
-    candidates = curation_result["candidates"]
-    brief = curation_result["brief"]
-    logger.info(f"Curation: {len(candidates)} candidates → "
-                f"focus + {len(brief.get('highlights', []))} highlights + "
-                f"{len(brief.get('tools', []))} tools")
+    contributions = load_contributions(args.contributions)
+    if contributions:
+        contributions = filter_contributions_by_window(
+            contributions, window_start, cutoff
+        )
+    curation_items = items
+    event_overrides = {}
+    if contributions:
+        curation_items = extend_curation_items(items, contributions)
+        event_overrides = contribution_event_overrides(contributions)
+
+    curation_result = {"candidates": [], "brief": {}}
+    generation_error = None
+    if curation_items:
+        logger.info("=== Variable-count curation ===")
+        try:
+            curation_result = curate_daily_brief(curation_items, config.get("llm", {}))
+        except CurationError as exc:
+            generation_error = str(exc)
+            logger.error(f"Curation failed: {exc}")
+    events = (
+        assemble_curated_events(curation_result, event_overrides)
+        if not generation_error
+        else []
+    )
+    if events:
+        events = await verify_event_primary_sources(events)
+    editions_dir = Path(config.get("output", {}).get("editions", {}).get("directory", "editions"))
+    source_records = [result.to_record() for result in source_results]
+    edition = build_edition(
+        edition_id=edition_id,
+        cutoff_at=cutoff.isoformat(),
+        sources=source_records,
+        events=events,
+        attempt=next_attempt(editions_dir, edition_id) if args.dry_run else 1,
+        contribution_count=len(contributions),
+        generation_error=generation_error,
+    )
+    logger.info(f"Edition status: {edition['status']} events={len(edition['events'])}")
 
     if args.dry_run:
-        print(json.dumps(curation_result, ensure_ascii=False, indent=2))
+        print(json.dumps(edition, ensure_ascii=False, indent=2))
         return
 
-    # 6. Output
-    logger.info("=== Writing outputs ===")
+    if edition["status"] != "published_candidate":
+        logger.info("=== No edition directory written ===")
+    else:
+        lock_path = acquire_edition_lock(editions_dir, edition_id)
+        try:
+            # Read the retry counter only after winning the same-date mutex.
+            edition = build_edition(
+                edition_id=edition_id,
+                cutoff_at=cutoff.isoformat(),
+                sources=source_records,
+                events=events,
+                attempt=next_attempt(editions_dir, edition_id),
+                contribution_count=len(contributions),
+                generation_error=generation_error,
+            )
+            edition_path = write_edition(editions_dir, edition)
+            html_path = write_web_edition(editions_dir, edition)
+            logger.info(f"Wrote {edition_path} and {html_path}")
+        finally:
+            release_edition_lock(lock_path)
+
+    # Legacy Markdown path remains available during migration.
     output_cfg = config.get("output", {})
-
-    # README (daily brief format)
-    if output_cfg.get("github_readme", {}).get("enabled", True):
-        readme_content = format_daily_brief(curation_result, output_cfg.get("github_readme", {}))
-        readme_path = output_cfg.get("github_readme", {}).get("file", "README.md")
-        write_readme(readme_content, readme_path)
-
-    # Archive
-    write_archive(curation_result, output_cfg.get("archive", {}))
-
-    # Notion
-    await push_to_notion(candidates[:20], output_cfg.get("notion", {}))
-
-    selected_count = 1 + len(brief.get("highlights", [])) + len(brief.get("tools", []))
-    logger.info(f"=== Done! {selected_count} items in daily brief ===")
+    selected_count = await write_legacy_outputs(curation_result, output_cfg)
+    logger.info(f"=== Done! edition events={len(edition['events'])} legacy items={selected_count} ===")
 
 
 def main():
     parser = argparse.ArgumentParser(description="AI Daily Brief")
     parser.add_argument("--config", default="config.yaml", help="Config file path")
+    parser.add_argument(
+        "--contributions",
+        help="Optional path to a platform-neutral contribution JSON file",
+    )
     parser.add_argument("--sources-only", action="store_true", help="Fetch sources only, no LLM")
     parser.add_argument("--dry-run", action="store_true", help="Print results, don't write files")
     args = parser.parse_args()

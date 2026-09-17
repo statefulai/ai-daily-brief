@@ -2,7 +2,7 @@
 AI News Aggregator - Two-Stage Curation Pipeline
 
 Stage 1: Score + classify + cluster similar topics
-Stage 2: Editor-in-chief curation (pick focus + 5 highlights + tools)
+Stage 2: Editor-in-chief curation (pick a focus and a variable number of supporting items)
 """
 
 import os
@@ -75,7 +75,7 @@ STAGE2_PROMPT = """你是一位面向开发者的 AI 技术日报主编。从候
 
 要求：
 1. 选 1 条作为"今日焦点"，提供 18 字以内的中文短标题；编辑评论严格写成"要点：……；影响：……"，只写候选信息能支持的内容
-2. 候选不少于 6 条时，恰好选 5 条作为"热点速览"；每条提供 18 字以内的中文短标题，点评严格写成"要点：……；影响：……"，控制在 50 字以内
+2. 按当天实际价值选择 0 条或多条"热点速览"，不设固定篇数；每条提供 18 字以内的中文短标题，点评严格写成"要点：……；影响：……"，控制在 50 字以内
 3. 选 0-2 个作为"今日工具"（优先开源项目，不要和焦点/速览重复）。只有能从来源或标题摘要说明"为什么今天入选"时才选择；理由严格写成"入选依据：来自今日实际来源名，……；用途：……"，不能只写常规简介
 选稿标准：
 - 重大模型发布/技术突破 > 工具更新 > 行业分析
@@ -118,16 +118,15 @@ Respond in JSON:
 
 
 def create_client(config: dict) -> OpenAI:
-    """Create OpenAI client with DuckCoding relay config."""
-    return OpenAI(
-        api_key=os.environ.get("OPENAI_API_KEY", ""),
-        base_url=(
-            os.environ.get("OPENAI_BASE_URL")
-            or config.get("base_url")
-            or "https://api.duckcoding.ai/v1"
-        ),
-        timeout=120.0,
-    )
+    """Create an OpenAI-compatible client from environment or project config."""
+    options = {
+        "api_key": os.environ.get("OPENAI_API_KEY", ""),
+        "timeout": 120.0,
+    }
+    base_url = os.environ.get("OPENAI_BASE_URL") or config.get("base_url")
+    if base_url:
+        options["base_url"] = base_url
+    return OpenAI(**options)
 
 
 def _run_stage1(items: list[NewsItem], config: dict) -> list[dict]:
@@ -297,10 +296,9 @@ def _run_stage2(candidates: list[dict], config: dict) -> dict:
         for i, item in enumerate(candidates)
         if not OPAQUE_REFERENCE_PATTERN.search(item.get("title", ""))
     ]
-    required_editorial_items = 1 + min(5, max(len(candidates) - 1, 0))
-    if len(eligible_candidates) < required_editorial_items:
+    if not eligible_candidates:
         raise CurationError(
-            "Stage2 has too few self-contained candidates for publication"
+            "Stage2 has no self-contained candidate for publication"
         )
 
     candidate_text = "\n".join(
@@ -442,11 +440,7 @@ def _validate_brief(brief: dict, candidates: list[dict]):
     if not has_concrete_impact(focus["editorial"]):
         raise CurationError("focus lacks a concrete reader impact")
     highlights = brief.get("highlights")
-    expected_highlights = min(5, max(candidate_count - 1, 0))
-    if (
-        not isinstance(highlights, list)
-        or len(highlights) != expected_highlights
-    ):
+    if not isinstance(highlights, list) or len(highlights) > max(candidate_count - 1, 0):
         raise CurationError("Stage2 returned an invalid highlight selection")
 
     selected_indices = {focus["index"]}
@@ -517,6 +511,9 @@ def curate_daily_brief(items: list[NewsItem], config: dict) -> dict:
 
     logger.info("=== Clustering & Candidate Selection ===")
     candidates = _cluster_and_select_candidates(scored)
+
+    if not candidates:
+        return {"candidates": [], "brief": {}}
 
     logger.info("=== Stage 2: Editorial Curation ===")
     brief = _run_stage2(candidates, config)

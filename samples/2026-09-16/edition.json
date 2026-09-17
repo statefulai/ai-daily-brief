@@ -1,0 +1,191 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-16",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-16T08:00:00+08:00",
+  "generated_at": "2026-09-16T08:05:00+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "google",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "ibm-research",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "gemini-live",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Gemini 3.8 Live 开放：语音对话中，可并行调用工具",
+      "kicker": "焦点 · 语音模型",
+      "facts": [
+        "Google 发布 Gemini 3.8 Live 与 Live Extended Thinking，开发者可通过 Gemini API 和 Google AI Studio 使用。新模型支持在后台执行工具调用，同时继续语音对话；也支持结合实时视觉输入理解任务。"
+      ],
+      "conditions": [],
+      "background": [
+        "Live 面向兼顾成本与规模的语音交互；Extended Thinking 面向更复杂的多步任务。",
+        "同篇文章提到的 Gemini 3.5 Transcribe 在上个月已发布，本期不把它计作新事件。"
+      ],
+      "sources": [
+        {
+          "label": "Google 开发者公告",
+          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/build-real-time-voice-applications-gemini-audio/",
+          "kind": "primary",
+          "published_at": "2026-09-15T17:00:00+00:00",
+          "verified": true,
+          "note": "以上为官方能力说明，未实测延迟、准确率或具体账号可用状态。"
+        },
+        {
+          "label": "Google 模型发布原文",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking/",
+          "kind": "secondary",
+          "published_at": "2026-09-15T17:00:00+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "cursor-incident",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Grok 4.6 非 Fast 版本服务降级已解除",
+      "kicker": "Cursor",
+      "facts": [
+        "Cursor 状态页在北京时间 06:00 标记故障恢复。"
+      ],
+      "conditions": [
+        "已确认的影响范围仅为 Cursor 中的 Grok 4.6 非 Fast 版本。"
+      ],
+      "background": [
+        "05:26 开始调查，05:41 缩小影响范围，06:00 标记恢复；调查时间不等同于实际故障开始时间。"
+      ],
+      "sources": [
+        {
+          "label": "Cursor 官方事件记录",
+          "url": "https://status.cursor.com/incidents/2bw21tcjqzg6",
+          "kind": "primary",
+          "published_at": "2026-09-15T22:00:00+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "github-properties",
+      "placement": "story",
+      "window": "in_window",
+      "title": "创建仓库属性时，Copilot 可建议允许值",
+      "kicker": "GitHub Copilot",
+      "facts": [
+        "企业或组织管理员创建仓库自定义属性时，可以让 Copilot 建议可选取值，再用这些属性配置规则集。"
+      ],
+      "conditions": [
+        "适用于 Copilot Business 和 Enterprise。",
+        "目前处于公开预览。",
+        "企业或组织所有者可通过策略控制开放。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "GitHub 更新说明",
+          "url": "https://github.blog/changelog/2026-09-15-github-copilot-suggests-custom-properties-definitions/",
+          "kind": "primary",
+          "published_at": "2026-09-15T19:07:47+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "agent-consistency",
+      "placement": "story",
+      "window": "recent",
+      "title": "评估 Agent，别只看一次成功",
+      "kicker": "研究作者报告",
+      "facts": [
+        "IBM Research 团队建议重复运行相同任务，同时记录平均成功率和每次都成功的任务比例，以区分偶尔做对与稳定完成。"
+      ],
+      "conditions": [],
+      "background": [
+        "作者实验基于 AppWorld test_normal 的 168 个任务，以及 GPT-4.1 驱动的 ReAct 代理。",
+        "Mean@5 是五次运行的平均成功率，Pass⁵ 是五次全部成功的任务比例，Pass@5 则看五次中至少成功一次。"
+      ],
+      "sources": [
+        {
+          "label": "IBM Research 作者原文",
+          "url": "https://huggingface.co/blog/ibm-research/altk-evolve-consistency",
+          "kind": "primary",
+          "published_at": "2026-09-15T00:00:00+00:00",
+          "verified": true,
+          "note": "来源只给出日期，未取得可靠具体时区。未独立复现实验结论。"
+        }
+      ]
+    },
+    {
+      "id": "salesforce-claude",
+      "placement": "story",
+      "window": "recent",
+      "title": "CRM 更新默认先审批，插件仍需申请测试资格",
+      "kicker": "Claude × Salesforce",
+      "facts": [
+        "Salesforce in Claude 插件可辅助客户研究、会议准备和 CRM 更新；它沿用用户的 Salesforce 权限，默认在每次写入前请求批准。"
+      ],
+      "conditions": [
+        "需要 Claude 付费计划。",
+        "需要最新版 Sales Cloud 企业版。",
+        "需要 Salesforce 测试批准。",
+        "管理员还需先完成接入。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Claude 发布原文",
+          "url": "https://claude.com/blog/salesforce-in-claude",
+          "kind": "primary",
+          "published_at": "2026-09-15T00:00:00+00:00",
+          "verified": true,
+          "note": "来源只给出日期，未取得可靠具体时区。"
+        },
+        {
+          "label": "官方接入条件",
+          "url": "https://support.claude.com/en/articles/16952184-set-up-salesforce-in-claude-for-your-organization",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": null
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:795e86666c105afe2a2c191775fee78931f684f4a60d068454707f5e7095273f"
+}

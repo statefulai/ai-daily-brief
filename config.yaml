@@ -1,25 +1,25 @@
-# AI News Aggregator Configuration
+# AI Daily Brief local configuration
 
-# LLM settings
 llm:
-  base_url: "https://api.duckcoding.ai/v1"
-  model: "gpt-5.4"               # fast model for Stage 1 (classify/score)
-  model_editorial: "gpt-5.4"    # quality model for Stage 2 (editorial curation)
+  # Leave null to use the OpenAI SDK default endpoint, or set an
+  # OpenAI-compatible /v1 URL. OPENAI_BASE_URL takes precedence.
+  base_url: null
+  model: "gpt-5.4"
+  model_editorial: "gpt-5.4"
   max_tokens: 1024
   temperature: 0.3
 
-# Data sources
 sources:
   hackernews:
     enabled: true
-    top_n: 30                    # fetch top N stories
-    min_score: 50                # minimum HN score
+    top_n: 30
+    min_score: 50
 
   github_trending:
     enabled: true
     languages: ["python", "typescript", "rust", "go"]
-    since: "daily"               # daily | weekly | monthly
-    max_existing_stars: 100000   # skip repos with more stars (permanent fixtures like llama.cpp/ollama/transformers)
+    since: "daily"
+    max_existing_stars: 100000
 
   huggingface:
     enabled: true
@@ -47,12 +47,12 @@ sources:
       - name: "机器之心"
         url: "https://www.jiqizhixin.com/rss"
       - name: "arXiv cs.AI"
-        url: "http://rss.arxiv.org/rss/cs.AI"
+        url: "https://rss.arxiv.org/rss/cs.AI"
 
   ruanyf_weekly:
     enabled: true
     repo: "ruanyf/weekly"
-    max_items: 20                # max links to extract per issue
+    max_items: 20
 
   reddit:
     enabled: true
@@ -60,7 +60,6 @@ sources:
     top_n: 15
     min_score: 50
 
-# Filtering
 filter:
   keywords:
     include:
@@ -90,38 +89,17 @@ filter:
       - "量化"
       - "微调"
       - "本地部署"
-    exclude:
-      - "crypto"
-      - "nft"
-      - "blockchain"
-  max_age_hours: 36              # only include items from last 36h (was 48h; tighter now that published timestamps are accurate)
+    exclude: ["crypto", "nft", "blockchain"]
 
-# Output settings
 output:
+  editions:
+    directory: "editions"
+
+  # Legacy outputs stay enabled until the first approved HTML edition succeeds.
+  # They are disabled only as part of the later production switch.
   github_readme:
     enabled: true
-    file: "daily-brief.md"         # daily brief output (separate from project README)
-    max_items: 30                # max items in brief
-    archive: true                # archive old entries
-
-  notion:
-    enabled: false               # set true + env vars to enable
-    database_id_env: "NOTION_DATABASE_ID"
-
+    file: "daily-brief.md"
   archive:
     enabled: true
     directory: "archives"
-    format: "markdown"           # markdown | json
-
-# Categories for grouping
-categories:
-  - name: "🔬 Research & Papers"
-    keywords: ["paper", "arxiv", "research", "benchmark", "dataset"]
-  - name: "🚀 Product & Release"
-    keywords: ["release", "launch", "announce", "update", "version"]
-  - name: "🛠️ Tools & Libraries"
-    keywords: ["github", "library", "framework", "sdk", "tool", "cli"]
-  - name: "💡 Tutorials & Guides"
-    keywords: ["tutorial", "guide", "how to", "introduction", "learn"]
-  - name: "📊 Industry & Business"
-    keywords: ["funding", "acquisition", "partnership", "enterprise"]
