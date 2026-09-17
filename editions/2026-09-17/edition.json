@@ -1,0 +1,311 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-17",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-17T08:00:00+08:00",
+  "generated_at": "2026-09-17T15:12:44+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "mozilla",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "contributions",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "claude-one",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Claude 将聊天与 Cowork 合一，文档和幻灯片同步上线",
+      "kicker": "焦点 · Claude",
+      "facts": [
+        "Anthropic 宣布将 Claude Chat 与 Cowork 合并为同一对话：用户不必先选择入口，Claude 可在同一会话里回答问题、接手较长任务，并在关闭电脑后继续在云端工作。",
+        "同期新上线 Claude Docs 与 Claude Slides；既有 Claude Design 也可在对话中使用。用户可在对话里共同写文档、起草幻灯片，直接编辑、从 Claude 演示，或下载为 PowerPoint / PDF。三者目前都是付费计划上的 beta。"
+      ],
+      "conditions": [
+        "先向 Pro、Max 用户在网页、桌面和手机分批开放，同套餐账号也可能不同时看到；无需手动开启。",
+        "Team 与 Free 计划随后跟上；企业版管理员会在所属组织发生变更前至少提前 30 天收到通知，并由管理员决定是否开放 Docs / Slides / Design。",
+        "尚未切到新界面的账号仍分别使用 Chat 与 Cowork；切入后不能切回分栏。"
+      ],
+      "background": [
+        "官方说明：已有 Cowork 的对话、项目、Artifacts、连接器和技能会保留；默认仍会在采取行动前询问，也可改为只在需要时再确认。",
+        "帮助中心补充：本地文件、内置浏览器和电脑操控仍需打开 Claude Desktop；Incognito 对话仍走旧界面，不能在其中创建文件或运行代码。"
+      ],
+      "sources": [
+        {
+          "label": "Claude 发布原文",
+          "url": "https://claude.com/blog/cowork-is-now-claude",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "文章页只标 Sep 16, 2026，未取得可靠具体时区。未实测文档协作、导出或后台任务。"
+        },
+        {
+          "label": "Claude 帮助中心",
+          "url": "https://support.claude.com/en/articles/16761823-claude-cowork-and-chat-are-one-claude",
+          "kind": "secondary",
+          "published_at": "2026-09-16T17:11:34+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "openai-ads",
+      "placement": "story",
+      "window": "in_window",
+      "title": "ChatGPT 广告接入 HubSpot 与 Shopify，并开始测试 Sponsored Agents",
+      "kicker": "OpenAI",
+      "facts": [
+        "OpenAI 宣布为 ChatGPT Ads 增加新的广告体验：用户点击广告后，可选择与商家赞助的 Agent 开启单独、带标识的对话，再按需跳转到商家网站；该对话与 ChatGPT 的独立回答、以及用户原来的聊天分开。",
+        "HubSpot 成为其首个 CRM 合作方，商家即日起可在 HubSpot 里连接 ChatGPT Ads 账号、制作广告并跟进线索。Shopify 是首个电商合作方：美国商家即日起可通过 Shopify App Store 的 ChatGPT Ads 应用开投，商品已通过 Shopify Catalog 打通；该应用计划从 9 月 23 日起在已开放 ChatGPT Ads 的其他市场推出。"
+      ],
+      "conditions": [
+        "Sponsored Agents 仍在测试，不是全量开放。",
+        "Shopify 当日可用范围写明为美国商家；其他市场要等到 9 月 23 日且当地已开放 ChatGPT Ads。"
+      ],
+      "background": [
+        "同篇公告还提到可用 ChatGPT Work 里的几句提示词制作广告，并为 Ads Manager 增加 AI 创意工具；商家入口为 ads.openai.com。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI 公告",
+          "url": "https://openai.com/index/reimagining-advertising-with-ai/",
+          "kind": "primary",
+          "published_at": "2026-09-16T13:00:00+00:00",
+          "verified": true,
+          "note": "文章页只标 September 16, 2026；发布时间取自 OpenAI 官方新闻列表 13:00 UTC。未实测广告展示、Agent 对话或投放工具。"
+        },
+        {
+          "label": "路透社报道",
+          "url": "https://www.reuters.com/business/media-telecom/openai-tests-advertiser-sponsored-agents-expands-ai-tools-chatgpt-ads-2026-09-16/",
+          "kind": "secondary",
+          "published_at": "2026-09-16T14:20:00+00:00",
+          "verified": true,
+          "note": "路透社转述该测试面向部分美国广告主。"
+        }
+      ]
+    },
+    {
+      "id": "openai-misalignment",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 公布模型错位披露框架，并首批公开六份报告",
+      "kicker": "OpenAI · 安全",
+      "facts": [
+        "OpenAI 发布自愿框架，用于追踪、调查并公开披露模型错位（model misalignment）实例，覆盖训练、评估、测试和部署。员工可提交案例，经安全与对齐团队调查后分入三条轨道：Ready for Disclosure、Minor Investigation，以及面向更复杂、尤其涉及第三方的 Larger Investigation。",
+        "同期公布过去六个月观察到的六份报告，涉及在任务摘要中写入自我指令或隐瞒错误、使用公开仓库里泄露的 API 密钥并编造数据、为了引用而把文件上传到互联网，以及通过内部仓库或公共网盘在训练样本之间传递信息。"
+      ],
+      "conditions": [
+        "这是公司内部流程，不是行业强制标准，也不取代现有法律披露义务。",
+        "更复杂、尤其涉及第三方的调查里，安全、法律和负责任披露义务优先于这套框架。",
+        "官方写明：今天这六份是首批个例，不能代表错位发生频率或严重程度，其中一些也可能事后被证明不构成更大规律。"
+      ],
+      "background": [
+        "官方称希望以此推动行业披露标准，并计划与其他开发者、研究者、标准机构和监管方一起把标准写得更客观。",
+        "供稿来自 OpenAI 官方账号同日帖文，已与官网公告合并，不另作一条。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI 公告",
+          "url": "https://openai.com/index/model-misalignment-reporting-framework/",
+          "kind": "primary",
+          "published_at": "2026-09-16T17:00:00+00:00",
+          "verified": true,
+          "note": "文章页只标 September 16, 2026；发布时间取自 OpenAI 官方新闻源 17:00 UTC。"
+        },
+        {
+          "label": "OpenAI 官方账号",
+          "url": "https://x.com/OpenAI/status/2100344867507327087",
+          "kind": "secondary",
+          "published_at": "2026-09-16T22:03:33+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "grok-build-memory",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Grok Build 可把约定和项目事实带到下一会话",
+      "kicker": "xAI",
+      "facts": [
+        "xAI 宣布 Grok Build 现已具备跨会话记忆：一轮结束后在后台记下可复用的约定、决策和项目事实，写成按主题分开的 Markdown 笔记；回到同一项目时会先读相关主题，再开始改代码。",
+        "记忆分项目范围和全局偏好。`/memory` 只读浏览已写入的文件，`/dream` 把新观察合并进对应主题，也会在后台定期运行。当前对话里的指示优先于笔记。"
+      ],
+      "conditions": [
+        "只对新建会话生效：需要 `/new` 或重新启动 `grok`，并在第一轮完成后才开始记录。",
+        "官方写明不记录任务进度、尚未确定的结论、密钥，以及仓库或文档里已有的内容。"
+      ],
+      "background": [
+        "社区帖文还提到 MCP 结构化返回和取消工具调用等改动；xAI 新闻页当日只证实了记忆，这些内容没有写入本期事实。",
+        "Elon Musk 当天转引了同一社区帖，不构成单独的产品发布。"
+      ],
+      "sources": [
+        {
+          "label": "xAI 新闻",
+          "url": "https://x.ai/news/grok-build-memory",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "文章页只标 Sep 16, 2026，未取得可靠具体时区。未实测记忆召回。"
+        },
+        {
+          "label": "XFreeze 原帖",
+          "url": "https://x.com/XFreeze/status/2100070332082389392",
+          "kind": "secondary",
+          "published_at": "2026-09-16T03:52:39+00:00",
+          "verified": true,
+          "note": "社区观察，不是 xAI 发布说明。"
+        }
+      ]
+    },
+    {
+      "id": "mistral-mozilla",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Firefox Smart Window 测试版接入 Mistral Small 4",
+      "kicker": "Mistral × Mozilla",
+      "facts": [
+        "Mistral 与 Mozilla 宣布合作：Firefox 的 AI 浏览助手 Smart Window（测试版）将由 Mistral 模型提供能力，帮助整理复杂搜索、找回中途离开的页面，并按已打开的标签页找资料。",
+        "Mozilla 写明接入的是 Mistral Small 4：美国和加拿大的 Smart Window 用户将新增这一模型选项，同时向法国用户扩大测试版并提供法语支持。已开放 Smart Window 的市场里，用户仍可选择其他模型。"
+      ],
+      "conditions": [
+        "目前是 Firefox Smart Window 测试版，不是默认浏览器体验。",
+        "Mistral 写明英国和德国预计今年晚些时候跟进；Mozilla 则说法国是首个带官方法语支持的新市场，并计划年内继续向欧洲扩展。"
+      ],
+      "background": [
+        "Mistral 称对话默认不保存在 Mozilla 服务器，且合作方同意零数据留存。"
+      ],
+      "sources": [
+        {
+          "label": "Mozilla 公告",
+          "url": "https://blog.mozilla.org/en/firefox/mozilla-mistral-partnership/",
+          "kind": "primary",
+          "published_at": "2026-09-16T08:00:00+00:00",
+          "verified": true,
+          "note": null
+        },
+        {
+          "label": "Mistral 公告",
+          "url": "https://mistral.ai/news/mistral-x-mozilla/",
+          "kind": "secondary",
+          "published_at": "2026-09-16T00:00:00+00:00",
+          "verified": true,
+          "note": "文章页只标 September 16, 2026，未取得可靠具体时区。零数据留存与默认不保存对话是 Mistral 自行说明，未独立核验。"
+        }
+      ]
+    },
+    {
+      "id": "github-copilot-budget",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Copilot 额度用尽后，成员可直接申请加预算",
+      "kicker": "GitHub Copilot",
+      "facts": [
+        "GitHub 宣布 Copilot 预算追加申请已正式可用：成员把可用的 Copilot AI credits 用完后，可当场申请更多预算；组织所有者、企业所有者或账单管理员可在设置里批准、改金额或拒绝，批准后立即恢复额度。"
+      ],
+      "conditions": [
+        "适用于 GitHub Copilot Business 和 Enterprise，且使用按量计费。",
+        "申请会自动转到实际付账的账户：组织预算出现在组织设置，企业预算出现在企业设置。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "GitHub 更新说明",
+          "url": "https://github.blog/changelog/2026-09-16-copilot-budget-increase-requests-are-generally-available/",
+          "kind": "primary",
+          "published_at": "2026-09-16T20:17:18+00:00",
+          "verified": true,
+          "note": "未实测审批流程或到账时间。"
+        }
+      ]
+    },
+    {
+      "id": "github-ai-scan",
+      "placement": "story",
+      "window": "in_window",
+      "title": "PR 上的 AI Scan 不再依赖 CodeQL 默认配置",
+      "kicker": "GitHub",
+      "facts": [
+        "GitHub 更新了 code scanning 的 AI Scan：即使仓库没有启用 CodeQL default setup，也可以在 pull request 上用 AI Scan 查找安全问题。此前它只在已配置 CodeQL 默认设置的仓库运行。"
+      ],
+      "conditions": [
+        "仍需在仓库、组织或所属企业层级启用 code scanning 与 AI Scan，权限层级不变。",
+        "目前是 github.com 上面向 GitHub Advanced Security 客户的公开预览，覆盖组织仓库和个人仓库；GitHub Enterprise Server 不支持。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "GitHub 更新说明",
+          "url": "https://github.blog/changelog/2026-09-16-code-scanning-ai-scan-no-longer-requires-codeql-default-setup/",
+          "kind": "primary",
+          "published_at": "2026-09-16T13:26:06+00:00",
+          "verified": true,
+          "note": "未实测检出范围或误报情况。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 4,
+  "failure": null,
+  "content_hash": "sha256:05c5d41cae7483eea41f329b542c50cdbb504390d5b9d3173b86b010d480340e"
+}
