@@ -73,7 +73,7 @@
       "id": "claude-one",
       "placement": "lead",
       "window": "in_window",
-      "title": "Cowork 并入同一对话，Docs 与 Slides 同期上线",
+      "title": "Claude 将聊天与 Cowork 合一，文档和幻灯片同步上线",
       "kicker": "焦点 · Claude",
       "facts": [
         "Anthropic 宣布将 Claude Chat 与 Cowork 合并为同一对话：用户不必先选择入口，Claude 可在同一会话里回答问题、接手较长任务，并在关闭电脑后继续在云端工作。",
@@ -93,9 +93,9 @@
           "label": "Claude 发布原文",
           "url": "https://claude.com/blog/cowork-is-now-claude",
           "kind": "primary",
-          "published_at": "2026-09-16T00:00:00+00:00",
+          "published_at": null,
           "verified": true,
-          "note": "文章页只标 Sep 16, 2026，未取得可靠具体时区。同日帮助中心与多家报道将其记为当天发布。未实测文档协作、导出或后台任务。"
+          "note": "文章页只标 Sep 16, 2026，未取得可靠具体时区。未实测文档协作、导出或后台任务。"
         },
         {
           "label": "Claude 帮助中心",
@@ -204,9 +204,9 @@
           "label": "xAI 新闻",
           "url": "https://x.ai/news/grok-build-memory",
           "kind": "primary",
-          "published_at": "2026-09-16T00:00:00+00:00",
+          "published_at": null,
           "verified": true,
-          "note": "官方元数据为 2026-09-16T00:00:00Z，精确到日。未实测记忆召回。"
+          "note": "文章页只标 Sep 16, 2026，未取得可靠具体时区。未实测记忆召回。"
         },
         {
           "label": "XFreeze 原帖",
@@ -307,5 +307,5 @@
   ],
   "contribution_count": 4,
   "failure": null,
-  "content_hash": "sha256:d084d4b4ecd07e13f6afbcda8b15a28109336ece39d2862d3bb11a15b6861050"
+  "content_hash": "sha256:05c5d41cae7483eea41f329b542c50cdbb504390d5b9d3173b86b010d480340e"
 }
