@@ -26,4 +26,8 @@
 | `createdAt` | `source_time` |
 | `postId` | `flash_ref` |
 
-`conditions` 只写来源明确给出的限制，没有则用空数组；`sensitivity` 只有确认可公开时才写 `public`。缺少 `fact`、`url` 或带时区的 `createdAt` 时跳过该候选，不猜测或补写内容。
+`conditions` 只写来源明确给出的计划、平台、阶段、地区或权限边界，没有则用空数组。未实测、仅确认到日期、页面未直接取得等核验缺口写进 `sources[].note` 或 `background`，不要写入 `conditions`。`sensitivity` 只有确认可公开时才写 `public`。缺少 `fact`、`url` 或带时区的 `createdAt` 时跳过该候选，不猜测或补写内容。
+
+面向读者的核验说明写成「核验说明（来源名）：…」，只保留事实边界。不要出现「本环境」「JSON-LD」「抓取失败接口」、Cloud Agent、`workspace` 路径或其他实现细节。`适用范围`、背景和来源说明如有重叠，只保留一处。
+
+`placement: desk` 只放明确的操作步骤、清单、工具用法或问答。普通公告和行业新闻放 `story`；例如 PR 上的 AI Scan 能力变更属于新闻速览，不进实操栏。

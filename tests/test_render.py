@@ -12,7 +12,15 @@ from outputs import (
 )
 
 
-def event(index: int, placement: str = "story", window: str = "in_window") -> dict:
+def event(
+    index: int,
+    placement: str = "story",
+    window: str = "in_window",
+    conditions: list[str] | None = None,
+    note: str | None = None,
+) -> dict:
+    if conditions is None:
+        conditions = ["仅适用于已开放账号。"] if index == 1 else []
     return {
         "id": f"event-{index}",
         "placement": placement,
@@ -20,7 +28,7 @@ def event(index: int, placement: str = "story", window: str = "in_window") -> di
         "title": f"第 {index} 条新闻 <script>alert(1)</script>",
         "kicker": "官方更新",
         "facts": [f"第 {index} 条核心事实。"],
-        "conditions": ["仅适用于已开放账号。"] if index == 1 else [],
+        "conditions": conditions,
         "background": ["补充背景。"] if index == 1 else [],
         "sources": [
             {
@@ -29,7 +37,7 @@ def event(index: int, placement: str = "story", window: str = "in_window") -> di
                 "kind": "primary",
                 "published_at": f"2026-09-{15 if window == 'recent' else 16:02d}T01:00:00+08:00",
                 "verified": True,
-                "note": None,
+                "note": note,
             }
         ],
     }
@@ -66,8 +74,13 @@ class RenderTest(unittest.TestCase):
         self.assertIn("近期选读", html)
         self.assertNotIn("近期选读</time><span>近期选读", html)
         self.assertIn("<details>", html)
-        self.assertIn('<p class="condition"><strong>适用条件：</strong>', html)
+        self.assertIn('<p class="condition"><strong>适用范围：</strong>', html)
+        self.assertNotIn("适用条件：", html)
+        self.assertNotIn("。；", html)
         self.assertNotIn('<div class="condition">', html)
+        self.assertIn(".lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }", html)
+        self.assertIn(".story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance;", html)
+        self.assertIn(".lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }", html)
         self.assertNotIn("edition.json", html)
         self.assertNotIn("sha256:", html)
 
@@ -97,9 +110,56 @@ class RenderTest(unittest.TestCase):
         self.assertNotIn("content_hash", email_html)
         self.assertNotIn("sha256:", email_html)
         self.assertIn("网页版：https://example.com/editions/2026-09-16/", email_text)
+        self.assertIn("适用范围：仅适用于已开放账号。", email_text)
+        self.assertIn("适用范围：仅适用于已开放账号。", group)
+        self.assertNotIn("适用条件：", email_html)
+        self.assertNotIn("适用条件：", email_text)
+        self.assertNotIn("适用条件：", group)
+        self.assertNotIn("。；", email_html)
+        self.assertNotIn("。；", email_text)
         self.assertIn("另有 1 条，详见网页版。", group)
         self.assertNotIn("<img", email_html)
         self.assertNotIn("附件", email_html)
+
+    def test_multi_item_ranges_render_per_item(self):
+        document = edition(
+            [
+                event(
+                    1,
+                    "lead",
+                    conditions=[
+                        "适用于付费计划。",
+                        "目前处于公开预览。",
+                    ],
+                    note="仅确认到日期。",
+                )
+            ]
+        )
+        public_url = "https://example.com/editions/2026-09-16/"
+        html = render_web_edition(document)
+        email_html = render_email_html(document, public_url)
+        email_text = render_email_text(document, public_url)
+        group = render_group_message(document, public_url)
+
+        self.assertIn('<div class="condition"><strong>适用范围：</strong><ul><li>适用于付费计划。</li>', html)
+        self.assertIn("<li>目前处于公开预览。</li></ul></div>", html)
+        self.assertIn("核验说明（官方来源）：仅确认到日期。", html)
+        self.assertIn("<ul style=\"margin:6px 0 0;padding-left:20px;\"><li>适用于付费计划。</li>", email_html)
+        self.assertIn("核验说明（官方来源）：仅确认到日期。", email_html)
+        self.assertEqual(
+            [line for line in email_text.splitlines() if line.startswith("适用范围") or "付费" in line or "预览" in line or line.startswith("核验")],
+            [
+                "适用范围：",
+                "适用于付费计划。",
+                "目前处于公开预览。",
+                "核验说明（官方来源）：仅确认到日期。",
+            ],
+        )
+        self.assertIn("适用范围：\n适用于付费计划。\n目前处于公开预览。", group)
+        self.assertNotIn("。；", html)
+        self.assertNotIn("。；", email_html)
+        self.assertNotIn("。；", email_text)
+        self.assertNotIn("适用条件：", html)
 
     def test_production_directory_contains_only_json_and_html(self):
         document = edition([event(1, "lead")])

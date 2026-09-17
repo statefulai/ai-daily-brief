@@ -38,12 +38,14 @@
     .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
     .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
     .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
-    .lead .kicker { justify-content:center; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
     .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
-    .lead h2 { margin:0 auto 19px; text-align:center; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
     .lead-copy { max-width:810px; margin:auto; }
     .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
     .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
     .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
     .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
     .source a::after { content:"↗"; font-size:12px; }
@@ -57,7 +59,7 @@
     .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
     .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
     .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
-    .story h3,.desk-story h3 { margin:0 0 13px; font-size:23px; line-height:1.5; }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
     details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
     summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
     details[open] summary { margin-bottom:7px; }
@@ -77,8 +79,10 @@
       .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
       .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
       .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
-      .lead { padding:20px 0; } .lead .kicker { justify-content:flex-start; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
       .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
       .condition { font-size:14px; padding-left:11px; }
       .source { gap:0 16px; } .source a { min-height:44px; }
       .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }

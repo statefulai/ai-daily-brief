@@ -61,6 +61,53 @@ def _source_time(event: dict) -> tuple[str, str]:
     return parsed.isoformat(), f"{parsed:%m.%d %H:%M} 北京时间"
 
 
+RANGE_LABEL = "适用范围"
+
+
+def _range_items(event: dict) -> list[str]:
+    return [item for item in event.get("conditions") or [] if item]
+
+
+def _verification_note(source: dict) -> str | None:
+    note = source.get("note")
+    if not note:
+        return None
+    return f"核验说明（{source['label']}）：{note}"
+
+
+def _ranges_web_html(event: dict) -> str:
+    items = [escape(item) for item in _range_items(event)]
+    if not items:
+        return ""
+    if len(items) == 1:
+        return f'<p class="condition"><strong>{RANGE_LABEL}：</strong>{items[0]}</p>'
+    body = "".join(f"<li>{item}</li>" for item in items)
+    return f'<div class="condition"><strong>{RANGE_LABEL}：</strong><ul>{body}</ul></div>'
+
+
+def _ranges_email_html(event: dict) -> str:
+    items = [escape(item) for item in _range_items(event)]
+    if not items:
+        return ""
+    box = 'style="margin:12px 0;padding:4px 0 4px 12px;border-left:2px solid #c7c2b7;"'
+    if len(items) == 1:
+        return f'<div {box}><strong>{RANGE_LABEL}：</strong>{items[0]}</div>'
+    body = "".join(f"<li>{item}</li>" for item in items)
+    return (
+        f'<div {box}><strong>{RANGE_LABEL}：</strong>'
+        f'<ul style="margin:6px 0 0;padding-left:20px;">{body}</ul></div>'
+    )
+
+
+def _ranges_plain_lines(event: dict) -> list[str]:
+    items = _range_items(event)
+    if not items:
+        return []
+    if len(items) == 1:
+        return [f"{RANGE_LABEL}：{items[0]}"]
+    return [f"{RANGE_LABEL}：", *items]
+
+
 def _sources_html(event: dict) -> str:
     links = []
     notes = []
@@ -71,22 +118,19 @@ def _sources_html(event: dict) -> str:
         if source["verified"]:
             suffix += " · 已核对"
         links.append(f'<a href="{url}" target="_blank" rel="noopener noreferrer">{label}{suffix}</a>')
-        if source.get("note"):
-            notes.append(f'<p class="source-note">{escape(source["note"])}</p>')
+        note = _verification_note(source)
+        if note:
+            notes.append(f'<p class="source-note">{escape(note)}</p>')
     return f'<div class="source">{"".join(links)}</div>{"".join(notes)}'
 
 
 def _event_copy_html(event: dict) -> str:
     facts = "".join(f"<p>{escape(item)}</p>" for item in event["facts"])
-    conditions = ""
-    if event["conditions"]:
-        condition_text = "；".join(escape(item) for item in event["conditions"])
-        conditions = f'<p class="condition"><strong>适用条件：</strong>{condition_text}</p>'
     background = ""
     if event["background"]:
         items = "".join(f"<li>{escape(item)}</li>" for item in event["background"])
         background = f"<details><summary>展开：背景与补充</summary><ul>{items}</ul></details>"
-    return facts + conditions + background + _sources_html(event)
+    return facts + _ranges_web_html(event) + background + _sources_html(event)
 
 
 def _event_html(event: dict, index: int, *, lead: bool = False, desk: bool = False) -> str:
@@ -188,19 +232,24 @@ def _email_event(event: dict, index: int) -> str:
         for source in event["sources"]
     )
     facts = "".join(f'<p style="margin:0 0 10px;">{escape(item)}</p>' for item in event["facts"])
-    conditions = "；".join(escape(item) for item in event["conditions"])
     background = "".join(f"<li>{escape(item)}</li>" for item in event["background"])
-    extra = ""
-    if conditions:
-        extra += f'<div style="margin:12px 0;padding:4px 0 4px 12px;border-left:2px solid #c7c2b7;"><strong>适用条件：</strong>{conditions}</div>'
+    extra = _ranges_email_html(event)
     if background:
         extra += f'<div style="margin:12px 0;color:#65665c;"><strong>背景与补充</strong><ul style="margin:6px 0 0;padding-left:20px;">{background}</ul></div>'
+    notes = []
+    for source in event["sources"]:
+        note = _verification_note(source)
+        if note:
+            notes.append(
+                f'<div style="margin:6px 0 0;font-size:12px;line-height:1.7;color:#65665c;">{escape(note)}</div>'
+            )
+    notes = "".join(notes)
     border = "" if index == 1 else "border-top:1px solid #c7c2b7;"
     return (
         f'<section style="padding:20px 0;{border}">'
         f'<div style="font-size:12px;color:#91472f;">{escape(event["kicker"])}</div>'
         f"<h2 style=\"margin:5px 0 12px;font-family:'Songti SC',serif;font-size:24px;line-height:1.45;font-weight:700;color:#252621;\">{escape(event['title'])}</h2>"
-        f'{facts}{extra}<div style="font-size:13px;line-height:1.7;">{sources}</div></section>'
+        f'{facts}{extra}<div style="font-size:13px;line-height:1.7;">{sources}</div>{notes}</section>'
     )
 
 
@@ -235,9 +284,12 @@ def render_email_text(document: dict, public_url: str | None = None) -> str:
     lines = [f"AI 日报｜{edition['edition_id']}", ""]
     for event in edition["events"]:
         lines.extend([event["title"], *event["facts"]])
-        if event["conditions"]:
-            lines.append("适用条件：" + "；".join(event["conditions"]))
+        lines.extend(_ranges_plain_lines(event))
         lines.append("来源：" + " · ".join(source["url"] for source in event["sources"]))
+        for source in event["sources"]:
+            note = _verification_note(source)
+            if note:
+                lines.append(note)
         lines.append("")
     if public_url:
         lines.append("网页版：" + _http_url(public_url, "public_url"))
@@ -253,6 +305,8 @@ def render_group_message(document: dict, public_url: str, max_items: int = 3) ->
     lines = [f"【AI 日报｜{edition['edition_id']}】"]
     for event in edition["events"][:max_items]:
         lines.append(f"• {event['title']}")
+        for item in _ranges_plain_lines(event):
+            lines.append(item)
     remaining = len(edition["events"]) - max_items
     if remaining > 0:
         lines.append(f"另有 {remaining} 条，详见网页版。")

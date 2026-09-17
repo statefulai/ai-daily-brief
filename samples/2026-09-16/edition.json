@@ -48,9 +48,7 @@
       "facts": [
         "Google 发布 Gemini 3.8 Live 与 Live Extended Thinking，开发者可通过 Gemini API 和 Google AI Studio 使用。新模型支持在后台执行工具调用，同时继续语音对话；也支持结合实时视觉输入理解任务。"
       ],
-      "conditions": [
-        "适合需要边对话、边执行任务的语音应用；以上是官方能力说明，本刊未实测延迟、准确率或具体账号的可用状态。"
-      ],
+      "conditions": [],
       "background": [
         "Live 面向兼顾成本与规模的语音交互；Extended Thinking 面向更复杂的多步任务。",
         "同篇文章提到的 Gemini 3.5 Transcribe 在上个月已发布，本期不把它计作新事件。"
@@ -62,7 +60,7 @@
           "kind": "primary",
           "published_at": "2026-09-15T17:00:00+00:00",
           "verified": true,
-          "note": null
+          "note": "以上为官方能力说明，未实测延迟、准确率或具体账号可用状态。"
         },
         {
           "label": "Google 模型发布原文",
@@ -110,7 +108,9 @@
         "企业或组织管理员创建仓库自定义属性时，可以让 Copilot 建议可选取值，再用这些属性配置规则集。"
       ],
       "conditions": [
-        "适用于 Copilot Business 和 Enterprise，目前处于公开预览；企业或组织所有者可通过策略控制开放。"
+        "适用于 Copilot Business 和 Enterprise。",
+        "目前处于公开预览。",
+        "企业或组织所有者可通过策略控制开放。"
       ],
       "background": [],
       "sources": [
@@ -126,7 +126,7 @@
     },
     {
       "id": "agent-consistency",
-      "placement": "desk",
+      "placement": "story",
       "window": "recent",
       "title": "评估 Agent，别只看一次成功",
       "kicker": "研究作者报告",
@@ -134,7 +134,7 @@
         "IBM Research 团队建议重复运行相同任务，同时记录平均成功率和每次都成功的任务比例，以区分偶尔做对与稳定完成。"
       ],
       "conditions": [
-        "作者实验基于 AppWorld test_normal 的 168 个任务及 GPT-4.1 驱动的 ReAct Agent；本刊未独立复现。"
+        "作者实验基于 AppWorld test_normal 的 168 个任务，以及 GPT-4.1 驱动的 ReAct 代理。"
       ],
       "background": [
         "Mean@5 是五次运行的平均成功率，Pass⁵ 是五次全部成功的任务比例，Pass@5 则看五次中至少成功一次。"
@@ -146,7 +146,7 @@
           "kind": "primary",
           "published_at": "2026-09-15T00:00:00+00:00",
           "verified": true,
-          "note": "来源只给出日期，未取得可靠具体时区。"
+          "note": "来源只给出日期，未取得可靠具体时区。未独立复现实验结论。"
         }
       ]
     },
@@ -160,7 +160,10 @@
         "Salesforce in Claude 插件可辅助客户研究、会议准备和 CRM 更新；它沿用用户的 Salesforce 权限，默认在每次写入前请求批准。"
       ],
       "conditions": [
-        "需要 Claude 付费计划、最新版 Sales Cloud 企业版及 Salesforce 测试批准，管理员还需先完成接入。"
+        "需要 Claude 付费计划。",
+        "需要最新版 Sales Cloud 企业版。",
+        "需要 Salesforce 测试批准。",
+        "管理员还需先完成接入。"
       ],
       "background": [],
       "sources": [
@@ -185,5 +188,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:35a2e7d33587ec183328b25104018143989a13c453afcea2e75d2f20e2c9d662"
+  "content_hash": "sha256:faf9c83203fe47395c40f67de2c29368f5987702def74d29b11301370046d02d"
 }

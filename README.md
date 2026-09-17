@@ -93,7 +93,7 @@ python main.py --contributions path/to/contributions.json
 
 `--contributions` 接收任意外部系统整理出的 JSON 文件，与公开采集进入同一次策展。不传参数时只使用公开来源；显式传入的文件如果缺失、格式错误或不符合契约，生成会直接失败。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选，入选后仍会重新抓取一手来源。
 
-最小记录包含事件、一手来源、带时区的来源时间、已核对事实、适用条件和敏感性：
+最小记录包含事件、一手来源、带时区的来源时间、已核对事实、适用范围和敏感性：
 
 ```json
 {
