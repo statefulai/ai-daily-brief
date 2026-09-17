@@ -75,6 +75,35 @@ def validate_tree(editions_dir: Path) -> list[dict]:
     return [validate_edition_directory(path) for path in _edition_directories(editions_dir)]
 
 
+def render_edition_file(path: Path) -> dict:
+    """Normalize an agent-authored edition and write its deterministic HTML."""
+    if path.name != "edition.json" or not path.is_file():
+        raise EditionError("render input must be an existing edition.json")
+    document = json.loads(path.read_text(encoding="utf-8"))
+    edition = validate_edition(document)
+    if edition["edition_id"] != path.parent.name:
+        raise EditionError("edition_id does not match directory")
+    if edition["status"] != "published_candidate":
+        raise EditionError("only published_candidate editions can render HTML")
+    for event in edition["events"]:
+        if not any(
+            source["kind"] == "primary" and source["verified"]
+            for source in event["sources"]
+        ):
+            raise EditionError(
+                f"{path.parent}: event {event['id']} has no verified primary source"
+            )
+    path.write_text(
+        json.dumps(edition, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    (path.parent / "index.html").write_text(
+        render_web_edition(edition),
+        encoding="utf-8",
+    )
+    return edition
+
+
 def validate_changed_paths(
     paths: list[str], *, deleted_paths: list[str] | None = None
 ) -> None:
@@ -165,6 +194,9 @@ def main() -> None:
     validate_parser = subparsers.add_parser("validate")
     validate_parser.add_argument("--editions", type=Path, default=Path("editions"))
 
+    render_parser = subparsers.add_parser("render")
+    render_parser.add_argument("--edition", type=Path, required=True)
+
     scope_parser = subparsers.add_parser("scope")
     scope_parser.add_argument("--base", required=True)
     scope_parser.add_argument("--head", required=True)
@@ -177,6 +209,9 @@ def main() -> None:
     if args.command == "validate":
         editions = validate_tree(args.editions)
         print(f"validated {len(editions)} edition(s)")
+    elif args.command == "render":
+        edition = render_edition_file(args.edition)
+        print(f"rendered edition {edition['edition_id']}")
     elif args.command == "scope":
         paths, deleted = changed_paths(args.base, args.head)
         validate_changed_paths(paths, deleted_paths=deleted)

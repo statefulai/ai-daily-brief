@@ -12,7 +12,7 @@
 
 > 当前状态：新版期次、网页渲染、CI／Pages 骨架和本地投递预览已经完成；`【开源】AI日报` 项目群与 `日刊` Bot 已建立，日例程保持停用。GitHub Pages、邮件和群投递尚未启用，旧 Markdown 日更在首期切换前继续运行。
 
-## 这套链路做什么
+## 本地运行链路
 
 一次运行完成以下步骤：
 
@@ -37,6 +37,8 @@ editions/YYYY-MM-DD/
 ```
 
 原始供稿、发送凭据、收件人、群聊信息和投递账本不进入公开期次。
+
+托管生产由 `日刊` 启动一个 Cloud Agent。Agent 直接使用自身模型完成公开采集、供稿合并和策展，写出结构化 `edition.json`，再调用仓库的固定渲染与校验命令；Python 不需要取得 Cloud Agent 的模型 API Key。`main.py` 的 OpenAI 兼容模型配置只用于本地独立运行。
 
 ## 本地运行
 
@@ -155,6 +157,7 @@ tests/                     # schema、渲染、CI、来源与投递测试
 
 ```bash
 python -m unittest discover -s tests -v
+python scripts/edition_ci.py render --edition editions/<date>/edition.json
 python scripts/edition_ci.py validate
 python scripts/edition_ci.py build --output _site
 ```

@@ -8,9 +8,15 @@
 2. 只保留明确要进入公开日报的候选，按下表映射为通用供稿字段。
 3. 把结果写到临时的 `contributions.json`；不复制原始扫描记录、投递状态或内部字段。
 4. 启动当期唯一 Cloud Agent 时，通过 `files` 上传该文件。
-5. Cloud Agent 在仓库中执行 `python main.py --contributions <上传后的文件路径>`；日报会再次抓取入选候选的一手来源。
+5. Cloud Agent 使用自身模型采集公开来源，与上传的候选合并并核对一手来源，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。
+6. Cloud Agent 用仓库的固定渲染器生成 HTML，并执行校验：
 
-临时供稿文件不进入 Git、Pages 或正式期次目录。没有可用候选时不创建文件，Cloud Agent 直接执行 `python main.py`。
+   ```bash
+   python scripts/edition_ci.py render --edition output/cloud-agent-check/editions/<日期>/edition.json
+   python scripts/edition_ci.py validate --editions output/cloud-agent-check/editions
+   ```
+
+临时供稿和验证产物不进入 Git、Pages 或正式期次目录。没有可用候选时不创建供稿文件，Cloud Agent 只使用自身采集的公开来源。Cloud Agent 不需要把自身模型作为 API 提供给 Python。
 
 | 闪报候选 | 通用供稿 |
 | --- | --- |

@@ -5,7 +5,12 @@ from pathlib import Path
 
 from edition import EditionError, build_edition, write_edition
 from outputs import write_web_edition
-from scripts.edition_ci import build_site, validate_changed_paths, validate_tree
+from scripts.edition_ci import (
+    build_site,
+    render_edition_file,
+    validate_changed_paths,
+    validate_tree,
+)
 
 
 def event() -> dict:
@@ -40,6 +45,29 @@ def document() -> dict:
 
 
 class EditionCITest(unittest.TestCase):
+    def test_render_normalizes_agent_edition_and_writes_html(self):
+        payload = document()
+        payload.pop("content_hash")
+        with tempfile.TemporaryDirectory() as directory:
+            editions = Path(directory) / "editions"
+            target = editions / payload["edition_id"]
+            target.mkdir(parents=True)
+            edition_path = target / "edition.json"
+            edition_path.write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            rendered = render_edition_file(edition_path)
+            validated = validate_tree(editions)
+
+            self.assertEqual(rendered["edition_id"], "2026-09-16")
+            self.assertEqual(validated[0]["content_hash"], rendered["content_hash"])
+            self.assertEqual(
+                {path.name for path in target.iterdir()},
+                {"edition.json", "index.html"},
+            )
+
     def test_validate_tree_accepts_deterministic_two_file_edition(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
