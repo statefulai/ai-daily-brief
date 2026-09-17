@@ -22,6 +22,7 @@ from edition import (
     write_edition,
 )
 from integrations.grok_bot.contributions import (
+    event_overrides,
     filter_contributions_by_window,
     validate_contribution,
 )
@@ -214,6 +215,26 @@ class EditionContractTest(unittest.TestCase):
 
 
 class IntelAndVerifyTest(unittest.TestCase):
+    def test_contribution_requires_fresh_primary_source_verification(self):
+        record = {
+            "event": "模型发布",
+            "primary_source": {
+                "title": "官方公告",
+                "url": "https://example.com/announcement",
+            },
+            "source_time": "2026-09-16T01:00:00+08:00",
+            "verified_facts": ["供稿侧已核对该发布。"],
+            "conditions": [],
+            "sensitivity": "public",
+        }
+
+        source = event_overrides([record])[
+            "https://example.com/announcement"
+        ]["sources"][0]
+
+        self.assertFalse(source["verified"])
+        self.assertIn("重新抓取一手来源", source["note"])
+
     def test_contributions_share_the_same_half_open_daily_window(self):
         beijing = timezone(timedelta(hours=8))
         start = datetime(2026, 9, 16, 8, 0, tzinfo=beijing)

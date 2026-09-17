@@ -1,4 +1,4 @@
-"""Adapt verified Grok Bot contributions to the generic local curation contract."""
+"""Adapt checked Grok Bot contributions to the generic local curation contract."""
 
 from __future__ import annotations
 
@@ -94,7 +94,7 @@ def filter_contributions_by_window(
 
 
 def extend_curation_items(items: list[NewsItem], records: list[dict]) -> list[NewsItem]:
-    """Return a copy with public, verified contributions added as ordinary candidates."""
+    """Return a copy with public contributions added as ordinary candidates."""
     combined = list(items)
     for raw in records:
         contribution = validate_contribution(raw)
@@ -115,7 +115,7 @@ def extend_curation_items(items: list[NewsItem], records: list[dict]) -> list[Ne
 
 
 def event_overrides(records: list[dict]) -> dict[str, dict]:
-    """Preserve verified facts if a contribution is selected by the generic curator."""
+    """Preserve checked facts while requiring a fresh primary-source fetch."""
     overrides: dict[str, dict] = {}
     for raw in records:
         contribution = validate_contribution(raw)
@@ -137,8 +137,8 @@ def event_overrides(records: list[dict]) -> dict[str, dict]:
                     "url": source["url"],
                     "kind": "primary",
                     "published_at": source["published_at"] or contribution["source_time"],
-                    "verified": True,
-                    "note": "由可选供稿适配层标记为已核对事实",
+                    "verified": False,
+                    "note": "供稿已做初筛，发布前仍需重新抓取一手来源",
                 }
             ],
         }

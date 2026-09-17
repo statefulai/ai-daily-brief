@@ -86,7 +86,7 @@ python main.py --config path/to/config.yaml
 
 ## 可选供稿
 
-`integrations/grok_bot/` 是可选适配层，不是本地运行的硬依赖。配置 `integrations.grok_bot.contributions_path` 后，可把已核验供稿与公开采集放进同一次策展；文件缺失等同于本期没有供稿。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选；格式或 schema 错误仍会终止生成。
+`integrations/grok_bot/` 是可选适配层，不是本地运行的硬依赖。配置 `integrations.grok_bot.contributions_path` 后，可把已初筛供稿与公开采集放进同一次策展；文件缺失等同于本期没有供稿。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选，入选后仍会重新抓取一手来源；格式或 schema 错误仍会终止生成。
 
 最小记录包含事件、一手来源、带时区的来源时间、已核对事实、适用条件和敏感性：
 
