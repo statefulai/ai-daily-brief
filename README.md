@@ -113,11 +113,11 @@ python main.py --contributions path/to/contributions.json
 ## 页面与投递输出
 
 - 网页：单页报纸版式；内容少时省略空栏，内容多时继续单页分组，不固定篇数或分页。
-- 邮件：同一期次生成内嵌 HTML 和纯文本兜底，不发送 HTML 附件或长图。
-- 群消息：日期、最多三条重点和网页版链接，不发送截图。
+- 邮件：同一期次生成内嵌 HTML 和纯文本兜底，不发送 HTML 附件或长图。发送时 `htmlBody` 必须是完整 `email.html`，禁止改成重点／摘要卡片加网页链接；纯文本部分同样携带全部文章。
+- 群消息：与邮件纯文本同一内容族，发送完整可读正文（项目群不能渲染 HTML），禁止只发三条重点加链接，也不发送截图或原始 HTML 标签。
 - 投递状态：以 `edition_id + content_hash + channel + recipient_scope` 分渠道记录；`sent` 和 `unknown` 都阻止直接重发。
 
-仓库只提供渲染器、状态契约和本地 dogfood。真实群与邮件凭据由外部托管环境持有，不写入仓库。
+发送入口是 `delivery.payload.build_email_send_parts`（`htmlBody` + 纯文本）和 `outputs.render_group_message`。仓库只提供渲染器、状态契约和本地 dogfood。真实群与邮件凭据由外部托管环境持有，不写入仓库。
 
 ## CI 与 Pages
 
@@ -146,7 +146,7 @@ verify.py                  # 一手来源核验
 source_status.py           # 来源四态
 contributions.py           # 通用供稿契约、过滤与策展接入
 templates/                 # 固定网页与邮件模板
-delivery/                  # 本地 dogfood 与私有投递状态契约
+delivery/                  # 发送正文契约、本地 dogfood 与私有投递状态
 integrations/grok_bot/     # Grok Bot 到通用供稿文件的桥接说明
 scripts/edition_ci.py      # CI 校验与 Pages 构建
 samples/2026-09-16/        # 本地验收样刊，不是生产期次
