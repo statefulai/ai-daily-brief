@@ -254,6 +254,7 @@ def _email_event(event: dict, index: int) -> str:
 
 
 def render_email_html(document: dict, public_url: str | None = None) -> str:
+    """Complete mobile-readable email.html. Send-time htmlBody must be this render."""
     edition = validate_edition(document)
     if edition["status"] != "published_candidate":
         raise EditionError("only published_candidate editions can render email")
@@ -296,20 +297,39 @@ def render_email_text(document: dict, public_url: str | None = None) -> str:
     return "\n".join(lines).rstrip() + "\n"
 
 
-def render_group_message(document: dict, public_url: str, max_items: int = 3) -> str:
+def render_group_message(document: dict, public_url: str) -> str:
+    """Full article body as plain text. Same content family as the email text part."""
     edition = validate_edition(document)
     if edition["status"] != "published_candidate":
         raise EditionError("only published_candidate editions can render a group message")
-    if type(max_items) is not int or max_items < 1:
-        raise EditionError("max_items must be an integer >= 1")
-    lines = [f"【AI 日报｜{edition['edition_id']}】"]
-    for event in edition["events"][:max_items]:
-        lines.append(f"• {event['title']}")
-    remaining = len(edition["events"]) - max_items
-    if remaining > 0:
-        lines.append(f"另有 {remaining} 条，详见网页版。")
-    lines.append("网页版：" + _http_url(public_url, "public_url"))
-    return "\n".join(lines)
+    text = render_email_text(document, public_url)
+    header = f"AI 日报｜{edition['edition_id']}"
+    if not text.startswith(header):
+        raise EditionError("group message must share the email plain-text body")
+    return f"【{header}】{text[len(header):]}"
+
+
+def require_full_email_html(
+    html_body: str, document: dict, public_url: str | None = None
+) -> None:
+    """Reject any send-time substitute that is not the complete email.html render."""
+    edition = validate_edition(document)
+    expected = render_email_html(edition, public_url)
+    if html_body != expected:
+        raise EditionError("htmlBody must be the complete email.html render")
+    for event in edition["events"]:
+        if event["title"] not in html_body:
+            raise EditionError("htmlBody must include every article title")
+        for fact in event["facts"]:
+            if fact not in html_body:
+                raise EditionError("htmlBody must include every article fact")
+
+
+def build_email_send_parts(document: dict, public_url: str | None = None) -> dict[str, str]:
+    """Send-time multipart bodies. htmlBody is always the full email.html render."""
+    html_body = render_email_html(document, public_url)
+    require_full_email_html(html_body, document, public_url)
+    return {"htmlBody": html_body, "body": render_email_text(document, public_url)}
 
 
 def _source_badge(source: str) -> str:

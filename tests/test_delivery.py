@@ -5,8 +5,10 @@ import unittest
 from pathlib import Path
 
 from delivery.local_dogfood import render_dogfood_page
+from delivery.payload import build_email_send_parts, require_full_email_html
 from delivery.state import DeliveryKey, DeliveryLedger
 from edition import EditionError, build_edition
+from outputs import render_email_html, render_email_text, render_group_message
 
 
 def document() -> dict:
@@ -137,8 +139,31 @@ class DeliveryTest(unittest.TestCase):
         self.assertIn("查看网页版", html)
         self.assertIn("查看邮件正文", html)
         self.assertIn("【AI 日报｜2026-09-16】", html)
+        self.assertIn("官方发布了一项更新。", html)
+        self.assertNotIn("另有", html)
+        self.assertNotIn("详见网页版", html)
         self.assertNotIn("OPENAI_API_KEY", html)
         self.assertNotIn("recipient_scope", html)
+
+    def test_email_payload_is_full_email_html_not_a_summary_card(self):
+        edition = document()
+        public_url = "https://example.com/editions/2026-09-16/"
+        parts = build_email_send_parts(edition, public_url)
+        group = render_group_message(edition, public_url)
+
+        self.assertEqual(parts["htmlBody"], render_email_html(edition, public_url))
+        self.assertEqual(parts["body"], render_email_text(edition, public_url))
+        self.assertIn("一条已核验新闻", parts["htmlBody"])
+        self.assertIn("官方发布了一项更新。", parts["htmlBody"])
+        self.assertIn("官方发布了一项更新。", parts["body"])
+        self.assertIn("官方发布了一项更新。", group)
+        self.assertNotIn("另有 1 条，详见网页版。", group)
+        card = (
+            "<html><body><p>一条已核验新闻</p>"
+            f'<a href="{public_url}">查看网页版</a></body></html>'
+        )
+        with self.assertRaisesRegex(EditionError, "complete email.html"):
+            require_full_email_html(card, edition, public_url)
 
 
 if __name__ == "__main__":

@@ -2,12 +2,14 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from edition import build_edition, write_edition
+from edition import EditionError, build_edition, write_edition
 from outputs import (
+    build_email_send_parts,
     render_email_html,
     render_email_text,
     render_group_message,
     render_web_edition,
+    require_full_email_html,
     write_web_edition,
 )
 
@@ -98,6 +100,7 @@ class RenderTest(unittest.TestCase):
         email_html = render_email_html(document, public_url)
         email_text = render_email_text(document, public_url)
         group = render_group_message(document, public_url)
+        send_parts = build_email_send_parts(document, public_url)
 
         self.assertIn("查看网页版", email_html)
         self.assertIn("font-family:'Songti SC',serif", email_html)
@@ -113,26 +116,49 @@ class RenderTest(unittest.TestCase):
         self.assertIn("适用范围：仅适用于已开放账号。", email_text)
         self.assertIn('<p class="condition"><strong>适用范围：</strong>仅适用于已开放账号。</p>', render_web_edition(document))
         self.assertIn("<strong>适用范围：</strong>仅适用于已开放账号。", email_html)
-        self.assertNotIn("适用范围", group)
+        self.assertIn("适用范围：仅适用于已开放账号。", group)
         self.assertNotIn("适用条件：", email_html)
         self.assertNotIn("适用条件：", email_text)
         self.assertNotIn("适用条件：", group)
         self.assertNotIn("。；", email_html)
         self.assertNotIn("。；", email_text)
-        self.assertIn("另有 1 条，详见网页版。", group)
-        self.assertEqual(
-            group.splitlines(),
-            [
-                "【AI 日报｜2026-09-16】",
-                "• 第 1 条新闻 <script>alert(1)</script>",
-                "• 第 2 条新闻 <script>alert(1)</script>",
-                "• 第 3 条新闻 <script>alert(1)</script>",
-                "另有 1 条，详见网页版。",
-                "网页版：https://example.com/editions/2026-09-16/",
-            ],
-        )
+        self.assertNotIn("另有 1 条，详见网页版。", group)
+        self.assertEqual(send_parts["htmlBody"], email_html)
+        self.assertEqual(send_parts["body"], email_text)
+        self.assertEqual(group, f"【AI 日报｜2026-09-16】{email_text[len('AI 日报｜2026-09-16'):]}")
+        for index in range(1, 5):
+            title = f"第 {index} 条新闻 <script>alert(1)</script>"
+            fact = f"第 {index} 条核心事实。"
+            self.assertIn(title, email_html)
+            self.assertIn(fact, email_html)
+            self.assertIn(title, email_text)
+            self.assertIn(fact, email_text)
+            self.assertIn(title, group)
+            self.assertIn(fact, group)
+            self.assertIn(title, send_parts["htmlBody"])
+            self.assertIn(fact, send_parts["body"])
+        self.assertNotIn("<section", group)
+        self.assertNotIn("<h2", group)
+        self.assertNotIn("style=", group)
         self.assertNotIn("<img", email_html)
         self.assertNotIn("附件", email_html)
+
+    def test_email_send_parts_reject_summary_card_html(self):
+        document = edition([event(1, "lead"), event(2), event(3), event(4)])
+        public_url = "https://example.com/editions/2026-09-16/"
+        card = (
+            "<html><body><h1>AI 日报</h1><ul>"
+            "<li>第 1 条新闻</li><li>第 2 条新闻</li><li>第 3 条新闻</li>"
+            "</ul><p>另有 1 条，详见网页版。</p>"
+            f'<a href="{public_url}">查看网页版</a></body></html>'
+        )
+
+        with self.assertRaisesRegex(EditionError, "complete email.html"):
+            require_full_email_html(card, document, public_url)
+        parts = build_email_send_parts(document, public_url)
+        self.assertEqual(parts["htmlBody"], render_email_html(document, public_url))
+        self.assertIn("第 4 条核心事实。", parts["htmlBody"])
+        self.assertIn("第 4 条核心事实。", parts["body"])
 
     def test_multi_item_ranges_render_per_item(self):
         document = edition(
@@ -168,16 +194,15 @@ class RenderTest(unittest.TestCase):
                 "核验说明（官方来源）：仅确认到日期。",
             ],
         )
-        self.assertNotIn("适用范围", group)
+        self.assertIn("适用范围：", group)
+        self.assertIn("适用于付费计划。", group)
+        self.assertIn("目前处于公开预览。", group)
         self.assertNotIn("适用条件：", group)
         self.assertEqual(
-            group.splitlines()[:3],
-            [
-                "【AI 日报｜2026-09-16】",
-                "• 第 1 条新闻 <script>alert(1)</script>",
-                "网页版：https://example.com/editions/2026-09-16/",
-            ],
+            group,
+            f"【AI 日报｜2026-09-16】{email_text[len('AI 日报｜2026-09-16'):]}",
         )
+        self.assertNotIn("详见网页版。", group)
         self.assertNotIn("。；", html)
         self.assertNotIn("。；", email_html)
         self.assertNotIn("。；", email_text)
