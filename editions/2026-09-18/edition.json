@@ -1,0 +1,309 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-18",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-18T08:00:00+08:00",
+  "generated_at": "2026-09-18T08:24:10+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "openai-astra-law",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "OpenAI 推出 Astra for Law，给法律工作单独配模型和检索",
+      "kicker": "焦点 · OpenAI",
+      "facts": [
+        "OpenAI 宣布 Astra for Law：把 GPT-6 Astra 配上面向法律分析与写作的说明、设置，以及新的美国法律检索索引，供律所和法律科技公司在此之上做产品和流程。索引覆盖判例、制定法、法规、法院规则和行政决定，语料超过 2.3 亿个 URL，并与 Free Law Project / CourtListener 合作纳入其超过 99.9% 的已公布美国先例。",
+        "官方用 Vals AI Legal Research Bench 的 200 道美国法律研究题做对照：在双方都开到最高推理强度时，Astra for Law 通过总体正确性检查的比例为 54.0%，只用网页搜索的 GPT-6 Astra 为 38.7%。模型选择器显示为 “GPT-6 Astra Law”，API 标识为 gpt-6-astra-law。同期上线 26 个合作方插件和 9 个社区插件、47 个可改技能；ChatGPT for Word 同日正式可用。"
+      ],
+      "conditions": [
+        "先通过 Trusted Access 向入选律所在 ChatGPT 和 Codex 开放，API 即将推出，不是全量开放。",
+        "符合条件的律所可在 API 上使用 Zero Data Retention；ChatGPT Enterprise 用量默认不进人审。",
+        "54.0% 与 38.7% 是 OpenAI 自己的对照，不是独立复现；官方也没有把它写成可以替代律师判断。"
+      ],
+      "background": [
+        "已与 Sullivan & Cromwell、Ropes & Gray、Cooley 等做定制流程，并与 Latham & Watkins 讨论权限墙和客户指令；Harvey、Legora 等 API 客户将能把该配置接到自有产品。",
+        "同日 OpenAI 官方账号帖文与官网公告合并，不另作一条。窗口内没有 Tibo 或 Codex 的新产品说明；GPT-6 Sol 当日仍只有传言，没有官方发布。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI 公告",
+          "url": "https://openai.com/index/astra-for-law/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "文章页只标 September 17, 2026；官方 RSS 的 pubDate 为 2026-09-17 00:00:00 GMT，更像按日归档而不是准确时刻。未实测法律检索、插件或 Trusted Access。"
+        },
+        {
+          "label": "OpenAI 官方账号",
+          "url": "https://x.com/OpenAI/status/2100679992720142459",
+          "kind": "secondary",
+          "published_at": "2026-09-17T20:15:13+00:00",
+          "verified": true,
+          "note": null
+        },
+        {
+          "label": "路透社报道",
+          "url": "https://www.reuters.com/legal/litigation/openai-launches-legal-focused-ai-platform-escalating-race-law-firm-users-2026-09-17/",
+          "kind": "secondary",
+          "published_at": "2026-09-17T22:12:00+00:00",
+          "verified": true,
+          "note": "发布时间取自路透社页面标示的 10:12 PM UTC。"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-lsvp",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 开放生命科学验证计划，Mythos 可走更松的生物学护栏",
+      "kicker": "Anthropic",
+      "facts": [
+        "Anthropic 推出 Life Sciences Verification Program（LSVP）公测：通过资质、安全和伦理审查的生命科学团队，可在 Mythos、Opus、Sonnet 上使用一套对生物学任务更宽松的护栏，覆盖药物发现、研究生物学、临床开发和生产等目前在公开 Fable 模型里会被拦住的工作。早鸟已接入数十家机构，即日起向更广泛的生命科学社区开放申请。",
+        "验证通过后可申请两类授权：Standard Use 覆盖团队日常科研，一年一续，当前适用于 Mythos 5.1、Opus 5、Sonnet 5；High-risk Use 是针对单一项目的附加授权，去掉阻挡生命科学请求的护栏，半年一续。Opus 5 与 Sonnet 5 的高风险授权今日可用；Mythos 的高风险授权仍只给少数再经审查的实体。其他护栏（如网络攻击分类器）仍保留。"
+      ],
+      "conditions": [
+        "公测先面向团队和机构；个人 Pro / Max 尚未开放；第三方平台不可用。",
+        "目前可在官方 API 控制台、Claude Enterprise 和 Team 使用。已启用 BAA 的组织不能开 LSVP，处理 PHI 的客户需另开非 BAA 组织。",
+        "Claude.ai 和 Claude Code 初期只有预选的默认授权（用 API 认证的 Claude Code 除外）。",
+        "官方称会把 LSVP 流量保留 30 天做离线监测，且该数据不用于训练、也不对 Anthropic 生命科学研究团队开放。"
+      ],
+      "background": [
+        "监测从实时拦截改为离线模式，授权范围绑定申请书里写明的用途；出现超出范围的活动时，会按事先约定的时限通知机构管理员处理。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic 公告",
+          "url": "https://www.anthropic.com/news/life-sciences-verification-program",
+          "kind": "primary",
+          "published_at": "2026-09-17T15:56:00+00:00",
+          "verified": true,
+          "note": "发布时间取自 Anthropic 新闻页 publishedOn。未实测申请、授权切换或离线监测。"
+        },
+        {
+          "label": "Anthropic 官方账号",
+          "url": "https://x.com/AnthropicAI/status/2100646837799834096",
+          "kind": "secondary",
+          "published_at": "2026-09-17T18:03:28+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "anthropic-biomolecular",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Claude 优化 30 多个开源生物学模型，并开源加速代码",
+      "kicker": "Anthropic · 开源",
+      "facts": [
+        "Anthropic 发布研究：在 Claude Science 里，Claude 用不到四周优化了 30 多个开源生物学模型，覆盖结构预测、蛋白质设计、蛋白质语言模型和基因组学。官方称平均大约加快 4 倍、精度损失很小，在输出完全一致时大约快 2 倍；并做了低显存 Big 模式，可在单台 NVIDIA GPU 节点上对超过 1 万 token 的生物分子系统做结构预测。",
+        "优化后的代码开源到 github.com/anthropics/uplifting-biomolecular-modeling。同期与 Adaptyv Bio 合办蛋白质设计竞赛，提供最多 100 万美元 Claude 额度和最多 25 万美元 Modal 算力额度，并对超过 5000 个设计做湿实验验证。"
+      ],
+      "conditions": [
+        "4 倍、2 倍和“输出一致”是官方自评，未独立复现。",
+        "竞赛题目、资格和提交以 ProteinBase 页面为准。",
+        "文中超过 3 万到 7 万 token 的病毒衣壳等推理是能力试跑，官方写明结构并不正确。"
+      ],
+      "background": [
+        "此前每个靶点可花到约 1 万美元 Modal / 约 2500 小时 H100；这次单模型加一块 H200、24 小时，官方称 in silico 分数接近、GPU 小时大约少两个数量级。",
+        "同日开放的 LSVP 公测已单列，不在本条重复展开。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic 研究原文",
+          "url": "https://www.anthropic.com/research/claude-uplifts-biomolecular-modeling",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "文章页只标 Sep 17, 2026，未取得可靠具体时区。未复现加速比，也未审核开源仓库里的全部内核。"
+        },
+        {
+          "label": "开源仓库",
+          "url": "https://github.com/anthropics/uplifting-biomolecular-modeling",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "已确认仓库存在；抓取时页面未给出可靠发布时间。"
+        },
+        {
+          "label": "Anthropic 官方账号",
+          "url": "https://x.com/AnthropicAI/status/2100701581109072332",
+          "kind": "secondary",
+          "published_at": "2026-09-17T21:41:00+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "grok-bot-voice",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Grok Bot 开始上线语音，桌面和手机分批开放",
+      "kicker": "Grok Bot",
+      "facts": [
+        "Grok Bot 官方账号宣布 Grok Bot 现在可以语音对话，并说明语音将在接下来几天内登陆桌面和手机。",
+        "这是给已有 Grok Bot 增加语音入口，不是新的独立产品线。"
+      ],
+      "conditions": [
+        "官方只写了“接下来几天”在桌面和手机推出，没有写清套餐、地区或是否一次全量开放。",
+        "未实测通话、延迟、审批或后台任务。"
+      ],
+      "background": [
+        "同日官方账号还预告了用 Grok Bot 连续三天搭一家公司的活动直播，不构成单独的产品发布。",
+        "x.ai 新闻列表被 Cloudflare 拦截，下载页 x.ai/bot 返回 403；本条以官方账号原帖为准。窗口内 Cursor 没有产品更新，只有已恢复的服务降级，不另作一条。"
+      ],
+      "sources": [
+        {
+          "label": "Grok Bot 官方账号",
+          "url": "https://x.com/bot/status/2100659463569170779",
+          "kind": "primary",
+          "published_at": "2026-09-17T18:53:39+00:00",
+          "verified": true,
+          "note": "未打开演示视频逐帧核验界面。x.ai/news 列表未能访问。"
+        },
+        {
+          "label": "Grok Bot 后续说明",
+          "url": "https://x.com/bot/status/2100659464781394222",
+          "kind": "secondary",
+          "published_at": "2026-09-17T18:53:39+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "anthropic-rd-metrics",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 公开三组内部指标，用来观察前沿实验室的研发节奏",
+      "kicker": "Anthropic · 安全",
+      "facts": [
+        "Anthropic 提出三组可供外界跟踪前沿实验室的指标：AI 自己做了多少 AI 研发、对内部智能体行动的监督覆盖，以及算力如何分配；并公布自己的一次快照。官方称希望缩小实验室内部与公众可见信息之间的差距。",
+        "截至 2026 年 8 月：Claude 在任何被统计的 AI 研发子集上都还没有完全自主；约 26% 的 AI 研发由 Claude“主导”，达到或超过“AI 协作”的超过 90%。最常用内部平台上约有 3 万个研发与工程智能体同时运行，在线监测覆盖这些智能体的全部行动；8 月超过 10 亿次决策里约 0.002% 被拦住。2026 年 7 月 13–20 日那一周，进入 AI 研发的算力里约 6% 被算作安全方向，进入“由 AI 驱动的 AI 研发”的算力里约 12% 被算作安全方向。"
+      ],
+      "conditions": [
+        "这是 Anthropic 自己的原型统计和分类，不是跨实验室统一标准，也不是监管强制披露。",
+        "算力安全占比被刻意算得保守；官方承认安全与能力研究的边界不好划，且只覆盖最常用内部平台。",
+        "自动化评级部分由 Claude 完成，再与员工交叉核对；不能把它读成已经过独立审计的行业数字。"
+      ],
+      "background": [
+        "官方称计划引入有接近员工权限的第三方评估方，核验安全实践、报告事件并跟踪这类指标。",
+        "新闻页把该文列在 2026-09-17；文章页本身没有给出带时区的发布时间。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic Institute 原文",
+          "url": "https://www.anthropic.com/institute/measuring-pace-of-ai-development",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "新闻页日期为 Sep 17, 2026；文章页未取得可靠具体时区。未复核其内部原始数据。"
+        },
+        {
+          "label": "Anthropic 官方账号",
+          "url": "https://x.com/AnthropicAI/status/2100684274114699295",
+          "kind": "secondary",
+          "published_at": "2026-09-17T20:32:14+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    },
+    {
+      "id": "github-copilot-metrics",
+      "placement": "desk",
+      "window": "in_window",
+      "title": "Copilot 用量报告补上功能活跃度和 CLI 定制指标",
+      "kicker": "GitHub Copilot",
+      "facts": [
+        "Copilot impact dashboard 和 28 天汇总报告新增功能活跃度：统计 28 天内至少有两天使用代码补全、agent edit、被动/主动代码审查、cloud agent、CLI、Copilot app 等功能的活跃用户数；AI 采用阶段也补上滚动 28 天完整人数。",
+        "用量指标 API 同时为 Copilot CLI 增加 skills、自定义 agent、MCP、斜杠命令和插件的活跃统计，方便管理员看哪些定制真的在用。"
+      ],
+      "conditions": [
+        "面向企业/组织管理员和拥有 View Copilot Metrics 权限的角色，且需开启 Copilot usage metrics 策略。",
+        "功能活跃度不进入用户级报告；客户自定义名称不展示。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "GitHub 更新说明",
+          "url": "https://github.blog/changelog/2026-09-17-copilot-impact-dashboard-now-shows-feature-engagement/",
+          "kind": "primary",
+          "published_at": "2026-09-17T21:47:27+00:00",
+          "verified": true,
+          "note": "未实测仪表盘或 API 返回。"
+        },
+        {
+          "label": "GitHub CLI 指标说明",
+          "url": "https://github.blog/changelog/2026-09-17-agentic-cli-customizations-now-in-the-usage-metrics-api/",
+          "kind": "secondary",
+          "published_at": "2026-09-17T21:08:50+00:00",
+          "verified": true,
+          "note": null
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:2735a05ea26b81f00364cac70cec232131c96f55df34b2729d6d18a03cae53e0"
+}
