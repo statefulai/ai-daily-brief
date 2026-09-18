@@ -318,10 +318,11 @@ def require_full_email_html(
     if html_body != expected:
         raise EditionError("htmlBody must be the complete email.html render")
     for event in edition["events"]:
-        if event["title"] not in html_body:
+        title = event["title"]
+        if title not in html_body and escape(title) not in html_body:
             raise EditionError("htmlBody must include every article title")
         for fact in event["facts"]:
-            if fact not in html_body:
+            if fact not in html_body and escape(fact) not in html_body:
                 raise EditionError("htmlBody must include every article fact")
 
 

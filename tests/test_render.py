@@ -128,14 +128,15 @@ class RenderTest(unittest.TestCase):
         self.assertEqual(group, f"【AI 日报｜2026-09-16】{email_text[len('AI 日报｜2026-09-16'):]}")
         for index in range(1, 5):
             title = f"第 {index} 条新闻 <script>alert(1)</script>"
+            escaped_title = f"第 {index} 条新闻 &lt;script&gt;alert(1)&lt;/script&gt;"
             fact = f"第 {index} 条核心事实。"
-            self.assertIn(title, email_html)
+            self.assertIn(escaped_title, email_html)
             self.assertIn(fact, email_html)
             self.assertIn(title, email_text)
             self.assertIn(fact, email_text)
             self.assertIn(title, group)
             self.assertIn(fact, group)
-            self.assertIn(title, send_parts["htmlBody"])
+            self.assertIn(escaped_title, send_parts["htmlBody"])
             self.assertIn(fact, send_parts["body"])
         self.assertNotIn("<section", group)
         self.assertNotIn("<h2", group)
