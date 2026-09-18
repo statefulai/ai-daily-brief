@@ -4,43 +4,71 @@
 
 # AI Daily Brief
 
-从公开来源生成可核验、可变篇数的中文 AI 日报，并以固定 HTML 模板输出网页、邮件正文和群消息。
+A verifiable Chinese AI daily — only the important changes, never padded to a quota.
 
-[查看本地样刊](./samples/2026-09-16/index.html) · [手机预览](./samples/2026-09-16/mobile.png) · [本地 dogfood](./samples/2026-09-16/dogfood.html)
+从公开一手来源和已核验候选里筛出重要变更，写成同一期，供网页、邮件和群阅读。
+
+[打开网页版](https://statefulai.github.io/ai-daily-brief/) · [往期目录](https://statefulai.github.io/ai-daily-brief/)
 
 </div>
 
-> 当前状态：新版期次、网页渲染、CI／Pages 骨架和本地投递预览已经完成；`【开源】AI日报` 项目群与 `日刊` Bot 已建立，日例程保持停用。GitHub Pages、邮件和群投递尚未启用，旧 Markdown 日更在首期切换前继续运行。
+公开首页即往期目录。下面两期是已经上线的例子，用来说明版式和写法，不是会自动改写的「最新一期」列表。
 
-## 本地运行链路
+## 目录
 
-一次运行完成以下步骤：
+- [真实期次（示例）](#真实期次示例)
+- [产品原则](#产品原则)
+- [如何运作](#如何运作)
+- [本地开发](#本地开发)
+- [License](#license)
 
-1. 并发读取已配置的公开来源，分别记录 `success`、`no_candidates`、`failed` 或 `skipped`。
-2. 合并可选的结构化供稿，过滤非公开内容。
-3. 使用一个 OpenAI 兼容模型完成可变篇数策展。
-4. 回到一手来源核对发布时间和事实依据。
-5. 生成严格的 `edition.json`，再由固定模板确定性渲染 `index.html`。
+## 真实期次（示例）
 
-生成结果只有三种：
+### 2026-09-18
 
-- `published_candidate`：有可发布内容，写入期次目录。
-- `no_new_value`：来源读取成功但没有值得发布的新内容，不创建期次目录。
-- `failed`：来源、模型或核验失败；不能伪装成“今天没有新闻”。
+<a href="https://statefulai.github.io/ai-daily-brief/editions/2026-09-18/"><img src="assets/readme/edition-2026-09-18-desktop.png" width="100%" alt="2026-09-18 公开网页桌面版：报头「AI 日报」与焦点条「OpenAI 推出 Astra for Law，给法律工作单独配模型和检索」" /></a>
 
-每个公开期次只包含：
+**[OpenAI 推出 Astra for Law，给法律工作单独配模型和检索](https://statefulai.github.io/ai-daily-brief/editions/2026-09-18/)**
 
-```text
-editions/YYYY-MM-DD/
-├── edition.json
-└── index.html
-```
+OpenAI 把 GPT-6 Astra 配上法律分析说明和新的美国法律检索索引，先通过 Trusted Access 向入选律所开放。这一期按窗口实写 6 条，不是固定篇数。
 
-原始供稿、发送凭据、收件人、群聊信息和投递账本不进入公开期次。
+[阅读完整一期](https://statefulai.github.io/ai-daily-brief/editions/2026-09-18/)
 
-托管生产由 `日刊` 启动一个 Cloud Agent。Agent 直接使用自身模型完成公开采集、供稿合并和策展，写出结构化 `edition.json`，再调用仓库的固定渲染与校验命令；Python 不需要取得 Cloud Agent 的模型 API Key。`main.py` 的 OpenAI 兼容模型配置只用于本地独立运行。
+### 2026-09-17
 
-## 本地运行
+<p align="center">
+  <a href="https://statefulai.github.io/ai-daily-brief/editions/2026-09-17/"><img src="assets/readme/edition-2026-09-17-mobile.png" width="390" alt="2026-09-17 公开网页手机版：报头「AI 日报」与焦点条「Claude 将聊天与 Cowork 合一，文档和幻灯片同步上线」" /></a>
+</p>
+
+**[Claude 将聊天与 Cowork 合一，文档和幻灯片同步上线](https://statefulai.github.io/ai-daily-brief/editions/2026-09-17/)**
+
+Anthropic 把 Claude Chat 与 Cowork 并进同一对话，并上线 Docs / Slides。这一期按窗口实写 7 条。
+
+[阅读完整一期](https://statefulai.github.io/ai-daily-brief/editions/2026-09-17/)
+
+## 产品原则
+
+- 回到公开一手来源核对事实、时间和适用范围，核验缺口写进正文，不靠转述补全。
+- 当天有多少条真正重要的变化，就写多少条；不为凑数而灌版。
+- 没有新价值就不发刊。来源或核验失败会单独作为失败，而不会写成「今天没有新闻」。
+- 网页、邮件、群读到的是同一期文章：邮件发送完整 `email.html`，群发送完整纯文本（该渠道不能渲染 HTML）。
+- 公开期次由结构化 `edition.json`、固定模板和 CI 生成，不手写 HTML。
+
+## 如何运作
+
+1. **汇集候选。** 读取公开一手来源，并可并入已核验、且标明可公开的供稿。期次窗口为北京时间 `[前一日 08:00, 当日 08:00)`。
+2. **筛选并回源核验。** 生产路径由 Cloud Agent 决定写哪些重要变化，并回到一手来源核对。
+3. **写成结构化期次。** 产出 `edition.json`，再用固定模板生成 HTML。
+4. **校验并发布网页。** 经 pull request 合入 `main` 后，CI 校验 schema、来源、内容 hash 和 HTML，再部署到 [GitHub Pages](https://statefulai.github.io/ai-daily-brief/)。
+5. **按同一期准备投递。** 邮件必须是完整 `email.html` 正文，禁止改成摘要卡片；群必须是同一批文章的完整纯文本，禁止只发短要点或原始 HTML 标签。`published_candidate` 只表示期次已写成可发布稿，不等于邮件或群已经发出。
+
+## 本地开发
+
+生产期次由 Cloud Agent 用自身模型完成公开采集、供稿合并和策展，再调用本仓库的固定渲染与校验；Python 不需要拿到 Cloud Agent 的模型 API Key。`main.py` 是本地独立路径，走 OpenAI 兼容接口。
+
+Grok Bot 如何把闪报转成通用供稿，见 [`integrations/grok_bot/README.md`](integrations/grok_bot/README.md)。
+
+### 安装与运行
 
 需要 Python 3.11 或更高版本。
 
@@ -66,12 +94,10 @@ OPENAI_BASE_URL=https://your-provider.example/v1
 AI_NEWS_MODEL=your-model-name
 ```
 
-本项目尚未对所有兼容服务做全新 clone 验收；如遇到响应格式差异，请提交可复现问题。
-
-运行命令：
+本项目尚未对所有兼容服务做全新 clone 验收；如遇到响应格式差异，请提交可复现问题。`config.yaml` 控制本地数据源、模型和输出目录；环境变量优先于其中的模型端点与模型名。
 
 ```bash
-# 完整流程；仅 published_candidate 会写 editions/<date>/
+# 完整本地流程；仅 published_candidate 会写 editions/<date>/
 python main.py
 
 # 只读取来源，不调用模型，也不写期次
@@ -87,13 +113,14 @@ python main.py --config path/to/config.yaml
 python main.py --contributions path/to/contributions.json
 ```
 
-每天的正式期次采用北京时间 `[前一日 08:00, 当日 08:00)` 半开区间；08:00 前手动运行时仍指向最近一个已经闭合的窗口。`config.yaml` 控制数据源、模型和输出目录，环境变量优先于其中的模型端点与模型名。
+08:00 前手动运行时，仍然指向最近一个已经闭合的北京时间窗口。
 
-## 可选供稿
+### 可选供稿
 
-`--contributions` 接收任意外部系统整理出的 JSON 文件，与公开采集进入同一次策展。不传参数时只使用公开来源；显式传入的文件如果缺失、格式错误或不符合契约，生成会直接失败。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选，入选后仍会重新抓取一手来源。
+`--contributions` 是本地和外部系统并入候选的唯一入口。不传参数时只使用公开来源；显式传入的文件如果缺失、格式错误或不符合契约，生成会直接失败。只有 `sensitivity: public` 且 `source_time` 落在同一日报窗口内的记录会进入候选，入选后仍会重新抓取一手来源。
 
-最小记录包含事件、一手来源、带时区的来源时间、已核对事实、适用范围和敏感性：
+<details>
+<summary>供稿记录最小字段</summary>
 
 ```json
 {
@@ -110,50 +137,21 @@ python main.py --contributions path/to/contributions.json
 }
 ```
 
-## 页面与投递输出
+</details>
 
-- 网页：单页报纸版式；内容少时省略空栏，内容多时继续单页分组，不固定篇数或分页。
-- 邮件：同一期次生成内嵌 HTML 和纯文本兜底，不发送 HTML 附件或长图。发送时 `htmlBody` 必须是完整 `email.html`，禁止改成重点／摘要卡片加网页链接；纯文本部分同样携带全部文章。
-- 群消息：与邮件纯文本同一内容族，发送完整可读正文（项目群不能渲染 HTML），禁止只发三条重点加链接，也不发送截图或原始 HTML 标签。
-- 投递状态：以 `edition_id + content_hash + channel + recipient_scope` 分渠道记录；`sent` 和 `unknown` 都阻止直接重发。
+### 正式期次目录
 
-发送入口是 `delivery.payload.build_email_send_parts`（`htmlBody` + 纯文本）和 `outputs.render_group_message`。仓库只提供渲染器、状态契约和本地 dogfood。真实群与邮件凭据由外部托管环境持有，不写入仓库。
-
-## CI 与 Pages
-
-`.github/workflows/edition-ci-pages.yml` 只负责：
-
-- 校验 schema、来源状态、一手来源、内容 hash 和确定性 HTML；
-- 限制一次期次变更只能包含一个日期的 `edition.json + index.html`；
-- 阻止删除已经发布的期次；
-- 在 `main` 存在正式期次时构建并部署 Pages。
-
-它不调用模型、不设置日报 cron，也不发送群或邮件。Pages 目前尚未启用；首次合并、部署和真实投递需要单独验收。
-
-## 迁移边界
-
-- `.github/workflows/daily-news.yml` 仍运行旧 Markdown 日更，首期新版成功前不会停用。
-- `.github/workflows/feishu-push.yml` 仍保留手动入口。
-- `daily-brief.md` 与 `archives/` 仍由旧链路更新；新版 Pages 不回填这些文件。
-- `config.yaml` 在迁移期继续启用旧 Markdown 与归档，避免代码合并后提前停掉旧日报；首期成功并正式切换时再关闭。
-
-## 项目结构
+每个公开期次只包含：
 
 ```text
-edition.py                 # 期次 schema、hash、状态与同日期互斥
-curate.py                  # 把模型结果装配为可变篇数事件
-verify.py                  # 一手来源核验
-source_status.py           # 来源四态
-contributions.py           # 通用供稿契约、过滤与策展接入
-templates/                 # 固定网页与邮件模板
-delivery/                  # 发送正文契约、本地 dogfood 与私有投递状态
-integrations/grok_bot/     # Grok Bot 到通用供稿文件的桥接说明
-scripts/edition_ci.py      # CI 校验与 Pages 构建
-samples/2026-09-16/        # 本地验收样刊，不是生产期次
-tests/                     # schema、渲染、CI、来源与投递测试
+editions/YYYY-MM-DD/
+├── edition.json
+└── index.html
 ```
 
-## 验证
+`published_candidate` 才会写入该目录。`no_new_value` 表示来源读取成功但没有值得发布的新内容；`failed` 表示来源、模型或核验失败。这两种结果都不创建公开期次，也不能互相冒充。原始供稿、发送凭据和收件人信息不进入公开期次。
+
+### 验证
 
 ```bash
 python -m unittest discover -s tests -v
@@ -163,6 +161,19 @@ python scripts/edition_ci.py build --output _site
 ```
 
 `validate` 在没有正式期次时会成功并报告 0 期；`_site/` 是本地构建目录，不进入版本库。
+
+### 仓库结构
+
+```text
+main.py                    # 本地独立运行
+edition.py / curate.py / verify.py
+templates/                 # 固定网页与邮件模板
+scripts/edition_ci.py      # 校验与 Pages 构建
+editions/YYYY-MM-DD/       # 正式期次
+integrations/grok_bot/     # 供稿桥接说明
+delivery/                  # 邮件与群的正文契约
+tests/
+```
 
 ## License
 
