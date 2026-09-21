@@ -60,7 +60,7 @@ python scripts/jev_assist.py \
 5. 回收成功：`ingest_from_ca_json`（拒绝 `request_count` 回退，合并 `evaluations`）→ meta=`ok`。
 6. 回收失败：`mark_ingest_failed` → meta=`failed_ingest`。
 
-`pending_ingest` / `failed_ingest` / store 不可读时，同日再 launch 必须 skip Jev，禁止按缺文件从零开计。
+`pending_ingest` / `failed_ingest` / store 不可读时，同日再 launch 必须 **skip_jev**，禁止按缺文件从零开计。
 
 两个独立 CA 配置相同的 `runs/jev/` **不等于**已经共享状态。CA 内默认 `runs/jev` 只是同次工作副本。仓内若写「跨 CA 须 `AI_DAILY_PRIVATE_RUN_DIR`」，日刊落地是「机上持久 + `files` 附带」，不是「两台 CA 配同一个路径」。
 

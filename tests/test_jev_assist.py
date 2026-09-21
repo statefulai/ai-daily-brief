@@ -570,6 +570,7 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertIn("prepare_for_ca_launch", text)
         self.assertIn("ingest_from_ca_json", text)
         self.assertIn("pending_ingest", text)
+        self.assertIn("skip_jev", text)
         self.assertIn("不等于", text)
         self.assertNotIn("两台 CA 配同一个路径就已经共享", text)
 
