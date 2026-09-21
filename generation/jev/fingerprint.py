@@ -8,8 +8,11 @@ import re
 from typing import Any
 
 # Split summary sentences for exact membership against structured facts.
-# This is not a novelty heuristic: leftover claims always enter evidence.
+# Do not treat decimal / version dots (1.2.3, 3.14) as sentence boundaries.
+# Leftover claims always enter evidence; this is not a novelty heuristic.
 _CLAIM_SPLIT = re.compile(r"[.!?。！？;；\n]+")
+_NUMERIC_DOT = re.compile(r"(?<=\d)\.(?=\d)")
+_NUMERIC_DOT_SENTINEL = "\x1enumdot\x1e"
 _TRAILING_PUNCT = ".!?。！？;；"
 
 
@@ -40,10 +43,41 @@ def normalize_url(value: Any) -> str:
     return value.strip().rstrip("/").lower()
 
 
+def _summary_texts(item: dict[str, Any]) -> list[str]:
+    """Summary strings scanned for leftover claims. Merge may attach every report."""
+    texts: list[str] = []
+    seen: set[str] = set()
+
+    def add(raw: Any) -> None:
+        if not isinstance(raw, str):
+            return
+        for part in raw.split("\n"):
+            key = part.strip()
+            if key and key not in seen:
+                seen.add(key)
+                texts.append(key)
+
+    retained = item.get("report_summaries")
+    if isinstance(retained, list) and retained:
+        for raw in retained:
+            add(raw)
+        if texts:
+            return texts
+    add(item.get("text") or item.get("summary") or "")
+    return texts
+
+
 def _summary_claims(text: Any) -> list[str]:
     if not isinstance(text, str):
         return []
-    return [part for part in (normalize_fact(piece) for piece in _CLAIM_SPLIT.split(text)) if part]
+    protected = _NUMERIC_DOT.sub(_NUMERIC_DOT_SENTINEL, text)
+    claims: list[str] = []
+    for piece in _CLAIM_SPLIT.split(protected):
+        restored = piece.replace(_NUMERIC_DOT_SENTINEL, ".")
+        claim = normalize_fact(restored)
+        if claim:
+            claims.append(claim)
+    return claims
 
 
 def stable_facts(item: dict[str, Any]) -> list[str]:
@@ -69,12 +103,12 @@ def unconfirmed_summary_claims(item: dict[str, Any]) -> list[str]:
     covered = set(stable_facts(item))
     extra: list[str] = []
     seen: set[str] = set()
-    summary = item.get("text") or item.get("summary") or ""
-    for claim in _summary_claims(summary):
-        if claim in covered or claim in seen:
-            continue
-        seen.add(claim)
-        extra.append(claim)
+    for summary in _summary_texts(item):
+        for claim in _summary_claims(summary):
+            if claim in covered or claim in seen:
+                continue
+            seen.add(claim)
+            extra.append(claim)
     extra.sort()
     return extra
 

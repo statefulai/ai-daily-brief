@@ -254,6 +254,31 @@ class JevFingerprintTest(unittest.TestCase):
         self.assertEqual(state["prior_coverage"], evidence["prior_coverage"])
         self.assertEqual(state["candidate"]["text"], " ".join(evidence["facts"]))
 
+    def test_version_and_decimal_claims_keep_full_values(self):
+        v123 = self._item(
+            facts=["A release was announced"],
+            summary="The released version is 1.2.3.",
+        )
+        v132 = self._item(
+            facts=["A release was announced"],
+            summary="The released version is 1.3.2.",
+        )
+        d314 = self._item(facts=["Accuracy was reported"], summary="Accuracy is 3.14.")
+        d271 = self._item(facts=["Accuracy was reported"], summary="Accuracy is 2.71.")
+        self.assertIn("the released version is 1.2.3", scoring_facts(v123))
+        self.assertIn("the released version is 1.3.2", scoring_facts(v132))
+        self.assertNotIn("the released version is 1", scoring_facts(v123))
+        self.assertNotEqual(
+            reuse_fingerprint(v123, self.QUESTIONS_ID),
+            reuse_fingerprint(v132, self.QUESTIONS_ID),
+        )
+        self.assertIn("accuracy is 3.14", scoring_facts(d314))
+        self.assertIn("accuracy is 2.71", scoring_facts(d271))
+        self.assertNotEqual(
+            reuse_fingerprint(d314, self.QUESTIONS_ID),
+            reuse_fingerprint(d271, self.QUESTIONS_ID),
+        )
+
 
 class JevAssistTest(JevHelpers, unittest.TestCase):
     def test_identical_rerun_reuses_without_second_http(self):
@@ -759,7 +784,7 @@ class JevEvidenceReuseContractTest(JevHelpers, unittest.TestCase):
         merge_partner = candidate(
             1,
             facts=["supports 4 tools", "API is available"],
-            summary="The company today said the API is available and supports 4 tools.",
+            summary="supports 4 tools. API is available",
             url="https://other.example/1",
             title="Rewrite title",
         )
@@ -824,10 +849,181 @@ class JevEvidenceReuseContractTest(JevHelpers, unittest.TestCase):
         self.assertEqual(len(merged), 1)
         self.assertEqual(merged[0]["facts"], ["api is available"])
         self.assertEqual(stable_facts(merged[0]), ["api is available"])
-        self.assertEqual(
+        self.assertIn(
+            "the company today said the api is available",
+            scoring_facts({**merged[0], "prior_coverage": []}),
+        )
+        self.assertNotEqual(
             reuse_fingerprint({**first, "prior_coverage": []}, self.QUESTIONS_ID),
             reuse_fingerprint({**merged[0], "prior_coverage": []}, self.QUESTIONS_ID),
         )
+
+    def _scored(self, item):
+        return {**item, "prior_coverage": item.get("prior_coverage") or []}
+
+    def test_merge_retains_summary_corrections_order_independently(self):
+        cases = [
+            (
+                ["API supports 4 tools"],
+                "API supports 4 tools",
+                "API supports 8 tools",
+                "api supports 4 tools",
+                "api supports 8 tools",
+            ),
+            (
+                ["API is available"],
+                "API is available",
+                "API is unavailable",
+                "api is available",
+                "api is unavailable",
+            ),
+            (
+                ["model download is open"],
+                "model download is open",
+                "model download is not open",
+                "model download is open",
+                "model download is not open",
+            ),
+        ]
+        for facts, first_summary, second_summary, kept, correction in cases:
+            first = candidate(1, facts=list(facts), summary=first_summary)
+            second = candidate(1, facts=list(facts), summary=second_summary)
+            forward = merge_same_event([first, second])[0]
+            reverse = merge_same_event([second, first])[0]
+            forward_evidence = scoring_facts(self._scored(forward))
+            reverse_evidence = scoring_facts(self._scored(reverse))
+            self.assertEqual(forward_evidence, reverse_evidence, facts)
+            self.assertIn(kept, forward_evidence, facts)
+            self.assertIn(correction, forward_evidence, facts)
+            self.assertEqual(stable_facts(forward), [kept])
+            self.assertEqual(stable_facts(reverse), [kept])
+            self.assertNotEqual(
+                reuse_fingerprint(self._scored(first), self.QUESTIONS_ID),
+                reuse_fingerprint(self._scored(forward), self.QUESTIONS_ID),
+                facts,
+            )
+
+    def test_score_then_merge_correction_does_not_reuse(self):
+        original = candidate(
+            1,
+            facts=["API supports 4 tools"],
+            summary="API supports 4 tools",
+        )
+        correction = candidate(
+            1,
+            facts=["API supports 4 tools"],
+            summary="API supports 8 tools",
+        )
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            first = self.score([original], opener, store)
+            merged = self.score([original, correction], opener, store)
+            swapped = self.score([correction, original], opener, store)
+            self.assertEqual(store.snapshot()["request_count"], 2)
+
+        self.assertEqual(len(opener.calls), 2)
+        self.assertEqual(first.summary["real_requests"], 1)
+        self.assertEqual(merged.summary["real_requests"], 1)
+        self.assertFalse(merged.candidates[0]["jev_assist"]["reused"])
+        self.assertEqual(swapped.summary["real_requests"], 0)
+        self.assertTrue(swapped.candidates[0]["jev_assist"]["reused"])
+        sent = opener.calls[1]["body"]["state"]["candidate"]["facts"]
+        self.assertIn("api supports 4 tools", sent)
+        self.assertIn("api supports 8 tools", sent)
+        self._assert_payload_matches_evidence(opener.calls[1], merged.candidates[0])
+        self.assertEqual(
+            scoring_facts(self._scored(merged.candidates[0])),
+            scoring_facts(self._scored(swapped.candidates[0])),
+        )
+
+    def test_version_and_decimal_changes_keep_full_values_and_re_evaluate(self):
+        groups = [
+            (
+                candidate(
+                    1,
+                    facts=["A release was announced"],
+                    summary="The released version is 1.2.3.",
+                ),
+                candidate(
+                    1,
+                    facts=["A release was announced"],
+                    summary="The released version is 1.3.2.",
+                ),
+                "the released version is 1.2.3",
+                "the released version is 1.3.2",
+            ),
+            (
+                candidate(
+                    2,
+                    facts=["Accuracy was reported"],
+                    summary="Accuracy is 3.14.",
+                ),
+                candidate(
+                    2,
+                    facts=["Accuracy was reported"],
+                    summary="Accuracy is 2.71.",
+                ),
+                "accuracy is 3.14",
+                "accuracy is 2.71",
+            ),
+        ]
+        for first_item, second_item, first_claim, second_claim in groups:
+            opener = RecordingOpener()
+            with tempfile.TemporaryDirectory() as tmp:
+                store = self.store(tmp)
+                first = self.score([first_item], opener, store)
+                second = self.score([second_item], opener, store)
+                self.assertEqual(store.snapshot()["request_count"], 2, first_claim)
+
+            self.assertEqual(len(opener.calls), 2, first_claim)
+            self.assertEqual(first.summary["real_requests"], 1, first_claim)
+            self.assertEqual(second.summary["real_requests"], 1, first_claim)
+            self.assertFalse(second.candidates[0]["jev_assist"]["reused"], first_claim)
+            self.assertIn(first_claim, opener.calls[0]["body"]["state"]["candidate"]["facts"])
+            self.assertIn(second_claim, opener.calls[1]["body"]["state"]["candidate"]["facts"])
+            self.assertNotIn("the released version is 1", opener.calls[0]["body"]["state"]["candidate"]["facts"])
+            self._assert_payload_matches_evidence(opener.calls[0], self._scored(first_item))
+            self._assert_payload_matches_evidence(opener.calls[1], self._scored(second_item))
+
+    def test_skip_paths_keep_correction_evidence_without_http(self):
+        original = candidate(
+            1,
+            facts=["API supports 4 tools"],
+            summary="API supports 4 tools",
+        )
+        correction = candidate(
+            1,
+            facts=["API supports 4 tools"],
+            summary="API supports 8 tools",
+        )
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp, limit=1)
+            first = self.score([original], opener, store)
+            disabled = self.score(
+                [original, correction],
+                opener,
+                store,
+                environ={**self.ENV, "JEV_ASSIST": "0"},
+            )
+            skipped = self.score([original, correction], opener, store)
+            self.assertEqual(store.snapshot()["request_count"], 1)
+
+        self.assertEqual(first.summary["real_requests"], 1)
+        self.assertEqual(len(opener.calls), 1)
+        self.assertEqual(disabled.summary["reason"], "disabled")
+        self.assertEqual(disabled.summary["real_requests"], 0)
+        self.assertEqual(disabled.summary["scored"], 0)
+        self.assertTrue(any("8 tools" in (row.get("summary") or "") for row in disabled.candidates))
+        self.assertEqual(skipped.summary["real_requests"], 0)
+        self.assertEqual(skipped.summary["scored"], 0)
+        self.assertEqual(skipped.candidates[0]["jev_assist"]["status"], "skipped")
+        self.assertEqual(skipped.candidates[0]["jev_assist"]["reason"], "quota_exhausted")
+        self.assertIn("api supports 8 tools", scoring_facts(self._scored(skipped.candidates[0])))
+        self.assertEqual(stable_facts(skipped.candidates[0]), ["api supports 4 tools"])
+        self.assertTrue(skipped.candidates[0].get("facts"))
+        self.assertTrue(skipped.candidates[0].get("summary"))
 
 
 def _independent_ca_claim_batch(path_str, calendar_date, start, count, queue):

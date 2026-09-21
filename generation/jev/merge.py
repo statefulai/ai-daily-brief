@@ -8,6 +8,7 @@ from typing import Any
 from generation.jev.fingerprint import (
     event_identity,
     evidence_payload,
+    normalize_text,
     normalize_url,
     stable_facts,
 )
@@ -57,10 +58,42 @@ def _structured_fact_strings(*items: dict[str, Any]) -> list[str]:
     return rows
 
 
+def _summary_part(raw: Any) -> str:
+    return raw.strip() if isinstance(raw, str) else ""
+
+
+def _report_summary_parts(item: dict[str, Any]) -> list[str]:
+    retained = item.get("report_summaries")
+    if isinstance(retained, list) and retained:
+        return [_summary_part(raw) for raw in retained if _summary_part(raw)]
+    text = _summary_part(item.get("text") or item.get("summary") or "")
+    return [text] if text else []
+
+
+def _unique_report_summaries(*items: dict[str, Any]) -> list[str]:
+    """Every report's summary, stable across input order. Not structured facts."""
+    texts: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        for part in _report_summary_parts(item):
+            if part in seen:
+                continue
+            seen.add(part)
+            texts.append(part)
+    texts.sort(key=lambda text: (normalize_text(text), text))
+    return texts
+
+
 def _merge_into(current: dict[str, Any], incoming: dict[str, Any]) -> None:
     merged_facts = stable_facts({"facts": _structured_fact_strings(current, incoming)})
     if merged_facts:
         current["facts"] = merged_facts
+
+    # Keep leftover summary evidence from every report. Do not promote it to
+    # facts, and do not pick a winner when summaries disagree.
+    summaries = _unique_report_summaries(current, incoming)
+    if summaries:
+        current["report_summaries"] = summaries
 
     sources = _source_rows(current)
     seen = {normalize_url(row.get("url") or row.get("source_url") or "") for row in sources}
