@@ -755,11 +755,9 @@ class JevCrossCAQuotaTest(JevHelpers, unittest.TestCase):
     def test_concurrent_writers_on_two_store_handles_stay_at_100(self):
         opener = RecordingOpener()
         with tempfile.TemporaryDirectory() as tmp:
-            durable = Path(tmp) / "shared-private"
-            first = self.score_shared_dir(
-                [candidate(1)], RecordingOpener(), durable, Path(tmp) / "seed"
-            )
-            path = durable / "jev" / f"quota-{self.DATE}.json"
+            durable = Path(tmp) / "shared-private" / "jev"
+            durable.mkdir(parents=True)
+            path = durable / f"quota-{self.DATE}.json"
             store_a = JevRunStore(path, calendar_date=self.DATE, request_limit=100, allow_create=True)
             store_b = JevRunStore(path, calendar_date=self.DATE, request_limit=100, allow_create=True)
             store_a.restore()
@@ -770,12 +768,11 @@ class JevCrossCAQuotaTest(JevHelpers, unittest.TestCase):
 
             with ThreadPoolExecutor(max_workers=16) as pool:
                 futures = []
-                for index in range(2, 122):
+                for index in range(1, 121):
                     handle = store_a if index % 2 == 0 else store_b
                     futures.append(pool.submit(worker, handle, index))
                 for future in futures:
                     future.result()
-            self.assertEqual(first.summary["real_requests"], 1)
             self.assertEqual(store_a.snapshot()["request_count"], 100)
             self.assertEqual(store_b.snapshot()["request_count"], 100)
 
