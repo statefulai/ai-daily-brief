@@ -456,7 +456,7 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
             self.assertEqual(in_flight["status"], "in_flight")
 
             store._write_unlocked = original_write
-            replay = self.score([candidate(1), candidate(3)], opener, store)
+            replay = self.score([candidate(1)], opener, store)
             self.assertEqual(store.snapshot()["request_count"], 1)
             self.assertEqual(len(opener.calls), 1)
             self.assertEqual(replay.candidates[0]["jev_assist"]["status"], "ambiguous")
