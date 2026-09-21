@@ -3,17 +3,25 @@ import tempfile
 import threading
 import unittest
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 from io import BytesIO
+from multiprocessing import Process, Queue
 from pathlib import Path
 from unittest.mock import patch
 import urllib.error
 
-from generation.jev.assist import assist_candidates, jev_enabled
+from edition import BEIJING_TZ
+from generation.jev.assist import CANONICAL_DISABLE_ENV, assist_candidates, jev_enabled
 from generation.jev.client import JevClientError, parse_answers
 from generation.jev.fingerprint import reuse_fingerprint, rubric_id
 from generation.jev.merge import merge_same_event
 from generation.jev.rubric import build_questions
-from generation.jev.store import JevRunStore, StoreError, beijing_calendar_date
+from generation.jev.store import (
+    JevRunStore,
+    StoreError,
+    beijing_calendar_date,
+    resolve_store_location,
+)
 from scripts.jev_assist import main as jev_assist_main
 
 
@@ -104,11 +112,32 @@ class JevHelpers:
     DATE = "2026-09-21"
     ENV = {"TYPESAFE_API_KEY": "test-jev-key-do-not-log"}
 
-    def store(self, directory, *, limit=100):
+    def store(self, directory, *, limit=100, allow_create=True):
         path = Path(directory) / "runs" / "jev" / f"quota-{self.DATE}.json"
-        store = JevRunStore(path, calendar_date=self.DATE, request_limit=limit)
+        store = JevRunStore(
+            path,
+            calendar_date=self.DATE,
+            request_limit=limit,
+            allow_create=allow_create,
+        )
         store.restore()
         return store
+
+    def beijing_now(self):
+        return datetime(2026, 9, 21, 15, 0, tzinfo=BEIJING_TZ)
+
+    def score_shared_dir(self, items, opener, durable_root, repo_root, **kwargs):
+        environ = dict(kwargs.pop("environ", self.ENV))
+        environ["AI_DAILY_PRIVATE_RUN_DIR"] = str(durable_root)
+        return assist_candidates(
+            items,
+            opener=opener,
+            environ=environ,
+            repo_root=repo_root,
+            now=kwargs.pop("now", self.beijing_now()),
+            prior_coverage=kwargs.pop("prior_coverage", []),
+            **kwargs,
+        )
 
     def score(self, items, opener, store, **kwargs):
         return assist_candidates(
@@ -380,6 +409,8 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertIn("no_new_value", text)
         self.assertIn("JEV_ASSIST=0", text)
         self.assertIn("runs/jev", text)
+        self.assertIn("AI_DAILY_PRIVATE_RUN_DIR", text)
+        self.assertIn("从零", text)
 
     def test_client_reads_only_typesafe_env_var(self):
         source = Path("generation/jev/client.py").read_text(encoding="utf-8")
@@ -388,10 +419,31 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertNotIn("TYPESAFE_API_TOKEN", source)
 
     def test_disable_helpers(self):
+        self.assertEqual(CANONICAL_DISABLE_ENV, "JEV_ASSIST")
         self.assertFalse(jev_enabled({}, {"JEV_ASSIST": "0"}))
         self.assertFalse(jev_enabled({}, {"JEV_ASSIST_DISABLED": "1"}))
         self.assertFalse(jev_enabled({"enabled": False}, {}))
         self.assertTrue(jev_enabled({}, {}))
+        # Canonical JEV_ASSIST wins when set; alias is ignored.
+        self.assertTrue(jev_enabled({"enabled": False}, {"JEV_ASSIST": "1"}))
+        self.assertFalse(jev_enabled({"enabled": True}, {"JEV_ASSIST": "0"}))
+
+    def test_canonical_disable_is_checked_before_store_or_http(self):
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "quota.json"
+            path.write_text("{not-json", encoding="utf-8")
+            store = JevRunStore(path, calendar_date=self.DATE, request_limit=100)
+            result = assist_candidates(
+                [candidate(1)],
+                store=store,
+                opener=opener,
+                environ={"TYPESAFE_API_KEY": "x", "JEV_ASSIST": "0"},
+                prior_coverage=[],
+            )
+            self.assertEqual(result.summary["reason"], "disabled")
+            self.assertEqual(len(opener.calls), 0)
+            self.assertEqual(path.read_text(encoding="utf-8"), "{not-json")
 
     def test_disappeared_store_skips_without_resetting(self):
         opener = RecordingOpener()
@@ -416,6 +468,320 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         )
         self.assertEqual(len(rows), 2)
         self.assertTrue(any(row.get("title") == "no evidence" for row in rows))
+
+
+def _independent_ca_claim_batch(path_str, calendar_date, start, count, queue):
+    """Standalone CA-process worker: own JevRunStore, shared durable file."""
+    store = JevRunStore(
+        Path(path_str),
+        calendar_date=calendar_date,
+        request_limit=100,
+        allow_create=True,
+    )
+    store.restore()
+    claimed = 0
+    exhausted = 0
+    reused = 0
+    for index in range(start, start + count):
+        claim = store.claim(f"cross-ca-fp-{index}")
+        if claim.kind == "claimed":
+            claimed += 1
+        elif claim.kind == "quota_exhausted":
+            exhausted += 1
+        elif claim.kind == "reuse":
+            reused += 1
+    snapshot = store.snapshot()
+    queue.put(
+        {
+            "claimed": claimed,
+            "exhausted": exhausted,
+            "reused": reused,
+            "request_count": snapshot["request_count"],
+        }
+    )
+
+
+class JevCrossCAQuotaTest(JevHelpers, unittest.TestCase):
+    def test_resolve_store_location_durable_vs_workspace_resume(self):
+        now = self.beijing_now()
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "private"
+            workspace = Path(tmp) / "workspace"
+            explicit = Path(tmp) / "explicit.json"
+            from_private = resolve_store_location(
+                now=now,
+                environ={"AI_DAILY_PRIVATE_RUN_DIR": str(durable)},
+                repo_root=workspace,
+            )
+            from_file = resolve_store_location(
+                now=now,
+                environ={"JEV_ASSIST_STORE": str(explicit)},
+                repo_root=workspace,
+            )
+            from_explicit = resolve_store_location(
+                now=now,
+                environ={},
+                explicit=explicit,
+                repo_root=workspace,
+            )
+            from_workspace = resolve_store_location(
+                now=now,
+                environ={},
+                repo_root=workspace,
+            )
+        self.assertTrue(from_private.allow_create)
+        self.assertEqual(from_private.source, "durable_env")
+        self.assertEqual(from_private.path, durable / "jev" / f"quota-{self.DATE}.json")
+        self.assertTrue(from_file.allow_create)
+        self.assertTrue(from_explicit.allow_create)
+        self.assertFalse(from_workspace.allow_create)
+        self.assertEqual(from_workspace.source, "workspace_resume")
+        self.assertEqual(from_workspace.path, workspace / "runs" / "jev" / f"quota-{self.DATE}.json")
+
+    def test_two_independent_cas_sharing_durable_dir_cannot_exceed_100(self):
+        opener_a = RecordingOpener()
+        opener_b = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "shared-private"
+            ca_a_root = Path(tmp) / "ca-a"
+            ca_b_root = Path(tmp) / "ca-b"
+            first = self.score_shared_dir(
+                [candidate(index) for index in range(1, 61)],
+                opener_a,
+                durable,
+                ca_a_root,
+            )
+            second = self.score_shared_dir(
+                [candidate(index) for index in range(61, 121)],
+                opener_b,
+                durable,
+                ca_b_root,
+            )
+            quota_path = durable / "jev" / f"quota-{self.DATE}.json"
+            payload = json.loads(quota_path.read_text(encoding="utf-8"))
+            late = self.score_shared_dir([candidate(200)], RecordingOpener(), durable, ca_b_root)
+
+        self.assertEqual(len(opener_a.calls), 60)
+        self.assertEqual(len(opener_b.calls), 40)
+        self.assertEqual(first.summary["real_requests"], 60)
+        self.assertEqual(second.summary["real_requests"], 40)
+        self.assertEqual(payload["request_count"], 100)
+        self.assertLessEqual(len(opener_a.calls) + len(opener_b.calls), 100)
+        self.assertEqual(late.candidates[0]["jev_assist"]["reason"], "quota_exhausted")
+        self.assertEqual(late.summary["real_requests"], 0)
+
+    def test_two_os_processes_sharing_durable_file_stay_at_100(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "shared-private" / "jev"
+            durable.mkdir(parents=True)
+            path = durable / f"quota-{self.DATE}.json"
+            queue: Queue = Queue()
+            workers = [
+                Process(
+                    target=_independent_ca_claim_batch,
+                    args=(str(path), self.DATE, 1, 80, queue),
+                ),
+                Process(
+                    target=_independent_ca_claim_batch,
+                    args=(str(path), self.DATE, 81, 80, queue),
+                ),
+            ]
+            for worker in workers:
+                worker.start()
+            for worker in workers:
+                worker.join(timeout=30)
+                if worker.is_alive():
+                    worker.terminate()
+                    worker.join(timeout=5)
+                    self.fail("independent CA worker hung on the shared store")
+                self.assertEqual(worker.exitcode, 0)
+            results = [queue.get(timeout=5), queue.get(timeout=5)]
+            payload = json.loads(path.read_text(encoding="utf-8"))
+
+        self.assertEqual(sum(item["claimed"] for item in results), 100)
+        self.assertEqual(sum(item["exhausted"] for item in results), 60)
+        self.assertEqual(payload["request_count"], 100)
+        self.assertEqual(len(payload["evaluations"]), 100)
+
+    def test_third_ca_missing_workspace_store_skips_without_http_or_reset(self):
+        opener_shared = RecordingOpener()
+        opener_fresh = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "shared-private"
+            self.score_shared_dir(
+                [candidate(index) for index in range(1, 6)],
+                opener_shared,
+                durable,
+                Path(tmp) / "ca-shared",
+            )
+            shared_count = json.loads(
+                (durable / "jev" / f"quota-{self.DATE}.json").read_text(encoding="utf-8")
+            )["request_count"]
+            fresh_vm = Path(tmp) / "fresh-vm"
+            result = assist_candidates(
+                [candidate(99)],
+                opener=opener_fresh,
+                environ=self.ENV,
+                repo_root=fresh_vm,
+                now=self.beijing_now(),
+                prior_coverage=[],
+            )
+            created = list(fresh_vm.rglob("quota-*.json")) if fresh_vm.exists() else []
+
+        self.assertEqual(shared_count, 5)
+        self.assertTrue(result.skipped)
+        self.assertEqual(result.summary["reason"], "store_unavailable")
+        self.assertIn("missing", result.summary["store_error"])
+        self.assertEqual(len(opener_fresh.calls), 0)
+        self.assertEqual(created, [])
+
+    def test_third_ca_corrupt_or_empty_shared_store_skips_without_reset(self):
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "shared-private"
+            self.score_shared_dir([candidate(1)], RecordingOpener(), durable, Path(tmp) / "ca-1")
+            quota_path = durable / "jev" / f"quota-{self.DATE}.json"
+            quota_path.write_text("{not-json", encoding="utf-8")
+            corrupt = self.score_shared_dir(
+                [candidate(2)], opener, durable, Path(tmp) / "ca-corrupt"
+            )
+            self.assertEqual(quota_path.read_text(encoding="utf-8"), "{not-json")
+            quota_path.write_text("   \n", encoding="utf-8")
+            empty = self.score_shared_dir(
+                [candidate(3)], opener, durable, Path(tmp) / "ca-empty"
+            )
+            self.assertEqual(quota_path.read_text(encoding="utf-8").strip(), "")
+            quota_path.write_text("[]", encoding="utf-8")
+            wrong_shape = self.score_shared_dir(
+                [candidate(4)], opener, durable, Path(tmp) / "ca-shape"
+            )
+            self.assertEqual(quota_path.read_text(encoding="utf-8"), "[]")
+
+        self.assertEqual(len(opener.calls), 0)
+        self.assertEqual(corrupt.summary["reason"], "store_unavailable")
+        self.assertEqual(empty.summary["reason"], "store_unavailable")
+        self.assertEqual(wrong_shape.summary["reason"], "store_unavailable")
+        self.assertIn("parsed", corrupt.summary["store_error"])
+        self.assertIn("empty", empty.summary["store_error"])
+        self.assertIn("not an object", wrong_shape.summary["store_error"])
+
+    def test_leftover_lock_without_json_does_not_mint_a_new_100(self):
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "shared-private"
+            jev_dir = durable / "jev"
+            jev_dir.mkdir(parents=True)
+            lock = jev_dir / f"quota-{self.DATE}.json.lock"
+            lock.write_text("held\n", encoding="utf-8")
+            result = self.score_shared_dir(
+                [candidate(1)], opener, durable, Path(tmp) / "ca-lock"
+            )
+            quota_path = jev_dir / f"quota-{self.DATE}.json"
+            self.assertFalse(quota_path.exists())
+            self.assertEqual(lock.read_text(encoding="utf-8"), "held\n")
+
+        self.assertEqual(result.summary["reason"], "store_unavailable")
+        self.assertEqual(len(opener.calls), 0)
+
+    def test_permission_and_lock_failures_skip_without_http(self):
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "shared-private"
+            seeded = self.score_shared_dir(
+                [candidate(1)], RecordingOpener(), durable, Path(tmp) / "ca-seed"
+            )
+            quota_path = durable / "jev" / f"quota-{self.DATE}.json"
+            self.assertEqual(seeded.summary["real_requests"], 1)
+            quota_path.chmod(0o000)
+            try:
+                denied = self.score_shared_dir(
+                    [candidate(2)], opener, durable, Path(tmp) / "ca-denied"
+                )
+            finally:
+                quota_path.chmod(0o644)
+            parent_is_file = Path(tmp) / "not-a-directory"
+            parent_is_file.write_text("blocker", encoding="utf-8")
+            blocked = assist_candidates(
+                [candidate(3)],
+                opener=opener,
+                environ={**self.ENV, "AI_DAILY_PRIVATE_RUN_DIR": str(parent_is_file)},
+                repo_root=Path(tmp) / "ca-blocked",
+                now=self.beijing_now(),
+                prior_coverage=[],
+            )
+            with patch("generation.jev.store.fcntl.flock", side_effect=OSError("flock failed")):
+                locked = self.score_shared_dir(
+                    [candidate(4)], opener, durable, Path(tmp) / "ca-flock"
+                )
+
+        self.assertEqual(len(opener.calls), 0)
+        self.assertEqual(denied.summary["reason"], "store_unavailable")
+        self.assertEqual(blocked.summary["reason"], "store_unavailable")
+        self.assertEqual(locked.summary["reason"], "store_unavailable")
+        self.assertIn("cannot be read", denied.summary["store_error"])
+        self.assertIn("cannot be locked", blocked.summary["store_error"])
+        self.assertIn("cannot be locked", locked.summary["store_error"])
+
+    def test_workspace_resume_does_not_create_and_durable_first_day_does(self):
+        opener_workspace = RecordingOpener()
+        opener_durable = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            workspace = Path(tmp) / "repo"
+            missing = assist_candidates(
+                [candidate(1)],
+                opener=opener_workspace,
+                environ=self.ENV,
+                repo_root=workspace,
+                now=self.beijing_now(),
+                prior_coverage=[],
+            )
+            self.assertFalse(any(workspace.rglob("quota-*.json")))
+            durable = Path(tmp) / "private"
+            created = self.score_shared_dir(
+                [candidate(1)], opener_durable, durable, Path(tmp) / "ca-first"
+            )
+            quota_path = durable / "jev" / f"quota-{self.DATE}.json"
+            self.assertTrue(quota_path.exists())
+            self.assertEqual(
+                json.loads(quota_path.read_text(encoding="utf-8"))["request_count"],
+                1,
+            )
+
+        self.assertEqual(missing.summary["reason"], "store_unavailable")
+        self.assertEqual(len(opener_workspace.calls), 0)
+        self.assertEqual(len(opener_durable.calls), 1)
+        self.assertEqual(created.summary["real_requests"], 1)
+
+    def test_concurrent_writers_on_two_store_handles_stay_at_100(self):
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            durable = Path(tmp) / "shared-private"
+            first = self.score_shared_dir(
+                [candidate(1)], RecordingOpener(), durable, Path(tmp) / "seed"
+            )
+            path = durable / "jev" / f"quota-{self.DATE}.json"
+            store_a = JevRunStore(path, calendar_date=self.DATE, request_limit=100, allow_create=True)
+            store_b = JevRunStore(path, calendar_date=self.DATE, request_limit=100, allow_create=True)
+            store_a.restore()
+            store_b.restore()
+            barrier = threading.Barrier(16)
+
+            def worker(handle, index):
+                barrier.wait()
+                self.score([candidate(index)], opener, handle)
+
+            with ThreadPoolExecutor(max_workers=16) as pool:
+                futures = []
+                for index in range(2, 122):
+                    handle = store_a if index % 2 == 0 else store_b
+                    futures.append(pool.submit(worker, handle, index))
+                for future in futures:
+                    future.result()
+            self.assertEqual(first.summary["real_requests"], 1)
+            self.assertEqual(store_a.snapshot()["request_count"], 100)
+            self.assertEqual(store_b.snapshot()["request_count"], 100)
+
+        self.assertEqual(len(opener.calls), 100)
 
 
 if __name__ == "__main__":

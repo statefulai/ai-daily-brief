@@ -21,18 +21,22 @@ from generation.jev.store import (
     JevRunStore,
     StoreError,
     beijing_calendar_date,
-    resolve_store_path,
+    resolve_store_location,
 )
 
 logger = logging.getLogger(__name__)
 
+# Canonical operator kill switch. Checked before any HTTP. Aliases still work
+# only when JEV_ASSIST is unset.
+CANONICAL_DISABLE_ENV = "JEV_ASSIST"
 FALSEY = {"0", "false", "off", "no", "disabled"}
 TRUTHY = {"1", "true", "yes", "on"}
 
 
 def jev_enabled(config: dict[str, Any] | None = None, environ: dict[str, str] | None = None) -> bool:
+    """Return False when the operator disabled assist. Canonical: JEV_ASSIST=0."""
     env = environ if environ is not None else os.environ
-    raw = env.get("JEV_ASSIST")
+    raw = env.get(CANONICAL_DISABLE_ENV)
     if isinstance(raw, str) and raw.strip():
         return raw.strip().lower() not in FALSEY
     disabled = env.get("JEV_ASSIST_DISABLED", "")
@@ -98,7 +102,11 @@ def _skip(
     }
     if extra:
         summary.update(extra)
-    logger.info("Jev assist skipped: %s", reason)
+    store_error = (extra or {}).get("store_error")
+    if store_error:
+        logger.info("Jev assist skipped: %s (%s)", reason, store_error)
+    else:
+        logger.info("Jev assist skipped: %s", reason)
     return AssistResult(candidates=list(candidates), summary=summary)
 
 
@@ -114,13 +122,18 @@ def _open_store(
         store.restore()
         return store
     date = beijing_calendar_date(now)
-    path = resolve_store_path(
+    location = resolve_store_location(
         now=now,
         environ=environ,
         explicit=config.get("store_path"),
         repo_root=repo_root if repo_root is not None else config.get("repo_root"),
     )
-    opened = JevRunStore(path, calendar_date=date, request_limit=daily_request_limit(config))
+    opened = JevRunStore(
+        location.path,
+        calendar_date=date,
+        request_limit=daily_request_limit(config),
+        allow_create=location.allow_create,
+    )
     opened.restore()
     return opened
 
@@ -140,6 +153,7 @@ def assist_candidates(
     config = dict(config or {})
     env = environ if environ is not None else os.environ
     incoming = [deepcopy(item) for item in candidates if isinstance(item, dict)]
+    # Canonical disable is JEV_ASSIST=0; checked before store I/O or HTTP.
     if not jev_enabled(config, env):
         return _skip(incoming, "disabled")
     api_key = _api_key(env)

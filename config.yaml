@@ -1,7 +1,7 @@
 # AI Daily Brief local configuration
 
 # Jev (TypeSafe System One) is assist-only topic scoring.
-# Disable with JEV_ASSIST=0 or jev.enabled: false. Scores never select or empty an edition.
+# Canonical disable: JEV_ASSIST=0 (checked before any HTTP). Scores never select or empty an edition.
 jev:
   enabled: true
   model: "jev-latest"

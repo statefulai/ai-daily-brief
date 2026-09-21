@@ -22,8 +22,45 @@ class StoreError(RuntimeError):
     """Private run state cannot be restored safely; Jev must be skipped."""
 
 
+@dataclass(frozen=True)
+class StoreLocation:
+    """Resolved quota file. allow_create is True only for an explicit durable root."""
+
+    path: Path
+    allow_create: bool
+    source: str
+
+
 def beijing_calendar_date(now: datetime | None = None) -> str:
     return beijing_today(now).strftime("%Y-%m-%d")
+
+
+def resolve_store_location(
+    *,
+    now: datetime | None = None,
+    environ: dict[str, str] | None = None,
+    explicit: str | Path | None = None,
+    repo_root: str | Path | None = None,
+) -> StoreLocation:
+    """Locate the dated quota file.
+
+    Durable roots (AI_DAILY_PRIVATE_RUN_DIR / JEV_ASSIST_STORE / explicit path)
+    may create today's file once. The workspace default ``runs/jev/`` is
+    resume-only: a missing file skips Jev instead of minting a new 100-call day.
+    """
+    env = environ if environ is not None else os.environ
+    date = beijing_calendar_date(now)
+    filename = f"quota-{date}.json"
+    if explicit:
+        return StoreLocation(Path(explicit), True, "explicit")
+    store_file = (env.get("JEV_ASSIST_STORE") or "").strip()
+    if store_file:
+        return StoreLocation(Path(store_file), True, "durable_env")
+    root = (env.get("AI_DAILY_PRIVATE_RUN_DIR") or "").strip()
+    if root:
+        return StoreLocation(Path(root) / "jev" / filename, True, "durable_env")
+    base = Path(repo_root) if repo_root is not None else Path.cwd()
+    return StoreLocation(base / "runs" / "jev" / filename, False, "workspace_resume")
 
 
 def resolve_store_path(
@@ -33,20 +70,9 @@ def resolve_store_path(
     explicit: str | Path | None = None,
     repo_root: str | Path | None = None,
 ) -> Path:
-    """Resolve the dated quota/reuse file inside private run storage."""
-    env = environ if environ is not None else os.environ
-    if explicit:
-        return Path(explicit)
-    store_file = (env.get("JEV_ASSIST_STORE") or "").strip()
-    if store_file:
-        return Path(store_file)
-    date = beijing_calendar_date(now)
-    filename = f"quota-{date}.json"
-    root = (env.get("AI_DAILY_PRIVATE_RUN_DIR") or "").strip()
-    if root:
-        return Path(root) / "jev" / filename
-    base = Path(repo_root) if repo_root is not None else Path.cwd()
-    return base / "runs" / "jev" / filename
+    return resolve_store_location(
+        now=now, environ=environ, explicit=explicit, repo_root=repo_root
+    ).path
 
 
 def empty_payload(calendar_date: str, request_limit: int = DEFAULT_LIMIT) -> dict[str, Any]:
@@ -77,32 +103,43 @@ class JevRunStore:
         *,
         calendar_date: str,
         request_limit: int = DEFAULT_LIMIT,
+        allow_create: bool = False,
     ):
         self.path = Path(path)
         self.calendar_date = calendar_date
         self.request_limit = request_limit
+        self.allow_create = allow_create
         self._ready = False
+
+    def lock_path(self) -> Path:
+        return Path(str(self.path) + ".lock")
 
     @contextmanager
     def _lock(self) -> Iterator[None]:
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        lock_path = Path(str(self.path) + ".lock")
-        with lock_path.open("a+", encoding="utf-8") as lock_file:
-            fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
-            try:
-                yield
-            finally:
-                fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+        try:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            with self.lock_path().open("a+", encoding="utf-8") as lock_file:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+                try:
+                    yield
+                finally:
+                    fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+        except OSError as exc:
+            raise StoreError("private run store cannot be locked") from exc
 
     def _read_unlocked(self) -> dict[str, Any]:
         if not self.path.exists():
-            if self._ready:
-                raise StoreError("private run store disappeared after restore")
-            return empty_payload(self.calendar_date, self.request_limit)
+            raise StoreError("private run store is missing")
         try:
-            payload = json.loads(self.path.read_text(encoding="utf-8"))
-        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raw = self.path.read_text(encoding="utf-8")
+        except OSError as exc:
             raise StoreError("private run store cannot be read") from exc
+        if not raw.strip():
+            raise StoreError("private run store is empty")
+        try:
+            payload = json.loads(raw)
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise StoreError("private run store cannot be parsed") from exc
         if not isinstance(payload, dict):
             raise StoreError("private run store is not an object")
         if payload.get("version") != STORE_VERSION or payload.get("kind") != STORE_KIND:
@@ -127,19 +164,42 @@ class JevRunStore:
             raise StoreError("private run store cannot be written") from exc
 
     def restore(self) -> dict[str, Any]:
-        """Load existing state and prove a read/write round-trip. Never reset on failure."""
-        with self._lock():
-            payload = self._read_unlocked()
-            self._write_unlocked(payload)
-            again = self._read_unlocked()
-            if again.get("request_count") != payload.get("request_count"):
-                raise StoreError("private run store round-trip failed")
-            self._ready = True
-            return again
+        """Load existing state. Never re-init a missing/corrupt day to a fresh 100.
+
+        First-of-day create is allowed only on an explicit/durable root
+        (``allow_create``) when neither today's JSON nor a leftover lock
+        existed before this process opened the lock. A leftover lock with
+        no JSON means a prior CA used this day and the file is gone —
+        skip Jev instead of minting another 100. Workspace ``runs/jev/``
+        is resume-only and never creates.
+        """
+        prior_lock = self.lock_path().exists()
+        # Workspace / already-opened stores: skip before creating a lock dir.
+        if not self.path.exists() and (self._ready or not self.allow_create):
+            raise StoreError("private run store is missing")
+        try:
+            with self._lock():
+                if not self.path.exists():
+                    if self._ready or not self.allow_create or prior_lock:
+                        raise StoreError("private run store is missing")
+                    self._write_unlocked(empty_payload(self.calendar_date, self.request_limit))
+                payload = self._read_unlocked()
+                self._write_unlocked(payload)
+                again = self._read_unlocked()
+                if again.get("request_count") != payload.get("request_count"):
+                    raise StoreError("private run store round-trip failed")
+                self._ready = True
+                return again
+        except StoreError:
+            self._ready = False
+            raise
 
     def snapshot(self) -> dict[str, Any]:
-        with self._lock():
-            return self._read_unlocked()
+        try:
+            with self._lock():
+                return self._read_unlocked()
+        except StoreError:
+            raise
 
     def claim(self, fingerprint: str, *, now: datetime | None = None) -> Claim:
         claimed_at = (now or datetime.now(BEIJING_TZ)).isoformat()

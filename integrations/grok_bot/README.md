@@ -18,7 +18,8 @@
      --editions editions
    ```
 
-   关闭：`JEV_ASSIST=0`。缺密钥、配额用尽、状态读不回或接口失败时继续原选稿。未打分候选仍可入选。
+   关闭（唯一正式入口）：`JEV_ASSIST=0`。缺密钥、配额用尽、私有状态读不回（不得从零再计）或接口失败时继续原选稿。未打分候选仍可入选。
+   跨 CA 共用 `AI_DAILY_PRIVATE_RUN_DIR`；默认 `runs/jev/` 只续跑同一工作区。
    Jev 失败或低分都不得写成 `no_new_value`。密钥必须是 Cloud Agents Runtime Secret `TYPESAFE_API_KEY`；日刊 `box-secrets` 不会进入 CA 虚拟机。
    日刊可粘贴的模板句见 [`generation/CA-JEV-ASSIST.md`](../../generation/CA-JEV-ASSIST.md)。
 7. Cloud Agent 回源核验并做最终选稿，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。

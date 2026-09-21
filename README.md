@@ -99,8 +99,8 @@ AI_NEWS_MODEL=your-model-name
 生产 Cloud Agent 在合并候选后调用 `python scripts/jev_assist.py`。Jev 默认开启，失败时跳过并继续原选稿。操作开关见 [`generation/CA-JEV-ASSIST.md`](generation/CA-JEV-ASSIST.md)：
 
 - 密钥只读环境变量 `TYPESAFE_API_KEY`。生产环境要在 **Cursor Cloud Agents → Secrets → Runtime Secret** 绑定同名密钥（优先绑到本仓库的 saved Environment）。日刊 Bot 的 `box-secrets` **不会**注入 CA 虚拟机；密钥只对**之后新启动**的 CA 生效。
-- 关闭：`JEV_ASSIST=0` 或 `config.yaml` 里 `jev.enabled: false`。
-- 北京自然日最多 100 次真实请求；配额与复用写在私有 `runs/jev/`（跨 CA 请设 `AI_DAILY_PRIVATE_RUN_DIR`）。读不回这份状态时跳过 Jev，不中断当日流程。
+- 关闭（唯一正式入口）：`JEV_ASSIST=0`。在任何 Jev HTTP 之前检查。`JEV_ASSIST_DISABLED=1` 与 `jev.enabled: false` 只在未设置 `JEV_ASSIST` 时生效。
+- 北京自然日最多 100 次真实请求。跨独立 CA 必须共用 `AI_DAILY_PRIVATE_RUN_DIR`。默认 `runs/jev/` 只续跑同一工作区；新虚拟机读不回该状态时跳过 Jev，**不得从零再计 100 次**。
 - 不要把配额写进 `editions/` 或投递账本。Jev 失败或低分都不是空刊。
 
 ```bash
