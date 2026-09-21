@@ -57,10 +57,11 @@ Anthropic 把 Claude Chat 与 Cowork 并进同一对话，并上线 Docs / Slide
 ## 如何运作
 
 1. **汇集候选。** 读取公开一手来源，并可并入已核验、且标明可公开的供稿。期次窗口为北京时间 `[前一日 08:00, 当日 08:00)`。
-2. **合并同事件后可调用 Jev 辅助打分。** 生产路径在合并候选、检查必填字段之后调用 `python scripts/jev_assist.py`。Jev 只评估「相对既往是否有新事实」和「阅读价值」，**不能单独入选、淘汰或裁定空刊**。随后 Cloud Agent 回源核验并做最终选稿。
-3. **写成结构化期次。** 产出 `edition.json`，再用固定模板生成 HTML。
-4. **校验并发布网页。** 经 pull request 合入 `main` 后，CI 校验 schema、来源、内容 hash 和 HTML，再部署到 [GitHub Pages](https://statefulai.github.io/ai-daily-brief/)。
-5. **按同一期准备投递。** 邮件必须是完整 `email.html` 正文，禁止改成摘要卡片；群必须是同一批文章的完整纯文本，禁止只发短要点或原始 HTML 标签。`published_candidate` 只表示期次已写成可发布稿，不等于邮件或群已经发出。
+2. **Jev 辅助判断。** Jev 是 TypeSafe 提供的 AI 评估模型。本项目把已采集的候选新闻和既往报道交给它，辅助判断“有没有新变化、值不值得读”。生成日报的 Cloud Agent 仍负责核实来源和最终选稿；Jev 出错或额度用完时，日报继续原有流程。官方说明见 [Jev 简介](https://docs.typesafe.ai/introduction)。调用、密钥、关闭（`JEV_ASSIST=0`）与额度交接见 [`generation/CA-JEV-ASSIST.md`](generation/CA-JEV-ASSIST.md)。
+3. **回源核验并最终选稿。** Cloud Agent 回到公开一手来源核对事实，并决定写哪些重要变化。Jev 分数不能单独入选、淘汰或裁定空刊。
+4. **写成结构化期次。** 产出 `edition.json`，再用固定模板生成 HTML。
+5. **先校验，再发布网页。** 打开 pull request 后，CI 校验 schema、来源、内容 hash 和 HTML；合入 `main` 后才部署到 [GitHub Pages](https://statefulai.github.io/ai-daily-brief/)。
+6. **按同一期准备投递。** 邮件必须是完整 `email.html` 正文，禁止改成摘要卡片；群必须是同一批文章的完整纯文本，禁止只发短要点或原始 HTML 标签。`published_candidate` 只表示期次已写成可发布稿，不等于网页已经上线，也不等于邮件或群已经发出。
 
 ## 本地开发
 
@@ -96,21 +97,18 @@ AI_NEWS_MODEL=your-model-name
 
 本项目尚未对所有兼容服务做全新 clone 验收；如遇到响应格式差异，请提交可复现问题。`config.yaml` 控制本地数据源、模型和输出目录；环境变量优先于其中的模型端点与模型名。
 
-生产 Cloud Agent 在合并候选后调用 `python scripts/jev_assist.py`。Jev 默认开启，失败时跳过并继续原选稿。操作开关见 [`generation/CA-JEV-ASSIST.md`](generation/CA-JEV-ASSIST.md)：
-
-- 密钥只读环境变量 `TYPESAFE_API_KEY`。生产环境要在 **Cursor Cloud Agents → Secrets → Runtime Secret** 绑定同名密钥（优先绑到本仓库的 saved Environment）。日刊 Bot 的 `box-secrets` **不会**注入 CA 虚拟机；密钥只对**之后新启动**的 CA 生效。
-- 关闭（唯一正式入口）：`JEV_ASSIST=0`。在任何 Jev HTTP 之前检查。`JEV_ASSIST_DISABLED=1` 与 `jev.enabled: false` 只在未设置 `JEV_ASSIST` 时生效。
-- 北京自然日最多 100 次真实请求。跨独立 CA 必须共用 `AI_DAILY_PRIVATE_RUN_DIR`。默认 `runs/jev/` 只续跑同一工作区；新虚拟机读不回该状态时跳过 Jev，**不得从零再计 100 次**。
-- 不要把配额写进 `editions/` 或投递账本。Jev 失败或低分都不是空刊。
+生产 Cloud Agent 在合并候选后调用 `python scripts/jev_assist.py`。Jev 默认开启；出错或额度用完时跳过并继续原选稿。关闭请设 `JEV_ASSIST=0`。操作细节见 [`generation/CA-JEV-ASSIST.md`](generation/CA-JEV-ASSIST.md)。
 
 ```bash
-# 完整本地流程；仅 published_candidate 会写 editions/<date>/
+# 完整本地流程；只有 published_candidate 才写 editions/<date>/
+# 成功策展时仍可能更新 daily-brief.md / archives/
 python main.py
 
 # 只读取来源，不调用模型，也不写期次
 python main.py --sources-only
 
-# 打印结构化结果，不写文件
+# 打印结构化期次，不写 editions/ 或公开产物
+# Jev 若真正发请求，仍可能写入私有配额文件
 python main.py --dry-run
 
 # 使用另一份配置
@@ -174,7 +172,7 @@ python scripts/edition_ci.py build --output _site
 ```text
 main.py                    # 本地独立运行
 edition.py / curate.py / verify.py
-generation/jev/            # Jev 辅助打分（客户端、配额、复用）
+generation/jev/            # Jev 辅助判断（客户端、配额、复用）
 templates/                 # 固定网页与邮件模板
 scripts/edition_ci.py      # 校验与 Pages 构建
 scripts/jev_assist.py      # Cloud Agent 合并候选后的 Jev 入口
