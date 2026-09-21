@@ -5,7 +5,12 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any
 
-from generation.jev.fingerprint import event_identity, evidence_payload, normalize_url
+from generation.jev.fingerprint import (
+    event_identity,
+    evidence_payload,
+    normalize_url,
+    stable_facts,
+)
 
 
 def has_required_fields(item: dict[str, Any]) -> bool:
@@ -43,18 +48,19 @@ def _source_rows(item: dict[str, Any]) -> list[dict[str, Any]]:
     return rows
 
 
+def _structured_fact_strings(*items: dict[str, Any]) -> list[str]:
+    rows: list[str] = []
+    for item in items:
+        for raw in item.get("facts") or []:
+            if isinstance(raw, str):
+                rows.append(raw)
+    return rows
+
+
 def _merge_into(current: dict[str, Any], incoming: dict[str, Any]) -> None:
-    current_facts = [fact for fact in current.get("facts") or [] if isinstance(fact, str)]
-    for fact in incoming.get("facts") or []:
-        if isinstance(fact, str) and fact not in current_facts:
-            current_facts.append(fact)
-    extra_text = incoming.get("text") or incoming.get("summary")
-    if isinstance(extra_text, str) and extra_text.strip() and extra_text not in current_facts:
-        current_summary = current.get("text") or current.get("summary") or ""
-        if extra_text.strip() != (current_summary.strip() if isinstance(current_summary, str) else ""):
-            current_facts.append(extra_text)
-    if current_facts:
-        current["facts"] = current_facts
+    merged_facts = stable_facts({"facts": _structured_fact_strings(current, incoming)})
+    if merged_facts:
+        current["facts"] = merged_facts
 
     sources = _source_rows(current)
     seen = {normalize_url(row.get("url") or row.get("source_url") or "") for row in sources}
@@ -84,6 +90,9 @@ def merge_same_event(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
             leftover.append(item)
             continue
         key = event_identity(item)
+        structured = stable_facts(item)
+        if structured:
+            item["facts"] = structured
         if key not in groups:
             groups[key] = item
             order.append(key)
