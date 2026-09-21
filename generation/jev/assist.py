@@ -270,32 +270,34 @@ def assist_candidates(
             )
             answers = response.get("answers") if isinstance(response, dict) else None
             resolved_model = response.get("model") if isinstance(response, dict) else None
-            run_store.complete(
-                fingerprint,
-                status="ok",
-                answers=answers if isinstance(answers, dict) else None,
-                model=resolved_model if isinstance(resolved_model, str) else None,
-                now=now,
-            )
-            item["jev_assist"] = {
-                "status": "ok",
-                "reused": False,
-                "assist_only": True,
-                "answers": answers,
-                "model": resolved_model,
-            }
-            scored += 1
-        except StoreError as exc:
-            # HTTP already ran and claim() already consumed quota. Do not
-            # treat the day as unused or rewrite counters to zero.
-            item["jev_assist"] = {
-                "status": "skipped",
-                "reused": False,
-                "assist_only": True,
-                "reason": "store_unavailable",
-            }
-            stop_reason = "store_unavailable"
-            logger.info("Jev assist ending this round after persist failure: %s", exc)
+            try:
+                run_store.complete(
+                    fingerprint,
+                    status="ok",
+                    answers=answers if isinstance(answers, dict) else None,
+                    model=resolved_model if isinstance(resolved_model, str) else None,
+                    now=now,
+                )
+            except (StoreError, OSError) as exc:
+                # HTTP already ran and claim() already consumed quota. Do not
+                # treat the day as unused or rewrite counters to zero.
+                item["jev_assist"] = {
+                    "status": "skipped",
+                    "reused": False,
+                    "assist_only": True,
+                    "reason": "store_unavailable",
+                }
+                stop_reason = "store_unavailable"
+                logger.info("Jev assist ending this round after persist failure: %s", exc)
+            else:
+                item["jev_assist"] = {
+                    "status": "ok",
+                    "reused": False,
+                    "assist_only": True,
+                    "answers": answers,
+                    "model": resolved_model,
+                }
+                scored += 1
         except JevClientError as exc:
             status = "ambiguous" if exc.ambiguous else "error"
             try:
@@ -305,7 +307,7 @@ def assist_candidates(
                     error=exc.kind,
                     now=now,
                 )
-            except StoreError:
+            except (StoreError, OSError):
                 pass
             item["jev_assist"] = {
                 "status": status,

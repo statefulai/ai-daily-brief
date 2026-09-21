@@ -235,17 +235,20 @@ class JevRunStore:
         now: datetime | None = None,
     ) -> dict[str, Any]:
         finished_at = (now or datetime.now(BEIJING_TZ)).isoformat()
-        with self._lock():
-            payload = self._read_unlocked()
-            record = dict(payload["evaluations"].get(fingerprint) or {})
-            record["status"] = status
-            record["consumed_quota"] = True
-            record["finished_at"] = finished_at
-            record["answers"] = answers
-            record["error"] = error
-            record["model"] = model
-            if "claimed_at" not in record:
-                record["claimed_at"] = finished_at
-            payload["evaluations"][fingerprint] = record
-            self._write_unlocked(payload)
-            return payload
+        try:
+            with self._lock():
+                payload = self._read_unlocked()
+                record = dict(payload["evaluations"].get(fingerprint) or {})
+                record["status"] = status
+                record["consumed_quota"] = True
+                record["finished_at"] = finished_at
+                record["answers"] = answers
+                record["error"] = error
+                record["model"] = model
+                if "claimed_at" not in record:
+                    record["claimed_at"] = finished_at
+                payload["evaluations"][fingerprint] = record
+                self._write_unlocked(payload)
+                return payload
+        except OSError as exc:
+            raise StoreError("private run store cannot be written") from exc

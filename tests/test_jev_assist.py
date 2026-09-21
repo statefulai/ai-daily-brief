@@ -428,19 +428,20 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertTrue(jev_enabled({"enabled": False}, {"JEV_ASSIST": "1"}))
         self.assertFalse(jev_enabled({"enabled": True}, {"JEV_ASSIST": "0"}))
 
-    def test_http_success_persist_failure_fail_open_keeps_quota(self):
+    def test_http_success_then_result_persist_failure_fail_open(self):
+        """HTTP ok this round, but writing this result fails — not a vanished prior file."""
         opener = RecordingOpener()
         with tempfile.TemporaryDirectory() as tmp:
             store = self.store(tmp)
             original_write = store._write_unlocked
 
-            def write_fails_on_complete(payload):
+            def write_fails_on_this_result(payload):
                 for record in (payload.get("evaluations") or {}).values():
                     if isinstance(record, dict) and record.get("status") == "ok":
-                        raise StoreError("private run store cannot be written")
+                        raise OSError(28, "No space left on device")
                 return original_write(payload)
 
-            store._write_unlocked = write_fails_on_complete
+            store._write_unlocked = write_fails_on_this_result
             result = self.score([candidate(1), candidate(2)], opener, store)
             payload = json.loads(store.path.read_text(encoding="utf-8"))
             self.assertEqual(result.summary["reason"], "store_unavailable")
@@ -449,8 +450,9 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
             self.assertEqual(result.candidates[1]["jev_assist"]["reason"], "store_unavailable")
             self.assertEqual(result.candidates[1]["jev_assist"]["status"], "skipped")
             self.assertEqual(len(opener.calls), 1)
+            self.assertEqual(result.summary["real_requests"], 1)
             self.assertEqual(payload["request_count"], 1)
-            self.assertNotEqual(payload["request_count"], 0)
+            self.assertGreater(payload["request_count"], 0)
             in_flight = next(iter(payload["evaluations"].values()))
             self.assertTrue(in_flight["consumed_quota"])
             self.assertEqual(in_flight["status"], "in_flight")
@@ -459,6 +461,7 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
             replay = self.score([candidate(1)], opener, store)
             self.assertEqual(store.snapshot()["request_count"], 1)
             self.assertEqual(len(opener.calls), 1)
+            self.assertEqual(replay.summary["real_requests"], 0)
             self.assertEqual(replay.candidates[0]["jev_assist"]["status"], "ambiguous")
             self.assertTrue(replay.candidates[0]["jev_assist"]["reused"])
 
