@@ -7,84 +7,10 @@ import json
 import re
 from typing import Any
 
+# Split summary sentences for exact membership against structured facts.
+# This is not a novelty heuristic: leftover claims always enter evidence.
 _CLAIM_SPLIT = re.compile(r"[.!?。！？;；\n]+")
-_LATIN_TOKEN = re.compile(r"[a-z0-9]+")
-_CJK_RUN = re.compile(r"[\u4e00-\u9fff]+")
-
-# Novelty check only. Folded fact strings stay as normalized source text.
-_STOPWORDS = {
-    "a",
-    "an",
-    "the",
-    "and",
-    "or",
-    "of",
-    "to",
-    "for",
-    "in",
-    "on",
-    "at",
-    "by",
-    "with",
-    "from",
-    "that",
-    "this",
-    "it",
-    "is",
-    "are",
-    "was",
-    "were",
-    "be",
-    "as",
-    "its",
-    "their",
-    "has",
-    "have",
-    "had",
-    "will",
-    "would",
-    "can",
-    "today",
-    "yesterday",
-    "official",
-    "officially",
-    "company",
-    "also",
-    "brief",
-    "note",
-    "update",
-    "news",
-    "report",
-    "according",
-    "says",
-    "said",
-    "的",
-    "了",
-    "在",
-    "与",
-    "和",
-    "及",
-    "并",
-    "将",
-    "对",
-    "为",
-    "是",
-    "已",
-    "现",
-    "会",
-    "把",
-    "被",
-    "等",
-    "其",
-    "该",
-    "本",
-    "今日",
-    "今天",
-    "官方",
-    "公司",
-    "同时",
-    "还",
-}
+_TRAILING_PUNCT = ".!?。！？;；"
 
 
 def canonical_json(value: Any) -> bytes:
@@ -103,89 +29,70 @@ def normalize_text(value: Any) -> str:
     return " ".join(value.strip().lower().split())
 
 
+def normalize_fact(value: Any) -> str:
+    """Lowercase, collapse whitespace, strip trailing sentence punctuation."""
+    return normalize_text(value).rstrip(_TRAILING_PUNCT)
+
+
 def normalize_url(value: Any) -> str:
     if not isinstance(value, str):
         return ""
     return value.strip().rstrip("/").lower()
 
 
-def _content_tokens(text: str) -> set[str]:
-    lowered = normalize_text(text)
-    for stop in sorted(_STOPWORDS, key=len, reverse=True):
-        if stop:
-            lowered = lowered.replace(stop, " ")
-    lowered = normalize_text(lowered)
-    tokens: set[str] = set()
-    for word in _LATIN_TOKEN.findall(lowered):
-        if len(word) > 1:
-            tokens.add(word)
-    for run in _CJK_RUN.findall(lowered):
-        if len(run) == 1:
-            tokens.add(run)
-        else:
-            tokens.update(run[i : i + 2] for i in range(len(run) - 1))
-    return tokens
-
-
-def _split_claims(text: Any) -> list[str]:
+def _summary_claims(text: Any) -> list[str]:
     if not isinstance(text, str):
         return []
-    return [part for part in (normalize_text(piece) for piece in _CLAIM_SPLIT.split(text)) if part]
-
-
-def _has_significant_token(tokens: set[str]) -> bool:
-    return any(token.isdigit() or any(char.isdigit() for char in token) for token in tokens)
-
-
-def is_material_claim(claim: str, existing_facts: list[str]) -> bool:
-    """True for a new or corrected fact; false for wording-only restatement."""
-    claim_tokens = _content_tokens(claim)
-    if not claim_tokens:
-        return False
-    covered: set[str] = set()
-    for fact in existing_facts:
-        covered |= _content_tokens(fact)
-    if not covered:
-        return True
-    novel = claim_tokens - covered
-    if not novel:
-        return False
-    if _has_significant_token(novel):
-        return True
-    return len(novel) >= 2 and (len(novel) / len(claim_tokens)) >= 0.4
+    return [part for part in (normalize_fact(piece) for piece in _CLAIM_SPLIT.split(text)) if part]
 
 
 def stable_facts(item: dict[str, Any]) -> list[str]:
-    """What's-new facts: declared facts plus material summary claims, sorted.
-
-    Summary wording is not hashed. If the summary adds or corrects a fact,
-    that claim is folded into this list first so reuse cannot skip it.
-    """
-    facts: list[str] = []
+    """Normalized, sorted, unique structured facts. No summary inference."""
     seen: set[str] = set()
-
-    def add(raw: Any) -> None:
-        text = normalize_text(raw)
+    facts: list[str] = []
+    for raw in item.get("facts") or []:
+        text = normalize_fact(raw)
         if text and text not in seen:
             seen.add(text)
             facts.append(text)
+    facts.sort()
+    return facts
 
-    for fact in item.get("facts") or []:
-        add(fact)
 
+def unconfirmed_summary_claims(item: dict[str, Any]) -> list[str]:
+    """Summary claims that are not already exact structured facts.
+
+    Generate CA owns complete facts. A leftover claim means equivalence
+    cannot be confirmed, so the claim must enter scoring evidence and an
+    old score cannot be reused.
+    """
+    covered = set(stable_facts(item))
+    extra: list[str] = []
+    seen: set[str] = set()
     summary = item.get("text") or item.get("summary") or ""
-    for claim in _split_claims(summary):
-        if claim in seen:
+    for claim in _summary_claims(summary):
+        if claim in covered or claim in seen:
             continue
-        if is_material_claim(claim, facts):
-            add(claim)
+        seen.add(claim)
+        extra.append(claim)
+    extra.sort()
+    return extra
 
+
+def scoring_facts(item: dict[str, Any]) -> list[str]:
+    """Fact evidence shared by reuse fingerprint and the Jev payload."""
+    seen: set[str] = set()
+    facts: list[str] = []
+    for text in (*stable_facts(item), *unconfirmed_summary_claims(item)):
+        if text not in seen:
+            seen.add(text)
+            facts.append(text)
     facts.sort()
     return facts
 
 
 def evidence_payload(item: dict[str, Any]) -> dict[str, Any]:
-    """Evidence used for reuse. Title, wording of headlines, and URLs are excluded."""
+    """Evidence used for reuse and scoring. Title and URLs are excluded."""
     prior_norm: list[Any] = []
     for row in item.get("prior_coverage") or []:
         if isinstance(row, str):
@@ -194,11 +101,7 @@ def evidence_payload(item: dict[str, Any]) -> dict[str, Any]:
                 prior_norm.append(text)
         elif isinstance(row, dict):
             prior_facts = sorted(
-                {
-                    normalize_text(raw)
-                    for raw in row.get("facts") or []
-                    if normalize_text(raw)
-                }
+                {normalize_fact(raw) for raw in row.get("facts") or [] if normalize_fact(raw)}
             )
             prior_norm.append(
                 {
@@ -212,7 +115,7 @@ def evidence_payload(item: dict[str, Any]) -> dict[str, Any]:
                     ),
                 }
             )
-    return {"facts": stable_facts(item), "prior_coverage": prior_norm}
+    return {"facts": scoring_facts(item), "prior_coverage": prior_norm}
 
 
 def event_identity(item: dict[str, Any]) -> str:
@@ -221,7 +124,7 @@ def event_identity(item: dict[str, Any]) -> str:
         text = normalize_text(key)
         if text:
             return f"key:{text}"
-    facts = evidence_payload(item)["facts"]
+    facts = stable_facts(item)
     if facts:
         return sha256_json({"facts": facts})
     url = normalize_url(item.get("source_url") or item.get("url") or "")

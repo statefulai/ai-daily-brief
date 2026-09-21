@@ -17,10 +17,12 @@ from generation.jev.fingerprint import (
     evidence_payload,
     reuse_fingerprint,
     rubric_id,
+    scoring_facts,
     stable_facts,
+    unconfirmed_summary_claims,
 )
 from generation.jev.merge import merge_same_event
-from generation.jev.rubric import build_questions
+from generation.jev.rubric import build_questions, build_state
 from generation.jev.store import (
     JevRunStore,
     StoreError,
@@ -163,7 +165,7 @@ class JevFingerprintTest(unittest.TestCase):
             "event_key": "same-event",
             "title": "Title",
             "url": "https://example.com/a",
-            "summary": "Official shipped feature A",
+            "summary": "shipped feature A",
             "facts": ["shipped feature A"],
             "prior_coverage": [],
         }
@@ -184,13 +186,13 @@ class JevFingerprintTest(unittest.TestCase):
             ["opened waitlist", "shipped feature a"],
         )
 
-    def test_summary_wording_only_reuses(self):
-        baseline = self._fp(summary="Official shipped feature A")
-        reworded = self._fp(summary="The company today shipped feature A.")
+    def test_confirmed_summary_rewrite_reuses(self):
+        baseline = self._fp(summary="shipped feature A")
+        reworded = self._fp(summary="Shipped feature A.")
         chinese = reuse_fingerprint(
             self._item(
                 facts=["官方开放了该能力"],
-                summary="官方今日开放了该能力。",
+                summary="官方开放了该能力。",
             ),
             self.QUESTIONS_ID,
         )
@@ -203,14 +205,15 @@ class JevFingerprintTest(unittest.TestCase):
         )
         self.assertEqual(baseline, reworded)
         self.assertEqual(chinese, chinese_same)
-        self.assertEqual(
-            stable_facts(self._item(summary="The company today shipped feature A.")),
-            ["shipped feature a"],
-        )
+        self.assertEqual(stable_facts(self._item(summary="Shipped feature A.")), ["shipped feature a"])
+        self.assertEqual(unconfirmed_summary_claims(self._item(summary="Shipped feature A.")), [])
 
     def test_material_new_facts_or_corrections_re_evaluate(self):
-        baseline = self._fp(facts=["shipped feature A"])
-        extra_fact = self._fp(facts=["shipped feature A", "opened a public waitlist"])
+        baseline = self._fp(facts=["shipped feature A"], summary="shipped feature A")
+        extra_fact = self._fp(
+            facts=["shipped feature A", "opened a public waitlist"],
+            summary="shipped feature A",
+        )
         corrected = self._fp(
             facts=["price is $10 per month"],
             summary="Price is $10 per month",
@@ -222,18 +225,34 @@ class JevFingerprintTest(unittest.TestCase):
         self.assertNotEqual(baseline, extra_fact)
         self.assertNotEqual(original_price, corrected)
 
-    def test_summary_material_info_is_folded_into_facts(self):
-        baseline = self._item(facts=["shipped feature A"], summary="Official shipped feature A")
-        with_new = self._item(
-            facts=["shipped feature A"],
-            summary="Opened a public waitlist for feature A.",
-        )
-        self.assertEqual(stable_facts(baseline), ["shipped feature a"])
-        self.assertIn("opened a public waitlist for feature a", stable_facts(with_new))
+    def test_unconfirmed_summary_enters_scoring_facts_without_token_heuristics(self):
+        baseline = self._item(facts=["API is available"], summary="API is available")
+        unavailable = self._item(facts=["API is available"], summary="API is unavailable")
+        tools = self._item(facts=["supports 4 tools"], summary="supports 8 tools")
+        closed = self._item(facts=["model download is open"], summary="model download is not open")
+        self.assertEqual(stable_facts(baseline), ["api is available"])
+        self.assertEqual(stable_facts(unavailable), ["api is available"])
+        self.assertEqual(unconfirmed_summary_claims(unavailable), ["api is unavailable"])
+        self.assertIn("api is unavailable", scoring_facts(unavailable))
+        self.assertIn("supports 8 tools", scoring_facts(tools))
+        self.assertIn("model download is not open", scoring_facts(closed))
         self.assertNotEqual(
             reuse_fingerprint(baseline, self.QUESTIONS_ID),
-            reuse_fingerprint(with_new, self.QUESTIONS_ID),
+            reuse_fingerprint(unavailable, self.QUESTIONS_ID),
         )
+        source = Path("generation/jev/fingerprint.py").read_text(encoding="utf-8")
+        self.assertNotIn("is_material_claim", source)
+        self.assertNotIn("_STOPWORDS", source)
+        self.assertNotIn("_content_tokens", source)
+        self.assertNotIn("new-word", source)
+
+    def test_scoring_payload_matches_fingerprint_facts(self):
+        item = self._item(facts=["opened waitlist", "shipped feature A", "shipped feature A"])
+        state = build_state(item, {})
+        evidence = evidence_payload(item)
+        self.assertEqual(state["candidate"]["facts"], evidence["facts"])
+        self.assertEqual(state["prior_coverage"], evidence["prior_coverage"])
+        self.assertEqual(state["candidate"]["text"], " ".join(evidence["facts"]))
 
 
 class JevAssistTest(JevHelpers, unittest.TestCase):
@@ -284,12 +303,12 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         first = candidate(
             1,
             facts=["shipped feature A", "opened waitlist"],
-            summary="Official shipped feature A",
+            summary="Shipped feature A. Opened waitlist.",
         )
         reordered = candidate(
             1,
             facts=["opened waitlist", "shipped feature A", "shipped feature A"],
-            summary="The company today shipped feature A.",
+            summary="opened waitlist. shipped feature A",
         )
         with tempfile.TemporaryDirectory() as tmp:
             store = self.store(tmp)
@@ -307,7 +326,7 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             store = self.store(tmp)
             self.score(
-                [candidate(1, facts=["shipped feature A"], summary="Official shipped feature A")],
+                [candidate(1, facts=["shipped feature A"], summary="shipped feature A")],
                 opener,
                 store,
             )
@@ -667,6 +686,148 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         )
         self.assertEqual(len(rows), 2)
         self.assertTrue(any(row.get("title") == "no evidence" for row in rows))
+
+
+class JevEvidenceReuseContractTest(JevHelpers, unittest.TestCase):
+    """merge → fingerprint → mock HTTP. Isolated ledger; count real requests."""
+
+    QUESTIONS_ID = rubric_id(build_questions({}))
+
+    def _assert_payload_matches_evidence(self, call, item):
+        scored = {**item, "prior_coverage": item.get("prior_coverage") or []}
+        evidence = evidence_payload(scored)
+        body = call["body"]
+        self.assertEqual(body["state"]["candidate"]["facts"], evidence["facts"])
+        self.assertEqual(body["state"]["prior_coverage"], evidence["prior_coverage"])
+
+    def test_stale_facts_negation_number_status_do_not_reuse(self):
+        cases = [
+            (
+                ["API is available"],
+                "API is available",
+                "API is unavailable",
+            ),
+            (
+                ["supports 4 tools"],
+                "supports 4 tools",
+                "supports 8 tools",
+            ),
+            (
+                ["model download is open"],
+                "model download is open",
+                "model download is not open",
+            ),
+        ]
+        for facts, first_summary, second_summary in cases:
+            opener = RecordingOpener()
+            first = candidate(1, facts=list(facts), summary=first_summary)
+            second = candidate(1, facts=list(facts), summary=second_summary)
+            with tempfile.TemporaryDirectory() as tmp:
+                store = self.store(tmp)
+                first_result = self.score([first], opener, store)
+                second_result = self.score([second], opener, store)
+                self.assertEqual(store.snapshot()["request_count"], 2, facts)
+
+            self.assertEqual(len(opener.calls), 2, facts)
+            self.assertFalse(first_result.candidates[0]["jev_assist"]["reused"])
+            self.assertFalse(second_result.candidates[0]["jev_assist"]["reused"])
+            self.assertEqual(second_result.summary["real_requests"], 1, facts)
+            self.assertNotEqual(
+                reuse_fingerprint({**first, "prior_coverage": []}, self.QUESTIONS_ID),
+                reuse_fingerprint({**second, "prior_coverage": []}, self.QUESTIONS_ID),
+            )
+            self._assert_payload_matches_evidence(opener.calls[0], {**first, "prior_coverage": []})
+            self._assert_payload_matches_evidence(opener.calls[1], {**second, "prior_coverage": []})
+
+    def test_complete_facts_order_dedupe_rewrite_and_merge_reuse_one_http(self):
+        opener = RecordingOpener()
+        baseline = candidate(
+            1,
+            facts=["API is available", "supports 4 tools"],
+            summary="API is available. Supports 4 tools.",
+        )
+        reordered = candidate(
+            1,
+            facts=["supports 4 tools", "API is available", "API is available"],
+            summary="supports 4 tools. API is available",
+        )
+        rewrite = candidate(
+            1,
+            facts=["API is available", "supports 4 tools"],
+            summary="Supports 4 tools. API is available.",
+        )
+        merge_partner = candidate(
+            1,
+            facts=["supports 4 tools", "API is available"],
+            summary="The company today said the API is available and supports 4 tools.",
+            url="https://other.example/1",
+            title="Rewrite title",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            first = self.score([baseline], opener, store)
+            self.score([reordered], opener, store)
+            self.score([rewrite], opener, store)
+            merged = self.score([baseline, merge_partner], opener, store)
+            self.assertEqual(store.snapshot()["request_count"], 1)
+
+        self.assertEqual(len(opener.calls), 1)
+        self.assertEqual(first.summary["real_requests"], 1)
+        self.assertEqual(merged.summary["real_requests"], 0)
+        self.assertTrue(merged.candidates[0]["jev_assist"]["reused"])
+        self.assertEqual(len(merged.candidates), 1)
+        self.assertEqual(
+            merged.candidates[0]["facts"],
+            ["api is available", "supports 4 tools"],
+        )
+        merge_source = Path("generation/jev/merge.py").read_text(encoding="utf-8")
+        self.assertNotIn("current_facts.append(extra_text)", merge_source)
+        self._assert_payload_matches_evidence(
+            opener.calls[0], {**baseline, "prior_coverage": []}
+        )
+
+    def test_material_fact_update_consumes_quota(self):
+        opener = RecordingOpener()
+        original = candidate(
+            1,
+            facts=["supports 4 tools"],
+            summary="supports 4 tools",
+        )
+        corrected = candidate(
+            1,
+            facts=["supports 8 tools"],
+            summary="supports 8 tools",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            first = self.score([original], opener, store)
+            second = self.score([corrected], opener, store)
+            self.assertEqual(store.snapshot()["request_count"], 2)
+
+        self.assertEqual(len(opener.calls), 2)
+        self.assertEqual(first.summary["real_requests"], 1)
+        self.assertEqual(second.summary["real_requests"], 1)
+        self.assertFalse(second.candidates[0]["jev_assist"]["reused"])
+        self._assert_payload_matches_evidence(
+            opener.calls[1], {**corrected, "prior_coverage": []}
+        )
+
+    def test_merge_does_not_append_pure_rewrite_summary_as_fact(self):
+        first = candidate(1, facts=["API is available"], summary="API is available")
+        rewrite = candidate(
+            1,
+            facts=["API is available"],
+            summary="The company today said the API is available.",
+            url="https://other.example/1",
+        )
+        merged = merge_same_event([first, rewrite])
+        self.assertEqual(len(merged), 1)
+        self.assertEqual(merged[0]["facts"], ["api is available"])
+        self.assertEqual(stable_facts(merged[0]), ["api is available"])
+        self.assertEqual(
+            reuse_fingerprint({**first, "prior_coverage": []}, self.QUESTIONS_ID),
+            reuse_fingerprint({**merged[0], "prior_coverage": []}, self.QUESTIONS_ID),
+        )
 
 
 def _independent_ca_claim_batch(path_str, calendar_date, start, count, queue):

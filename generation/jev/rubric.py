@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from generation.jev.fingerprint import evidence_payload
+
 DEFAULT_MODEL = "jev-latest"
 DEFAULT_AUDIENCE = (
     "Readers of an open-source Chinese AI daily brief: engineers and product people "
@@ -52,6 +54,7 @@ def build_questions(rubric: dict[str, Any] | None = None) -> dict[str, Any]:
 
 def build_state(item: dict[str, Any], rubric: dict[str, Any] | None = None) -> dict[str, Any]:
     rubric = rubric or {}
+    evidence = evidence_payload(item)
     return {
         "audience": rubric.get("audience", DEFAULT_AUDIENCE),
         "candidate": {
@@ -60,10 +63,10 @@ def build_state(item: dict[str, Any], rubric: dict[str, Any] | None = None) -> d
             "published_at": item.get("published_at") or item.get("published"),
             "source_url": item.get("source_url") or item.get("url"),
             "source_lang": item.get("source_lang"),
-            "text": item.get("text") or item.get("summary") or "",
+            "text": " ".join(evidence["facts"]),
             "tags": item.get("tags") or [],
-            "facts": list(item.get("facts") or []),
+            "facts": list(evidence["facts"]),
         },
-        "prior_coverage": item.get("prior_coverage") or [],
+        "prior_coverage": evidence["prior_coverage"],
         "notes_for_judge": item.get("notes_for_judge") or "",
     }
