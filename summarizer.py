@@ -492,20 +492,15 @@ def _validate_brief(brief: dict, candidates: list[dict]):
         selected_indices.add(tool["index"])
 
 
-def curate_daily_brief(items: list[NewsItem], config: dict) -> dict:
+def curate_daily_brief(items: list[NewsItem], config: dict, *, jev: dict | None = None) -> dict:
     """
     Full two-stage curation pipeline.
 
-    Returns:
-        {
-            "candidates": [...],  # all scored candidates
-            "brief": {            # editor's selections
-                "focus": {...},
-                "highlights": [...],
-                "tools": [...]
-            }
-        }
+    Jev assist runs after same-topic clustering and before editorial selection.
+    Scores are annotations only; Stage 2 still sees every clustered candidate.
     """
+    from generation.jev.assist import assist_candidates
+
     logger.info("=== Stage 1: Score & Classify ===")
     scored = _run_stage1(items, config)
 
@@ -515,7 +510,14 @@ def curate_daily_brief(items: list[NewsItem], config: dict) -> dict:
     if not candidates:
         return {"candidates": [], "brief": {}}
 
+    logger.info("=== Jev assist (advisory only) ===")
+    assist = assist_candidates(candidates, config=jev or {})
+    candidates = assist.candidates
+
     logger.info("=== Stage 2: Editorial Curation ===")
     brief = _run_stage2(candidates, config)
 
-    return {"candidates": candidates, "brief": brief}
+    result = {"candidates": candidates, "brief": brief}
+    if assist.summary:
+        result["jev_assist"] = assist.summary
+    return result

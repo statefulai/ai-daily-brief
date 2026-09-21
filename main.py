@@ -310,8 +310,15 @@ async def run(args: argparse.Namespace):
     generation_error = None
     if curation_items:
         logger.info("=== Variable-count curation ===")
+        jev_cfg = dict(config.get("jev") or {})
+        jev_cfg.setdefault(
+            "editions_dir",
+            config.get("output", {}).get("editions", {}).get("directory", "editions"),
+        )
         try:
-            curation_result = curate_daily_brief(curation_items, config.get("llm", {}))
+            curation_result = curate_daily_brief(
+                curation_items, config.get("llm", {}), jev=jev_cfg
+            )
         except CurationError as exc:
             generation_error = str(exc)
             logger.error(f"Curation failed: {exc}")

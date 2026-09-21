@@ -8,3 +8,6 @@ assets/avatars/
 
 output
 _site/
+
+# Private generation run state (Jev quota / reuse). Never publish.
+runs/jev/

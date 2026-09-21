@@ -13,10 +13,13 @@ on:
       - "outputs.py"
       - "templates/**"
       - "scripts/edition_ci.py"
+      - "scripts/jev_assist.py"
+      - "generation/**"
       - "tests/test_edition*.py"
       - "tests/test_main.py"
       - "tests/test_source_status.py"
       - "tests/test_render.py"
+      - "tests/test_jev*.py"
       - ".github/workflows/edition-ci-pages.yml"
   push:
     branches: [main]
@@ -31,10 +34,13 @@ on:
       - "outputs.py"
       - "templates/**"
       - "scripts/edition_ci.py"
+      - "scripts/jev_assist.py"
+      - "generation/**"
       - "tests/test_edition*.py"
       - "tests/test_main.py"
       - "tests/test_source_status.py"
       - "tests/test_render.py"
+      - "tests/test_jev*.py"
       - ".github/workflows/edition-ci-pages.yml"
   workflow_dispatch:
 
@@ -42,12 +48,15 @@ permissions:
   contents: read
 
 concurrency:
-  group: ai-daily-pages
-  cancel-in-progress: false
+  # Pages deploys stay serialized on main. PR validate must not share that
+  # lock — a hung PR test would otherwise block later commits and main.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     outputs:
       has_editions: ${{ steps.editions.outputs.has_editions }}
     steps:
