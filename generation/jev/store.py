@@ -116,16 +116,22 @@ class JevRunStore:
 
     @contextmanager
     def _lock(self) -> Iterator[None]:
+        lock_file = None
         try:
             self.path.parent.mkdir(parents=True, exist_ok=True)
-            with self.lock_path().open("a+", encoding="utf-8") as lock_file:
-                fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
-                try:
-                    yield
-                finally:
-                    fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+            lock_file = self.lock_path().open("a+", encoding="utf-8")
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
         except OSError as exc:
+            if lock_file is not None:
+                lock_file.close()
             raise StoreError("private run store cannot be locked") from exc
+        try:
+            yield
+        finally:
+            try:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+            finally:
+                lock_file.close()
 
     def _read_unlocked(self) -> dict[str, Any]:
         if not self.path.exists():
