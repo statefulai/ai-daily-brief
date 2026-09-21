@@ -764,10 +764,8 @@ class JevCrossCAQuotaTest(JevHelpers, unittest.TestCase):
             store_b = JevRunStore(path, calendar_date=self.DATE, request_limit=100, allow_create=True)
             store_a.restore()
             store_b.restore()
-            barrier = threading.Barrier(16)
 
             def worker(handle, index):
-                barrier.wait()
                 self.score([candidate(index)], opener, handle)
 
             with ThreadPoolExecutor(max_workers=16) as pool:
