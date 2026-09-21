@@ -428,6 +428,40 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertTrue(jev_enabled({"enabled": False}, {"JEV_ASSIST": "1"}))
         self.assertFalse(jev_enabled({"enabled": True}, {"JEV_ASSIST": "0"}))
 
+    def test_http_success_persist_failure_fail_open_keeps_quota(self):
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            original_write = store._write_unlocked
+
+            def write_fails_on_complete(payload):
+                for record in (payload.get("evaluations") or {}).values():
+                    if isinstance(record, dict) and record.get("status") == "ok":
+                        raise StoreError("private run store cannot be written")
+                return original_write(payload)
+
+            store._write_unlocked = write_fails_on_complete
+            result = self.score([candidate(1), candidate(2)], opener, store)
+            payload = json.loads(store.path.read_text(encoding="utf-8"))
+            self.assertEqual(result.summary["reason"], "store_unavailable")
+            self.assertEqual(result.candidates[0]["jev_assist"]["reason"], "store_unavailable")
+            self.assertNotEqual(result.candidates[0]["jev_assist"]["status"], "ok")
+            self.assertEqual(result.candidates[1]["jev_assist"]["reason"], "store_unavailable")
+            self.assertEqual(result.candidates[1]["jev_assist"]["status"], "skipped")
+            self.assertEqual(len(opener.calls), 1)
+            self.assertEqual(payload["request_count"], 1)
+            self.assertNotEqual(payload["request_count"], 0)
+            in_flight = next(iter(payload["evaluations"].values()))
+            self.assertTrue(in_flight["consumed_quota"])
+            self.assertEqual(in_flight["status"], "in_flight")
+
+            store._write_unlocked = original_write
+            replay = self.score([candidate(1), candidate(3)], opener, store)
+            self.assertEqual(store.snapshot()["request_count"], 1)
+            self.assertEqual(len(opener.calls), 1)
+            self.assertEqual(replay.candidates[0]["jev_assist"]["status"], "ambiguous")
+            self.assertTrue(replay.candidates[0]["jev_assist"]["reused"])
+
     def test_canonical_disable_is_checked_before_store_or_http(self):
         opener = RecordingOpener()
         with tempfile.TemporaryDirectory() as tmp:
