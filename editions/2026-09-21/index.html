@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 9 月 21 日 AI 日报，含 3 条已策展内容。">
+  <title>AI 日报 · 2026 年 9 月 21 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-09-21">2026 年 9 月 21 日</time> · 星期一</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 9 月 21 日 08:00（北京时间）。本期收录 3 条窗口内动态。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">焦点 · 阶跃星辰</span><time datetime="2026-09-20T11:15:13+08:00">09.20 11:15 北京时间</time></div><h2 id="event-1-title">阶跃星辰发布 Step 5 Preview，600B 旗舰先上 API，权重 10 月 15 日才开源</h2><div class="lead-copy"><p>阶跃星辰官方账号宣布 Step 5 Preview：面向 agent 工作的新旗舰，稀疏 MoE，总参数 600B、每 token 激活 27B，1M 上下文并支持视觉输入；今日可通过产品和 API 使用，权重计划 10 月 15 日开源。官方称其在软件工程和专业知识工作上接近前沿水平，金融场景相对突出。</p><p>开放平台文档写明模型 ID 为 step-5-preview，输入文本、图片和视频，输出文本，最大输出 64k tokens，支持工具调用、JSON / JSON Schema、low / medium / high 三档推理强度和提示缓存。定价页同步列出每百万 tokens 输入 7 元（缓存命中 0.35 元）、输出 20 元。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是 Preview：权重尚未释放，开源许可证官方还没写明；不能把“今天能调用”写成“今天能下载权重”。</li><li>官方发布页和中文报道引用 Artificial Analysis Intelligence Index 44 分、跻身开源前三，以及单任务成本约为 Claude Opus 5 的 1/8；这些是官方引用的第三方指数和公司对照，不是独立复现。</li><li>未实测 API、工具调用或长程任务。官方回复称访问量较大；有用户反馈欧洲号码无法注册、印度访问困难。</li><li>文档写明工具、搜索和代码执行由接入应用提供，不代表模型直接访问本地环境或外部服务。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>窗口内 OpenAI、Anthropic、Google、GitHub、xAI、Cursor 官网没有新产品公告。同日中文媒体报道与官方账号、开放平台文档合并，不另作一条。</li></ul></details><div class="source"><a href="https://x.com/StepFun_ai/status/2101510462685003786" target="_blank" rel="noopener noreferrer">阶跃星辰官方账号 · 一手来源 · 已核对</a><a href="https://www.stepfun.com/step-5-preview" target="_blank" rel="noopener noreferrer">阶跃星辰发布页 · 补充来源 · 已核对</a><a href="https://platform.stepfun.com/docs/zh/guides/models/step-5-preview" target="_blank" rel="noopener noreferrer">阶跃星辰开放平台文档 · 补充来源 · 已核对</a><a href="https://platform.stepfun.com/docs/zh/guides/pricing/details" target="_blank" rel="noopener noreferrer">阶跃星辰定价页 · 补充来源 · 已核对</a></div><p class="source-note">核验说明（阶跃星辰官方账号）：认证账号长帖。未实测 API 或开源权重。</p><p class="source-note">核验说明（阶跃星辰发布页）：页面为前端渲染，未取得带时区的发布时间；规格以官方长帖和开放平台文档为准。</p><p class="source-note">核验说明（阶跃星辰开放平台文档）：发布时间取自文档页 dateModified。</p><p class="source-note">核验说明（阶跃星辰定价页）：发布时间取自文档页 dateModified。价格以该页人民币标价为准。</p></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">开源 · 通义千问</span><time datetime="2026-09-20T17:41:05+08:00">09.20 17:41 北京时间</time></div><h3 id="event-2-title">通义开源 Qwen-Image-2.1：7B 把生图和改图合成一个模型</h3><div><p>通义团队在 Hugging Face 公开 Qwen-Image-2.1 模型卡：视觉生成部分约 7B 参数（32 层 Single-Stream DiT），把文生图和图像编辑放进同一模型，可原生输出透明 RGBA，最多接受 10 张参考图，并用圆圈、涂抹或单独蒙版指定局部编辑。权重同时放在 GitHub 仓库 QwenLM/Qwen-Image-2.1。</p><p>随附 Qwen Research License 写明发布日为 2026 年 9 月 20 日，仅限非商用研究与评估；商用需另向杭州通义实验室申请许可。官方账号同日宣布 ComfyUI 已支持该模型。</p><div class="condition"><strong>适用范围：</strong><ul><li>Hugging Face 仓库 9 月 14 日已创建，9 月 19 日已有 0919 检查点；窗口内补全公开说明，并宣布 ComfyUI 接入。</li><li>官方博客页为前端渲染，未能取得带时区的博文元数据。未跑通推理，也未复现其自有评测。</li><li>研究许可禁止商用，不能写成可直接商用的开源权重。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>The Decoder 同日报道转述官方说明，并指出独立基准仍待补充。</li></ul></details><div class="source"><a href="https://huggingface.co/Qwen/Qwen-Image-2.1" target="_blank" rel="noopener noreferrer">Hugging Face 模型卡 · 一手来源 · 已核对</a><a href="https://huggingface.co/Qwen/Qwen-Image-2.1/raw/main/LICENSE" target="_blank" rel="noopener noreferrer">Qwen Research License · 补充来源 · 已核对</a><a href="https://x.com/Alibaba_Qwen/status/2101670814953455780" target="_blank" rel="noopener noreferrer">通义官方账号 · 补充来源 · 已核对</a><a href="https://the-decoder.com/alibabas-open-weight-qwen-image-2-1-claims-to-beat-closed-models-in-image-generation-with-just-7-billion-parameters/" target="_blank" rel="noopener noreferrer">The Decoder 报道 · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Hugging Face 模型卡）：时间取自公开说明 README 的提交时间 2026-09-20T09:41:05Z。仓库创建于 9 月 14 日。未实测生图或编辑。</p><p class="source-note">核验说明（Qwen Research License）：许可证正文写 Release Date: September 20, 2026；该文件首次提交于 2026-09-18T10:28:46Z。</p><p class="source-note">核验说明（通义官方账号）：只宣布 ComfyUI 已支持，没有另给评测数字。</p><p class="source-note">核验说明（The Decoder 报道）：页面只标 Sep 20, 2026，未取得可靠具体时区。</p></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">产业 · 融资</span><time datetime="2026-09-20T21:14:32+08:00">09.20 21:14 北京时间</time></div><h3 id="event-3-title">金融时报：科技公司用担保把最高约 3000 亿美元 AI 基建敞口留在表外</h3><div><p>Seeking Alpha 转述金融时报周日调查：过去一年，科技公司为人工智能数据中心和芯片融资提供了最高约 3000 亿美元担保，使多数敞口不必立刻记为常规债务。</p><p>Seeking Alpha 写明这些安排通过特殊目的结构担保资产最低价值，从而在不立即增加账面债务的情况下扩容；若需求不及预期或设备贬值，担保可能变成信用风险。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是媒体调查，不是公司当天发布的融资公告，也不是新的监管决定。</li><li>未打开金融时报付费原文逐段核对；正文依据 Seeking Alpha 对 FT 的转述。</li><li>报道没有写这些担保已经发生赔付。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>Gate News 等转述还点到 Meta 路易斯安那 Hyperion、Broadcom 对 Anthropic 芯片融资，以及 Nvidia 与软银 / OpenAI 相关数据中心的担保规模；这些细项未在已打开的 Seeking Alpha 正文里核对，不写入事实栏。</li></ul></details><div class="source"><a href="https://seekingalpha.com/news/4644577-big-tech-s-300b-ai-guarantees-raise-hidden-risk-for-investors" target="_blank" rel="noopener noreferrer">Seeking Alpha 转述 · 一手来源 · 已核对</a><a href="https://www.gate.com/news/detail/big-tech-issues-300-billion-in-ai-data-center-guarantees-over-past-year-24422731" target="_blank" rel="noopener noreferrer">Gate News 转述 · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Seeking Alpha 转述）：发布时间取自页面 JSON-LD datePublished。文章明确写明转述金融时报周日报道。未打开 FT 付费原文。</p><p class="source-note">核验说明（Gate News 转述）：页面标 2026-09-20 13:22:11，未标时区。对具体项目金额的转述未写入事实栏。</p></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
