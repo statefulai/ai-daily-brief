@@ -566,6 +566,12 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertIn("runs/jev", text)
         self.assertIn("AI_DAILY_PRIVATE_RUN_DIR", text)
         self.assertIn("从零", text)
+        self.assertIn("delivery/jev-private", text)
+        self.assertIn("prepare_for_ca_launch", text)
+        self.assertIn("ingest_from_ca_json", text)
+        self.assertIn("pending_ingest", text)
+        self.assertIn("不等于", text)
+        self.assertNotIn("两台 CA 配同一个路径就已经共享", text)
 
     def test_client_reads_only_typesafe_env_var(self):
         source = Path("generation/jev/client.py").read_text(encoding="utf-8")
