@@ -8,8 +8,21 @@
 2. 只保留明确要进入公开日报的候选，按下表映射为通用供稿字段。
 3. 把结果写到临时的 `contributions.json`；不复制原始扫描记录、投递状态或内部字段。
 4. 启动当期唯一 Cloud Agent 时，通过 `files` 上传该文件。
-5. Cloud Agent 使用自身模型采集公开来源，与上传的候选合并并核对一手来源，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。
-6. Cloud Agent 用仓库的固定渲染器生成 HTML，并执行校验：
+5. Cloud Agent 使用自身模型采集公开来源，与上传的候选合并，并检查必填字段。
+6. 在最终选稿之前调用 Jev 辅助打分（只辅助，不裁定入选或空刊）：
+
+   ```bash
+   python scripts/jev_assist.py \
+     --candidates output/cloud-agent-check/candidates.json \
+     --out output/cloud-agent-check/jev-assist.json \
+     --editions editions
+   ```
+
+   关闭：`JEV_ASSIST=0`。缺密钥、配额用尽、状态读不回或接口失败时继续原选稿。未打分候选仍可入选。
+   Jev 失败或低分都不得写成 `no_new_value`。密钥必须是 Cloud Agents Runtime Secret `TYPESAFE_API_KEY`；日刊 `box-secrets` 不会进入 CA 虚拟机。
+   日刊可粘贴的模板句见 [`generation/CA-JEV-ASSIST.md`](../../generation/CA-JEV-ASSIST.md)。
+7. Cloud Agent 回源核验并做最终选稿，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。
+8. Cloud Agent 用仓库的固定渲染器生成 HTML，并执行校验：
 
    ```bash
    python scripts/edition_ci.py render --edition output/cloud-agent-check/editions/<日期>/edition.json

@@ -13,10 +13,13 @@ on:
       - "outputs.py"
       - "templates/**"
       - "scripts/edition_ci.py"
+      - "scripts/jev_assist.py"
+      - "generation/**"
       - "tests/test_edition*.py"
       - "tests/test_main.py"
       - "tests/test_source_status.py"
       - "tests/test_render.py"
+      - "tests/test_jev*.py"
       - ".github/workflows/edition-ci-pages.yml"
   push:
     branches: [main]
@@ -31,10 +34,13 @@ on:
       - "outputs.py"
       - "templates/**"
       - "scripts/edition_ci.py"
+      - "scripts/jev_assist.py"
+      - "generation/**"
       - "tests/test_edition*.py"
       - "tests/test_main.py"
       - "tests/test_source_status.py"
       - "tests/test_render.py"
+      - "tests/test_jev*.py"
       - ".github/workflows/edition-ci-pages.yml"
   workflow_dispatch:
 

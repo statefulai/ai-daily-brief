@@ -1,5 +1,14 @@
 # AI Daily Brief local configuration
 
+# Jev (TypeSafe System One) is assist-only topic scoring.
+# Disable with JEV_ASSIST=0 or jev.enabled: false. Scores never select or empty an edition.
+jev:
+  enabled: true
+  model: "jev-latest"
+  request_timeout_sec: 30
+  batch_timeout_sec: 180
+  daily_request_limit: 100
+
 llm:
   # Leave null to use the OpenAI SDK default endpoint, or set an
   # OpenAI-compatible /v1 URL. OPENAI_BASE_URL takes precedence.
