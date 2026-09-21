@@ -1,0 +1,226 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-21",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-21T08:00:00+08:00",
+  "generated_at": "2026-09-21T08:16:11+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "openai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "stepfun",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "financial-times",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "stepfun-step-5-preview",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "阶跃星辰发布 Step 5 Preview，600B 旗舰先上 API，权重 10 月 15 日才开源",
+      "kicker": "焦点 · 阶跃星辰",
+      "facts": [
+        "阶跃星辰官方账号宣布 Step 5 Preview：面向 agent 工作的新旗舰，稀疏 MoE，总参数 600B、每 token 激活 27B，1M 上下文并支持视觉输入；今日可通过产品和 API 使用，权重计划 10 月 15 日开源。官方称其在软件工程和专业知识工作上接近前沿水平，金融场景相对突出。",
+        "开放平台文档写明模型 ID 为 step-5-preview，输入文本、图片和视频，输出文本，最大输出 64k tokens，支持工具调用、JSON / JSON Schema、low / medium / high 三档推理强度和提示缓存。定价页同步列出每百万 tokens 输入 7 元（缓存命中 0.35 元）、输出 20 元。"
+      ],
+      "conditions": [
+        "这是 Preview：权重尚未释放，开源许可证官方还没写明；不能把“今天能调用”写成“今天能下载权重”。",
+        "官方发布页和中文报道引用 Artificial Analysis Intelligence Index 44 分、跻身开源前三，以及单任务成本约为 Claude Opus 5 的 1/8；这些是官方引用的第三方指数和公司对照，不是独立复现。",
+        "未实测 API、工具调用或长程任务。官方回复称访问量较大；有用户反馈欧洲号码无法注册、印度访问困难。",
+        "文档写明工具、搜索和代码执行由接入应用提供，不代表模型直接访问本地环境或外部服务。"
+      ],
+      "background": [
+        "窗口内 OpenAI、Anthropic、Google、GitHub、xAI、Cursor 官网没有新产品公告。同日中文媒体报道与官方账号、开放平台文档合并，不另作一条。"
+      ],
+      "sources": [
+        {
+          "label": "阶跃星辰官方账号",
+          "url": "https://x.com/StepFun_ai/status/2101510462685003786",
+          "kind": "primary",
+          "published_at": "2026-09-20T03:15:13+00:00",
+          "verified": true,
+          "note": "认证账号长帖。未实测 API 或开源权重。"
+        },
+        {
+          "label": "阶跃星辰发布页",
+          "url": "https://www.stepfun.com/step-5-preview",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面为前端渲染，未取得带时区的发布时间；规格以官方长帖和开放平台文档为准。"
+        },
+        {
+          "label": "阶跃星辰开放平台文档",
+          "url": "https://platform.stepfun.com/docs/zh/guides/models/step-5-preview",
+          "kind": "secondary",
+          "published_at": "2026-09-20T12:19:46.301Z",
+          "verified": true,
+          "note": "发布时间取自文档页 dateModified。"
+        },
+        {
+          "label": "阶跃星辰定价页",
+          "url": "https://platform.stepfun.com/docs/zh/guides/pricing/details",
+          "kind": "secondary",
+          "published_at": "2026-09-20T08:37:25.218Z",
+          "verified": true,
+          "note": "发布时间取自文档页 dateModified。价格以该页人民币标价为准。"
+        }
+      ]
+    },
+    {
+      "id": "qwen-image-2-1",
+      "placement": "story",
+      "window": "in_window",
+      "title": "通义开源 Qwen-Image-2.1：7B 把生图和改图合成一个模型",
+      "kicker": "开源 · 通义千问",
+      "facts": [
+        "通义团队在 Hugging Face 公开 Qwen-Image-2.1 模型卡：视觉生成部分约 7B 参数（32 层 Single-Stream DiT），把文生图和图像编辑放进同一模型，可原生输出透明 RGBA，最多接受 10 张参考图，并用圆圈、涂抹或单独蒙版指定局部编辑。权重同时放在 GitHub 仓库 QwenLM/Qwen-Image-2.1。",
+        "随附 Qwen Research License 写明发布日为 2026 年 9 月 20 日，仅限非商用研究与评估；商用需另向杭州通义实验室申请许可。官方账号同日宣布 ComfyUI 已支持该模型。"
+      ],
+      "conditions": [
+        "Hugging Face 仓库 9 月 14 日已创建，9 月 19 日已有 0919 检查点；窗口内补全公开说明，并宣布 ComfyUI 接入。",
+        "官方博客页为前端渲染，未能取得带时区的博文元数据。未跑通推理，也未复现其自有评测。",
+        "研究许可禁止商用，不能写成可直接商用的开源权重。"
+      ],
+      "background": [
+        "The Decoder 同日报道转述官方说明，并指出独立基准仍待补充。"
+      ],
+      "sources": [
+        {
+          "label": "Hugging Face 模型卡",
+          "url": "https://huggingface.co/Qwen/Qwen-Image-2.1",
+          "kind": "primary",
+          "published_at": "2026-09-20T09:41:05+00:00",
+          "verified": true,
+          "note": "时间取自公开说明 README 的提交时间 2026-09-20T09:41:05Z。仓库创建于 9 月 14 日。未实测生图或编辑。"
+        },
+        {
+          "label": "Qwen Research License",
+          "url": "https://huggingface.co/Qwen/Qwen-Image-2.1/raw/main/LICENSE",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "许可证正文写 Release Date: September 20, 2026；该文件首次提交于 2026-09-18T10:28:46Z。"
+        },
+        {
+          "label": "通义官方账号",
+          "url": "https://x.com/Alibaba_Qwen/status/2101670814953455780",
+          "kind": "secondary",
+          "published_at": "2026-09-20T13:52:24+00:00",
+          "verified": true,
+          "note": "只宣布 ComfyUI 已支持，没有另给评测数字。"
+        },
+        {
+          "label": "The Decoder 报道",
+          "url": "https://the-decoder.com/alibabas-open-weight-qwen-image-2-1-claims-to-beat-closed-models-in-image-generation-with-just-7-billion-parameters/",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面只标 Sep 20, 2026，未取得可靠具体时区。"
+        }
+      ]
+    },
+    {
+      "id": "ft-ai-guarantees",
+      "placement": "story",
+      "window": "in_window",
+      "title": "金融时报：科技公司用担保把最高约 3000 亿美元 AI 基建敞口留在表外",
+      "kicker": "产业 · 融资",
+      "facts": [
+        "Seeking Alpha 转述金融时报周日调查：过去一年，科技公司为人工智能数据中心和芯片融资提供了最高约 3000 亿美元担保，使多数敞口不必立刻记为常规债务。",
+        "Seeking Alpha 写明这些安排通过特殊目的结构担保资产最低价值，从而在不立即增加账面债务的情况下扩容；若需求不及预期或设备贬值，担保可能变成信用风险。"
+      ],
+      "conditions": [
+        "这是媒体调查，不是公司当天发布的融资公告，也不是新的监管决定。",
+        "未打开金融时报付费原文逐段核对；正文依据 Seeking Alpha 对 FT 的转述。",
+        "报道没有写这些担保已经发生赔付。"
+      ],
+      "background": [
+        "Gate News 等转述还点到 Meta 路易斯安那 Hyperion、Broadcom 对 Anthropic 芯片融资，以及 Nvidia 与软银 / OpenAI 相关数据中心的担保规模；这些细项未在已打开的 Seeking Alpha 正文里核对，不写入事实栏。"
+      ],
+      "sources": [
+        {
+          "label": "Seeking Alpha 转述",
+          "url": "https://seekingalpha.com/news/4644577-big-tech-s-300b-ai-guarantees-raise-hidden-risk-for-investors",
+          "kind": "primary",
+          "published_at": "2026-09-20T13:14:32.000Z",
+          "verified": true,
+          "note": "发布时间取自页面 JSON-LD datePublished。文章明确写明转述金融时报周日报道。未打开 FT 付费原文。"
+        },
+        {
+          "label": "Gate News 转述",
+          "url": "https://www.gate.com/news/detail/big-tech-issues-300-billion-in-ai-data-center-guarantees-over-past-year-24422731",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面标 2026-09-20 13:22:11，未标时区。对具体项目金额的转述未写入事实栏。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:054edb8711d734c6bccf3b3ca79055eead44bfd3840fe480c950d2227d882141"
+}
