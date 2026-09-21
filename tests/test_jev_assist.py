@@ -13,7 +13,12 @@ import urllib.error
 from edition import BEIJING_TZ
 from generation.jev.assist import CANONICAL_DISABLE_ENV, assist_candidates, jev_enabled
 from generation.jev.client import JevClientError, parse_answers
-from generation.jev.fingerprint import reuse_fingerprint, rubric_id
+from generation.jev.fingerprint import (
+    evidence_payload,
+    reuse_fingerprint,
+    rubric_id,
+    stable_facts,
+)
 from generation.jev.merge import merge_same_event
 from generation.jev.rubric import build_questions
 from generation.jev.store import (
@@ -150,6 +155,87 @@ class JevHelpers:
         )
 
 
+class JevFingerprintTest(unittest.TestCase):
+    QUESTIONS_ID = rubric_id(build_questions({}))
+
+    def _item(self, **overrides):
+        item = {
+            "event_key": "same-event",
+            "title": "Title",
+            "url": "https://example.com/a",
+            "summary": "Official shipped feature A",
+            "facts": ["shipped feature A"],
+            "prior_coverage": [],
+        }
+        item.update(overrides)
+        return item
+
+    def _fp(self, **overrides):
+        return reuse_fingerprint(self._item(**overrides), self.QUESTIONS_ID)
+
+    def test_fact_order_and_duplicate_facts_reuse(self):
+        ordered = self._fp(facts=["shipped feature A", "opened waitlist"])
+        reversed_facts = self._fp(facts=["opened waitlist", "shipped feature A"])
+        duplicated = self._fp(facts=["shipped feature A", "shipped feature A", "opened waitlist"])
+        self.assertEqual(ordered, reversed_facts)
+        self.assertEqual(ordered, duplicated)
+        self.assertEqual(
+            evidence_payload(self._item(facts=["opened waitlist", "shipped feature A"]))["facts"],
+            ["opened waitlist", "shipped feature a"],
+        )
+
+    def test_summary_wording_only_reuses(self):
+        baseline = self._fp(summary="Official shipped feature A")
+        reworded = self._fp(summary="The company today shipped feature A.")
+        chinese = reuse_fingerprint(
+            self._item(
+                facts=["官方开放了该能力"],
+                summary="官方今日开放了该能力。",
+            ),
+            self.QUESTIONS_ID,
+        )
+        chinese_same = reuse_fingerprint(
+            self._item(
+                facts=["官方开放了该能力"],
+                summary="官方开放了该能力",
+            ),
+            self.QUESTIONS_ID,
+        )
+        self.assertEqual(baseline, reworded)
+        self.assertEqual(chinese, chinese_same)
+        self.assertEqual(
+            stable_facts(self._item(summary="The company today shipped feature A.")),
+            ["shipped feature a"],
+        )
+
+    def test_material_new_facts_or_corrections_re_evaluate(self):
+        baseline = self._fp(facts=["shipped feature A"])
+        extra_fact = self._fp(facts=["shipped feature A", "opened a public waitlist"])
+        corrected = self._fp(
+            facts=["price is $10 per month"],
+            summary="Price is $10 per month",
+        )
+        original_price = self._fp(
+            facts=["price is $20 per month"],
+            summary="Price is $20 per month",
+        )
+        self.assertNotEqual(baseline, extra_fact)
+        self.assertNotEqual(original_price, corrected)
+
+    def test_summary_material_info_is_folded_into_facts(self):
+        baseline = self._item(facts=["shipped feature A"], summary="Official shipped feature A")
+        with_new = self._item(
+            facts=["shipped feature A"],
+            summary="Opened a public waitlist for feature A.",
+        )
+        self.assertEqual(stable_facts(baseline), ["shipped feature a"])
+        self.assertIn("opened a public waitlist for feature a", stable_facts(with_new))
+        self.assertNotEqual(
+            reuse_fingerprint(baseline, self.QUESTIONS_ID),
+            reuse_fingerprint(with_new, self.QUESTIONS_ID),
+        )
+
+
 class JevAssistTest(JevHelpers, unittest.TestCase):
     def test_identical_rerun_reuses_without_second_http(self):
         opener = RecordingOpener()
@@ -192,6 +278,75 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
             self.assertEqual(store.snapshot()["request_count"], 2)
 
         self.assertEqual(len(opener.calls), 2)
+
+    def test_fact_order_duplicate_and_summary_wording_reuse_one_http(self):
+        opener = RecordingOpener()
+        first = candidate(
+            1,
+            facts=["shipped feature A", "opened waitlist"],
+            summary="Official shipped feature A",
+        )
+        reordered = candidate(
+            1,
+            facts=["opened waitlist", "shipped feature A", "shipped feature A"],
+            summary="The company today shipped feature A.",
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            first_result = self.score([first], opener, store)
+            reused = self.score([reordered], opener, store)
+            self.assertEqual(store.snapshot()["request_count"], 1)
+
+        self.assertEqual(len(opener.calls), 1)
+        self.assertFalse(first_result.candidates[0]["jev_assist"]["reused"])
+        self.assertTrue(reused.candidates[0]["jev_assist"]["reused"])
+        self.assertEqual(reused.summary["real_requests"], 0)
+
+    def test_summary_new_fact_or_correction_makes_a_second_request(self):
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            self.score(
+                [candidate(1, facts=["shipped feature A"], summary="Official shipped feature A")],
+                opener,
+                store,
+            )
+            self.score(
+                [
+                    candidate(
+                        1,
+                        facts=["shipped feature A"],
+                        summary="Opened a public waitlist for feature A.",
+                    )
+                ],
+                opener,
+                store,
+            )
+            self.score(
+                [
+                    candidate(
+                        1,
+                        facts=["price is $20 per month"],
+                        summary="Price is $20 per month",
+                    )
+                ],
+                opener,
+                store,
+            )
+            self.score(
+                [
+                    candidate(
+                        1,
+                        facts=["price is $10 per month"],
+                        summary="Price is $10 per month",
+                    )
+                ],
+                opener,
+                store,
+            )
+            self.assertEqual(store.snapshot()["request_count"], 4)
+
+        self.assertEqual(len(opener.calls), 4)
 
     def test_quota_survives_new_attempt_and_never_sends_101st(self):
         opener = RecordingOpener()
@@ -411,6 +566,13 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertIn("runs/jev", text)
         self.assertIn("AI_DAILY_PRIVATE_RUN_DIR", text)
         self.assertIn("从零", text)
+        self.assertIn("delivery/jev-private", text)
+        self.assertIn("prepare_for_ca_launch", text)
+        self.assertIn("ingest_from_ca_json", text)
+        self.assertIn("pending_ingest", text)
+        self.assertIn("skip_jev", text)
+        self.assertIn("不等于", text)
+        self.assertNotIn("两台 CA 配同一个路径就已经共享", text)
 
     def test_client_reads_only_typesafe_env_var(self):
         source = Path("generation/jev/client.py").read_text(encoding="utf-8")
