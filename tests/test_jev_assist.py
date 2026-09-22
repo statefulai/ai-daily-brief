@@ -116,8 +116,20 @@ def http_error(code=429):
 
 
 class JevHelpers:
-    DATE = "2026-09-21"
     ENV = {"TYPESAFE_API_KEY": "test-jev-key-do-not-log"}
+
+    def beijing_now(self):
+        """Stable Beijing clock for one test so store write and restore share a day."""
+        frozen = getattr(self, "_beijing_now", None)
+        if frozen is None:
+            today = datetime.now(BEIJING_TZ).date()
+            frozen = datetime(today.year, today.month, today.day, 15, 0, tzinfo=BEIJING_TZ)
+            self._beijing_now = frozen
+        return frozen
+
+    @property
+    def DATE(self) -> str:
+        return beijing_calendar_date(self.beijing_now())
 
     def store(self, directory, *, limit=100, allow_create=True):
         path = Path(directory) / "runs" / "jev" / f"quota-{self.DATE}.json"
@@ -130,8 +142,12 @@ class JevHelpers:
         store.restore()
         return store
 
-    def beijing_now(self):
-        return datetime(2026, 9, 21, 15, 0, tzinfo=BEIJING_TZ)
+    def patch_assist_calendar(self):
+        """Bind assist restore (now=None) to the same Beijing day as helper writes."""
+        return patch(
+            "generation.jev.assist.beijing_calendar_date",
+            side_effect=lambda now=None: beijing_calendar_date(now or self.beijing_now()),
+        )
 
     def score_shared_dir(self, items, opener, durable_root, repo_root, **kwargs):
         environ = dict(kwargs.pop("environ", self.ENV))
@@ -549,7 +565,7 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
             root = Path(tmp)
             candidates_path = root / "candidates.json"
             out_path = root / "out.json"
-            store_path = root / "runs" / "jev" / f"quota-{beijing_calendar_date()}.json"
+            store_path = root / "runs" / "jev" / f"quota-{self.DATE}.json"
             candidates_path.write_text(
                 json.dumps({"candidates": [candidate(1)]}), encoding="utf-8"
             )
@@ -558,6 +574,7 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
                     "generation.jev.assist.call_jev",
                     return_value=(ok_payload(), 0.01),
                 ) as mocked_call,
+                self.patch_assist_calendar(),
                 patch.dict("os.environ", self.ENV, clear=False),
             ):
                 jev_assist_main(
@@ -587,6 +604,46 @@ class JevAssistTest(JevHelpers, unittest.TestCase):
         self.assertTrue(payload["candidates"][0]["jev_assist"]["reused"])
         self.assertTrue(payload["jev_assist"]["assist_only"])
         self.assertEqual(payload["jev_assist"]["quota_used"], 1)
+
+    def test_helper_store_reopens_on_live_calendar_when_now_is_omitted(self):
+        """curate_daily_brief omits now=; helper ledger day must match that restore."""
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            result = assist_candidates(
+                [candidate(1)],
+                config={"store_path": str(store.path), "repo_root": tmp},
+                opener=opener,
+                environ=self.ENV,
+                prior_coverage=[],
+            )
+            payload = json.loads(store.path.read_text(encoding="utf-8"))
+
+        self.assertEqual(store.calendar_date, beijing_calendar_date())
+        self.assertEqual(payload["calendar_date"], store.calendar_date)
+        self.assertEqual(result.candidates[0]["jev_assist"]["status"], "ok")
+        self.assertEqual(len(opener.calls), 1)
+
+    def test_injected_calendar_day_keeps_write_and_restore_aligned(self):
+        """A frozen helper day must be injected into assist when now= is omitted."""
+        self._beijing_now = datetime(1999, 12, 31, 15, 0, tzinfo=BEIJING_TZ)
+        opener = RecordingOpener()
+        with tempfile.TemporaryDirectory() as tmp:
+            store = self.store(tmp)
+            with self.patch_assist_calendar():
+                result = assist_candidates(
+                    [candidate(1)],
+                    config={"store_path": str(store.path), "repo_root": tmp},
+                    opener=opener,
+                    environ=self.ENV,
+                    prior_coverage=[],
+                )
+            payload = json.loads(store.path.read_text(encoding="utf-8"))
+
+        self.assertEqual(self.DATE, "1999-12-31")
+        self.assertEqual(payload["calendar_date"], "1999-12-31")
+        self.assertEqual(result.candidates[0]["jev_assist"]["status"], "ok")
+        self.assertEqual(len(opener.calls), 1)
 
     def test_parse_answers_rejects_bool_and_missing_keys(self):
         with self.assertRaises(JevClientError):
