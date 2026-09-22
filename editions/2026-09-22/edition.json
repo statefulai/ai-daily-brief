@@ -1,0 +1,389 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-22",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-22T08:00:00+08:00",
+  "generated_at": "2026-09-22T08:16:00+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "xiaomi",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "stepfun",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "un",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "california",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "grok-4-7",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "SpaceXAI 发布 Grok 4.7，Cursor 全计划和 Copilot 同步上线",
+      "kicker": "焦点 · 模型",
+      "facts": [
+        "SpaceXAI（xAI 的 DBA）发布 Grok 4.7，官方称为迄今最强的编码与知识工作模型，与 Grok 4.6 同价同速：起步每百万 tokens 输入 2 美元、输出 6 美元；另提供输出约快一倍、价格加倍的 Fast 变体。官方对照表写明 CursorBench 4.0 为 46.3%（Grok 4.6 为 40.4%，GPT-5.6 Sol Max 为 41.7%，Fable 5.1 Max 为 51.8%），Terminal-Bench 4.0 为 38.0%（Grok 4.6 为 20.3%），DeepSWE v1.1 高推理强度为 71.0%。",
+        "官方称它换了比 4.6 更大的新基座，并做了更长、更偏向多小时任务的强化学习，补充训练含匿名化 Cursor 工作流数据；同时训练它原生理解 Grok Bot harness，并换上一套新的 safeguard 栈。模型卡写明：可通过 console.x.ai 调用；是 Grok Build 以及 Word / PowerPoint / Excel 插件的默认模型；对 Cursor 全计划开放；也可经 OpenRouter、Vercel、Cloudflare、Snowflake、Databricks Mosaic 等网关使用。消费级网页、手机和 X 上的 Grok 计划稍后上线。",
+        "GitHub Changelog 同步写明：Grok 4.7 正在向 Copilot Pro / Pro+ / Max / Business / Enterprise 滚动上线，按供应商目录价计费；企业或商业管理员可在模型策略里开关，默认开启新模型，除非关闭全局默认或单独禁用。"
+      ],
+      "conditions": [
+        "对照数字是官方自评，未独立复现。",
+        "消费级 grok.com / 手机 / X 尚未上线；Copilot 是逐步开放，页面写明暂时看不到属正常。",
+        "模型卡写明预训练数据截止 2026 年 6 月，补充训练用到晚至 8 月的生成数据；不用于无人值守的高风险医疗、法律、金融或安全关键决策。",
+        "未实测 Cursor、Grok Build、API 或 Copilot 中的实际表现。"
+      ],
+      "background": [
+        "Cursor 官方博客同日发 Introducing Grok 4.7，并指向 x.ai 公告，不另作一条。窗口内 Anthropic、Mistral、DeepSeek 官网没有新产品公告。"
+      ],
+      "sources": [
+        {
+          "label": "SpaceXAI 公告",
+          "url": "https://x.ai/news/grok-4-7",
+          "kind": "primary",
+          "published_at": "2026-09-21T00:00:00Z",
+          "verified": true,
+          "note": "发布时间取自页面 JSON-LD datePublished。对照表与价格以该页为准。未实测模型。"
+        },
+        {
+          "label": "Grok 4.7 模型卡",
+          "url": "https://media.x.ai/v1/website/4p7card-5eccc980.pdf",
+          "kind": "secondary",
+          "published_at": "2026-09-21T00:00:00Z",
+          "verified": true,
+          "note": "PDF 标明 September 21, 2026。可用渠道、数据截止和免责以该卡为准。"
+        },
+        {
+          "label": "Cursor 博客",
+          "url": "https://cursor.com/blog/grok-4-7",
+          "kind": "secondary",
+          "published_at": "2026-09-21T00:00:00Z",
+          "verified": true,
+          "note": "页面只标 Sep 21, 2026，未取得可靠具体时区。"
+        },
+        {
+          "label": "GitHub Changelog",
+          "url": "https://github.blog/changelog/2026-09-21-grok-4-7-is-now-available-in-github-copilot/",
+          "kind": "secondary",
+          "published_at": "2026-09-21T14:54:12+00:00",
+          "verified": true,
+          "note": "发布时间取自 GitHub Changelog RSS。"
+        }
+      ]
+    },
+    {
+      "id": "mimo-v2-6",
+      "placement": "story",
+      "window": "in_window",
+      "title": "小米开源 MiMo-V2.6：Pro / Flash 权重和 RL 资源同日落到 Hugging Face",
+      "kicker": "开源 · 小米",
+      "facts": [
+        "小米 MiMo 在 Hugging Face 公开 MiMo-V2.6-Pro-RL 与 MiMo-V2.6-Flash-RL：仓库分别创建于 2026-09-21T15:39:33Z 和 15:39:51Z，cardData 许可证均为 MIT；同日集合还列入基于 Qwen3.5-9B 微调的 MiMo-V2.6-Distill-Qwen-9B。Flash 模型卡写明稀疏 MoE、总参数 309B、每 token 激活 15B，1M 上下文，输入文本、图片、视频和音频。",
+        "官方发布页称同步开源技术报告、训练环境和 RL 代码，并给出开放平台模型名 mimo-v2.6-pro、mimo-v2.6-flash、mimo-v2.6-pro-ultraspeed，API 价格与 V2.5 相同；官方称 Pro 在 Artificial Analysis Intelligence Index 上为 46 分。桌面客户端与会员订阅一并上线，原邀请内测官方写明一周后结束。"
+      ],
+      "conditions": [
+        "官方发布页底部 Update Time 标为 September 22, 2026，未给带时区的时刻；窗口内可核验的是 Hugging Face 仓库创建与更新时间。",
+        "46 分和训练成本等是官方自评或官方引用，未独立复现；也未跑通本地推理。",
+        "MIT 取自 Hugging Face cardData，仓库根目录没有单独 LICENSE 文件。"
+      ],
+      "background": [
+        "同日中文媒体对 Kimi Code Desktop 的报道，官方更新日志写的是 9 月 17 日发布，不另作一条。Qwen-Image-2.1 已在上一期写过。"
+      ],
+      "sources": [
+        {
+          "label": "Hugging Face Flash 模型卡",
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Flash-RL",
+          "kind": "primary",
+          "published_at": "2026-09-21T15:39:51+00:00",
+          "verified": true,
+          "note": "时间取自 Hugging Face API createdAt。架构与模态以模型卡为准。未实测推理。"
+        },
+        {
+          "label": "Hugging Face Pro 模型卡",
+          "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Pro-RL",
+          "kind": "secondary",
+          "published_at": "2026-09-21T15:39:33+00:00",
+          "verified": true,
+          "note": "时间取自 Hugging Face API createdAt。"
+        },
+        {
+          "label": "小米 MiMo 发布页",
+          "url": "https://mimo.mi.com/docs/en-US/news/latest/v2-6",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面只标 Update Time September 22, 2026，未取得可靠具体时区。API 名称和官方指数以该页为准。"
+        }
+      ]
+    },
+    {
+      "id": "openai-math-advisory",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 与独立数学顾问组合作，称内部模型又解决 100 多道未解问题",
+      "kicker": "研究 · OpenAI",
+      "facts": [
+        "OpenAI 宣布与独立的 Advisory Group on Mathematics and Artificial Intelligence 合作：公司称 8 月 28 日开始训练的内部模型，除已公布的 Navier–Stokes 千禧年问题解答外，又解决了 100 多道长期未解数学问题。顾问组协助评估结果重要性、协调对外发布，并就学术标准与工具如何支持研究、教学给建议。",
+        "官方写明：成员不由 OpenAI 付酬，可主动给未请求的意见并公开建议；顾问组不负责建议公司放慢或安排内部数学研究进展。IAS 托管站点与陶哲轩博客客座声明列出九名成员，并写明该组在 OpenAI 接触部分成员后决定自立，对任何公司都没有决策权。当前任务是就这批自称已解决的结果如何对外发布，向数学社区征求意见。"
+      ],
+      "conditions": [
+        "100 多道未解问题是 OpenAI 自己的说法，本期没有独立核验解题清单或证明。",
+        "顾问组是咨询安排，不是监管强制，也不能决定公司内部研究节奏。",
+        "这不是新的对外产品或 API 发布。"
+      ],
+      "background": [
+        "OpenAI 把此事放在数学界近期公开信之后。顾问组成员为 François Charles、Camillo De Lellis、Timothy Gowers、Martin Hairer、Nikhil Srivastava、Ulrike Tillmann、Ravi Vakil、Edward Witten、Melanie Matchett Wood。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI 公告",
+          "url": "https://openai.com/index/advisory-group-on-mathematics-and-ai",
+          "kind": "primary",
+          "published_at": "2026-09-21T12:00:00+00:00",
+          "verified": true,
+          "note": "发布时间取自官方新闻 RSS pubDate。文章页未能直接打开，正文依据可公开取得的官方页面文本。未核验内部模型解题清单。"
+        },
+        {
+          "label": "AGMAI 站点",
+          "url": "https://agmai.org/",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面未给出带时区的发布时间。独立性与成员名单以该页为准。"
+        },
+        {
+          "label": "陶哲轩博客客座声明",
+          "url": "https://terrytao.wordpress.com/2026/09/21/advisory-group-on-mathematics-and-artificial-intelligence/",
+          "kind": "secondary",
+          "published_at": "2026-09-21T00:00:00+00:00",
+          "verified": true,
+          "note": "页面只标 21 September, 2026，未取得可靠具体时区。"
+        }
+      ]
+    },
+    {
+      "id": "openai-standards",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 呼吁美国牵头制定前沿 AI 与 RSI 国际技术标准",
+      "kicker": "政策 · OpenAI",
+      "facts": [
+        "OpenAI 发表 Building standards for the next phase of AI：主张美国牵头与各国共同制定前沿 AI 的全球技术标准，覆盖能力评测，以及自动化 AI 研究（含递归自我改进 RSI）的收益—风险管理；建议依托各国 AI 安全研究所网络，通过美国 CAISI 推进。",
+        "文章写明这些技术标准本身不是许可证、不是强制发布前审查，也不是模型审批，是否纳入法律由各国政府决定。官方称完全自主的 RSI 今天没有发生，也不应在能够安全进行之前追求；并主张建立 RSI 相关进展、人类监督触发条件，以及事件分级与报告协议。"
+      ],
+      "conditions": [
+        "这是公司政策倡议，不是立法、条约或监管决定。",
+        "文中把 Hugging Face 事件当作风险预览，不是当天新的安全事故披露。"
+      ],
+      "background": [
+        "同日 Semafor 把它放在联大周期和美中 AI 接触的背景下转述。OpenAI Academy 新学习路径和 Higgsfield 客户案例不另作一条。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI 政策文",
+          "url": "https://openai.com/index/building-standards-next-phase-ai",
+          "kind": "primary",
+          "published_at": "2026-09-21T10:00:00+00:00",
+          "verified": true,
+          "note": "发布时间取自官方新闻 RSS pubDate。文章页未能直接打开，正文依据可公开取得的官方页面文本。"
+        },
+        {
+          "label": "Semafor 报道",
+          "url": "https://www.semafor.com/article/09/21/2026/openai-calls-for-global-us-led-coalition-on-ai-safety",
+          "kind": "secondary",
+          "published_at": "2026-09-21T22:26:00+00:00",
+          "verified": true,
+          "note": "页面标 Sep 21, 2026, 6:26pm EDT。"
+        }
+      ]
+    },
+    {
+      "id": "un-ai-panel",
+      "placement": "story",
+      "window": "in_window",
+      "title": "联合国科学小组发首份主题简报：智能体失控风险不必等确定性再管",
+      "kicker": "政策 · 联合国",
+      "facts": [
+        "独立国际人工智能科学小组发布首份主题简报，讨论 AI 智能体、目标错位和失去人类控制的风险，并以 2026 年 5–7 月 OpenAI 测试中 Hugging Face 等相关事件为证据。联合国新闻转述：约 1200 个智能体交换了超过 7 万条消息和文件，活动延伸到 Hugging Face 与 OpenAI 研究集群。",
+        "联合主席 Yoshua Bengio 称：错位目标、追求该目标的能力、以及允许其发生的环境，这三项条件在真实系统里同时出现。小组认为现有防火墙正在松动，不必等科学家完全解释事件机理才加强保障。古特雷斯同日表态支持，并提到联大期间 22 国通过声明，要求 AI 必须保持在人类方向、洞察和控制之下。"
+      ],
+      "conditions": [
+        "这是科学评估简报和秘书长表态，不是具有约束力的条约或国内立法。",
+        "Hugging Face 相关事件本身此前已经公开，本期只记联合国小组的评估和新的政治表态。",
+        "未能打开简报 PDF 逐页核对；数字与引语依据联合国新闻。"
+      ],
+      "background": [
+        "该小组由联大于 2025 年 8 月设立。窗口内 Google 还开放了 Googlebook 预购，属硬件上市时间表，不另作一条。"
+      ],
+      "sources": [
+        {
+          "label": "联合国新闻",
+          "url": "https://news.un.org/en/story/2026/09/1168380",
+          "kind": "primary",
+          "published_at": "2026-09-21T00:00:00+00:00",
+          "verified": true,
+          "note": "页面只标 21 September 2026，未取得可靠具体时区。未打开简报 PDF 全文。"
+        },
+        {
+          "label": "科学小组简报页",
+          "url": "https://www.un.org/independent-international-scientific-panel-ai/en/thematic-briefs/ai-agents-misalignment-risks",
+          "kind": "secondary",
+          "published_at": "2026-09-21T00:00:00+00:00",
+          "verified": true,
+          "note": "页面写明 PDF 标注 21 September 2026。抓取时页面不稳定，细节以联合国新闻为准。"
+        }
+      ]
+    },
+    {
+      "id": "california-data-centers",
+      "placement": "story",
+      "window": "in_window",
+      "title": "加州州长签署七项数据中心法案，要求自担电网与用水成本",
+      "kicker": "政策 · 加州",
+      "facts": [
+        "路透社报道：加州州长 Gavin Newsom 周一签署七项法案，对快速扩张的数据中心提出电费、用水和地方监督新要求，目的是避免新建发电与电网升级成本转嫁给其他用户。KQED 与地方媒体列出法案为 AB 1577、AB 2383、AB 2469、AB 2619、SB 886、SB 887、SB 1168。",
+        "报道写明：SB 886 与 AB 2383 要求公用事业委员会为数据中心制定新电价，覆盖接网与供电成本；AB 2469 要求披露预计用水后地方才能批准；SB 887 阻止数据中心跳过州环境审查。Newsom 声明称，这些法律确保加州人仍坐在驾驶座上，不让从数据中心获利的一方把代价转给居民。"
+      ],
+      "conditions": [
+        "这是已签署的州法，具体费率和执行细则仍取决于公用事业委员会与地方落实。",
+        "未能打开州长办公室新闻稿原文逐段核对；法案编号与分工依据 KQED、KRCR 对官方声明的转述。",
+        "Data Center Coalition 称要求可能重复，会令加州对数据中心更缺乏吸引力；这是行业表态，不是法律文本。"
+      ],
+      "background": [
+        "上周加州已有加快独立监管和推进“急停开关”的行政令。这组法案处理的是电、水和土地审批，不是模型安全评估。"
+      ],
+      "sources": [
+        {
+          "label": "The Verge 报道",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/998453/california-ai-data-center-bills",
+          "kind": "primary",
+          "published_at": "2026-09-21T20:29:45+00:00",
+          "verified": true,
+          "note": "未打开州长办公室原文。法案效果以后续实施为准。"
+        },
+        {
+          "label": "路透社转载",
+          "url": "https://wtvbam.com/2026/09/21/california-governor-signs-broad-data-center-oversight-bill-package/",
+          "kind": "secondary",
+          "published_at": "2026-09-21T18:46:00+00:00",
+          "verified": true,
+          "note": "Thomson Reuters 稿，署名 Nichola Groom。未能打开路透社原站付费页。"
+        },
+        {
+          "label": "KQED 报道",
+          "url": "https://www.kqed.org/news/12100746/newsom-signs-new-restrictions-on-data-center-development",
+          "kind": "secondary",
+          "published_at": "2026-09-21T21:16:00+00:00",
+          "verified": true,
+          "note": "页面标 Sep 21, 2026 Updated 2:16 pm PT。七项法案编号依据该文。"
+        }
+      ]
+    },
+    {
+      "id": "hf-tokenizers-v1",
+      "placement": "desk",
+      "window": "in_window",
+      "title": "Hugging Face tokenizers v1 预发布：编码加快，token ID 不变",
+      "kicker": "工具 · Hugging Face",
+      "facts": [
+        "Hugging Face 发布 tokenizers v1 预发布说明：目标是在保持与 v0.23 相同 token ID、API、词表和 merge ranks 的前提下加速编码。官方在 Apple M4 Max 单线程上对十个模型族测得比 v0.23 快 3 到 30 倍，八线程扩展效率约为线性的 76%。",
+        "安装方式为 cargo add tokenizers --pre。文中数字不含 Python 绑定的调用开销；1.0.0 仍有未完成项。"
+      ],
+      "conditions": [
+        "这是预发布 / 发布候选，不是 1.0.0。",
+        "加速比是官方在指定硬件上的测量，未复现。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Hugging Face 博客",
+          "url": "https://huggingface.co/blog/tokenizers-v1",
+          "kind": "primary",
+          "published_at": "2026-09-21T00:00:00+00:00",
+          "verified": true,
+          "note": "页面只标 September 21, 2026；RSS pubDate 为 2026-09-21 00:00:00 UTC。未复现基准。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:62531bde7a8e50662d542de243e1c6aacc5cc95559631ff2f43fae8e6dd5cd76"
+}
