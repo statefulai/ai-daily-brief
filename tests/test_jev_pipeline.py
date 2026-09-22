@@ -171,6 +171,7 @@ class JevPipelineTest(JevHelpers, unittest.TestCase):
                     "generation.jev.assist.call_jev",
                     return_value=(ok_payload(noul=0.01, score=0.2), 0.01),
                 ),
+                self.patch_assist_calendar(),
                 patch.dict("os.environ", self.ENV, clear=False),
             ):
                 result = curate_daily_brief(
