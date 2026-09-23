@@ -1,0 +1,230 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-23",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-23T08:00:00+08:00",
+  "generated_at": "2026-09-23T08:33:40+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "alibaba",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "claude-opus-5-5",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Anthropic 发布 Claude Opus 5.5，价格低于 Opus 5，网络安全请求改走 Opus 4.8",
+      "kicker": "焦点 · 模型",
+      "facts": [
+        "Anthropic 于 2026 年 9 月 22 日发布 Claude Opus 5.5，称为 Claude 5.5 家族的第一款，也是其呼吁放缓前沿之后的首次发布。官方称它在多数工作上达到 Claude Fable 5.1 的水平，默认设置下典型负载成本比 Opus 5 低约 40%。Claude Platform 模型 ID 为 claude-opus-5-5；每百万 tokens 输入 4 美元、输出 20 美元，缓存读取 0.20 美元（Opus 5 为 5 美元、25 美元、0.50 美元）。文档写明上下文 100 万 tokens，最大输出 12.8 万，可靠知识截止 2026 年 6 月；已在 Claude API、Amazon Bedrock、Google Cloud、Microsoft Foundry 和 Claude Platform on AWS 提供。Fast 模式在 Claude Code 和 Claude Platform 提供，最高约 2.5 倍速度，输入 8 美元、输出 40 美元。",
+        "官方对照表在自适应思考、最高努力且生产护栏开启时写明：Terminal-Bench 4.0（Opus 5.5 为 xhigh）66.4%，Fable 5.1 为 55.8%，Opus 5 为 52.3%，GPT-6 Astra 为 57.9%；CursorBench 4.0 为 57.8%，Fable 5.1 为 51.8%，Opus 5 为 46.6%；GDPval-AA v2.1 为 1846，Fable 5.1 为 1735，Opus 5 为 1708。护栏介入时，网络安全任务改由 Claude Opus 4.8 完成，生物学和前沿模型研发任务改由 Claude Opus 5 完成。文档另列相对 Opus 5 的接口变化：不能关闭思考；强制工具调用会报错；思考块绑定模型和对话；Claude API 与 Google Cloud 不再接受较早的 computer_20251124。默认显示设置下，工具调用之间的文字回到空的 thinking 块。",
+        "官方称在近 2000 个场景的自动行为审计上，这是迄今测过的最强模型；越界测试里，试图绕过边界的次数比 Opus 5 或 Claude Mythos 5.1 少约 85%，且每次都是低严重度并自我报告。因生物与网络安全能力接近 Mythos 5.1，多数网络安全任务会改路由到 Opus 4.8；受生物护栏阻碍的机构可申请生命科学验证计划。它沿用 preserved thinking：2026 年 8 月 31 日及之后创建的 API 账户不能编辑先前上下文来抽取推理。Sonnet 5.5 和 Haiku 5.5 将在未来数周发布。GitHub Changelog 同日写明，该模型正在向 Copilot Pro+、Max、Business 和 Enterprise 滚动上线，文本输出带水印，按供应商目录价计费。"
+      ],
+      "conditions": [
+        "对照数字是官方自评，未独立复现。Terminal-Bench 上 GPT-6 Astra 的 57.9% 是 OpenAI 报告的 high 成绩，不是同一努力档的复测。生产护栏开启时，网络安全和生物学基准会受回退模型影响。",
+        "Fast 模式单独计价。思考模式不能关闭。Copilot 是逐步开放，页面写明暂时看不到属正常。",
+        "Sonnet 5.5 与 Haiku 5.5 尚未发布。未实测 API、Claude 应用或 Copilot。"
+      ],
+      "background": [
+        "同日的 GPT-6 Sol 与 Luna 另作一条。窗口内 Google、Mistral、DeepSeek、Cursor 官网没有新的模型发布。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic 公告",
+          "url": "https://www.anthropic.com/claude-opus-5-5",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面只标 September 22, 2026，未取得带时区的时刻。价格、护栏和基准以该页为准。未实测模型。"
+        },
+        {
+          "label": "Claude 模型文档",
+          "url": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "文档写 Released September 22, 2026。模型 ID、上下文、知识截止和接口变化以该页为准。"
+        },
+        {
+          "label": "GitHub Changelog",
+          "url": "https://github.blog/changelog/2026-09-22-claude-opus-5-5-is-now-available-in-github-copilot/",
+          "kind": "secondary",
+          "published_at": "2026-09-22T17:10:23+00:00",
+          "verified": true,
+          "note": "发布时间取自 GitHub Changelog 新闻源。Copilot 套餐范围和水印以该页为准。"
+        }
+      ]
+    },
+    {
+      "id": "gpt-6-sol-luna",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 推出 GPT-6 Sol 与 Luna，API 比 5.6 促销价低一半，但还没进 Chat",
+      "kicker": "模型 · OpenAI",
+      "facts": [
+        "OpenAI 发布 GPT-6 Sol 与 GPT-6 Luna，称训练方法与 GPT-6 Astra 相近，用来把专业工作、事实性、编码、计算机使用和对齐上的进展放到更快、更便宜的档位。API 模型 ID 为 gpt-6-sol 与 gpt-6-luna。相对 GPT-5.6 促销价，Sol 每百万 tokens 输入从 4 美元降到 2 美元、输出从 20 美元降到 10 美元；Luna 输入从 0.20 美元降到 0.10 美元、输出从 1.20 美元降到 0.50 美元。官方称 GPT-6 Astra 仍是最强模型。",
+        "ChatGPT Work 和 Codex 即日起对 Plus、Pro、Business、Enterprise 和 Edu 开放；Free 与 Go 可在桌面应用使用 Luna。这些模型尚未进入 Chat，官方称当天逐步放量。GitHub Changelog 同日写明：Copilot 里 Sol 面向 Pro+、Max、Business 和 Enterprise，Luna 另含 Pro，按用量计费，同样逐步上线。",
+        "官方自评：AutomationBench 上 Sol（xhigh）得分 33.2%，单任务成本 0.27 美元，高于 Claude Opus 5（max）的 26.9%，成本约为其 9%。DeepSWE v1.1 上 Sol（max）为 68.8%，距 Claude Fable 5（xhigh）的 69.9% 差 1.1 个百分点，单任务成本约低 80%。内部事实性评估里，Sol 的错误大约是前代的一半；该评估取自用户曾标错的对话，不代表日常错误率。同一公告写明 GPT-6 提示缓存的默认命中率提高，缓存输入读取有 90% 折扣；调整推理强度或开关工具不再打断已有缓存，并可用显式断点指定缓存前缀。"
+      ],
+      "conditions": [
+        "分数和单任务成本是官方自评或转引公开榜，未独立复现。公告写明 AutomationBench 对 Fable 5.1 的成本未计入约 40% 任务上的 Opus 5 回退。",
+        "Chat 端尚未上线。ChatGPT 与 Copilot 都是逐步开放。",
+        "未实测 API、Codex 或 Copilot。缓存事实只取自本篇公告。"
+      ],
+      "background": [
+        "公告转述 GitHub：过去数月这些缓存改进使其对 OpenAI 模型的数十亿次请求里，需要重新处理的提示 token 占比下降超过 50%。这是对已上线改进的回顾，不是另一款模型。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI 公告",
+          "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna",
+          "kind": "primary",
+          "published_at": "2026-09-22T18:00:00+00:00",
+          "verified": true,
+          "note": "发布时间取自 OpenAI 新闻源。价格、可用范围和自评以该页为准。未实测模型。"
+        },
+        {
+          "label": "GitHub Changelog",
+          "url": "https://github.blog/changelog/2026-09-22-openais-gpt-6-sol-and-gpt-6-luna-now-available/",
+          "kind": "secondary",
+          "published_at": "2026-09-22T17:00:14+00:00",
+          "verified": true,
+          "note": "发布时间取自 GitHub Changelog 新闻源。Copilot 套餐范围以该页为准。"
+        }
+      ]
+    },
+    {
+      "id": "alibaba-zhenwu-v900",
+      "placement": "story",
+      "window": "in_window",
+      "title": "阿里云栖发布真武 V900，并称 Qwen 4 已在训练、后续计划做到 5 到 10 万亿参数",
+      "kicker": "产业 · 阿里云",
+      "facts": [
+        "阿里云 2026 年 9 月 22 日新闻稿：平头哥发布训推芯片真武 V900，性能为今年 5 月真武 M890 的 3 倍，显存 216GB，片间互联 1200GB/s，原生支持 FP8 与 FP4，计划 2027 年第一季度量产并商用。真武系列已服务汽车、金融、大模型、具身智能、能源、制造等超过 650 家客户。同日的超节点服务器集成真武 V900、ICN Switch、磐脉智能网卡和镇岳 SSD 主控，单一集群可到 50 万卡。",
+        "同一新闻稿写明：下一代 Qwen 4 正在训练；Qwen 4.5 与 Qwen 5 的规划规模为 5 到 10 万亿参数。集团 CEO 吴泳铭提出，到 2032 年阿里云运营的全球数据中心容量超过 20GW。倚天 720 与倚天 730 计划 2027 年推出，其中倚天 730 是平头哥首款自研微架构 CPU，SPECint2017/GHz 最高比倚天 710 高 40%。",
+        "新闻稿还称，Qwen3.8-Max 在一个多月全自动运行中完成 33 轮迭代，Artificial Analysis 分数从 40 升到 45。同声传译模型 Qwen3.8-LiveTranslate 首次亮相，LAAL 从 2.8 秒降到 2.3 秒。图像模型 Qwen-Image 3.1 写明今年晚些时候才推出。"
+      ],
+      "conditions": [
+        "性能倍数、参数规模、延迟和评测分数都是公司自述，未独立复现。",
+        "Qwen 4、4.5、5，以及 20GW 和倚天新 CPU，是路线图或目标，不是已经交付的模型、机房或芯片。真武 V900 要到 2027 年一季度才量产。",
+        "Qwen-Image 3.1 不是当日可下载的权重。未实测芯片、集群或语音模型。"
+      ],
+      "background": [
+        "同稿还发布了面向智能体的 AgentCore、新一代 CPFS 存储和 HPN 8.0 Pro 网络，不另作一条。DeepSeek 新闻列表最新一条仍是 9 月 10 日的 V4.1-Flash，官网没有新产品公告。"
+      ],
+      "sources": [
+        {
+          "label": "阿里云新闻稿",
+          "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-roadmap-on-full-stack-ai-strategy",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "新闻稿落款为 2026 年 9 月 22 日、杭州，未给出带时区的时刻。芯片规格、模型路线和容量目标以该页为准。未实测芯片或模型。"
+        }
+      ]
+    },
+    {
+      "id": "transformers-gguf",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Hugging Face：Transformers 可直接加载 GGUF，先支持苹果芯片上的 Qwen3.5",
+      "kicker": "开源 · 工具",
+      "facts": [
+        "Hugging Face 于 2026 年 9 月 22 日宣布，Transformers 可以加载 GGUF：把 Hub 模型 ID 和 gguf_file 交给 from_pretrained 就能生成。打包推理目前只走 Apple Silicon 的 MPS，经 kernels 复用 ggml 的 Metal 内核。初始覆盖 Qwen3.5 的稠密模型与 MoE，以及兼容的 Qwen3.8 检查点。",
+        "官方写明需要较新的 PyTorch，以及还在 main 分支、尚未发稳定版的 transformers 和兼容的 kernels。没有量化内核时会退回反量化，更占内存。llama.cpp 仍是其推荐的本地推理引擎。在 MacBook Pro M2 Max 32GB 上，官方对比了三个 GGUF 检查点，但 Transformers 的计时包含预填充，llama-bench 只报解码速度，两边条件并不相同。"
+      ],
+      "conditions": [
+        "打包内核还不能用在非苹果芯片上，填充批处理和更多架构也还没覆盖。",
+        "这不是当前稳定版的开箱能力。未复现加载或速度。"
+      ],
+      "background": [
+        "同日博客还有 UK AISI 用 EvalEval 公开若干既有模型的评测记录，以及 oMLX 维护者加入 Hugging Face。前者是评测数据协作，后者是人员变动，都不另作一条。"
+      ],
+      "sources": [
+        {
+          "label": "Hugging Face 博客",
+          "url": "https://huggingface.co/blog/transformers-llama-cpp-quants",
+          "kind": "primary",
+          "published_at": "2026-09-22T00:00:00+00:00",
+          "verified": true,
+          "note": "博客页只标 September 22, 2026。新闻源时间为当日 00:00 UTC，没有更细的时刻，该时刻恰为窗口起点。未复现加载。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:b09fc1d90cb8325d93c9fdb3e9113946b14ce7b5bee2bc5bfc82f2174670c140"
+}
