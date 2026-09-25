@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{DESCRIPTION}}">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      --desk: #e7e3db;
+      --paper: #faf7f0;
+      --ink: #252621;
+      --body: #45463f;
+      --muted: #65665c;
+      --rule: #c7c2b7;
+      --accent: #91472f;
+      --wash: #f0ebe0;
+      --serif: "Songti SC", "STSong", "Noto Serif CJK SC", "SimSun", serif;
+      --display-latin: "Didot", "Bodoni 72", "Times New Roman", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { color-scheme: light; scroll-padding-top: 24px; }
+    body { margin: 0; background: var(--desk); color: var(--body); font: 16px/1.8 var(--sans); -webkit-text-size-adjust: 100%; }
+    a { color: var(--accent); text-underline-offset: 5px; text-decoration-thickness: 1px; }
+    a:hover { color: var(--ink); }
+    a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+    h1, h2, h3, h4, p { margin: 0; }
+    h1, h2, h3, h4 { color: var(--ink); font-family: var(--serif); }
+    h1, h2, h3, h4, p, li, a { overflow-wrap: anywhere; }
+    time, .ordinal, .archive-count { font-variant-numeric: tabular-nums; }
+    .skip-link { position: absolute; left: 20px; top: -80px; padding: 8px 14px; background: var(--paper); z-index: 2; }
+    .skip-link:focus { top: 12px; }
+    .paper { width: min(1120px, calc(100% - 64px)); margin: 32px auto 0; padding: 18px 48px 22px; border: 1px solid #b9b4a9; background: var(--paper); box-shadow: 0 8px 36px #2526210b; }
+    .utility { display: flex; justify-content: space-between; align-items: center; gap: 16px; font-size: 12px; color: var(--muted); }
+    .utility-brand { letter-spacing: .11em; }
+    .utility nav { display: flex; flex-wrap: wrap; gap: 24px; }
+    .utility nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--body); text-decoration: none; }
+    .utility nav a:hover { color: var(--accent); text-decoration: underline; }
+    .masthead { display: grid; grid-template-columns: 112px minmax(0, 1fr) 112px; align-items: center; gap: 16px; padding: 14px 0 22px; text-align: center; border-bottom: 4px double var(--ink); }
+    .masthead-art { display: block; width: 92px; height: auto; }
+    .masthead-type { grid-column: 2; min-width: 0; }
+    .masthead h1 { display: flex; align-items: center; justify-content: center; gap: .18em; font-size: 60px; font-weight: 400; line-height: 1.15; white-space: nowrap; }
+    .masthead-latin { position: relative; top: .08em; font-family: var(--display-latin); font-size: 1.18em; letter-spacing: .035em; }
+    .masthead-han { letter-spacing: .04em; }
+    .masthead-en { margin-top: 13px; color: var(--muted); font-size: 10px; letter-spacing: .23em; }
+    .latest { padding-top: 25px; }
+    .section-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+    .section-label { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; }
+    .section-label h2 { font-size: 23px; font-weight: 600; line-height: 1.4; }
+    .section-en { color: var(--muted); font-size: 10px; letter-spacing: .12em; }
+    .edition-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; color: var(--muted); font-size: 13px; }
+    .coverage-note { margin: 16px 0 23px; border-left: 2px solid var(--accent); padding: 7px 12px; background: var(--wash); color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .lead-layout { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: 36px; }
+    .lead-layout--single { display: block; }
+    .lead-story, .edition-contents { min-width: 0; }
+    .kicker { color: var(--accent); font-size: 12px; font-weight: 600; letter-spacing: .06em; }
+    .lead-story h3 { margin-top: 10px; font-size: 32px; font-weight: 700; line-height: 1.5; text-wrap: pretty; }
+    .excerpt-label { margin-top: 17px; color: var(--muted); font-size: 11px; letter-spacing: .08em; }
+    .excerpt { margin-top: 4px; font-size: 15px; line-height: 1.9; }
+    .lead-actions { margin-top: 21px; }
+    .read-edition { display: inline-flex; align-items: center; justify-content: space-between; gap: 26px; min-height: 46px; padding: 8px 18px; background: var(--accent); color: var(--paper); font-size: 14px; text-decoration: none; }
+    .read-edition:hover { background: var(--ink); color: var(--paper); }
+    .scope { margin-top: 12px; font-size: 13px; }
+    .scope summary { width: fit-content; min-height: 44px; padding: 10px 0; color: var(--muted); cursor: pointer; }
+    .scope summary:hover { color: var(--accent); }
+    .scope ul { margin: 4px 0 10px; padding-left: 20px; }
+    .scope li + li { margin-top: 8px; }
+    .edition-contents { align-self: start; border-left: 1px solid var(--rule); padding-left: 28px; }
+    .edition-contents h3 { font-size: 17px; font-weight: 600; }
+    .contents-list { list-style: none; padding: 0; margin: 4px 0 0; }
+    .contents-list li { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+    .contents-list a { display: grid; grid-template-columns: 21px minmax(0, 1fr); gap: 11px; min-height: 44px; color: var(--ink); text-decoration: none; }
+    .contents-list a:hover h4 { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+    .ordinal { padding-top: 4px; color: var(--accent); font: 12px/1.8 var(--sans); }
+    .contents-list h4 { font-size: 18px; line-height: 1.7; font-weight: 600; }
+    .remaining-note { margin-top: 13px; color: var(--muted); font-size: 12px; }
+    .archive { margin-top: 27px; padding-top: 24px; border-top: 2px solid var(--ink); }
+    .archive-count { color: var(--muted); font-size: 12px; }
+    .archive-month { margin-top: 19px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); color: var(--muted); font-size: 12px; letter-spacing: .05em; }
+    .archive-list { margin: 0; padding: 0; list-style: none; }
+    .archive-list li { border-bottom: 1px solid var(--rule); }
+    .archive-link { display: grid; grid-template-columns: 96px minmax(0, 1fr) 60px 16px; align-items: baseline; gap: 18px; min-height: 76px; padding: 20px 0; color: var(--ink); text-decoration: none; }
+    .archive-link time { padding-top: 2px; color: var(--muted); font-size: 13px; }
+    .archive-link h3 { font-size: 18px; font-weight: 600; line-height: 1.8; }
+    .archive-link:hover h3 { color: var(--accent); text-decoration: underline; text-underline-offset: 5px; }
+    .item-count { align-self: center; color: var(--muted); font-size: 12px; white-space: nowrap; text-align: right; }
+    .archive-arrow { align-self: center; color: var(--accent); font-size: 16px; }
+    .paper-footer { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; margin-top: 34px; padding-top: 20px; border-top: 4px double var(--ink); }
+    .paper-footer h2 { font-size: 16px; font-weight: 600; }
+    .paper-footer p { max-width: 710px; margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.9; }
+    .paper-footer a { display: inline-flex; align-items: center; min-height: 44px; align-self: end; font-size: 12px; text-decoration: none; white-space: nowrap; }
+    @media (max-width: 820px) {
+      .paper { width: calc(100% - 32px); margin-top: 16px; padding: 14px 28px 20px; }
+      .lead-layout { grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 24px; }
+      .edition-contents { padding-left: 20px; }
+      .lead-story h3 { font-size: 28px; }
+      .archive-link { grid-template-columns: 82px minmax(0, 1fr) 48px 14px; gap: 12px; }
+    }
+    @media (max-width: 680px) {
+      html { scroll-padding-top: 16px; }
+      body { background: var(--paper); }
+      .paper { width: 100%; margin: 0; padding: 10px 22px 16px; border: 0; box-shadow: none; }
+      .utility { gap: 8px; font-size: 11px; }
+      .utility-brand { letter-spacing: .02em; }
+      .utility nav { gap: 15px; }
+      .masthead { grid-template-columns: 40px minmax(0, 1fr) 40px; gap: 8px; padding: 13px 0 18px; }
+      .masthead-art { width: 36px; }
+      .masthead h1 { font-size: clamp(36px, 11vw, 45px); }
+      .masthead-en { margin-top: 10px; font-size: 8px; letter-spacing: .08em; }
+      .latest { padding-top: 21px; }
+      .section-label { gap: 9px; }
+      .section-label h2 { font-size: 21px; }
+      .section-en { font-size: 9px; }
+      .edition-meta { width: 100%; margin-top: 2px; font-size: 12px; }
+      .coverage-note { margin: 13px 0 19px; padding: 8px 10px; font-size: 11px; }
+      .lead-layout { display: block; }
+      .lead-story h3 { margin-top: 9px; font-size: 27px; line-height: 1.55; }
+      .excerpt-label { margin-top: 15px; }
+      .excerpt { font-size: 15px; line-height: 1.9; }
+      .lead-actions { margin-top: 18px; }
+      .read-edition { min-height: 46px; }
+      .scope { margin-top: 8px; }
+      .edition-contents { margin-top: 21px; padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--rule); }
+      .edition-contents h3 { font-size: 16px; }
+      .contents-list li { padding: 12px 0; }
+      .contents-list h4 { font-size: 17px; line-height: 1.7; }
+      .archive { margin-top: 26px; padding-top: 22px; }
+      .archive-count { font-size: 11px; }
+      .archive-month { margin-top: 16px; }
+      .archive-link { grid-template-columns: minmax(0, 1fr) auto; gap: 5px 12px; padding: 16px 0; }
+      .archive-link time { grid-column: 1; grid-row: 1; padding: 0; font-size: 12px; }
+      .archive-link h3 { grid-column: 1; grid-row: 2; font-size: 18px; line-height: 1.7; }
+      .item-count { grid-column: 2; grid-row: 1; font-size: 11px; }
+      .archive-arrow { grid-column: 2; grid-row: 2; }
+      .paper-footer { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 28px; padding-top: 18px; }
+      .paper-footer a { justify-self: start; }
+    }
+    @media print {
+      body { background: white; }
+      .paper { width: 100%; margin: 0; border: 0; box-shadow: none; }
+      .skip-link, .utility nav { display: none; }
+      .lead-layout { display: block; }
+      .edition-contents { border-left: 0; padding-left: 0; margin-top: 20px; }
+      .archive-list li { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="utility">
+        <span class="utility-brand">公开来源 · 中文编选</span>
+        <nav aria-label="首页目录">
+          <a href="#latest">最新一期</a>
+          <a href="#archive">往期</a>
+          <a href="#principles">编选原则</a>
+        </nav>
+      </div>
+      <div class="masthead">
+        <img class="masthead-art" src="assets/masthead-art.webp" width="309" height="399" alt="" aria-hidden="true" decoding="async">
+        <div class="masthead-type">
+          <h1><span class="masthead-latin">AI</span><span class="masthead-han">日报</span></h1>
+          <p class="masthead-en" lang="en">ARTIFICIAL INTELLIGENCE DAILY</p>
+        </div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="latest" id="latest" aria-labelledby="latest-heading">
+        {{LATEST}}
+      </section>
+      <section class="archive" id="archive" aria-labelledby="archive-heading">
+        {{ARCHIVE}}
+      </section>
+    </main>
+    <footer class="paper-footer" id="principles">
+      <div><h2>编选原则</h2><p>回到公开一手来源核对事实、时间和适用范围，核验缺口写进正文。不为凑数而灌版；来源或核验失败，不等于当天没有新闻。</p></div>
+      <a href="#top">回到报头 <span aria-hidden="true">↑</span></a>
+    </footer>
+  </div>
+</body>
+</html>

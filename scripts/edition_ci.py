@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 from html import escape
 import json
 from pathlib import Path
@@ -17,7 +18,10 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from edition import EDITION_ID_RE, EditionError, validate_edition  # noqa: E402
-from outputs import render_web_edition  # noqa: E402
+from outputs import WEEKDAYS_ZH, _edition_note, render_web_edition  # noqa: E402
+
+MASTHEAD_NAME = "masthead-art.webp"
+_HOME_TOKENS = ("TITLE", "DESCRIPTION", "LATEST", "ARCHIVE")
 
 PRODUCTION_FILES = {"edition.json", "index.html"}
 EDITION_PATH_RE = re.compile(
@@ -150,26 +154,199 @@ def changed_paths(base: str, head: str) -> tuple[list[str], list[str]]:
     return paths, deleted
 
 
+def _masthead_path() -> Path:
+    return ROOT / "templates" / "assets" / MASTHEAD_NAME
+
+
+def _assert_safe_output(editions_dir: Path, output_dir: Path) -> None:
+    """Refuse to delete the repo, edition history, templates, or reference files."""
+    output = output_dir.resolve()
+    protected = [
+        editions_dir.resolve(),
+        (ROOT / "editions").resolve(),
+        (ROOT / "templates").resolve(),
+        (ROOT / "uploads").resolve(),
+    ]
+    if output == ROOT.resolve() or any(
+        output == tree or tree in output.parents for tree in protected
+    ):
+        raise EditionError(
+            "refusing to publish a homepage build into the repository root, "
+            "editions, templates, or reference files"
+        )
+
+
+def _fill_home_template(values: dict[str, str]) -> str:
+    content = (ROOT / "templates" / "home.html").read_text(encoding="utf-8")
+    parts = re.split(r"\{\{([A-Z0-9_]+)\}\}", content)
+    rendered: list[str] = []
+    seen: list[str] = []
+    for index, part in enumerate(parts):
+        if index % 2 == 0:
+            rendered.append(part)
+            continue
+        if part not in values:
+            raise EditionError(f"unresolved home template field: {part}")
+        seen.append(part)
+        rendered.append(values[part])
+    if len(seen) != len(_HOME_TOKENS) or set(seen) != set(_HOME_TOKENS):
+        raise EditionError(f"home template fields mismatch: {seen}")
+    return "".join(rendered)
+
+
+def _edition_day(edition_id: str) -> datetime:
+    return datetime.strptime(edition_id, "%Y-%m-%d")
+
+
+def _select_lead(events: list[dict]) -> tuple[int, dict]:
+    for index, event in enumerate(events, start=1):
+        if event["placement"] == "lead":
+            return index, event
+    return 1, events[0]
+
+
+def _conditions_html(conditions: list[str]) -> str:
+    if not conditions:
+        return ""
+    items = "".join(f"<li>{escape(item)}</li>" for item in conditions)
+    return (
+        '<details class="scope"><summary>本条适用范围与核验边界</summary>'
+        f"<ul>{items}</ul></details>"
+    )
+
+
+def _sidebar_html(edition_id: str, events: list[dict], lead: dict) -> str:
+    others = [
+        (index, event)
+        for index, event in enumerate(events, start=1)
+        if event is not lead
+    ]
+    if not others:
+        return ""
+    items = []
+    for index, event in others[:3]:
+        href = escape(f"editions/{edition_id}/#event-{index}", quote=True)
+        items.append(
+            f'<li><a href="{href}">'
+            f'<span class="ordinal" aria-hidden="true">{index:02d}</span>'
+            f"<h4>{escape(event['title'])}</h4></a></li>"
+        )
+    remaining = len(others) - 3
+    note = (
+        f'<p class="remaining-note">另有 {remaining} 条内容，见完整一期。</p>'
+        if remaining > 0
+        else ""
+    )
+    return (
+        '<aside class="edition-contents" aria-labelledby="contents-heading">'
+        '<h3 id="contents-heading">本期还包括</h3>'
+        f'<ol class="contents-list">{"".join(items)}</ol>{note}</aside>'
+    )
+
+
+def _latest_html(edition: dict) -> str:
+    edition_id = edition["edition_id"]
+    day = _edition_day(edition_id)
+    _, lead = _select_lead(edition["events"])
+    sidebar = _sidebar_html(edition_id, edition["events"], lead)
+    layout = "lead-layout lead-layout--single" if not sidebar else "lead-layout"
+    read_href = escape(f"editions/{edition_id}/", quote=True)
+    meta_date = escape(f"{day:%Y.%m.%d} · {WEEKDAYS_ZH[day.weekday()]}")
+    return (
+        '<div class="section-heading"><div class="section-label">'
+        '<h2 id="latest-heading">最新一期</h2>'
+        '<span class="section-en" lang="en">LATEST EDITION</span></div>'
+        f'<div class="edition-meta"><time datetime="{escape(edition_id, quote=True)}">'
+        f"{meta_date}</time><span>{len(edition['events'])} 条内容</span></div></div>"
+        f'<p class="coverage-note">{escape(_edition_note(edition))}</p>'
+        f'<div class="{layout}"><article class="lead-story" aria-labelledby="lead-heading">'
+        f'<p class="kicker">{escape(lead["kicker"])}</p>'
+        f'<h3 id="lead-heading">{escape(lead["title"])}</h3>'
+        f'<div class="lead-actions"><a class="read-edition" href="{read_href}">'
+        '阅读完整一期 <span aria-hidden="true">→</span></a></div>'
+        '<p class="excerpt-label">头条摘录</p>'
+        f'<p class="excerpt">{escape(lead["facts"][0])}</p>'
+        f"{_conditions_html(lead.get('conditions') or [])}</article>{sidebar}</div>"
+    )
+
+
+def _empty_latest_html() -> str:
+    return (
+        '<div class="section-heading"><div class="section-label">'
+        '<h2 id="latest-heading">最新一期</h2>'
+        '<span class="section-en" lang="en">LATEST EDITION</span></div></div>'
+        '<p class="coverage-note">尚无公开期次</p>'
+    )
+
+
+def _archive_html(older: list[dict], published_count: int) -> str:
+    prior = max(0, published_count - 1)
+    parts = [
+        '<div class="section-heading"><div class="section-label">'
+        '<h2 id="archive-heading">往期</h2>'
+        '<span class="section-en" lang="en">ARCHIVE</span></div>'
+        f'<span class="archive-count">此前已刊 {prior} 期</span></div>'
+    ]
+    if published_count == 0:
+        parts.append('<p class="coverage-note">尚无公开期次</p>')
+        return "".join(parts)
+    if not older:
+        parts.append('<p class="coverage-note">暂无更早期次</p>')
+        return "".join(parts)
+
+    groups: list[tuple[str, list[str]]] = []
+    for edition in older:
+        day = _edition_day(edition["edition_id"])
+        month_label = f"{day.year} 年 {day.month} 月"
+        if not groups or groups[-1][0] != month_label:
+            groups.append((month_label, []))
+        edition_id = edition["edition_id"]
+        _, lead = _select_lead(edition["events"])
+        href = escape(f"editions/{edition_id}/", quote=True)
+        groups[-1][1].append(
+            f'<li><a class="archive-link" href="{href}">'
+            f'<time datetime="{escape(edition_id, quote=True)}">'
+            f"{escape(f'{day.month:02d} 月 {day.day:02d} 日')}</time>"
+            f"<h3>{escape(lead['title'])}</h3>"
+            f'<span class="item-count">{len(edition["events"])} 条内容</span>'
+            '<span class="archive-arrow" aria-hidden="true">→</span></a></li>'
+        )
+    for label, items in groups:
+        parts.append(f'<p class="archive-month">{escape(label)}</p>')
+        parts.append(f'<ol class="archive-list">{"".join(items)}</ol>')
+    return "".join(parts)
+
+
+def _home_description(latest: dict | None) -> str:
+    base = "AI 日报公开首页：最新一期、往期与编选原则。"
+    if latest is None:
+        return base + "尚无公开期次。"
+    day = _edition_day(latest["edition_id"])
+    return (
+        f"{base}最新一期为 {day.year} 年 {day.month} 月 {day.day} 日，"
+        f"共 {len(latest['events'])} 条内容。"
+    )
+
+
 def _history_index(editions: list[dict]) -> str:
     ordered = sorted(editions, key=lambda edition: edition["edition_id"], reverse=True)
-    links = "".join(
-        f'<li><a href="editions/{escape(item["edition_id"])}/">'
-        f'{escape(item["edition_id"])}</a></li>'
-        for item in ordered
+    latest = ordered[0] if ordered else None
+    return _fill_home_template(
+        {
+            "TITLE": escape("AI 日报 · 最新一期与往期"),
+            "DESCRIPTION": escape(_home_description(latest), quote=True),
+            "LATEST": _latest_html(latest) if latest else _empty_latest_html(),
+            "ARCHIVE": _archive_html(ordered[1:], len(ordered)),
+        }
     )
-    content = links or "<li>尚无公开期次</li>"
-    return f"""<!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI 日报 · 往期</title><style>
-body{{margin:0;background:#e7e3db;color:#45463f;font:16px/1.8 -apple-system,BlinkMacSystemFont,'PingFang SC','Microsoft YaHei',sans-serif}}
-main{{width:min(720px,calc(100% - 32px));margin:32px auto;padding:32px;background:#faf7f0;border:1px solid #b9b4a9}}
-h1{{margin:0 0 20px;color:#252621;font:400 38px/1.2 'Songti SC','STSong',serif}} ul{{margin:0;padding-left:22px}} a{{color:#91472f}}
-</style></head><body><main><h1>AI 日报 · 往期</h1><ul>{content}</ul></main></body></html>
-"""
 
 
 def build_site(editions_dir: Path, output_dir: Path) -> list[dict]:
     editions = validate_tree(editions_dir)
+    masthead = _masthead_path()
+    if not masthead.is_file():
+        raise EditionError(f"homepage masthead is missing: {masthead}")
+    _assert_safe_output(editions_dir, output_dir)
     if output_dir.exists():
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True)
@@ -183,6 +360,9 @@ def build_site(editions_dir: Path, output_dir: Path) -> list[dict]:
             encoding="utf-8",
         )
         shutil.copy2(source / "index.html", target / "index.html")
+    assets = output_dir / "assets"
+    assets.mkdir()
+    shutil.copyfile(masthead, assets / MASTHEAD_NAME)
     (output_dir / "index.html").write_text(_history_index(editions), encoding="utf-8")
     return editions
 
