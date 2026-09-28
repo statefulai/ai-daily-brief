@@ -1,0 +1,181 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-28",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-28T08:00:00+08:00",
+  "generated_at": "2026-09-28T08:03:07+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai_alignment",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "qwen",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "minimax",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 41,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news、x.ai/blog 与 x.ai/api 均返回 HTTP 403"
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "jiqizhixin.com 与 /rss 返回 HTTP 200，但是数据服务落地页，不是可解析的新闻列表或 RSS"
+    }
+  ],
+  "events": [
+    {
+      "id": "google-flipkart-gemini-checkout",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Google 在印度小范围测试从 Gemini 和 AI Mode 直接进入 Flipkart 结账",
+      "kicker": "焦点 · 购物",
+      "facts": [
+        "TechCrunch 于 2026 年 9 月 27 日 01:30 UTC 报道，记者在印度看到：部分用户的 Gemini 和 Google AI Mode 里，部分 Flipkart 商品出现 Buy 按钮，点下去进入 Flipkart 的结账流程，页面仍留在 AI 界面里。报道写，这只覆盖部分用户和少量商品，包括手机、电子产品和手机配件；其他用户看到的仍是不能从 AI 界面直接购买的普通列表。",
+        "报道称，一位知情人士说 Google 计划在 10 月晚些时候、印度节日购物季之前扩大这一体验。记者就此询问时，Google 发言人说公司一直在测试新功能，以便人们更容易发现商家并与之联系，并表示没有进一步细节可以提供。报道写，记者看到的结账带 Flipkart 品牌，不同于公司今年更早演示的、由 Google 托管的结账；同一视图里 Amazon 等其他商家没有直接购买入口。报道没有说明这次测试是否使用 Universal Commerce Protocol。"
+      ],
+      "conditions": [
+        "这是早期测试，不是对印度全部用户或全部商品开放。扩大到 10 月的说法只来自一位不愿具名的人士。Google 发言人没有确认这次测试的范围或时间。",
+        "未打开 Gemini 或 AI Mode 复现该按钮，也未完成订单。",
+        "Google 持有 Flipkart 少数股权、以及更早的 Universal Commerce Protocol，都不是这次新宣布的。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/09/26/google-tests-buying-from-walmart-owned-flipkart-through-gemini-and-ai-mode-in-india/",
+          "kind": "primary",
+          "published_at": "2026-09-27T01:30:00+00:00",
+          "verified": true,
+          "note": "Buy 按钮、结账留在 AI 界面、商品范围、发言人未提供进一步细节，以及 10 月扩大只来自一位知情人士，都取自这篇稿。稿的时间是 2026-09-27 01:30 UTC。窗口内 Google 官方博客没有对应公告。未复现该界面。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:775d4af2cb327df30ca6c2958651bf4b69e7f1db8baea5a19f404f10598b229f"
+}
