@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 9 月 30 日 AI 日报，含 5 条已策展内容。">
+  <title>AI 日报 · 2026 年 9 月 30 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-09-30">2026 年 9 月 30 日</time> · 星期三</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 9 月 30 日 08:00（北京时间）。本期收录 5 条窗口内动态；另有 4 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">焦点 · 模型</span></div><h2 id="event-1-title">OpenAI 发布 GPT-6.1 Sol：标准价是 Astra 的五分之一，网络安全仍按 Critical 防护</h2><div class="lead-copy"><p>OpenAI 于 2026 年 9 月 29 日发布 GPT-6.1 Sol，称为 GPT-6 Sol 的升级。发布页写，它在智能体编程、计算机使用和专业工作上接近 GPT-6 Astra，标准输入和输出 token 价格是 Astra 的五分之一。标准 API 价格为每百万输入 token 2 美元、缓存输入每百万 token 0.10 美元、每百万输出 token 10 美元。页面写，缓存输入比标准输入低 95%，也比 GPT-6 Sol 的缓存输入低 50%。模型 ID 是 gpt-6.1-sol。即日起向 ChatGPT Work 和 Codex 里的 Plus、Pro、Business、Enterprise 和 Edu 用户开放，尚未进入 Chat。未来数天还将提供 GPT-6.1 Sol Ultrafast，页面称在 Codex 里 token 生成可比其标准速度最多快 8 倍。</p><p>API 文档写明上下文窗口 105 万 token，最大输入 92.2 万，最大输出 12.8 万，知识截止 2026 年 4 月 30 日。reasoning.effort 支持 low、medium（默认）、high、xhigh 和 max，不支持 none 和 minimal。同一文档站列出 GPT-6 Astra 的标准价为每百万输入 token 10 美元、缓存输入 1 美元、输出 50 美元。超过 27.2 万输入 token 的请求，输入和缓存按 2 倍、输出按 1.5 倍计费。文档写 Fast 模式在欧盟数据驻留下不可用。</p><p>发布页的公司自测写：DeepSWE v1.1 上 GPT-6.1 Sol 与 Astra 持平，并比 GPT-6 Sol 的最好成绩高 6.4 个百分点，推理强度和成本更低。OSWorld 2.0 离线集使用 v2026.08.08 的部分奖励，最高推理强度下比 GPT-6 Sol 高 7 个百分点，距离 Astra 在 2.1 个百分点以内。Terminal-Bench Science 0.1 上 Astra 仍是所测模型里最高的 68.1%；最高强度下 GPT-6.1 Sol 平均每任务 5.47 美元，Opus 5.5 为 23.21 美元，Astra 为 23.80 美元。低推理强度的事实性测试里，含至少一处事实错误的回答占比从 GPT-6 Sol 的 11.4% 降到 7.7%；各档与 Astra 相差不超过 1.9 个百分点。页面写，这些题来自用户曾指出前代错误的脱敏对话，不代表日常使用。</p><p>同日的系统卡附录按预备框架把 GPT-6.1 Sol 定为网络安全 Critical、生物与化学 High，人工智能自我改进低于 High，并使用与 GPT-6 Astra 相同的防护栈。生物与化学结果没有越过 Critical 的指示阈值。ExploitBench 在最高推理强度为 99.7%，GPT-6 Sol 为 81.7%，Astra 为 100%；附录写这些结果可能因接触历史漏洞而被抬高。针对较新披露漏洞的内部移植评测中，任意代码执行成功率为 21.5%，Astra 为 31.5%，GPT-6 Sol 为 5.5%。ExploitGym 上按次的预期漏洞成功率为 35.1%，Astra 为 42.4%，GPT-6 Sol 为 22.1%。发布页写，没有观察到绕过自动安全审查器的尝试，这一点与 Astra 和 GPT-6 Sol 一致。</p><p>GitHub Changelog 于 2026 年 9 月 29 日写明，GPT-6.1 Sol 在 GitHub Copilot 一般可用并逐步推出，面向 Copilot Pro+、Max、Business 和 Enterprise，按提供商标价做用量计费。Business 和 Enterprise 管理员可用模型策略管理；在默认启用下，除非关掉全局默认或单独禁用，新模型会自动打开。</p><div class="condition"><strong>适用范围：</strong><ul><li>分数、每任务成本和“接近 Astra”都是 OpenAI 的自测或所引外部测试的说法。DeepSWE 的绝对分数发布页没有写成一个数字，只给了与 Astra 持平、以及相对 GPT-6 Sol 最好成绩的差值。</li><li>Ultrafast 对 GPT-6.1 Sol 仍是未来数天的预告，不是今天已经打开的速度档。发布页没有写 API 里 Ultrafast 的价格。</li><li>未调用 API，也没有在 ChatGPT Work、Codex 或 Copilot 里实测。系统卡附录写，评测在研究环境或 API 中进行，系统提示、工具和推理强度可能与生产环境的 ChatGPT 不同。</li><li>缓存输入 0.10 美元是相对它自己的标准输入，以及相对 GPT-6 Sol 缓存价的比较。Astra 文档里的缓存输入是每百万 token 1 美元，不是 0.50 美元。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>GPT-6 Sol 与 Luna 于 9 月 22 日发布。9 月 28 日公司决定不发布 GPT-6.1 Astra。本期新事实是 9 月 29 日的 GPT-6.1 Sol、它的价格和仍按 Critical 网络安全防护。</li></ul></details><div class="source"><a href="https://openai.com/index/introducing-gpt-6-1-sol" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a><a href="https://deploymentsafety.openai.com/gpt-6-1-sol" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a><a href="https://developers.openai.com/api/docs/models/gpt-6.1-sol" target="_blank" rel="noopener noreferrer">OpenAI API · 补充来源 · 已核对</a><a href="https://developers.openai.com/api/docs/models/gpt-6-astra" target="_blank" rel="noopener noreferrer">OpenAI API · 补充来源 · 已核对</a><a href="https://github.blog/changelog/2026-09-29-gpt-6-1-sol-in-github-copilot" target="_blank" rel="noopener noreferrer">GitHub · 补充来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI）：五分之一的标准价、2 / 0.10 / 10 美元、尚未进入 Chat、DeepSWE 与 OSWorld 的差值、Terminal-Bench Science 的每任务成本和 68.1%，以及 Ultrafast 尚未对这款模型开放，都取自这篇 2026 年 9 月 29 日的发布页。页面没有时钟。新闻列表把这篇标在世界协调时 10:00。</p><p class="source-note">核验说明（OpenAI）：网络安全 Critical、生物与化学 High、自我改进低于 High、与 Astra 相同的防护栈，以及 ExploitBench 99.7%、内部移植 21.5% 和 ExploitGym 35.1%，取自这篇署期 2026 年 9 月 29 日的系统卡附录。页面没有时钟。</p><p class="source-note">核验说明（OpenAI API）：模型 ID、105 万上下文、知识截止 2026 年 4 月 30 日，以及推理强度档位，取自这篇模型文档。标准价与发布页一致。</p><p class="source-note">核验说明（OpenAI API）：Astra 每百万 token 输入 10 美元、缓存输入 1 美元、输出 50 美元，取自这篇模型文档，用来核对“五分之一”指的是标准输入和输出。</p><p class="source-note">核验说明（GitHub）：Copilot 的套餐范围、逐步推出和按提供商标价计费，取自这篇 2026 年 9 月 29 日的更新日志。页面没有时钟。</p></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">产品 · 智能体</span></div><h3 id="event-2-title">OpenAI 开始推出 dots：GPT-6 Astra 驱动的常驻智能体，自带云端电脑</h3><div><p>OpenAI 发布 dots，称为常驻智能体，由 GPT-6 Astra 驱动。每个 dot 有自己的云端电脑，可通过插件连接超过 4000 个应用，并按反馈学习。用户可在 ChatGPT 的桌面、网页和手机上发消息或语音通话，也可在 Slack 和 Teams 里联系它；短信即将支持。用户不主动使用时，dot 用已经连接的应用做只读的后台查找，OpenAI 称之为 proactive research。这些工具不能发消息、不能改应用内容，也不能控制浏览器或电脑。用户可以打开 dot 的电脑查看工作，也可以授权它连接自己的笔记本电脑。</p><p>发布页写，dots 今天起向符合条件市场里的 Pro 和 Business Premium 用户在 ChatGPT 推出。Enterprise，包括 Edu 和 Healthcare，要等工作区管理员打开测试版。第一个 dot 含在 Pro 或 Business Premium 里，不另收费。与 dot 的对话不计入 ChatGPT 用量；让它在 Codex 或 ChatGPT Work 里启动或管理任务时，仍按原来的计划用量计算。发布后的第一个月有更高的深度工作额度。多个 dot 组成团队仍是以后的设想。初始设置在桌面应用或桌面浏览器完成，之后可以在手机上发消息。</p><p>dots 用自动审查对照用户说明、自定义规则和安全要求，决定哪些动作可以继续、哪些需要批准、哪些必须用户自己做。更改密码一类敏感操作始终留给用户。监控若发现安全问题，可以暂停或停止工作。登录受支持的网站时，可以使用已保存的密码，而不把密码交给模型。个人计划可以选择对话和工作是否用于改进模型。页面写，不会直接用 proactive research 或 dot 写给自己的笔记来训练。Business、Enterprise 和 Edu 工作区的内容默认不用于改进模型。</p><p>specialist dots 是给组织里的固定职责用的预览。公司为每个 dot 配置自己的身份、凭证和所需系统。OpenAI 写，目前从范围收窄的企业试点开始，工程团队会和机构一起规定职责、可用工具，以及人如何复查和批准。公司还写正在与微软合作，把 specialist dots 接到 Agent 365 的治理和安全控制，以便企业用已经在用的微软工具管理它们。这是正在做的集成，不是已经对所有企业开放的开关。</p><div class="condition"><strong>适用范围：</strong><ul><li>“超过 4000 个应用”和内部、外部的使用场景都是 OpenAI 的说法。未创建 dot，也没有走完一次审批。</li><li>符合条件的市场发布页没有列成国家名单，只链到帮助中心。本期没有打开那篇帮助文章。</li><li>Agent 365 集成和 specialist dots 都是试点或计划，不是一般可用。短信也还没有上线。</li><li>发布页没有时钟。新闻列表把这篇标在世界协调时 9 月 29 日 00:00，这个整点更像日期而不是实测发布时间。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>GPT-6 Astra 是更早发布的模型。9 月 28 日公司决定不发布 GPT-6.1 Astra。dots 用的是已经发布的 GPT-6 Astra，不是被暂停的 6.1。</li></ul></details><div class="source"><a href="https://openai.com/index/introducing-dots" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI）：GPT-6 Astra、云端电脑、超过 4000 个应用、Pro 与 Business Premium 的推出范围、只读后台查找，以及 specialist dots 和 Agent 365 仍是试点，都取自这篇发布页。页面没有时钟。</p></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">政策 · 白宫</span><time datetime="2026-09-30T05:17:25+08:00">09.30 05:17 北京时间</time></div><h3 id="event-3-title">白宫命令行政部门改称 Super Intelligence，60 天内另交立法定义</h3><div><p>白宫于 2026 年 9 月 29 日公布行政命令《Inaugurating The Era Of Super Intelligence》，落款为 THE WHITE HOUSE, September 29, 2026。命令写，在法律允许的最大范围内，行政部门使用 Super Intelligence 和 SI，取代 Artificial Intelligence 和 AI，并且不承认后一组用语。第 2 节要求各部门和机构在官方信函、公共传播、网站、报告、政策文件和其他非制定法文件中做这个替换。已经发出的法规、总统行动、合同、拨款和其他历史文件不必因此改写。</p><p>第 3 节写，除非法律另有规定，本命令里的 Super Intelligence 和 SI 指美国法典第 15 编第 9401(3) 条所定义的 artificial intelligence 涵盖的技术和系统。科学和技术总统助理须在命令之日起 60 天内向总统提交立法语言，用来建立联邦定义，并评估这个定义是否应修改、扩大或取代现行制定法定义，以及制定法里的 artificial intelligence 和 AI 需要哪些相应修正。命令写明，它不创设任何可以对美国或其部门执行的权利或利益。页面发布时间为世界协调时 21:17。</p><p>CNBC 于世界协调时 21:07 报道，命令是特朗普与人工智能公司负责人午餐之后公布的。稿件写，特朗普稍早对记者说名称已经正式改了，并称文件由在场的公司负责人签署。CNBC 核对特朗普发在 Truth Social 上的两页文件后写，那份文件标题是 White House Accord on Super Intelligence，副题是 Joint Commitment on Frontier Responsibilities，正文没有宣布改名。签署方同意每家公司有责任安全地开发自己的技术并建立信任，包括健全的内部流程和控制，并建议再增加四层控制；他们同意定期会面制定安全标准，并写随着时间推移，把这些步骤写成法律或法规可能是有意义的。CNBC 列出的签署人除特朗普外有 Sundar Pichai、Elon Musk、Dario Amodei、Mark Zuckerberg、Greg Brockman 和黄仁勋。特朗普被问及有没有约束力时说，它是 morally binding。众议院议长 Mike Johnson 在特朗普出现之前对记者说，与会者签的是一份原则声明，承诺是自愿的。</p><div class="condition"><strong>适用范围：</strong><ul><li>行政命令改的是行政部门自己的用语，并暂时沿用现行制定法里的人工智能定义。它本身不是国会通过的改名法律。60 天期限交的是立法建议，不是已经生效的新定义。</li><li>自愿协议的正文、四层控制的具体内容和签署人，都来自 CNBC 对 Truth Social 附件的核对。本期没有打开那份附件，也没有看到白宫网站上的协议全文。CNBC 没有逐条写出那四层控制是什么。</li><li>CNBC 稿件的发布时间早于行政命令页面标出的 21:17。命令正文以 9 月 29 日的白宫文本为准。</li></ul></div><div class="source"><a href="https://www.whitehouse.gov/presidential-actions/2026/09/inaugurating-the-era-of-super-intelligence/" target="_blank" rel="noopener noreferrer">白宫 · 一手来源 · 已核对</a><a href="https://www.cnbc.com/2026/09/29/trump-ai-super-intelligence.html" target="_blank" rel="noopener noreferrer">CNBC · 补充来源 · 已核对</a></div><p class="source-note">核验说明（白宫）：用语替换的范围、沿用美国法典第 15 编第 9401(3) 条、60 天内提交立法语言，以及不创设可执行权利，都取自这篇世界协调时 21:17 公布的命令。</p><p class="source-note">核验说明（CNBC）：午餐之后的说法、协议标题和副题、自愿而非改名、六位公司签署人，以及 morally binding 和 Johnson 关于原则声明的话，取自这篇世界协调时 21:07 的稿。未打开 Truth Social 附件。</p></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">产品 · Meta</span></div><h3 id="event-4-title">Meta 把 Muse 接到小企业的现有工具，不经批准不发布、不发送、不花钱</h3><div><p>Meta 于 2026 年 9 月 29 日宣布 Muse for Small Business。页面写，本月较早推出的 Muse 是在美国和加拿大提供的个人智能体；这次是在 Muse 里增加面向小企业的技能和连接器。用户给出经营企业或寻找客户一类目标后，由 Muse 去完成。它可以在几次点击里连接已经在用的工具。页面列出 Asana、Box、Canva、Dropbox、Figma、Granola、HighLevel、Intuit QuickBooks、Klaviyo、Lovable、Notion、Shopify、Slack、Stripe、Zoom，以及 Facebook 和 Instagram 的商业账号。页面写，控制权仍在用户：没有批准，它不会发布、不会发送，也不会花钱。</p><p>页面写，Muse 可以连接 Instagram 专业账号的分析、Facebook 主页和 Meta 广告账号，并称它已经理解商家卖什么、品牌怎么说话，以及客户反复问什么。完整的连接器名单在 Muse 的应用设置里，还会继续增加。想合作的公司可以到 muse.ai/platform 申请。也支持自定义连接器，用来接上尚未官方支持的服务。页面举的用法包括根据销售、广告和社交起草下一年的增长计划，整理邮件和日历，以及查看本月财务里显得异常的支出。它也会主动标出需要回复的邮件并写出初稿。</p><p>页面写，对大多数人需要的功能，Muse 免费；想要更多的人可以使用订阅计划。这篇公告没有列出新的价格，也没有新的模型名称。Canva 联合创始人 Cameron Adams 的话出现在这篇稿件里，是合作方评论，不是独立测试。</p><div class="condition"><strong>适用范围：</strong><ul><li>“已经理解业务”和主动写邮件初稿是 Meta 的产品描述。未在 Muse 里连接账号或完成一笔广告、付款。</li><li>美国和加拿大是页面回顾个人版 Muse 时写的范围。这篇没有单独列出小企业技能的新地区，也没有写已经扩大到这两个国家以外。</li><li>订阅计划没有在这篇里给出价目。页面只有日期，没有时钟。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>Muse 个人智能体和 9 月 28 日的 Meta 企业平台都是更早的安排。本期新事实是小企业技能、这批连接器，以及不经批准不发布、不发送、不花钱。</li></ul></details><div class="source"><a href="https://about.fb.com/news/2026/09/introducing-muse-small-business/" target="_blank" rel="noopener noreferrer">Meta · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Meta）：连接器名单、不经批准不发布或不花钱、免费与订阅的分界，以及个人版 Muse 此前面向美国和加拿大，都取自这篇 2026 年 9 月 29 日的说明。页面没有时钟。</p></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">开源 · 研究</span><time datetime="2026-09-29T23:30:38+08:00">09.29 23:30 北京时间</time></div><h3 id="event-5-title">英伟达公开表格模型 Kumo Tabular：只在合成数据上预训练，称四项基准第一</h3><div><p>英伟达于 2026 年 9 月 29 日在 Hugging Face 发文介绍 NVIDIA Kumo Tabular，称它是 Kumo Structured 集合里的开源表格基础模型，现在可以在 Hugging Face 获得。给定带标签的表，它用一次前向传播预测新行的标签，不需要再训练、调参或做特征工程，分类和回归都支持。文章写，它只在人工合成的数据上预训练，有三个尺寸，参数从 2800 万到 2.15 亿，通过开源库 structured-data-models 运行，许可证是 OpenMDW-1.1，可以商用。权重在 huggingface.co/nvidia/Kumo-Tabular，代码在 github.com/NVIDIA/structured-data-models。分类和回归是分开训练的模型。</p><p>文章称，三个尺寸都以默认设置对完整的 TabArena 排行榜做了比较，综合第一，ELO 为 1950。对照包括调过参的梯度提升树、AutoGluon，以及较新的表格基础模型。BeyondArena 上 ELO 为 1418，Improvability 为 7.78%，文章写排名第一。TALENT 上，分类准确率、分类对数损失和回归 RMSE 的平均名次分别是 6.67、3.98 和 4.22，文章写总体排名第一。ScoringBench 上，Kumo Tabular-Large 和 Medium 的平均名次是第一和第二。</p><p>Hugging Face 的模型接口显示，这个仓库的 createdAt 是 2026-09-01T07:00:05Z，lastModified 是 2026-09-28T00:00:00Z，许可证标签为 openmdw-1.1。因此 9 月 29 日的文章是公开说明和基准写法，不能把它写成权重文件在这一天才第一次出现。</p><div class="condition"><strong>适用范围：</strong><ul><li>ELO、名次和“一次前向传播、无需调参”都是英伟达在这篇文章里的说法。未复现 TabArena，也没有下载权重。</li><li>文章还有一句与 LimiX-2 的速度比较，页面抽取后乘数没有保留，本期不采用那个倍数。</li><li>文章发布时间为世界协调时 15:30。仓库创建时间早于这篇说明。</li></ul></div><div class="source"><a href="https://huggingface.co/blog/nvidia/kumo-tabular" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a><a href="https://huggingface.co/nvidia/Kumo-Tabular" target="_blank" rel="noopener noreferrer">Hugging Face · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Hugging Face）：三个尺寸、只在合成数据上预训练、OpenMDW-1.1，以及 TabArena ELO 1950 和另外三项基准的名次，取自这篇世界协调时 15:30 的文章。</p><p class="source-note">核验说明（Hugging Face）：仓库 createdAt 为 2026-09-01T07:00:05Z，lastModified 为 2026-09-28T00:00:00Z。这是模型页接口里的时间，不是文章的发表时间。</p></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
