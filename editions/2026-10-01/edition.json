@@ -1,0 +1,360 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-01",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-01T08:00:00+08:00",
+  "generated_at": "2026-10-01T08:19:33+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "success",
+      "item_count": 9,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "github_code",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 8,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 14,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "jiqizhixin.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv",
+      "status": "success",
+      "item_count": 725,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 8,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news 返回 HTTP 403，/news/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "california",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "gemini-4-argon",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Google 发布 Gemini 4 Argon：先只给受信任的网络防御者，输出上限提到 100 万 token",
+      "kicker": "焦点 · 模型",
+      "facts": [
+        "Google 于 2026 年 9 月 30 日宣布 Gemini 4 Argon。发布页写，它现在通过 Fairwind 计划向一组受信任的网络防御者推出，同时参与美国政府发布前的自愿访问流程；护栏继续加强后，再向开发者、企业和消费者开放，先从付费 API 客户和 Google AI Ultra 订阅用户开始。页面没有把今天写成已经对公众或普通开发者开放。",
+        "页面写，推出时的介绍价为每百万输入 token 2 美元、每百万输出 token 10 美元，缓存输入比输入价低 95%。脚注只写介绍期结束后改为每百万输入 4 美元、输出 20 美元，没有写介绍期到哪一天结束，也没有写 Fairwind 访问今天是否按这个价格计费。输出 token 上限从之前的 6.4 万提高到 100 万。页面没有单列上下文窗口。",
+        "公司在这篇发布页给出的成绩包括：DeepSWE v1.1 为 77.9%，称为该榜新的最高成绩，但没有写出对照模型的分数；Zapier 的 AutomationBench 为 51.3%，并写排名第一；长视频理解 LVBench 为 91.7%；CWE-bench v1 为 68%，与另一模型并列第一，没有写出并列者的名称。Vals Index、Vals Finance Agent v2 和 Harvey 的 Legal Agent Benchmark 只写领先，没有给出分数。",
+        "页面写，对受信任的防御者和 Google 内部团队，Argon 会在没有网络护栏的情况下提供，以便使用完整的防御能力。对更广泛的滥用，页面写模型会拒绝网络以及化学、生物、放射和核方面的有害请求，并称在 Gray Swan 的间接提示注入基准上领先，没有给出分数。Wiz 的 Scan for Good 被写成早期例子：模型发现了一处此前前沿模型没发现的、会暴露医疗软件中敏感个人信息的严重漏洞，但没有给出软件名称或漏洞编号。",
+        "页面还写了 Google 内部使用的例子：有一次量子子程序的时空资源比已发表基线低 40%；一组代理在数据中心找出并应用内存优化，已释放超过 300 TiB，估计总节省 500 TiB 到 1 PiB；把 C/C++ 迁到 Rust 的规模从核心库的数万行到 Fuchsia Zircon 内核的 80 万行以上，其中 libgav1 的结果比原有 Rust 移植快 2.7 倍，视频输出相同。这些是公司自述。"
+      ],
+      "conditions": [
+        "今天写明已经推出的范围是 Fairwind 里的受信任网络防御者。介绍价用的是 will launch，介绍期长度和 Fairwind 是否按此计费，页面都没有写。",
+        "DeepSWE 77.9%、AutomationBench 51.3%、LVBench 91.7% 和 CWE-bench 68% 都是 Google 在这篇发布页上的说法。未复现，也没有调用模型。",
+        "内存、量子和代码迁移的数字同样是公司自述。Wiz 的医疗软件漏洞没有名称或编号，不能把它写成已经公开确认的具体事件。",
+        "“没有网络护栏”只针对页面写明的受信任防御者和 Google 内部团队，不是对所有用户关闭安全策略。"
+      ],
+      "background": [
+        "9 月 29 日 OpenAI 发布 GPT-6.1 Sol，DeepSWE v1.1 只给出相对 Astra 的说法，没有绝对分数。Google 这篇也没有点名对照模型，本期不把 77.9% 写成已经超过某个未在页面出现的模型。"
+      ],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+          "kind": "primary",
+          "published_at": "2026-09-30T20:00:00+00:00",
+          "verified": true,
+          "note": "Fairwind 的推出范围、介绍价 2 美元和 10 美元、介绍期结束后的 4 美元和 20 美元、输出上限从 6.4 万到 100 万，以及 DeepSWE 77.9%、AutomationBench 51.3%、LVBench 91.7%、CWE-bench 68%，都取自这篇 2026 年 9 月 30 日的发布页。页面没有时钟，时间取自 Google 博客 feed 的 20:00 UTC。DeepMind 博客上的同题链接打开后进入这一页。"
+        }
+      ]
+    },
+    {
+      "id": "deepseek-ascend-kernels",
+      "placement": "story",
+      "window": "in_window",
+      "title": "DeepSeek 公开昇腾 950 算子和通信库，带宽表来自尚未公开发行的固件",
+      "kicker": "开源 · 算力",
+      "facts": [
+        "DeepSeek 于 2026 年 9 月 30 日在 GitHub 公开面向华为昇腾 950 的一批基础设施代码。DeepGEMM-Ascend 的 README 把初始发布写在 2026.09.30，称 API 与 DeepGEMM 兼容，覆盖 BF16、FP8、FP4 的 GEMM，以及 MQA logits 和 MegaMoE，并写多种矩阵形状能接近硬件极限。仓库 createdAt 为 2026-09-29T15:49:55Z，许可证为 MIT；标题为 OSS release 的提交时间是 2026-09-30T01:07:52Z。",
+        "DeepEP-Ascend 仓库 createdAt 为 2026-09-30T00:44:59Z。README 写，公开 buffer API 与英伟达版 DeepEP 对齐，提供 MoE dispatch 和 combine 的专家并行；PP、Engram 和 Bucket 仍在开发或标为实验。性能表写明测在 Ascend 950DT、CANN 9.2.0 和手工配置的 PoC HDK 上，走超节点外部 Clos 网络。EP8 的 dispatch 为 373–375 GB/s，combine 为 345–347 GB/s。EP 不超过 32 时，持续 dispatch 大约达到物理载荷带宽上限的 90% 至 95%；更大的 EP 和 combine 仍在优化。README 建议改用计划在 2026 年 10 月 15 日前后公开的 Atlas 850E Q3 商用 HDK，并写明表中数字不是那一版尚未发布的商用固件测得的。GitHub API 没有给出这个仓库的许可证。",
+        "FlashMLA 于 2026 年 9 月 30 日的说明写，昇腾 950 上的稀疏注意力在 prefill 最高 410 TFlops，为硬件峰值的 95%，decoding 最高 360 TFlops，为硬件峰值的 83%。同一版本移除了对 Hopper 以及 DeepSeek V3、V3.2 和 V4.0 的支持，并改变 FP8 与 FP4 的 KV cache 格式，因此与旧版不兼容。TileKernels 同日写明增加昇腾后端，运行时自动选择，同一套 Python API 可在英伟达 GPU 和华为 NPU 上运行，要求 Ascend 950 与 CANN 9.2.0 或更高。DeepSelect 同日写明发布昇腾 TopK 内核；相对 torch.topk 的 2 到 20 倍是仓库的总体说法。昇腾实现目前只支持 bfloat16，不支持 CUDA 版已有的 float32 采样。"
+      ],
+      "conditions": [
+        "接近硬件上限、TFlops 和带宽都是各仓库 README 里的自测。未在昇腾机器上复现。",
+        "DeepEP 的带宽表使用的是提供给 DeepSeek 的 PoC HDK 和手工配置。商用 HDK 仍是大约 10 月 15 日的发布计划，不是今天已经可以下载的版本。",
+        "DeepGEMM-Ascend 的仓库对象创建于 9 月 29 日 15:49 UTC，早于本期窗口；README 的初始发布日期和 OSS release 提交落在 9 月 30 日。",
+        "FlashMLA 这一版与旧接口不兼容。需要 Hopper 或前代模型的人要改用 README 指向的旧提交。",
+        "量子位转载的华为材料里还有 TPOT 和每卡吞吐。那些数字不在上述 DeepSeek README 的性能表里，本期不采用。"
+      ],
+      "background": [
+        "TileKernels、FlashMLA 和 DeepSelect 的仓库早于今天。本期新事实是 9 月 30 日写明的昇腾后端、昇腾 950 注意力内核，以及新建的 DeepEP-Ascend 与 DeepGEMM-Ascend 发布说明。"
+      ],
+      "sources": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/deepseek-ai/DeepGEMM-Ascend",
+          "kind": "primary",
+          "published_at": "2026-09-30T01:07:52+00:00",
+          "verified": true,
+          "note": "2026.09.30 的初始发布、Ascend 950、与 DeepGEMM 兼容的 API，以及 MIT 许可证和仓库 createdAt 2026-09-29T15:49:55Z，取自这个仓库的 README 和 GitHub API。提交时间是 OSS release 的 2026-09-30T01:07:52Z。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/deepseek-ai/DeepEP-Ascend",
+          "kind": "primary",
+          "published_at": "2026-09-30T00:44:59+00:00",
+          "verified": true,
+          "note": "EP8 的 373–375 GB/s 与 345–347 GB/s、EP 不超过 32 时大约 90% 至 95% 的物理带宽，以及 PoC HDK 和大约 10 月 15 日的商用固件计划，取自这个仓库的 README。时间用仓库 createdAt。API 未返回许可证。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/deepseek-ai/FlashMLA",
+          "kind": "primary",
+          "published_at": "2026-09-30T01:58:27+00:00",
+          "verified": true,
+          "note": "410 TFlops 与 360 TFlops，以及移除 Hopper 和前代模型支持、改变 KV cache 格式，取自 README 里 2026.09.30 的发布说明。时间是同日提交 Open-source release for Ascend 950。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/deepseek-ai/TileKernels",
+          "kind": "secondary",
+          "published_at": "2026-09-30T01:58:45+00:00",
+          "verified": true,
+          "note": "同日增加自动选择的昇腾后端，以及 Ascend 950 与 CANN 9.2.0 的要求，取自 README 的 2026-09-30 条目。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/deepseek-ai/DeepSelect",
+          "kind": "secondary",
+          "published_at": "2026-09-30T01:54:54+00:00",
+          "verified": true,
+          "note": "昇腾 TopK 于 2026.09.30 发布、相对 torch.topk 的 2 到 20 倍，以及昇腾版只支持 bfloat16，取自这个 README。"
+        }
+      ]
+    },
+    {
+      "id": "california-ai-name-and-bills",
+      "placement": "story",
+      "window": "in_window",
+      "title": "加州命令本州机构继续称 AI，并签署一批职场与透明法案",
+      "kicker": "政策 · 加州",
+      "facts": [
+        "加州州长办公室于 2026 年 9 月 30 日公布新闻稿，并链接已签署的行政命令 N-10-26。命令写，受州长权限约束的机构和部门应把 Artificial Intelligence 和 AI 称为 Artificial Intelligence 和 AI，尽管联邦政府使用了重新命名或不同的术语；与法律不一致时除外。命令写明立即生效，并写明不创设任何可对加州或其机构、人员执行的实体或程序权利。",
+        "同一篇新闻稿列出同日签署的法案短标题，其中包括 AB 1331 职场监控、AB 1864 基因合成设备的制造者和提供者、AB 1883 职场监控工具、AB 1979 与 SB 503 医疗服务中的人工智能、AB 2392 公立高等院校生成式人工智能的采购标准和培训、AB 2713 与 SB 1000 加州人工智能透明法案、SB 574 律师与替代性争议解决、SB 947 就业中的自动决策系统、SB 951 技术性替代的通知、SB 1111 数字复制品，以及 SB 1159 人工智能的透明与治理。加州劳工联合会主席的话把 SB 947、SB 951、AB 1331 和 AB 1883 称为这四项职场法案。",
+        "新闻稿用条目概括效果：雇主不能只依靠人工智能做纪律处分或解雇；大规模裁员、搬迁或终止若由人工智能系统造成，雇主须告知；禁止在工作场所的浴室使用职场监控工具；加州公立高等院校须为学生、教师和职员建立人工智能培训；律师不能把起草书状或法律判断这类核心法律工作完全交给人工智能。基因合成一条写，要求相关公司遵循安全指南、核验客户，并检查送出的遗传物质。这些是新闻稿的概括，不是章程原文。"
+      ],
+      "conditions": [
+        "命令只约束州长权限下的机构和部门，并写明与法律不一致时除外。它不创设可执行的权利，也不是国会立法。",
+        "法案效果取自这篇新闻稿的短标题和条目。加州立法信息站本次返回 HTTP 502，没有核对章程文本，不能把新闻稿的一句话写成已经逐条核对过的法律原文。",
+        "新闻稿把命令说成永久宣布人工智能仍叫人工智能。命令正文的操作条款是继续使用 Artificial Intelligence 和 AI，尽管联邦政府换了术语。"
+      ],
+      "background": [
+        "9 月 29 日白宫命令联邦行政部门改称 Super Intelligence。本期新事实是加州这份立即生效的命令，以及同日签署的州法案。"
+      ],
+      "sources": [
+        {
+          "label": "加州州长办公室",
+          "url": "https://www.gov.ca.gov/2026/09/30/californias-nation-leading-ai-framework-just-got-stronger-governor-newsom-signs-more-first-in-the-nation-worker-protections-and-more/",
+          "kind": "primary",
+          "published_at": "2026-09-30T23:01:39+00:00",
+          "verified": true,
+          "note": "法案短标题、职场和基因合成的条目，以及劳工联合会点名的四项法案，取自这篇新闻稿。发布时间取自页面数据里的 2026-09-30T23:01:39+00:00。"
+        },
+        {
+          "label": "加州州长办公室",
+          "url": "https://www.gov.ca.gov/wp-content/uploads/2026/09/SIGNED_EO-N-10-26_9.30.26.pdf",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "继续使用 Artificial Intelligence 和 AI、与法律不一致时除外、立即生效，以及不创设可执行权利，取自新闻稿链接的已签署命令 N-10-26。命令以扫描件公布，页面本身没有单独的时钟。"
+        }
+      ]
+    },
+    {
+      "id": "synthid-bio",
+      "placement": "story",
+      "window": "in_window",
+      "title": "DeepMind 提出 SynthID Bio：给 AI 设计的蛋白质加水印，湿实验里称功能仍在",
+      "kicker": "研究 · 生物",
+      "facts": [
+        "Google DeepMind 于 2026 年 9 月 30 日介绍 SynthID Bio，称为把水印做进合成生物学的概念验证。博文写，它在 AI 生成的蛋白质设计里嵌入可核验标记，并称标记不仅在数字模型上可核验，也在合成出来的物理蛋白质上可核验，实验室测试中生物功能仍然保留。",
+        "湿实验部分写，使用 AlphaProteo 和带 SynthID Bio 的 ProteinMPNN 设计蛋白质结合剂。在 VEGF-A、SARS-CoV-2 刺突蛋白 RBD 和 PD-L1 三个靶点上，带水印的设计在命中率、结合亲和力和自然序列多样性上与不带水印的版本相当。页面称这是首批既带水印、又在生物学上有功能的蛋白质结合剂。正文没有写出每个靶点的具体结合亲和力。",
+        "页面写正在发表方法论文，并开源代码、体外数据和权重，但这篇博文没有给出论文编号或代码仓库链接。对抗故意篡改被写成尚未完成的下一步。与斯坦福 Hie 实验室和 Arc Institute 合作、给 Evo 2 所设计噬菌体的基因组加标记，被写成进行中的工作：细菌培养中的早期测试显示这些噬菌体有功能，技术手稿以后再发。Twist Bioscience 的评论是对论文的早期反馈，不是已经接入生产筛查的公告。"
+      ],
+      "conditions": [
+        "命中率、亲和力和功能保留都是 DeepMind 的实验叙述。未重复湿实验，也没有下载到博文所写的代码或权重。",
+        "博文说将开源代码、数据和权重，但页面没有放链接。在看到仓库之前，不能写成今天已经可以克隆。",
+        "噬菌体基因组上的标记仍是进行中的合作，技术手稿尚未发布。",
+        "页面讨论水印可以成为 DNA 合成筛查时的核验信号。这是用途说明，没有写哪家合成公司已经把它接进生产流程。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Google DeepMind",
+          "url": "https://deepmind.google/blog/introducing-synthid-bio/",
+          "kind": "primary",
+          "published_at": "2026-09-30T15:03:07+00:00",
+          "verified": true,
+          "note": "三个靶点上的湿实验对照、将开源代码和权重但页面未给链接，以及噬菌体工作仍待技术手稿，取自这篇博文。页面署期 September 30, 2026，时钟取自 DeepMind 博客 feed 的 15:03 UTC。"
+        },
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synthid-bio/",
+          "kind": "secondary",
+          "published_at": "2026-09-30T15:00:00+00:00",
+          "verified": true,
+          "note": "这篇短讯写 SynthID Bio 给 AI 设计的蛋白质加水印，并指向 DeepMind 的全文。时间取自 Google 博客 feed 的 15:00 UTC。"
+        }
+      ]
+    },
+    {
+      "id": "github-hydrafusion",
+      "placement": "story",
+      "window": "in_window",
+      "title": "GitHub 把 HydraFusion 放进 VS Code 和 Copilot 应用，仍是研究预览",
+      "kicker": "产品 · Copilot",
+      "facts": [
+        "GitHub Changelog 于 2026 年 9 月 30 日写明，HydraFusion 研究预览现已进入 Visual Studio Code 和 GitHub Copilot 应用，此前只在 Copilot CLI。它出现在模型选择器里，但不是单一模型，而是编排多个模型。页面写，它用推理、代码生成、调试和工具使用的能力信号选择执行方式，并有三种工作流：Single 由一个模型直接完成；Cascade 由较省的模型起草，再由质量门决定接受或升级到更强模型；Critique 由一个模型起草，另一个模型家族的只读批评者复查，起草模型再修改一次。",
+        "VS Code 需要 1.140 或更高版本，或 VS Code Insiders；选择器里没有时，可打开 chat.copilot.hydraFusion.enabled。组织或企业账号可能要管理员允许预览功能。Copilot 应用需要更新到最新版，并在设置中打开 HydraFusion。可用范围是 Copilot Pro、Pro+、Business 和 Enterprise；Business 和 Enterprise 必须由管理员启用预览功能。页面写它仍是研究预览，可能改变。这次还增加了步骤透明度和更频繁的进度更新。Auto 为每次请求选择一个模型；HydraFusion 则在同一轮里选择工作流并协调多个模型。"
+      ],
+      "conditions": [
+        "未在 VS Code 或 Copilot 应用里打开选择器。质量门的阈值、可选模型名单和是否另计费，这篇更新日志没有写。",
+        "这是研究预览，不是一般可用。组织策略可以不打开它。"
+      ],
+      "background": [
+        "更新日志写，这个预览此前已在 Copilot CLI。本期新事实是进入 VS Code 和 Copilot 应用，以及页面写明的三种工作流。"
+      ],
+      "sources": [
+        {
+          "label": "GitHub",
+          "url": "https://github.blog/changelog/2026-09-30-hydrafusion-in-vs-code-and-the-github-copilot-app",
+          "kind": "primary",
+          "published_at": "2026-09-30T14:31:19+00:00",
+          "verified": true,
+          "note": "进入 VS Code 和 Copilot 应用、三种工作流、套餐范围，以及仍是研究预览，取自这篇 2026 年 9 月 30 日的更新日志。页面没有时钟，时间取自 changelog feed 的 14:31 UTC。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:a3f52a40c3e88cf0d6c7fd373b50e9ee8c3afc9caf59cb50d4ff8e93a497239f"
+}
