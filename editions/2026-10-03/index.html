@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 3 日 AI 日报，含 6 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 3 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-03">2026 年 10 月 3 日</time> · 星期六</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 3 日 08:00（北京时间）。本期收录 6 条窗口内动态；另有 3 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">焦点 · 人才</span><time datetime="2026-10-03T07:01:00+08:00">10.03 07:01 北京时间</time></div><h2 id="event-1-title">Anthropic 投入 1 亿美元办 Claude Frontier Academy，目标到 2027 年底培训 1 万名工程师</h2><div class="lead-copy"><p>Anthropic 于 2026 年 10 月 2 日宣布启动 Claude Frontier Academy，并写明由 1 亿美元承诺支持，目标是到 2027 年底培训 1 万名 Frontier Deployed Engineers。页面标注的发布时间是 2026-10-02T23:01:00Z。</p><p>首批学员来自 Accenture、Bain、Capgemini、澳大利亚联邦银行、Deloitte、McKinsey、Morgan Stanley 和 Novo Nordisk，页面写还有其他机构。队列已在旧金山、纽约和伦敦进行。参加方式是机构提名，不是公开报名。</p><p>第一项课程是 Frontier Deployed Engineer Residency。工程师先参加多日的当面课程，完成一次模拟的企业部署和一次评分实操；通过后得到 Claude Resident Engineer 徽章，再进入 12 周驻场，在自己的机构里带一个真实的 Claude 用例。12 周结束再评估，通过后得到 Claude Frontier Deployed Engineer 徽章。页面写第一批这种徽章预计在 2027 年初。事先做过智能体不是入学条件。</p><div class="condition"><strong>适用范围：</strong><ul><li>1 亿美元和 1 万人是承诺和目标。页面没有写已经花出的金额，也没有写已经结业的人数。</li><li>未参加课程，也没有向客户经理核实某个机构是否真的被提名。</li><li>第一批 Frontier Deployed Engineer 徽章还没发出。2027 年初是页面写的预计时间。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>页面写这个学院建立在 Claude Partner Network 之上：4.6 万家机构里的从业者已获得超过 17.5 万个 Claude 认证，近 4000 人完成过 Basecamp。这些是既有网络的数字，不是本期新训出来的人数。</li></ul></details><div class="source"><a href="https://www.anthropic.com/news/claude-frontier-academy" target="_blank" rel="noopener noreferrer">Anthropic · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Anthropic）：1 亿美元、1 万名、首批机构、旧金山纽约伦敦、提名制、12 周驻场和两枚徽章，取自这篇署期 Oct 2, 2026 的说明。时钟取自页面标注的 2026-10-02T23:01:00Z。未报名。</p></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">平台 · 权限</span></div><h3 id="event-2-title">Apple 称将收紧 macOS 的完全磁盘访问，页面没有写出上线日期</h3><div><p>Apple Developer News 于 2026 年 10 月 2 日发文，题为 Updates to Full Disk Access in macOS。文中写，完全磁盘访问大体绕开了保护用户私人数据的那些控制，目的是让备份应用能在 Mac 上工作。</p><p>文中写，一些开发者使用完全磁盘访问的方式可能让用户面临风险，在用户没有充分了解的情况下暴露系统上的文件、邮件、信息和浏览历史。对通讯类应用，这还可能影响到用户正在通讯的其他人的隐私。</p><p>文中写，今后会增加控制，使用户只有通过非常明确的操作，才能把这种程度的访问权授予一个应用。文中把这件事和人工智能智能体越来越有能力、越来越自主联系起来，并写这种访问的风险会大幅增加。页面没有写新控制的上线日期，也没有写 macOS 版本号。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是即将增加控制的声明，不是今天已经生效的系统更新。</li><li>页面没有点名哪一个智能体或哪一家开发者。不能把转述里的具体产品写成 Apple 这篇点了名。</li><li>未在 macOS 上打开完全磁盘访问的设置，也没有看到新的确认步骤。</li></ul></div><div class="source"><a href="https://developer.apple.com/news/?id=p6zjojqw" target="_blank" rel="noopener noreferrer">Apple · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Apple）：绕开现有控制、可能暴露文件邮件信息和浏览历史，以及今后要非常明确的用户操作，取自这篇署期 October 2, 2026 的开发者新闻。页面没有时钟，也没有版本号。</p></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">开源 · 硬件</span></div><h3 id="event-3-title">Meta 公开 Muse Gadgets 的设备 SDK，Home Link 只向美国订阅用户排队</h3><div><p>Meta 的 Muse Gadgets 页面写，用户可以用开源 SDK 把现成的 ESP32 板或 Raspberry Pi 接上 Muse，连接显示器、按钮、传感器和执行器。GitHub 仓库 facebookincubator/muse-gadget-sdk 创建于 2026-10-02T18:21:23Z，许可证为 Apache-2.0。仓库说明写，ESP32 和 Linux 设备要在 iOS 或 Android 的 Muse 应用里打开开发者模式，再到设置的设备中配对，设备名前缀是 MuseGadget。每个设备都要有 SDK token。</p><p>SDK token 条款写，token 供个人、非商业使用，绑定本人的 Muse 账号。token 本人持有，最多嵌入 50 台提供给他人的设备，一个 token 最多关联 50 台设备。不得把 token 放进出售、公开上架或作为促销发放的设备，除非事先得到 Meta 的书面许可。条款写 SDK 和 token 不是受支持的产品，也不是开发者平台，Meta 可以随时改变或收回。Apache-2.0 只覆盖源代码，不授予 token。</p><p>同站的 Muse Home Link 页面写，它是 USB-C 设备，芯片为 Espressif ESP32-C5，32 位 RISC-V、240 MHz，8 MB PSRAM，8 MB 闪存，Wi-Fi 6 覆盖 2.4 和 5 GHz，接口为 USB-C 和 USB-A，尺寸 35 × 42 × 10 毫米。它只运行官方固件，不能重新刷写。持有有效 Muse 订阅的美国用户可免费领取，每位订阅者一台，10 月发货，先到先得。领取只是排队，不是订单。社区技能可以变化或失效，页面写不要把它用于家庭安防、紧急情况或医疗。</p><div class="condition"><strong>适用范围：</strong><ul><li>未烧录 ESP32，未在手机上配对，也没有领取 Home Link。</li><li>产品页和仓库说明都没有写出制造数量。转述里的台数本期不采用。</li><li>token 可以随时收回。开源的是设备端代码，不是连接 Muse 的资格。</li></ul></div><div class="source"><a href="https://gadgets.muse.ai/" target="_blank" rel="noopener noreferrer">Meta · 一手来源 · 已核对</a><a href="https://github.com/facebookincubator/muse-gadget-sdk" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a><a href="https://gadgets.muse.ai/sdk-terms" target="_blank" rel="noopener noreferrer">Meta · 一手来源 · 已核对</a><a href="https://gadgets.muse.ai/home-link" target="_blank" rel="noopener noreferrer">Meta · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Meta）：ESP32、Raspberry Pi、Apache-2.0，以及自行承担变砖和保修风险的提示，取自这个产品页。页面没有时钟。</p><p class="source-note">核验说明（GitHub）：仓库创建时间 2026-10-02T18:21:23Z、Apache-2.0、开发者模式和 MuseGadget 前缀，取自仓库接口和 README。未克隆后编译。</p><p class="source-note">核验说明（Meta）：个人非商业、最多 50 台、不得出售或上架，以及 token 不属于 Apache 许可，取自这篇 token 条款。页面没有时钟。</p><p class="source-note">核验说明（Meta）：ESP32-C5、8 MB 内存和闪存、35 × 42 × 10 毫米、美国订阅用户免费排队且领取不是订单，取自这个产品页。页面没有时钟，也没有制造数量。</p></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">产品 · 硬件</span><time datetime="2026-10-02T21:00:39+08:00">10.02 21:00 北京时间</time></div><h3 id="event-4-title">英伟达预告 64GB 的 DGX Spark，10 月 23 日起售，起价 4999 美元</h3><div><p>英伟达于 2026 年 10 月 2 日写，64GB 统一内存的 DGX Spark 将从 10 月 23 日星期五起由 Acer、ASUS、Dell、Gigabyte、HP 和 MSI 发售，起价 4999 美元。页面写它保留与 128GB 机型相同的 GB10 Grace Blackwell 超芯片、DGX OS 和英伟达 AI 软件栈，可在设备上运行最多 1000 亿参数的模型。</p><p>页面写，两台 64GB 机器用 QSFP 线缆经 ConnectX-7 直连后，内存池为 128GB，模型规模写到最多 2000 亿参数。英伟达用 Qwen3.8 27B 做的测试写，两台集群相对单台最高约 1.7 倍，并写内存带宽为两倍。NVIDIA Sync Cluster Assistant 负责发现设备、检查配置并配置网络。NVIDIA Sync Model Launcher 写成月底推出，可以在单机或集群上下载并启动 Qwen3.8 27B，并为 OpenCode 接上这个模型。</p><div class="condition"><strong>适用范围：</strong><ul><li>10 月 23 日才开始由上述厂商发售。10 月 2 日这篇不是已经可以下单取货的通知。</li><li>4999 美元是起价。页面没有列出每个厂商的具体售价。</li><li>1000 亿、2000 亿、1.7 倍和两倍内存带宽都是英伟达的说法。未购买机器，也没有复测。</li></ul></div><div class="source"><a href="https://blogs.nvidia.com/blog/local-ai-dgx-spark-64gb-sync/" target="_blank" rel="noopener noreferrer">NVIDIA · 一手来源 · 已核对</a></div><p class="source-note">核验说明（NVIDIA）：10 月 23 日、六家厂商、4999 美元起、1000 亿与 2000 亿参数，以及 Qwen3.8 27B 的约 1.7 倍，取自这篇博文。时间取自页面标注的 2026-10-02T13:00:39Z。</p></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">开源 · 研究</span><time datetime="2026-10-02T23:19:50+08:00">10.02 23:19 北京时间</time></div><h3 id="event-5-title">Ai2 说明 Asta 的 Fast 模式用 AstaBrief 8B，模型仓库 2 月已经存在</h3><div><p>Allen Institute for AI 于 2026 年 10 月 2 日在 Hugging Face 介绍 AstaBrief 8B。博文写它从 Qwen3-8B 出发，用监督微调和直接偏好优化训练，不走强化学习；输入是研究问题和检索到的文献片段，输出是带引用的报告。博文写它已作为 Asta 报告功能的 Fast 模式上线，旁边仍有 Claude 驱动的 Thinking 模式。整条 Asta 流水线上，Fast 模式平均每份报告 51.1 秒，Thinking 模式 178.5 秒，大约快 3.5 倍。</p><p>博文写，过滤后有 9 万条研究向查询，监督微调得到 4.7 万个可用样本，直接偏好优化大约 6000 对。主评测集 SQABench-CS2 有 200 道计算机科学问题。博文写训练和评测大部分在 2025 年完成，没有对照今天的前沿模型重跑。另有 14 道题的人工比较，三名科研人员参加；正文写总体偏好上 DR-Tulu 胜出，三名里有两名在引用准确性上更倾向 AstaBrief。使用情况写，试过 Fast 模式的 374 人里，29.1% 用了两天或更多，平均生成 3.67 条报告线程；23% 之后不再切回 Thinking；另有 18% 来回切换，Fast 约占这些线程的 40%。正向反馈比例写成 84.2% 对 Thinking 的 85.2%。</p><p>Hugging Face 模型接口显示 allenai/AstaBrief_8B 的 createdAt 为 2026-02-09T17:13:01Z，lastModified 为 2026-10-02T22:46:53Z，许可证标签为 apache-2.0。数据集 allenai/AstaBrief_DPO_Mix 的 createdAt 为 2025-11-14T01:27:26Z，lastModified 为 2026-09-29T21:58:58Z。</p><div class="condition"><strong>适用范围：</strong><ul><li>秒数、样本量和用户比例都是 Ai2 的统计。未复现报告，也没有在 Asta 里点开 Fast 模式。</li><li>博文写明没有对照今天的前沿模型重跑。不能把文中的比较写成对当前 Claude 或更新模型的排名。</li><li>模型对象创建于 2 月 9 日，偏好数据集创建于 2025 年 11 月 14 日，且该数据集的 lastModified 在本期窗口之前。不能把 10 月 2 日的博文写成权重或这份数据这一天才第一次出现。未比较权重文件今天有没有更换。图表里的逐项分数没有另从图片抄出。</li></ul></div><div class="source"><a href="https://huggingface.co/blog/allenai/astabrief" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a><a href="https://huggingface.co/allenai/AstaBrief_8B" target="_blank" rel="noopener noreferrer">Hugging Face · 补充来源 · 已核对</a><a href="https://huggingface.co/datasets/allenai/AstaBrief_DPO_Mix" target="_blank" rel="noopener noreferrer">Hugging Face · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Hugging Face）：Qwen3-8B、51.1 秒与 178.5 秒、9 万条查询、374 名用户和 2025 年完成大部分评测，取自这篇博文。时间取自 Hugging Face 博客 feed 的 15:19 UTC。</p><p class="source-note">核验说明（Hugging Face）：apache-2.0、createdAt 2026-02-09T17:13:01Z 和 lastModified 2026-10-02T22:46:53Z 取自模型接口。时间用 lastModified。未下载权重。</p><p class="source-note">核验说明（Hugging Face）：createdAt 2025-11-14T01:27:26Z 和 lastModified 2026-09-29T21:58:58Z 取自数据集接口。时间用 lastModified，早于本期窗口。</p></div></article><article class="story" id="event-6" aria-labelledby="event-6-title"><div class="kicker"><span class="tag">产品 · Copilot</span><time datetime="2026-10-03T02:24:19+08:00">10.03 02:24 北京时间</time></div><h3 id="event-6-title">GitHub 今天停用 Copilot 里的四款模型，和 9 月预告的 10 月 19 日名单不是同一批</h3><div><p>GitHub Changelog 于 2026 年 10 月 2 日写，即日起在全部 Copilot 体验中停用四款模型，范围包括 Copilot Chat、行内编辑、Ask 和 Agent 模式，以及代码补全。停用的是 Gemini 3.5 Flash 和 Gemini 3.6 Flash，建议改用 Gemini 3.8 Flash；Kimi K2.7 Code 建议改用 Kimi K3；Claude Opus 4.7 建议改用 Claude Opus 5.5。</p><p>页面写，Copilot Enterprise 管理员可能要在模型策略里打开替代模型，才能在 VS Code 和 github.com 的选择器里看到它们。不需要再手动移除已停用的模型。</p><div class="condition"><strong>适用范围：</strong><ul><li>未在组织后台核对替代模型是否已经打开，也没有在 VS Code 里看选择器。</li><li>企业管理员不打开策略时，替代模型不一定已经出现在选择器里。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>这四款和 2026 年 9 月 18 日预告、定于 10 月 19 日停用的那一批不是同一份名单。9 月那批写的是 Gemini 3.7 Flash、GPT-5.5、GPT-5.4、GPT-5.4 mini、GPT-5 mini 和 Grok 4.5。这篇没有改 10 月 19 日那批的日期。</li></ul></details><div class="source"><a href="https://github.blog/changelog/2026-10-02-selected-models-in-github-copilot-deprecated" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a></div><p class="source-note">核验说明（GitHub）：四款模型、建议替代和即日停用的范围，取自这篇 2026 年 10 月 2 日的更新日志。页面没有时钟，时间取自 changelog 页标注的 18:24 UTC。</p></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
