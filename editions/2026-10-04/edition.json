@@ -1,0 +1,329 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-04",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-04T08:00:00+08:00",
+  "generated_at": "2026-10-04T07:57:12+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "jiqizhixin.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news/rss.xml 返回 HTTP 404，/blog/rss.xml 与 /news 返回 HTTP 403"
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 32,
+      "error": null
+    },
+    {
+      "id": "apple",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google_research",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "infoq",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "aleph_alpha",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "kolibri-1",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Aleph Alpha 公开 Kolibri 权重，模型卡写 10 月 3 日，仓库在 10 月 2 日已经建好",
+      "kicker": "开源 · 模型",
+      "facts": [
+        "Aleph Alpha 博文页面标着 03/10/2026，题为 Kolibri Has Landed: A Sovereign Open-Weight Model。文中写当天发布 Kolibri：面向英语和德语的混合专家模型，总参数 78.1B，每个 token 激活 3.46B，按 Apache 2.0 提供完整权重，放在 Hugging Face。模型卡把 Release Date 写成 2026 年 10 月 3 日，总参数写成 78,103,074,560，激活参数写成 3,457,573,120，许可证为 apache-2.0。知识截止日期在博文的表和模型卡里都是 2026 年 6 月 18 日，英德相同。",
+        "博文的对照表写，Kolibri Origin 没有公开发布，预训练完成于 2026 年 6 月 11 日；Kolibri 预训练完成于 2026 年 9 月 11 日，Release 一栏写 2026 年 10 月 3 日。Origin 是 30.6B 总参数、每 token 激活 3.27B；Kolibri 是 78.1B 和 3.46B。预训练 token 从 7.51T 增到 20T。两版都是 50 层；Kolibri 全部是 MoE，并有 1 个共享专家。专家从 128 个里激活 8 个，改为 384 个里激活 6 个。最长训练长度从 65,536 改为 262,144。推理档位写成 none、low、medium、high。",
+        "博文开头写上下文最长到 100 万 tokens。同一篇的表把预训练上下文写成 16,384，最长训练长度写成 262,144。模型卡写上下文长度为 1,048,576 tokens，并建议为了服务效率和复杂任务不超过 262,144 tokens。博文写训练用 768 张 B200：16k 上预训练 20T token、用了 21 天；64k 的中期训练 3.44T token；256k 的长上下文适应写成 200B token。模型卡把这段长上下文扩展写成 201B。德文在博文里约占预训练 token 的 21.3%，英文约 62%，代码约 14%；模型卡写成约 62.5% 英文、约 23.9% 德文、约 13.6% 代码。博文写这 21 天有 38 次计划外中断，大约每 10,000 GPU 小时一次，流水线自动换节点，并从最多回退 250 步的检查点继续。",
+        "博文写评测用他们自己的 harness，适用时各模型取各自最高推理档。表上 Kolibri 的 AIME 2025 英文为 96.9，GPQA Diamond 英文为 84.3，LiveCodeBench v6 为 85.9；同一张总表里 Kolibri 的英文综合分为 75.5，Qwen3.8 27B 为 80.2。模型卡写公开这份权重是 float8_e4m3fn、按 128×128 分块，激活动态量化，评估时用 FP8 KV cache；嵌入、LM head、norm 和 MoE router 为 bfloat16。显存足迹写成约 78GB。最低配置写成 2×A100 80GB、2×H100 SXM5、1×H200、1×B200 或 1×B300。",
+        "Hugging Face 接口显示 Aleph-Alpha/Kolibri-1 的 createdAt 为 2026-10-02T05:54:02Z，lastModified 为 2026-10-03T08:43:53Z。BF16 仓库 Aleph-Alpha/Kolibri-1-BF16 的 createdAt 为 2026-10-02T08:07:59Z，lastModified 为 2026-10-03T08:44:27Z，许可证同样是 apache-2.0。GitHub 上的 Aleph-Alpha/aleph-alpha-inference 创建于 2026-09-28T07:57:16Z，最近推送为 2026-10-03T07:11:12Z，许可证为 Apache-2.0。博文写推理要这个包，或使用镜像 ghcr.io/aleph-alpha/aleph-alpha-inference，并给出以 vllm serve Aleph-Alpha/Kolibri-1 启动的命令。"
+      ],
+      "conditions": [
+        "未下载 FP8 或 BF16 权重，未安装推理包，也没有按博文里的命令启动。分数、768 张 B200 和 38 次中断都是 Aleph Alpha 写的。",
+        "两个仓库的 createdAt 都在 10 月 2 日，推理包仓库创建于 9 月 28 日。不能把权重写成 10 月 3 日才第一次出现在 Hugging Face。博文和模型卡把发布日写成 10 月 3 日。",
+        "博文同时写最长 100 万 tokens 和最长训练长度 262,144。模型卡建议服务时不超过 262,144。页面没有解释这两者的差。长上下文 token 数博文写 200B，模型卡写 201B。德文占比博文写 21.3%，模型卡写约 23.9%。",
+        "技术报告 PDF 可以下载。本期的数字取自博文和模型卡，没有逐项对照 PDF。博文写模型在德国建造、在德国和芬兰的基础设施上训练。这是他们的说法。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Aleph Alpha",
+          "url": "https://aleph-alpha.com/en/blog/kolibri-has-landed-a-sovereign-open-weight-model/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "78.1B、3.46B、Apache 2.0、768 张 B200、21 天、38 次中断，以及英文综合分 75.5 对 Qwen3.8 27B 的 80.2，取自这篇标着 03/10/2026 的博文。页面没有时钟。未复测表内分数。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1",
+          "kind": "primary",
+          "published_at": "2026-10-03T08:43:53+00:00",
+          "verified": true,
+          "note": "总参数 78,103,074,560、激活参数 3,457,573,120、上下文 1,048,576、约 78GB 和 apache-2.0，取自模型卡。createdAt 2026-10-02T05:54:02Z，lastModified 2026-10-03T08:43:53Z，取自模型接口。时间用 lastModified。未下载权重。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/Aleph-Alpha/Kolibri-1-BF16",
+          "kind": "secondary",
+          "published_at": "2026-10-03T08:44:27+00:00",
+          "verified": true,
+          "note": "createdAt 2026-10-02T08:07:59Z，lastModified 2026-10-03T08:44:27Z，许可证 apache-2.0，取自模型接口。时间用 lastModified。未下载权重。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/Aleph-Alpha/aleph-alpha-inference",
+          "kind": "secondary",
+          "published_at": "2026-10-03T07:11:12+00:00",
+          "verified": true,
+          "note": "仓库创建于 2026-09-28T07:57:16Z，最近推送 2026-10-03T07:11:12Z，许可证 Apache-2.0，取自仓库接口。时间用最近推送。未安装，也没有启动服务。"
+        }
+      ]
+    },
+    {
+      "id": "robinson-atlantic-essay",
+      "placement": "story",
+      "window": "in_window",
+      "title": "媒体转述 Robinson 的 Atlantic 辞职文，OpenAI 发言人说必要时会暂停训练",
+      "kicker": "行业 · 安全",
+      "facts": [
+        "The Guardian 的文章标着 2026 年 10 月 3 日 15:41 EDT，TechCrunch 标着 2026 年 10 月 3 日 9:30 AM PDT。两篇都写 David Robinson 曾负责撰写伴随 OpenAI 重大产品发布的安全报告，并在 The Atlantic 一篇题为 I quit OpenAI because its culture is broken 的文章里说明辞职。TechCrunch 写他说自己在 OpenAI 三年半，属于公司任期最长的员工之一。Atlantic 原文页被拦住，这次没有读到正文。",
+        "Guardian 印出的句子包括：他同意其他最近离开的人，做这门技术的公司不够小心；要比具体规则或新法律看得更深，要谈文化；公司从一次发布冲向下一次，没有达到他认为需要的小心程度。Guardian 和 The Verge 都印出这句：Given today's risks, frontier labs need to run like nuclear-power plants or busy airports, with layers of redundancy and careful, time-consuming planning, so that the occasional and inevitable human error does not open a door to disaster。TechCrunch 另引：OpenAI 靠试错成长，公司把这叫做 iterative deployment，出了问题再补护栏；并写这种方法本身会周期性失败，系统越强，失败的规模越大。",
+        "TechCrunch 点名 OpenAI 发言人 Drew Pusateri，并引用：We're making sure our models don't become more capable than we can safely manage and secure, and we pause training or hold back models when we need to slow down。同文还写，公司在加强研究和测试环境的安全，训练模型把任务做完时也做得负责任，扩大第三方评估，并改进实时监测，以便更早发现训练中的异常行为。Guardian 的发言人引语没有点名：前半是继续加强安全和安保实践，以应对今天看到的风险；后半与上面这句暂停或暂缓相同。",
+        "TechCrunch 写这次离职最早由 Business Insider 报道。Robinson 在文章里承认雇了公关公司，并写发声的决定只属于他自己。The Verge 标着 2026 年 10 月 3 日 14:31 UTC，复述了核电站与机场那句引语。"
+      ],
+      "conditions": [
+        "引语来自 Guardian、TechCrunch 和 The Verge 已经印出的句子，不是从 Atlantic 原文页抄下的。",
+        "没有打开 Business Insider。不把辞职动作本身的日期写成 10 月 3 日。10 月 3 日是这几篇报道标出的时间。",
+        "没有向 Robinson 或 OpenAI 核实。点名的发言人原话以 TechCrunch 那一段为准。",
+        "Guardian 同文还写了 Geoffrey Irving 发表在 Time 的另一篇文章。那不是这一条。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/oct/03/openai-safety-leader-quits-warning-ai-companys-culture-is-broken",
+          "kind": "primary",
+          "published_at": "2026-10-03T15:41:00-04:00",
+          "verified": true,
+          "note": "安全报告、不够小心、文化和核电站那句，取自这篇标着 2026 年 10 月 3 日 15:41 EDT 的报道。发言人没有点名。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/03/openai-safety-employee-resigns-claiming-the-companys-culture-is-broken/",
+          "kind": "primary",
+          "published_at": "2026-10-03T09:30:00-07:00",
+          "verified": true,
+          "note": "三年半、Drew Pusateri 关于暂停或暂缓的原话，以及 Business Insider 先报道离职，取自这篇标着 2026 年 10 月 3 日 9:30 AM PDT 的报道。没有打开 Business Insider。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1004408/openai-safety-quits-sounding-the-alarm",
+          "kind": "secondary",
+          "published_at": "2026-10-03T14:31:00+00:00",
+          "verified": true,
+          "note": "核电站与机场的整句引语，与 Guardian 印出的句子一致，取自这篇标着 2026 年 10 月 3 日 14:31 UTC 的报道。"
+        },
+        {
+          "label": "The Atlantic",
+          "url": "https://www.theatlantic.com/technology/2026/10/openai-safety-team-resignation/688881/",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": false,
+          "note": "原文页被拦住，返回的是拦截页，这次没有读到正文。不把这一页当成已经核对过的引语来源。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:463e5179c26c4dcc5d73aaf16a1d41b7ab4ba8a1417b39e7c21d83406de1f73b"
+}
