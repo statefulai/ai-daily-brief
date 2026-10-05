@@ -18,7 +18,7 @@ from scripts.edition_ci import (
 )
 
 APPROVED_MASTHEAD_SHA256 = (
-    "ae5eaffbcfefbb62d1aa3998c2c160baa7566e10b924cb363aa4f6b00cb434aa"
+    "3bc2a260fdf457d9de5f9899ed6369afe45afed3c574c6c27ce34bb5b54102d5"
 )
 WEEKDAYS_ZH = ("星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日")
 BEIJING = timezone(timedelta(hours=8))
@@ -314,8 +314,8 @@ class EditionCITest(unittest.TestCase):
         self.assertIn("1120px", template)
         self.assertIn("max-width: 820px", template)
         self.assertIn("max-width: 680px", template)
-        self.assertIn("width: 92px", template)
-        self.assertIn("width: 36px", template)
+        self.assertIn(".masthead-art { display: block; width: 112px; height: auto; }", template)
+        self.assertIn(".masthead-art { width: 40px; }", template)
         for anchor in ("#latest", "#archive", "#principles"):
             self.assertIn(f'href="{anchor}"', template)
 
