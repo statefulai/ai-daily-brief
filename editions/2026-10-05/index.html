@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 5 日 AI 日报，含 2 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 5 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-05">2026 年 10 月 5 日</time> · 星期一</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 5 日 08:00（北京时间）。本期收录 2 条窗口内动态；另有 3 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">政策 · 美国</span><time datetime="2026-10-04T21:37:50+08:00">10.04 21:37 北京时间</time></div><h2 id="event-1-title">特朗普周日发帖设立 Super Intelligence Force，由国家情报总监 Clayton 牵头</h2><div class="lead-copy"><p>路透社稿在雅虎页面上的 datePublished 是 2026-10-04T13:37:50Z，电头写 Oct 4 (Reuters)。卫报写首次发表于 2026 年 10 月 4 日 09:44 EDT。两篇都写，特朗普周日任命国家情报总监 Jay Clayton 为白宫人工智能事务负责人，并让他领导新设的 Super Intelligence Force，缩写 SIF。</p><p>路透社印出的 Truth Social 句子是：SIF 要 “ensure that America continues to lead the World in Super Intelligence”，并 “protect the interests, and improve the lives, of all Americans”。卫报印出的帖子内容是，SIF 将 “coordinate the federal government’s engagement with consumers, public interest groups, religious organizations, critical infrastructure providers, and super intelligence companies”。TechCrunch 的 datePublished 为 2026-10-04T15:15:10+00:00，印出更长的一句，把协调联邦政府的努力、与工业革命和互联网的比较，以及保护美国人的利益和生活放在同一段。</p><p>路透社写，这次发帖确认了《华尔街日报》先前的报道。Clayton 对日报说 “The risk of not being first is high”。他并说，小组有 120 天提交一份报告，评估人工智能的风险与机会，并建议联邦政府应当扮演什么角色。日报援引章程写，小组将审查与人工智能相关的风险，以及政府现有的泄露、黑客攻击和其他事件报告机制，并建议在现有职权内加强联邦响应能力。</p><p>路透社写，特朗普写道，除 Clayton 外，小组负责人还包括联邦贸易委员会主席 Andrew Ferguson、五角大楼首席技术官 Emil Michael，以及人事管理办公室主任 Scott Kupor；小组向总统和白宫幕僚长 Susie Wiles 报告。TechCrunch 援引《华尔街日报》称这三人为副主席，并把 Michael 写成负责研究与工程的战争部副部长。TechCrunch 另印出一句章程：“develop plans for responding to SI-enabled threats to our society, while preventing overregulation and regulatory capture that would stifle innovation and competition。”</p><div class="condition"><strong>适用范围：</strong><ul><li>Truth Social 页面和《华尔街日报》原文这次都没有打开。引语是卫报、路透社和 TechCrunch 已经印出的句子。</li><li>120 天和章程内容来自路透社对 Clayton 和日报的转述，以及 TechCrunch 对日报的转述。两家印出的章程句子不一样，这里不并成一份没有见过的章程原文。</li><li>Emil Michael 的职衔两说：路透社写五角大楼首席技术官，TechCrunch 援引日报写负责研究与工程的战争部副部长。不把两个头衔收成一个。</li><li>卫报写马斯克认为 SI 比 AI 好，并且正在把 SpaceXAI 改名为 SpaceXSI。能对上的帖子是有人问有没有可能改名为 SpaceXSI，马斯克回复 “Yes, we will make that change”，时间 2026-10-04T09:07:43Z。没有看到已经改名的产品页，也没有看到卫报所写 “better” 的那句原话。改名不单列。</li><li>9 月说要设 AI Force、周二的行业承诺，以及 David Sacks 曾担任这一职务，都是这几篇报道里的背景，不是周日这条帖子的新内容。</li></ul></div><div class="source"><a href="https://www.yahoo.com/news/politics/articles/jay-clayton-lead-trumps-ai-224548272.html" target="_blank" rel="noopener noreferrer">Reuters · 一手来源 · 已核对</a><a href="https://www.theguardian.com/us-news/2026/oct/04/trump-jay-clayton-white-house-ai-czar" target="_blank" rel="noopener noreferrer">The Guardian · 一手来源 · 已核对</a><a href="https://techcrunch.com/2026/10/04/trump-unveils-his-new-super-intelligence-force/" target="_blank" rel="noopener noreferrer">TechCrunch · 补充来源 · 已核对</a><a href="https://x.com/elonmusk/status/2106672603536712025" target="_blank" rel="noopener noreferrer">X · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Reuters）：任命、Truth Social 上的两句目标、120 天、章程里的风险与事件报告，以及 Ferguson、Michael、Kupor 和向 Wiles 报告，取自这篇电头为 Oct 4 (Reuters) 的稿件。读到的是雅虎转载页。路透网站原页没有打开。《华尔街日报》原文也没有打开。</p><p class="source-note">核验说明（The Guardian）：周日任命 Clayton 领导 SIF，以及协调消费者、公共利益团体、宗教组织、关键基础设施提供者和超级智能公司，取自这篇首次发表于 2026 年 10 月 4 日 09:44 EDT 的报道。关于马斯克改名的句子与能对上的回复不一致，不采用。</p><p class="source-note">核验说明（TechCrunch）：把工业革命和互联网写进同一段的 Truth Social 引语，以及副主席头衔、战争部副部长职衔和另一句章程，取自这篇 datePublished 为 2026-10-04T15:15:10+00:00 的报道。这些细节都注明来自《华尔街日报》。日报原文没有打开。</p><p class="source-note">核验说明（X）：回复全文是 “Yes, we will make that change”，时间 2026-10-04T09:07:43Z。所回复的问题是 “Any possibility of renaming to SpaceXSI??”，见 https://x.com/XFreeze/status/2106666922221965422 ，时间 2026-10-04T08:45:08Z。没有打开 X 的网页，也没有看到完成更名的产品页。</p></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">政策 · 科研</span><time datetime="2026-10-04T17:14:42+08:00">10.04 17:14 北京时间</time></div><h3 id="event-2-title">白宫称美国与 16 国在京都背书科学愿景，并写要扩大科研人员对超级智能工具的使用</h3><div><p>白宫稿的 datePublished 是 2026-10-04T09:14:42+00:00，地点写京都。稿件称，在京都召开的第 23 届科学与技术社会论坛年会上，美国与另外 16 个国家背书了 Kyoto Vision for a Golden Age of Science。名单上的背书方是阿根廷、保加利亚、智利、塞浦路斯、德国、希腊、印度尼西亚、意大利、日本、哈萨克斯坦、韩国、新西兰、波兰、新加坡、阿联酋、英国和美国。</p><p>稿件写，这份愿景由白宫科技政策办公室主任 Michael Kratsios 牵头。它认为可以利用超级智能加快科学发现，超级智能用于科学将使大规模自主实验成为可能。各国部长承诺把握这一时机，使用新的机构模式和资助机制，让科学家做更有雄心的工作。</p><p>愿景写了三条。改进发现机构：部长们注意到长期资助、快速拨款、奖项和挑战赛等工具的价值，鼓励试验自主程度、资源和方向不同的机构模式，并欢迎把元科学当作改进科研组织与资助的实证领域。把超级智能用于科学：部长们承认它既在加快已有研究任务，也在打开新的探究形式；他们鼓励把超级智能审慎纳入科研流程，并承诺扩大科研人员对超级智能科研工具、科学数据、计算基础设施和实验设施的使用。培养人才：承诺找出并支持有成绩的学生和早期科研人员，扩大动手训练，以及跨部门的博士项目、奖学金和研究合作。</p><p>Kratsios 的引语写，科学发现的方式已经变了，京都愿景承认这一转变并发出行动号召；用于科学的超级智能将是历史上把研究民主化的最大力量。稿件把 2026 年 7 月他交给总统的 Science: A New Golden Age 写成已有报告，不是这份京都稿新宣布的拨款。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是一份联合愿景。稿件没有写新的法律、预算数字或可以执行的处罚。</li><li>三条内容和 17 个背书方名单只取自这篇白宫稿。没有另读论坛现场文本或各国自己的签署页。</li><li>7 月的 Science: A New Golden Age 是稿件自己点出的前序文件，不是这个窗口里的新决定。</li></ul></div><div class="source"><a href="https://www.whitehouse.gov/releases/2026/10/us-leads-international-coalition-to-endorse-kyoto-vision-for-a-golden-age-of-science/" target="_blank" rel="noopener noreferrer">The White House · 一手来源 · 已核对</a></div><p class="source-note">核验说明（The White House）：美国与 16 国、17 个背书方名单、Kratsios 的引语，以及扩大科研人员使用超级智能工具的承诺，取自这篇 datePublished 为 2026-10-04T09:14:42+00:00 的稿件。没有另读论坛文本。</p></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>

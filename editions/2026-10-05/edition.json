@@ -1,0 +1,298 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-05",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-05T08:00:00+08:00",
+  "generated_at": "2026-10-05T07:56:32+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "jiqizhixin.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news/rss.xml 返回 HTTP 404，/blog/rss.xml 与 /news 返回 HTTP 403"
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "apple",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "failed",
+      "item_count": 0,
+      "error": "api-docs.deepseek.com/news/rss.xml 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "google_research",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "infoq",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "super-intelligence-force",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "特朗普周日发帖设立 Super Intelligence Force，由国家情报总监 Clayton 牵头",
+      "kicker": "政策 · 美国",
+      "facts": [
+        "路透社稿在雅虎页面上的 datePublished 是 2026-10-04T13:37:50Z，电头写 Oct 4 (Reuters)。卫报写首次发表于 2026 年 10 月 4 日 09:44 EDT。两篇都写，特朗普周日任命国家情报总监 Jay Clayton 为白宫人工智能事务负责人，并让他领导新设的 Super Intelligence Force，缩写 SIF。",
+        "路透社印出的 Truth Social 句子是：SIF 要 “ensure that America continues to lead the World in Super Intelligence”，并 “protect the interests, and improve the lives, of all Americans”。卫报印出的帖子内容是，SIF 将 “coordinate the federal government’s engagement with consumers, public interest groups, religious organizations, critical infrastructure providers, and super intelligence companies”。TechCrunch 的 datePublished 为 2026-10-04T15:15:10+00:00，印出更长的一句，把协调联邦政府的努力、与工业革命和互联网的比较，以及保护美国人的利益和生活放在同一段。",
+        "路透社写，这次发帖确认了《华尔街日报》先前的报道。Clayton 对日报说 “The risk of not being first is high”。他并说，小组有 120 天提交一份报告，评估人工智能的风险与机会，并建议联邦政府应当扮演什么角色。日报援引章程写，小组将审查与人工智能相关的风险，以及政府现有的泄露、黑客攻击和其他事件报告机制，并建议在现有职权内加强联邦响应能力。",
+        "路透社写，特朗普写道，除 Clayton 外，小组负责人还包括联邦贸易委员会主席 Andrew Ferguson、五角大楼首席技术官 Emil Michael，以及人事管理办公室主任 Scott Kupor；小组向总统和白宫幕僚长 Susie Wiles 报告。TechCrunch 援引《华尔街日报》称这三人为副主席，并把 Michael 写成负责研究与工程的战争部副部长。TechCrunch 另印出一句章程：“develop plans for responding to SI-enabled threats to our society, while preventing overregulation and regulatory capture that would stifle innovation and competition。”"
+      ],
+      "conditions": [
+        "Truth Social 页面和《华尔街日报》原文这次都没有打开。引语是卫报、路透社和 TechCrunch 已经印出的句子。",
+        "120 天和章程内容来自路透社对 Clayton 和日报的转述，以及 TechCrunch 对日报的转述。两家印出的章程句子不一样，这里不并成一份没有见过的章程原文。",
+        "Emil Michael 的职衔两说：路透社写五角大楼首席技术官，TechCrunch 援引日报写负责研究与工程的战争部副部长。不把两个头衔收成一个。",
+        "卫报写马斯克认为 SI 比 AI 好，并且正在把 SpaceXAI 改名为 SpaceXSI。能对上的帖子是有人问有没有可能改名为 SpaceXSI，马斯克回复 “Yes, we will make that change”，时间 2026-10-04T09:07:43Z。没有看到已经改名的产品页，也没有看到卫报所写 “better” 的那句原话。改名不单列。",
+        "9 月说要设 AI Force、周二的行业承诺，以及 David Sacks 曾担任这一职务，都是这几篇报道里的背景，不是周日这条帖子的新内容。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Reuters",
+          "url": "https://www.yahoo.com/news/politics/articles/jay-clayton-lead-trumps-ai-224548272.html",
+          "kind": "primary",
+          "published_at": "2026-10-04T13:37:50+00:00",
+          "verified": true,
+          "note": "任命、Truth Social 上的两句目标、120 天、章程里的风险与事件报告，以及 Ferguson、Michael、Kupor 和向 Wiles 报告，取自这篇电头为 Oct 4 (Reuters) 的稿件。读到的是雅虎转载页。路透网站原页没有打开。《华尔街日报》原文也没有打开。"
+        },
+        {
+          "label": "The Guardian",
+          "url": "https://www.theguardian.com/us-news/2026/oct/04/trump-jay-clayton-white-house-ai-czar",
+          "kind": "primary",
+          "published_at": "2026-10-04T09:44:00-04:00",
+          "verified": true,
+          "note": "周日任命 Clayton 领导 SIF，以及协调消费者、公共利益团体、宗教组织、关键基础设施提供者和超级智能公司，取自这篇首次发表于 2026 年 10 月 4 日 09:44 EDT 的报道。关于马斯克改名的句子与能对上的回复不一致，不采用。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/04/trump-unveils-his-new-super-intelligence-force/",
+          "kind": "secondary",
+          "published_at": "2026-10-04T15:15:10+00:00",
+          "verified": true,
+          "note": "把工业革命和互联网写进同一段的 Truth Social 引语，以及副主席头衔、战争部副部长职衔和另一句章程，取自这篇 datePublished 为 2026-10-04T15:15:10+00:00 的报道。这些细节都注明来自《华尔街日报》。日报原文没有打开。"
+        },
+        {
+          "label": "X",
+          "url": "https://x.com/elonmusk/status/2106672603536712025",
+          "kind": "secondary",
+          "published_at": "2026-10-04T09:07:43+00:00",
+          "verified": true,
+          "note": "回复全文是 “Yes, we will make that change”，时间 2026-10-04T09:07:43Z。所回复的问题是 “Any possibility of renaming to SpaceXSI??”，见 https://x.com/XFreeze/status/2106666922221965422 ，时间 2026-10-04T08:45:08Z。没有打开 X 的网页，也没有看到完成更名的产品页。"
+        }
+      ]
+    },
+    {
+      "id": "kyoto-vision",
+      "placement": "story",
+      "window": "in_window",
+      "title": "白宫称美国与 16 国在京都背书科学愿景，并写要扩大科研人员对超级智能工具的使用",
+      "kicker": "政策 · 科研",
+      "facts": [
+        "白宫稿的 datePublished 是 2026-10-04T09:14:42+00:00，地点写京都。稿件称，在京都召开的第 23 届科学与技术社会论坛年会上，美国与另外 16 个国家背书了 Kyoto Vision for a Golden Age of Science。名单上的背书方是阿根廷、保加利亚、智利、塞浦路斯、德国、希腊、印度尼西亚、意大利、日本、哈萨克斯坦、韩国、新西兰、波兰、新加坡、阿联酋、英国和美国。",
+        "稿件写，这份愿景由白宫科技政策办公室主任 Michael Kratsios 牵头。它认为可以利用超级智能加快科学发现，超级智能用于科学将使大规模自主实验成为可能。各国部长承诺把握这一时机，使用新的机构模式和资助机制，让科学家做更有雄心的工作。",
+        "愿景写了三条。改进发现机构：部长们注意到长期资助、快速拨款、奖项和挑战赛等工具的价值，鼓励试验自主程度、资源和方向不同的机构模式，并欢迎把元科学当作改进科研组织与资助的实证领域。把超级智能用于科学：部长们承认它既在加快已有研究任务，也在打开新的探究形式；他们鼓励把超级智能审慎纳入科研流程，并承诺扩大科研人员对超级智能科研工具、科学数据、计算基础设施和实验设施的使用。培养人才：承诺找出并支持有成绩的学生和早期科研人员，扩大动手训练，以及跨部门的博士项目、奖学金和研究合作。",
+        "Kratsios 的引语写，科学发现的方式已经变了，京都愿景承认这一转变并发出行动号召；用于科学的超级智能将是历史上把研究民主化的最大力量。稿件把 2026 年 7 月他交给总统的 Science: A New Golden Age 写成已有报告，不是这份京都稿新宣布的拨款。"
+      ],
+      "conditions": [
+        "这是一份联合愿景。稿件没有写新的法律、预算数字或可以执行的处罚。",
+        "三条内容和 17 个背书方名单只取自这篇白宫稿。没有另读论坛现场文本或各国自己的签署页。",
+        "7 月的 Science: A New Golden Age 是稿件自己点出的前序文件，不是这个窗口里的新决定。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The White House",
+          "url": "https://www.whitehouse.gov/releases/2026/10/us-leads-international-coalition-to-endorse-kyoto-vision-for-a-golden-age-of-science/",
+          "kind": "primary",
+          "published_at": "2026-10-04T09:14:42+00:00",
+          "verified": true,
+          "note": "美国与 16 国、17 个背书方名单、Kratsios 的引语，以及扩大科研人员使用超级智能工具的承诺，取自这篇 datePublished 为 2026-10-04T09:14:42+00:00 的稿件。没有另读论坛文本。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:2d1d091460bc258236b48b4ee286e4e4874277373491d454d5fdd361b264676f"
+}
