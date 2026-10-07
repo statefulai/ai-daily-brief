@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 7 日 AI 日报，含 7 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 7 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-07">2026 年 10 月 7 日</time> · 星期三</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 7 日 08:00（北京时间）。本期收录 7 条窗口内动态；另有 4 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">研究 · 数学</span><time datetime="2026-10-06T20:00:00+08:00">10.06 20:00 北京时间</time></div><h2 id="event-1-title">OpenAI 公开 722 篇数学手稿：内部模型还没发布，未形式化的结果可能有问题</h2><div class="lead-copy"><p>OpenAI 新闻源的时间是 2026-10-06T12:00:00+00:00。公告写，公司发布一批由内部前沿模型做出的新数学结果。为安排披露方式，公司咨询了普林斯顿高等研究院独立的数学与人工智能咨询小组，并称这次发布参考了该小组的建议和公开推荐。结果放在 GitHub 仓库 openai/math，附有修订和引用的规则。博客写，许多证明会以 Lean 形式化放进仓库，并会继续补充；同时公开 10 份模型推理的缩写摘要、按 ChatGPT Pro 用量估算的计算，以及尝试过的题目数量。平均每个结果用了大约三小时 ChatGPT Pro thinking 的计算。做出这些结果的模型这次没有发布。公司还写，将资助一系列工作坊、会议和专项来理解人工智能做出的重要结果，细节以后再说。</p><p>仓库元数据里的创建时间是 2026-10-06T21:47:02Z，许可证是 Apache-2.0。README 写，当前目录有 722 篇手稿，分成 372 个家族。一个家族可以包含主结果、伴随论证、推论或另一种证明，并按数学学科分类。材料包括 PDF、源文件、分篇引用说明，以及 Lean 库和形式化目录。不少手稿有 Lean 形式化，但不是全部。README 写，未形式化的结果可能有问题，公司会尽快修；已发布的版本会保留，更正记成新版本。</p><p>README 写，绝大多数结果用同一套流程、由尚未发布的内部模型做出。评估里大约出了 4000 道题，再按家族汇总，并要求达到一定重要性，才形成这个目录。现有数学评估饱和之后，公司才扩大了这类评估。有些输出建立在模型更早的结果之上。例外包括黎曼 zeta 函数的一个零点禁区，以及针对 CM 阿贝尔簇的 Hodge 猜想的证明。其中 Re(s) 大于 11/12 的 zeta 零点禁区文稿为了可读性做过人工编辑。README 没有把这写成一般 Hodge 猜想已经证明，也没有写成黎曼猜想已经证明。</p><p>10 份缩写推理摘要对应的题目是：乘性函数的普通两点相关、圆周率的无理指数、对称与一般 Mahler 猜想、基本半定阈值上的普通 NP 难、等差数列的拟多项式界、Kaplansky 在特征 2 的直接有限性猜想、稀释自旋玻璃的 Mézard–Parisi 公式、量子海森堡铁磁体的自发磁化、自由群因子的同构，以及三维相对论 Vlasov–Maxwell 系统。</p><div class="condition"><strong>适用范围：</strong><ul><li>没有读完 722 篇手稿，也没有运行 Lean 检查。未形式化的结果，README 自己写可能有问题。</li><li>咨询小组的公开推荐原文没有另读。博客只说这次发布参考了他们的建议。</li><li>平均三小时的计算和大约 4000 道题，是 README 对内部流程的说明，不是独立复算。模型没有公开。</li></ul></div><div class="source"><a href="https://openai.com/index/sharing-ai-progress-in-mathematics/" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a><a href="https://github.com/openai/math" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI）：发布时间取自 OpenAI 新闻源。咨询小组、Lean、10 份推理摘要、平均约三小时 Pro 计算，以及模型尚未发布，以这篇公告为准。没有另读咨询小组的推荐原文。</p><p class="source-note">核验说明（GitHub）：722 篇、372 个家族、Apache-2.0、约 4000 道题、零点禁区与 CM 阿贝尔簇上的 Hodge 猜想这些例外，以及 10 个摘要题目，取自仓库 README 和仓库元数据。创建时间是 2026-10-06T21:47:02Z。没有跑 Lean。</p></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">模型 · 开源</span></div><h3 id="event-2-title">Mistral Large 4 公开预览：1 万亿参数，权重月底才发布</h3><div><p>Mistral 新闻页的日期是 October 6, 2026，页面没有钟点。公司宣布 Mistral Large 4 公开预览，非正式简称 ML4，昵称 le Chonk。预览接口当天可以在 Mistral Studio 试用。权重计划本月月底发布。权重放出前，公司正和网络安全方面的负责人、经过筛选的伙伴以及国家机构做红队；这些对象使用同一个模型，审核更少，网络能力更宽。架构、更多基准和后训练方法留到发布权重时再给。</p><p>页面写，ML4 是 1 万亿参数的原生多模态模型，每个 token 激活 490 亿参数，是该公司迄今最大的模型。它在 Mistral 位于欧洲的自有数据中心、3800 张 NVIDIA Grace Blackwell GPU 上从零训练，公开预览也由这套基础设施提供。训练数据里有相当一部分是多语言，覆盖 160 多种语言，包括欧盟每一种官方语言。提供范围包括由 Mistral 端到端运营、不依赖其他数字服务提供商、并受欧洲法律约束的欧洲部署。页面没有写预览接口的价格。</p><p>文中的分数是公司自己的表。Artificial Analysis Cyber Index 上，页面称它进入全球前五，并领先中国以外的开放权重模型；其中一项要求先复现开源软件里的真实漏洞再打补丁，ML4 是 82%，页面称这是所有模型里最高的。Cybench 的 40 道题解出 93%。编码方面，DeepSWE v1.1 是 61.7%，Terminal-Bench 4 是 28.3%，Coding Agent Index 合计 49.8%，页面称高于 DeepSeek V4 Pro 0813 和 Qwen3.8 Max。Surge AI 的编码盲评里，五款模型中 ML4 Preview 以 3.74 排第二，高于 Kimi K3 的 3.59、GLM-5.3 的 3.60 和 GLM-5.2 的 3.40，低于 Claude Opus 5 的 4.22。视觉定位 Dense 200 是 42%，对照写的是 GPT-6-Astra 的 41%。</p><p>页面写，这次预览背后的强化学习还在进行，模型没有出现饱和。ML4 被写成 30 亿欧元 D 轮之后路线图上的第一个里程碑，并会成为以后专用模型的底模。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是公开预览。权重、架构和后训练细节都还没放出。没有调用 Mistral Studio 的预览接口。</li><li>基准和 82%、93%、49.8% 这些数字是公司在这篇里给出的，不是独立复测。</li><li>红队使用的减审核版本不等于今天公开预览接口上的默认审核。</li></ul></div><div class="source"><a href="https://mistral.ai/news/mistral-large-4/" target="_blank" rel="noopener noreferrer">Mistral · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Mistral）：参数、训练规模、月底发布权重，以及文中的基准，取自这篇日期为 October 6, 2026 的新闻。页面没有钟点。没有调用预览接口，也没有独立复测。</p></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">模型 · 开源</span><time datetime="2026-10-07T00:00:00+08:00">10.07 00:00 北京时间</time></div><h3 id="event-3-title">谷歌发布 EmbeddingGemma 2：7.4 亿参数的开放多模态嵌入模型</h3><div><p>谷歌博客的页面日期是 Oct 06, 2026，博客订阅源给出的时间是 2026-10-06T16:00:00+00:00。DeepMind 研究工程师 Sahil Dua 和 Henrique Schechter Vera 介绍 EmbeddingGemma 2。它以 Apache 2.0 发布，基于 Gemma 4，有 7.4 亿参数，把文本、代码、图像、视频和音频放进同一个嵌入空间。默认向量 768 维，可以截到 512、256 或 128 维。上下文 8000 token，是上一代的 4 倍。页面写，在本地可以处理最多约 5.5 分钟音频、29 张图像或 58 帧视频，也可以交错输入。</p><p>只做文本时可以只用大约 2.7 亿参数；视觉编码器和音频编码器是可选的，分别约 1.7 亿和 3 亿参数。量化之后，在 Google Pixel 11 Pro 上，仅文本权重大约 191MB 活动内存，完整多模态大约 567MB。代码基准 MTEB Code 从 68.76 升到 78.68。权重放在 Hugging Face 和 Kaggle。Gemini Enterprise Agent Platform 的 Model Garden 写的是即将提供。页面列出的本地途径包括 MediaPipe、LiteRT、transformers、llama.cpp、Ollama 和 MLX。</p><p>DeepMind 的博客订阅源指向同一篇谷歌博客。上一代 EmbeddingGemma 超过 2000 万次下载，是这篇里的背景，不是这次新模型的下载量。</p><div class="condition"><strong>适用范围：</strong><ul><li>内存、上下文长度和 MTEB Code 的分数是谷歌这篇博客给出的。没有在本机加载权重，也没有复跑基准。</li><li>Model Garden 是即将提供，不是今天已经可以在那里调用。</li></ul></div><div class="source"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：参数、Apache 2.0、内存和 MTEB Code 的变化，取自这篇博客。订阅源时间是 2026-10-06T16:00:00+00:00。没有加载权重。</p></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">安全 · 准入</span></div><h3 id="event-4-title">Anthropic 把网络验证计划扩成三档，合格防守者可以申请更少拦截</h3><div><p>Anthropic 新闻稿的日期是 Oct 6, 2026，页面没有钟点。公司扩大 Cyber Verification Program，向合格的安全人员提供更强的网络能力和更少的拦截。计划收成三档，每档都包含 Claude Opus 5.5、Claude Sonnet 5.5、Claude Mythos 5.1，以及以后的新模型。一般可用的模型仍然对大多数网络工作做保守拦截。过去六个月的 Project Glasswing 和原来的 CVP 被并进这一套。</p><p>Defense Access 面向防守，包括安全运营、事件响应、恶意软件逆向，以及分析和验证漏洞。公司写，预期多数做防守工作的机构能够通过，目标是几天内回复。Red Team Access 在此之上增加已经获授权的渗透测试和红队，目前只对机构开放，个人研究者不能申请；审查预计要几周，等待期间先进入 Defense。这一档仍会实时拦截可能造成人身伤害或大范围中断的行为，例如部署勒索软件、破坏物理系统，或对高风险安全系统做渗透测试。Specialized Access 拦截最少，留给经过核实、被授权测试可能影响生命或扰乱市场的系统的少数机构，例如飞行操作系统、电网、电信网络、银行间转账和政府行政网络。这一档目前与美国政府一起逐家审查。现有 Project Glasswing 成员转入这一档，当前模型不必重新审批。</p><p>效果测试用 Claude Opus 5.5 跑 CyScenarioBench，10 道题各试 5 次。没有 CVP 时，每道题都在第一条提示被拦截。Defense 档 50 次里有 46 次中途被拦截，4 次完成。Red Team 档没有拦截，完成 34 次；页面称这与不加防护时 67.6% 的完成率相当，并用这个完成率代表 Specialized。</p><p>Project Glasswing 的伙伴在 2026 年 4 月到 7 月至少发现 12.9 万个已经核实的软件漏洞。Anthropic 自己的开源扫描在 4 月到 10 月另发现 5500 个。其中已有超过 3.3 万个被标为严重或高危。页面写，这是部分伙伴调查的下限，依据是 33 份伙伴报告里的部分数据，真实影响预期至少再高五倍。加入计划的机构必须保留数据，以便监测滥用。Enterprise Frontier Safeguards 要到今年秋天晚些时候才提供。在此之前，已经对 Claude Fable 5.1 或 Claude Mythos 5.1 使用零数据保留的机构，也可以在 CVP 里使用零数据保留。CVP 可以在 Claude Platform、Google Cloud Vertex AI 和 Microsoft Foundry 使用。Amazon Bedrock 只提供给有资格使用 Enterprise Frontier Safeguards 的客户。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是申请制。没有提交申请，也没有打开帮助中心的逐项控件表。</li><li>12.9 万和五倍这些数字是公司根据部分伙伴调查作出的估计，页面自己写修补数量被低估。</li><li>CyScenarioBench 的 46/50 和 34/50 是 Anthropic 用自己的模型跑的，不是第三方复测。</li></ul></div><div class="source"><a href="https://www.anthropic.com/news/cyber-verification-program" target="_blank" rel="noopener noreferrer">Anthropic · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Anthropic）：三档范围、CyScenarioBench 的次数，以及 12.9 万个漏洞的口径，取自这篇日期为 Oct 6, 2026 的新闻。页面没有钟点。没有提交申请。</p></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">产品 · 接口</span></div><h3 id="event-5-title">OpenAI 公开测试 Decisions API，目前只接 gpt-6-luna</h3><div><p>OpenAI API 更新日志把这项写在 October 2026 的 Oct 6：Decisions API 以公开测试版配合 gpt-6-luna 发布，端点是 POST /v1/decisions。指南写，公开测试预计未来数周转为正式版，目前只有 gpt-6-luna 可以用。指南称，它把文本和图像变成程序能直接用的判断，大约比 Responses API 快 10 倍。这是文档里的速度说法。</p><p>一次请求有三部分：模型、共享输入、问题列表。输入可以是一段文本，或同时包含文本和图像的用户消息。图像必须是内联的 base64 data URL，不接受托管的 HTTP 或 HTTPS 图片地址，也不接受 file_id。问题分三类。predicate 返回条件成立的概率，范围是 0 到 1。choice 从调用者给的选项里选一个，并返回各选项的概率和单独的 confidence。score 按从低到高的等级做概率加权平均，分数可以落在两个等级之间。指南写，如果要的是自定义 JSON 对象或工具调用，仍用 Responses API。</p><p>gpt-6-luna 在这个端点上的输入价格是每 100 万 token 0.10 美元，只对输入 token 收费，没有缓存读写费用，也没有输出 token 费用。区域处理和长上下文的乘数另计。符合条件的客户可以使用零数据保留和 HIPAA。数据驻留和区域处理支持美国，以及欧洲经济区加瑞士。没有调用这个端点。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是公开测试，不是正式版。指南写预计未来数周才 GA。</li><li>快 10 倍是文档相对 Responses API 的说法，没有在本机计时。</li><li>同一天日志里把 API 用量档收成三档，是另一项变更，不在这个接口的行为里。</li></ul></div><div class="source"><a href="https://developers.openai.com/api/docs/guides/decisions" target="_blank" rel="noopener noreferrer">OpenAI API · 一手来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI API）：三种问题、图片必须用 base64，以及每 100 万输入 token 0.10 美元，取自这篇指南。日期取自更新日志里 October 2026 的 Oct 6 条目，日志没有钟点。没有调用接口。</p></div></article><article class="story" id="event-6" aria-labelledby="event-6-title"><div class="kicker"><span class="tag">行业 · 标准</span></div><h3 id="event-6-title">Sierra 与 Meta 宣布个人代理协议，v0.1 规范本月稍后才发布</h3><div><p>Sierra 博客由 Bret Taylor 和 Clay Bavor 署名，页面日期是 October 6, 2026，正文没有钟点。他们宣布 Personal Agent Protocol，称这是 Meta 和 Sierra 正在与 Genesys、Instinct、Rocket、Shopify、Stripe、Walmart 一起制定的开放标准，用来规定个人代理如何与企业交互。目标是处理认证、由消费者决定授权，并让公司看见代理通过网站、API 或公司自己的代理做了什么。任何人都可以实现。v0.1 规范计划本月稍后发布，同时会办设计工作坊，并放出参考实现。更细的权限、航班或订单的推送通知，以及不交出信用卡号的支付扩展，写在后续，不是今天已经发布的文本。</p><p>页面写，会话基于 OAuth。代理先在公司网站上发现对方提供什么、怎么接通，再代表用户开始一次会话。可以先做访客，用来查库存或退货政策。需要账户时，用户在公司页面登录，或使用已经交给个人代理的凭据。用户决定代理是只读还是可写。登录前的问题和登录后的改单属于同一次访问。公司可以选择三条通路：普通网页、基于 MCP 和 OpenAPI 的 API，或公司自己的对话代理。</p><p>CNBC 的页面时间是 Tue, Oct 6 2026 2:15 PM EDT。Taylor 对 CNBC 说，OpenAI 和 Anthropic 现在还不在这组伙伴里，他预期它们会参加。Meta 的 David Singleton 对 CNBC 说，Muse 在美国已经有数百万用户，并且增长很快。这两句是采访，不是协议文本。</p><div class="condition"><strong>适用范围：</strong><ul><li>今天发布的是意向和机制说明。v0.1 规范、工作坊和参考实现都还没有文本。没有看到草案。</li><li>伙伴名单以 Sierra 这篇为准。CNBC 对 Taylor 和 Singleton 的引语没有另找录音。</li><li>支付被写成以后的扩展，不是当前已经定义的流程。</li></ul></div><div class="source"><a href="https://sierra.ai/blog/introducing-personal-agent-protocol" target="_blank" rel="noopener noreferrer">Sierra · 一手来源 · 已核对</a><a href="https://www.cnbc.com/2026/10/06/meta-joins-companies-to-tame-chaos-of-doing-business-with-ai-bots.html" target="_blank" rel="noopener noreferrer">CNBC · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Sierra）：伙伴、OAuth 会话、三条通路，以及 v0.1 规范本月稍后才发布，取自这篇日期为 October 6, 2026 的博客。正文没有钟点。没有看到规范草案。</p><p class="source-note">核验说明（CNBC）：Taylor 关于 OpenAI、Anthropic 尚未加入，以及 Singleton 关于 Muse 美国用户规模的话，取自这篇页面时间为 Tue, Oct 6 2026 2:15 PM EDT 的采访。协议机制以 Sierra 博客为准。</p></div></article><article class="story" id="event-7" aria-labelledby="event-7-title"><div class="kicker"><span class="tag">政策 · 用语</span><time datetime="2026-10-07T02:19:00+08:00">10.07 02:19 北京时间</time></div><h3 id="event-7-title">路透社称司法部要求员工在多数正式文本里把 AI 写成超级智能</h3><div><p>路透社的电讯日期是 Oct 6，华盛顿电头。Investing.com 上的转载写着 Published Oct 06, 2026, 04:09 PM，没有时区。报道称，司法部周二指示员工在多数情况下用 super intelligence 代替 artificial intelligence，包括在法庭上；依据是路透社看到的一份备忘录。备忘录来自代理副部长 Trent McCotter，跟随上周总统的行政命令，要求联邦机构改用这一称呼。员工应在法律允许的最大范围内，在公共传播、政策文件和其他正式记录里使用 super intelligence 和 SI。备忘录写：The directive &quot;shall extend to court filings when appropriate.&quot;</p><p>NBC News 的页面时间是 Oct. 6, 2026, 2:19 PM EDT。报道称，四名知情者说，一名高级官员要求司法部采用这一改称。备忘录标题是 Super Intelligence。NBC 印出的句子是：&quot;This directive shall extend to court filings when appropriate.&quot; NBC 把上周的场合写成 9 月 29 日白宫午餐，黄仁勋和埃隆·马斯克在场。</p><p>没有看到司法部公开贴出的备忘录，也没有核对那份行政命令的全文。这是用语指示。10 月 5 日已经报道的 Super Intelligence Force 人事，不在这里重述。</p><div class="condition"><strong>适用范围：</strong><ul><li>备忘录没有公开文本。路透社写的是记者看到了备忘录，NBC 写的是四名知情者。两篇印出的法庭文件那一句一致。</li><li>Investing.com 转载没有标时区。司法部官网这次没有找到这份备忘录。</li><li>这不是新的法规，也没有改变模型发布或采购规则。</li></ul></div><div class="source"><a href="https://www.nbcnews.com/politics/justice-department/justice-department-tells-employees-adopt-trumps-ai-rebrand-rcna601923" target="_blank" rel="noopener noreferrer">NBC News · 一手来源 · 已核对</a><a href="https://www.investing.com/news/world-news/us-justice-dept-tells-staff-to-call-ai-super-intelligence-under-trump-order-4935169" target="_blank" rel="noopener noreferrer">Reuters · 补充来源 · 已核对</a></div><p class="source-note">核验说明（NBC News）：备忘录标题、四名知情者，以及法庭文件那一句，取自这篇页面时间为 Oct. 6, 2026, 2:19 PM EDT 的报道。没有看到备忘录原件。</p><p class="source-note">核验说明（Reuters）：McCotter、公共传播和政策文件里的用词范围，取自 Investing.com 转载的路透社电讯。页面写 Published Oct 06, 2026, 04:09 PM，没有时区。没有打开 reuters.com 原文。</p></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
