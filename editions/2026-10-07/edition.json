@@ -1,0 +1,448 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-07",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-07T08:00:00+08:00",
+  "generated_at": "2026-10-07T08:00:23+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "success",
+      "item_count": 7,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 11,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "jiqizhixin.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv",
+      "status": "success",
+      "item_count": 80,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "success",
+      "item_count": 80,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "failed",
+      "item_count": 0,
+      "error": "blogs.microsoft.com/ai/feed/ 返回 HTTP 410"
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news/rss.xml 返回 HTTP 404，/blog/rss.xml 与 /news 返回 HTTP 403"
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 7,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 31,
+      "error": null
+    },
+    {
+      "id": "apple",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "failed",
+      "item_count": 0,
+      "error": "api-docs.deepseek.com/news/rss.xml 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "google_research",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "infoq",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 17,
+      "error": null
+    },
+    {
+      "id": "reflection",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "claude_code",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "openai-math",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "OpenAI 公开 722 篇数学手稿：内部模型还没发布，未形式化的结果可能有问题",
+      "kicker": "研究 · 数学",
+      "facts": [
+        "OpenAI 新闻源的时间是 2026-10-06T12:00:00+00:00。公告写，公司发布一批由内部前沿模型做出的新数学结果。为安排披露方式，公司咨询了普林斯顿高等研究院独立的数学与人工智能咨询小组，并称这次发布参考了该小组的建议和公开推荐。结果放在 GitHub 仓库 openai/math，附有修订和引用的规则。博客写，许多证明会以 Lean 形式化放进仓库，并会继续补充；同时公开 10 份模型推理的缩写摘要、按 ChatGPT Pro 用量估算的计算，以及尝试过的题目数量。平均每个结果用了大约三小时 ChatGPT Pro thinking 的计算。做出这些结果的模型这次没有发布。公司还写，将资助一系列工作坊、会议和专项来理解人工智能做出的重要结果，细节以后再说。",
+        "仓库元数据里的创建时间是 2026-10-06T21:47:02Z，许可证是 Apache-2.0。README 写，当前目录有 722 篇手稿，分成 372 个家族。一个家族可以包含主结果、伴随论证、推论或另一种证明，并按数学学科分类。材料包括 PDF、源文件、分篇引用说明，以及 Lean 库和形式化目录。不少手稿有 Lean 形式化，但不是全部。README 写，未形式化的结果可能有问题，公司会尽快修；已发布的版本会保留，更正记成新版本。",
+        "README 写，绝大多数结果用同一套流程、由尚未发布的内部模型做出。评估里大约出了 4000 道题，再按家族汇总，并要求达到一定重要性，才形成这个目录。现有数学评估饱和之后，公司才扩大了这类评估。有些输出建立在模型更早的结果之上。例外包括黎曼 zeta 函数的一个零点禁区，以及针对 CM 阿贝尔簇的 Hodge 猜想的证明。其中 Re(s) 大于 11/12 的 zeta 零点禁区文稿为了可读性做过人工编辑。README 没有把这写成一般 Hodge 猜想已经证明，也没有写成黎曼猜想已经证明。",
+        "10 份缩写推理摘要对应的题目是：乘性函数的普通两点相关、圆周率的无理指数、对称与一般 Mahler 猜想、基本半定阈值上的普通 NP 难、等差数列的拟多项式界、Kaplansky 在特征 2 的直接有限性猜想、稀释自旋玻璃的 Mézard–Parisi 公式、量子海森堡铁磁体的自发磁化、自由群因子的同构，以及三维相对论 Vlasov–Maxwell 系统。"
+      ],
+      "conditions": [
+        "没有读完 722 篇手稿，也没有运行 Lean 检查。未形式化的结果，README 自己写可能有问题。",
+        "咨询小组的公开推荐原文没有另读。博客只说这次发布参考了他们的建议。",
+        "平均三小时的计算和大约 4000 道题，是 README 对内部流程的说明，不是独立复算。模型没有公开。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/sharing-ai-progress-in-mathematics/",
+          "kind": "primary",
+          "published_at": "2026-10-06T12:00:00+00:00",
+          "verified": true,
+          "note": "发布时间取自 OpenAI 新闻源。咨询小组、Lean、10 份推理摘要、平均约三小时 Pro 计算，以及模型尚未发布，以这篇公告为准。没有另读咨询小组的推荐原文。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/openai/math",
+          "kind": "primary",
+          "published_at": "2026-10-06T21:47:02+00:00",
+          "verified": true,
+          "note": "722 篇、372 个家族、Apache-2.0、约 4000 道题、零点禁区与 CM 阿贝尔簇上的 Hodge 猜想这些例外，以及 10 个摘要题目，取自仓库 README 和仓库元数据。创建时间是 2026-10-06T21:47:02Z。没有跑 Lean。"
+        }
+      ]
+    },
+    {
+      "id": "mistral-large-4",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Mistral Large 4 公开预览：1 万亿参数，权重月底才发布",
+      "kicker": "模型 · 开源",
+      "facts": [
+        "Mistral 新闻页的日期是 October 6, 2026，页面没有钟点。公司宣布 Mistral Large 4 公开预览，非正式简称 ML4，昵称 le Chonk。预览接口当天可以在 Mistral Studio 试用。权重计划本月月底发布。权重放出前，公司正和网络安全方面的负责人、经过筛选的伙伴以及国家机构做红队；这些对象使用同一个模型，审核更少，网络能力更宽。架构、更多基准和后训练方法留到发布权重时再给。",
+        "页面写，ML4 是 1 万亿参数的原生多模态模型，每个 token 激活 490 亿参数，是该公司迄今最大的模型。它在 Mistral 位于欧洲的自有数据中心、3800 张 NVIDIA Grace Blackwell GPU 上从零训练，公开预览也由这套基础设施提供。训练数据里有相当一部分是多语言，覆盖 160 多种语言，包括欧盟每一种官方语言。提供范围包括由 Mistral 端到端运营、不依赖其他数字服务提供商、并受欧洲法律约束的欧洲部署。页面没有写预览接口的价格。",
+        "文中的分数是公司自己的表。Artificial Analysis Cyber Index 上，页面称它进入全球前五，并领先中国以外的开放权重模型；其中一项要求先复现开源软件里的真实漏洞再打补丁，ML4 是 82%，页面称这是所有模型里最高的。Cybench 的 40 道题解出 93%。编码方面，DeepSWE v1.1 是 61.7%，Terminal-Bench 4 是 28.3%，Coding Agent Index 合计 49.8%，页面称高于 DeepSeek V4 Pro 0813 和 Qwen3.8 Max。Surge AI 的编码盲评里，五款模型中 ML4 Preview 以 3.74 排第二，高于 Kimi K3 的 3.59、GLM-5.3 的 3.60 和 GLM-5.2 的 3.40，低于 Claude Opus 5 的 4.22。视觉定位 Dense 200 是 42%，对照写的是 GPT-6-Astra 的 41%。",
+        "页面写，这次预览背后的强化学习还在进行，模型没有出现饱和。ML4 被写成 30 亿欧元 D 轮之后路线图上的第一个里程碑，并会成为以后专用模型的底模。"
+      ],
+      "conditions": [
+        "这是公开预览。权重、架构和后训练细节都还没放出。没有调用 Mistral Studio 的预览接口。",
+        "基准和 82%、93%、49.8% 这些数字是公司在这篇里给出的，不是独立复测。",
+        "红队使用的减审核版本不等于今天公开预览接口上的默认审核。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Mistral",
+          "url": "https://mistral.ai/news/mistral-large-4/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "参数、训练规模、月底发布权重，以及文中的基准，取自这篇日期为 October 6, 2026 的新闻。页面没有钟点。没有调用预览接口，也没有独立复测。"
+        }
+      ]
+    },
+    {
+      "id": "embeddinggemma-2",
+      "placement": "story",
+      "window": "in_window",
+      "title": "谷歌发布 EmbeddingGemma 2：7.4 亿参数的开放多模态嵌入模型",
+      "kicker": "模型 · 开源",
+      "facts": [
+        "谷歌博客的页面日期是 Oct 06, 2026，博客订阅源给出的时间是 2026-10-06T16:00:00+00:00。DeepMind 研究工程师 Sahil Dua 和 Henrique Schechter Vera 介绍 EmbeddingGemma 2。它以 Apache 2.0 发布，基于 Gemma 4，有 7.4 亿参数，把文本、代码、图像、视频和音频放进同一个嵌入空间。默认向量 768 维，可以截到 512、256 或 128 维。上下文 8000 token，是上一代的 4 倍。页面写，在本地可以处理最多约 5.5 分钟音频、29 张图像或 58 帧视频，也可以交错输入。",
+        "只做文本时可以只用大约 2.7 亿参数；视觉编码器和音频编码器是可选的，分别约 1.7 亿和 3 亿参数。量化之后，在 Google Pixel 11 Pro 上，仅文本权重大约 191MB 活动内存，完整多模态大约 567MB。代码基准 MTEB Code 从 68.76 升到 78.68。权重放在 Hugging Face 和 Kaggle。Gemini Enterprise Agent Platform 的 Model Garden 写的是即将提供。页面列出的本地途径包括 MediaPipe、LiteRT、transformers、llama.cpp、Ollama 和 MLX。",
+        "DeepMind 的博客订阅源指向同一篇谷歌博客。上一代 EmbeddingGemma 超过 2000 万次下载，是这篇里的背景，不是这次新模型的下载量。"
+      ],
+      "conditions": [
+        "内存、上下文长度和 MTEB Code 的分数是谷歌这篇博客给出的。没有在本机加载权重，也没有复跑基准。",
+        "Model Garden 是即将提供，不是今天已经可以在那里调用。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2/",
+          "kind": "primary",
+          "published_at": "2026-10-06T16:00:00+00:00",
+          "verified": true,
+          "note": "参数、Apache 2.0、内存和 MTEB Code 的变化，取自这篇博客。订阅源时间是 2026-10-06T16:00:00+00:00。没有加载权重。"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-cvp",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 把网络验证计划扩成三档，合格防守者可以申请更少拦截",
+      "kicker": "安全 · 准入",
+      "facts": [
+        "Anthropic 新闻稿的日期是 Oct 6, 2026，页面没有钟点。公司扩大 Cyber Verification Program，向合格的安全人员提供更强的网络能力和更少的拦截。计划收成三档，每档都包含 Claude Opus 5.5、Claude Sonnet 5.5、Claude Mythos 5.1，以及以后的新模型。一般可用的模型仍然对大多数网络工作做保守拦截。过去六个月的 Project Glasswing 和原来的 CVP 被并进这一套。",
+        "Defense Access 面向防守，包括安全运营、事件响应、恶意软件逆向，以及分析和验证漏洞。公司写，预期多数做防守工作的机构能够通过，目标是几天内回复。Red Team Access 在此之上增加已经获授权的渗透测试和红队，目前只对机构开放，个人研究者不能申请；审查预计要几周，等待期间先进入 Defense。这一档仍会实时拦截可能造成人身伤害或大范围中断的行为，例如部署勒索软件、破坏物理系统，或对高风险安全系统做渗透测试。Specialized Access 拦截最少，留给经过核实、被授权测试可能影响生命或扰乱市场的系统的少数机构，例如飞行操作系统、电网、电信网络、银行间转账和政府行政网络。这一档目前与美国政府一起逐家审查。现有 Project Glasswing 成员转入这一档，当前模型不必重新审批。",
+        "效果测试用 Claude Opus 5.5 跑 CyScenarioBench，10 道题各试 5 次。没有 CVP 时，每道题都在第一条提示被拦截。Defense 档 50 次里有 46 次中途被拦截，4 次完成。Red Team 档没有拦截，完成 34 次；页面称这与不加防护时 67.6% 的完成率相当，并用这个完成率代表 Specialized。",
+        "Project Glasswing 的伙伴在 2026 年 4 月到 7 月至少发现 12.9 万个已经核实的软件漏洞。Anthropic 自己的开源扫描在 4 月到 10 月另发现 5500 个。其中已有超过 3.3 万个被标为严重或高危。页面写，这是部分伙伴调查的下限，依据是 33 份伙伴报告里的部分数据，真实影响预期至少再高五倍。加入计划的机构必须保留数据，以便监测滥用。Enterprise Frontier Safeguards 要到今年秋天晚些时候才提供。在此之前，已经对 Claude Fable 5.1 或 Claude Mythos 5.1 使用零数据保留的机构，也可以在 CVP 里使用零数据保留。CVP 可以在 Claude Platform、Google Cloud Vertex AI 和 Microsoft Foundry 使用。Amazon Bedrock 只提供给有资格使用 Enterprise Frontier Safeguards 的客户。"
+      ],
+      "conditions": [
+        "这是申请制。没有提交申请，也没有打开帮助中心的逐项控件表。",
+        "12.9 万和五倍这些数字是公司根据部分伙伴调查作出的估计，页面自己写修补数量被低估。",
+        "CyScenarioBench 的 46/50 和 34/50 是 Anthropic 用自己的模型跑的，不是第三方复测。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/news/cyber-verification-program",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "三档范围、CyScenarioBench 的次数，以及 12.9 万个漏洞的口径，取自这篇日期为 Oct 6, 2026 的新闻。页面没有钟点。没有提交申请。"
+        }
+      ]
+    },
+    {
+      "id": "openai-decisions",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 公开测试 Decisions API，目前只接 gpt-6-luna",
+      "kicker": "产品 · 接口",
+      "facts": [
+        "OpenAI API 更新日志把这项写在 October 2026 的 Oct 6：Decisions API 以公开测试版配合 gpt-6-luna 发布，端点是 POST /v1/decisions。指南写，公开测试预计未来数周转为正式版，目前只有 gpt-6-luna 可以用。指南称，它把文本和图像变成程序能直接用的判断，大约比 Responses API 快 10 倍。这是文档里的速度说法。",
+        "一次请求有三部分：模型、共享输入、问题列表。输入可以是一段文本，或同时包含文本和图像的用户消息。图像必须是内联的 base64 data URL，不接受托管的 HTTP 或 HTTPS 图片地址，也不接受 file_id。问题分三类。predicate 返回条件成立的概率，范围是 0 到 1。choice 从调用者给的选项里选一个，并返回各选项的概率和单独的 confidence。score 按从低到高的等级做概率加权平均，分数可以落在两个等级之间。指南写，如果要的是自定义 JSON 对象或工具调用，仍用 Responses API。",
+        "gpt-6-luna 在这个端点上的输入价格是每 100 万 token 0.10 美元，只对输入 token 收费，没有缓存读写费用，也没有输出 token 费用。区域处理和长上下文的乘数另计。符合条件的客户可以使用零数据保留和 HIPAA。数据驻留和区域处理支持美国，以及欧洲经济区加瑞士。没有调用这个端点。"
+      ],
+      "conditions": [
+        "这是公开测试，不是正式版。指南写预计未来数周才 GA。",
+        "快 10 倍是文档相对 Responses API 的说法，没有在本机计时。",
+        "同一天日志里把 API 用量档收成三档，是另一项变更，不在这个接口的行为里。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "OpenAI API",
+          "url": "https://developers.openai.com/api/docs/guides/decisions",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "三种问题、图片必须用 base64，以及每 100 万输入 token 0.10 美元，取自这篇指南。日期取自更新日志里 October 2026 的 Oct 6 条目，日志没有钟点。没有调用接口。"
+        }
+      ]
+    },
+    {
+      "id": "personal-agent-protocol",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Sierra 与 Meta 宣布个人代理协议，v0.1 规范本月稍后才发布",
+      "kicker": "行业 · 标准",
+      "facts": [
+        "Sierra 博客由 Bret Taylor 和 Clay Bavor 署名，页面日期是 October 6, 2026，正文没有钟点。他们宣布 Personal Agent Protocol，称这是 Meta 和 Sierra 正在与 Genesys、Instinct、Rocket、Shopify、Stripe、Walmart 一起制定的开放标准，用来规定个人代理如何与企业交互。目标是处理认证、由消费者决定授权，并让公司看见代理通过网站、API 或公司自己的代理做了什么。任何人都可以实现。v0.1 规范计划本月稍后发布，同时会办设计工作坊，并放出参考实现。更细的权限、航班或订单的推送通知，以及不交出信用卡号的支付扩展，写在后续，不是今天已经发布的文本。",
+        "页面写，会话基于 OAuth。代理先在公司网站上发现对方提供什么、怎么接通，再代表用户开始一次会话。可以先做访客，用来查库存或退货政策。需要账户时，用户在公司页面登录，或使用已经交给个人代理的凭据。用户决定代理是只读还是可写。登录前的问题和登录后的改单属于同一次访问。公司可以选择三条通路：普通网页、基于 MCP 和 OpenAPI 的 API，或公司自己的对话代理。",
+        "CNBC 的页面时间是 Tue, Oct 6 2026 2:15 PM EDT。Taylor 对 CNBC 说，OpenAI 和 Anthropic 现在还不在这组伙伴里，他预期它们会参加。Meta 的 David Singleton 对 CNBC 说，Muse 在美国已经有数百万用户，并且增长很快。这两句是采访，不是协议文本。"
+      ],
+      "conditions": [
+        "今天发布的是意向和机制说明。v0.1 规范、工作坊和参考实现都还没有文本。没有看到草案。",
+        "伙伴名单以 Sierra 这篇为准。CNBC 对 Taylor 和 Singleton 的引语没有另找录音。",
+        "支付被写成以后的扩展，不是当前已经定义的流程。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Sierra",
+          "url": "https://sierra.ai/blog/introducing-personal-agent-protocol",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "伙伴、OAuth 会话、三条通路，以及 v0.1 规范本月稍后才发布，取自这篇日期为 October 6, 2026 的博客。正文没有钟点。没有看到规范草案。"
+        },
+        {
+          "label": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/06/meta-joins-companies-to-tame-chaos-of-doing-business-with-ai-bots.html",
+          "kind": "secondary",
+          "published_at": "2026-10-06T14:15:00-04:00",
+          "verified": true,
+          "note": "Taylor 关于 OpenAI、Anthropic 尚未加入，以及 Singleton 关于 Muse 美国用户规模的话，取自这篇页面时间为 Tue, Oct 6 2026 2:15 PM EDT 的采访。协议机制以 Sierra 博客为准。"
+        }
+      ]
+    },
+    {
+      "id": "doj-super-intelligence-memo",
+      "placement": "story",
+      "window": "in_window",
+      "title": "路透社称司法部要求员工在多数正式文本里把 AI 写成超级智能",
+      "kicker": "政策 · 用语",
+      "facts": [
+        "路透社的电讯日期是 Oct 6，华盛顿电头。Investing.com 上的转载写着 Published Oct 06, 2026, 04:09 PM，没有时区。报道称，司法部周二指示员工在多数情况下用 super intelligence 代替 artificial intelligence，包括在法庭上；依据是路透社看到的一份备忘录。备忘录来自代理副部长 Trent McCotter，跟随上周总统的行政命令，要求联邦机构改用这一称呼。员工应在法律允许的最大范围内，在公共传播、政策文件和其他正式记录里使用 super intelligence 和 SI。备忘录写：The directive \"shall extend to court filings when appropriate.\"",
+        "NBC News 的页面时间是 Oct. 6, 2026, 2:19 PM EDT。报道称，四名知情者说，一名高级官员要求司法部采用这一改称。备忘录标题是 Super Intelligence。NBC 印出的句子是：\"This directive shall extend to court filings when appropriate.\" NBC 把上周的场合写成 9 月 29 日白宫午餐，黄仁勋和埃隆·马斯克在场。",
+        "没有看到司法部公开贴出的备忘录，也没有核对那份行政命令的全文。这是用语指示。10 月 5 日已经报道的 Super Intelligence Force 人事，不在这里重述。"
+      ],
+      "conditions": [
+        "备忘录没有公开文本。路透社写的是记者看到了备忘录，NBC 写的是四名知情者。两篇印出的法庭文件那一句一致。",
+        "Investing.com 转载没有标时区。司法部官网这次没有找到这份备忘录。",
+        "这不是新的法规，也没有改变模型发布或采购规则。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "NBC News",
+          "url": "https://www.nbcnews.com/politics/justice-department/justice-department-tells-employees-adopt-trumps-ai-rebrand-rcna601923",
+          "kind": "primary",
+          "published_at": "2026-10-06T14:19:00-04:00",
+          "verified": true,
+          "note": "备忘录标题、四名知情者，以及法庭文件那一句，取自这篇页面时间为 Oct. 6, 2026, 2:19 PM EDT 的报道。没有看到备忘录原件。"
+        },
+        {
+          "label": "Reuters",
+          "url": "https://www.investing.com/news/world-news/us-justice-dept-tells-staff-to-call-ai-super-intelligence-under-trump-order-4935169",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "McCotter、公共传播和政策文件里的用词范围，取自 Investing.com 转载的路透社电讯。页面写 Published Oct 06, 2026, 04:09 PM，没有时区。没有打开 reuters.com 原文。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:ae77aa63fd737e44aa65c8c3e12ed0a34b93c20cadc3801a308085356d31f225"
+}
