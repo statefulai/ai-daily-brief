@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 8 日 AI 日报，含 7 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 8 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-08">2026 年 10 月 8 日</time> · 星期四</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 8 日 08:00（北京时间）。本期收录 7 条窗口内动态；另有 3 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">产品 · ChatGPT</span><time datetime="2026-10-07T08:00:00+08:00">10.07 08:00 北京时间</time></div><h2 id="event-1-title">ChatGPT 付费档开始换上 GPT-6，回答可以变成可交互界面</h2><div class="lead-copy"><p>OpenAI 新闻源把《GPT-6 and Intelligent UI for everyone》标在 2026-10-07T00:00:00+00:00。摘要写，GPT-6 正在全球向 ChatGPT 推出 Intelligent UI，回答可以带上可视化和能直接使用的交互。公告正文页这次没有打开。部署安全中心的系统卡写 Published October 7, 2026，没有钟点。卡写，ChatGPT 里的这些模型将替换 GPT-5.6 Sol 和 GPT-5.6 Luna。Codex 和 ChatGPT Work 里的 GPT-6 Sol、GPT-6 Luna 仍是此前发布的版本。卡把今天这一版标成 October，把仍留在 Codex 和 Work 里的标成 September。</p><p>The Verge 的页面时间是 2026-10-07T19:10:42+00:00。报道称，Intelligent UI 让回答可以包含图示、图表、表单和可点的按钮；OpenAI 给的例子包括七速自行车的可交互图、麻将牌面，以及退休储蓄计算器、复古游戏和账单分摊这类当场生成的小工具。付费的 Plus、Pro、Business 和 Enterprise 从今天起在 Chat 里使用 GPT-6 Sol。Go 和免费档从周四起使用 GPT-6 Luna。TechCrunch 写，不想要这么多视觉元素的人可以把它调少。企业版是否出现，The Verge 写还要看管理员设置。这两篇是对公告和演示的转述。</p><p>系统卡写，相对各自的 GPT-5.6，GPT-6 更能抵抗越狱，包括会随着多轮对话调整的攻击；不诚实、欺骗和绕过护栏的情况也减少。按 Preparedness Framework，October 版的 Sol 和 Luna 在网络安全、生物与化学上都按 High 对待，人工智能自我改进没有达到 High。采用的是 GPT-5.6 系统卡里为 5.6 Sol 和 Luna 写的同一套防护。</p><p>系统卡写，相对 2026 年 8 月的 GPT-5.6，October 版 Sol 和 Luna 在未满 18 岁的评测里，年龄限制内容、性内容和情感依赖都有统计上显著的退步；Luna 在血腥内容上也有统计上显著的退步。其余差异不显著。自我伤害、性内容和血腥内容另有一层分类器拦截，不计入这些分数。情感依赖的退步被写成评测对 bro、bestie 这类昵称过于敏感。在故意选难的生产例子上，Sol 在标准自我伤害一项退步，Luna 在标准自我伤害、血腥和性内容上退步。人工复核写成越界回答总体严重程度低，并且这些分数不代表线上平均出现的频率。MentalHealthBench 上，Luna 相对 8 月的 Luna 在各紧急程度上都有提升，Sol 的提升主要在紧急对话。</p><div class="condition"><strong>适用范围：</strong><ul><li>公告正文没有读到。分档时间和界面例子来自 The Verge、TechCrunch 对官方材料的转述，不是在 ChatGPT 里点过。</li><li>系统卡写免费和付费都会换上 October 版，但没有写免费档的钟点。周四才到免费档和 Go，是两家媒体的说法。</li><li>Codex 和 ChatGPT Work 不在这次更换里。安全评测是公司自己的难例，没有复跑。</li></ul></div><div class="source"><a href="https://openai.com/index/gpt-6-for-everyone" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a><a href="https://deploymentsafety.openai.com/gpt-6-october/model-safety-training-and-evaluation" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a><a href="https://www.theverge.com/ai-artificial-intelligence/1007276/openai-chatgpt-intelligent-ui-gpt-6" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a><a href="https://techcrunch.com/2026/10/07/chatgpt-is-getting-a-lot-more-visual-with-the-launch-of-a-new-interface/" target="_blank" rel="noopener noreferrer">TechCrunch · 补充来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI）：标题、时间和一句摘要取自 OpenAI 新闻源。公告正文页没有打开，界面细节不以此页为准。</p><p class="source-note">核验说明（OpenAI）：October 与 September 的区分、Codex 和 Work 不更换，以及未满 18 岁评测的退步类别，取自这篇标为 October 7, 2026 的系统卡。页面没有钟点。没有复跑评测。</p><p class="source-note">核验说明（The Verge）：付费档今天用 Sol、免费档和 Go 周四用 Luna，以及图示、图表、表单和按钮，取自这篇。时间取自订阅源的 2026-10-07T19:10:42+00:00。</p><p class="source-note">核验说明（TechCrunch）：视觉元素可以调少，取自这篇。时间取自订阅源的 2026-10-07T18:00:19+00:00。</p></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">模型 · 价格</span></div><h3 id="event-2-title">Claude Haiku 5.5 发布：十万 token 以内比上一代便宜九成</h3><div><p>Anthropic 的页面日期是 October 7, 2026，没有钟点。Claude Haiku 5.5 的模型 ID 是 claude-haiku-5-5。页面称它是该公司最快、最便宜、也最强的小模型，用来做摘要、压缩、数据库查询、分类，以及在编码时给 Opus 5.5 和 Sonnet 5.5 当子代理。已在 Claude Platform、Amazon Web Services、Google Cloud 和 Microsoft Azure 提供。它是 Haiku 系列里第一个可以调节 effort 的型号。脚注写，按各模型的标准速度，它是最快的，但仍慢于打开 Fast 模式的 Opus。</p><p>价格按每百万 token，并分成提示不超过 10 万 token 和超过 10 万 token。Haiku 5.5 的缓存读取是 0.01 或 0.05 美元，缓存写入是 0.125 或 0.625 美元，输入是 0.10 或 0.50 美元，输出是 0.50 或 2.50 美元。对照表里的 Haiku 4.5 是缓存读取 0.10 美元、缓存写入 1.25 美元、输入 1.00 美元、输出 5.00 美元。脚注写，10 万 token 以内比 Haiku 4.5 低 90%，以上低 50%。Haiku 4.5 大约 90% 的请求落在前一档，所以平均大约便宜 75%。新的分词器和 Sonnet 5.5、Opus 5.5 类似，同样的任务会多用一些 token。</p><p>从今天起，Sonnet 5.5 的缓存读取从每百万 token 0.20 美元降到 0.10 美元。页面称，因此多数智能体任务大约便宜 20%。本周还会给 Max 和 Team 发放只能在 Claude Platform 使用的月度 API 额度：Max 5x 每月 100 美元，Max 20x 每月 200 美元，Team 最多 500 美元并且在用户之间共享，任何模型都能用。Python 和 TypeScript SDK 增加仍在测试中的计算机使用和浏览器使用。</p><p>公司自己的表写，Haiku 5.5 相对 Haiku 4.5：GDPval-AA v2.1 是 1620 对 735，OSWorld 2.1 的离线子集是 72.4% 对 15.7%，Humanity’s Last Exam 无工具是 45.9% 对 10.2%、有工具是 57.4% 对 18.7%，Terminal-Bench 4.0 是 39.2% 对 0.0%。同一张表里的 GPT-6 Luna 是 GDPval-AA 1437、OSWorld 离线子集 48.9%、Terminal-Bench 16.4%。网络安全防护比 Haiku 4.5 更严，但比 Sonnet 5.5 宽：更多防守任务可以通过，渗透测试仍然拦截。生物学防护与 Sonnet 5、Sonnet 5.5 和 Opus 5 相同。</p><p>GitHub Changelog 的时间是 2026-10-07T20:12:18+00:00。Haiku 5.5 已向 Copilot Pro、Pro+、Max、Business 和 Enterprise 正式提供，可以在 VS Code、Visual Studio、Copilot CLI、云端代理、Copilot 应用、github.com、GitHub Mobile、JetBrains、Xcode 和 Eclipse 的模型列表里选择。推送是逐步的。按用量计费，价格用提供商的标价。企业和 Business 的管理员默认开启新模型，除非关掉了全局默认，或单独禁用这一款。Changelog 写，早期测试里它在许多编码任务上接近 Claude Sonnet 5，同时用的 token 和步骤更少。这是 GitHub 的说法。</p><div class="condition"><strong>适用范围：</strong><ul><li>页面没有钟点。基准、75% 和 20% 都是 Anthropic 在这篇里的计算，没有复测，也没有调用 claude-haiku-5-5。</li><li>Max 和 Team 的 API 额度写的是本周才发放，不是这篇发布时已经到账。</li><li>Copilot 里能不能看到，还要等逐步推送和管理员策略。</li></ul></div><div class="source"><a href="https://www.anthropic.com/claude-haiku-5-5" target="_blank" rel="noopener noreferrer">Anthropic · 一手来源 · 已核对</a><a href="https://github.blog/changelog/2026-10-07-claude-haiku-5-5-in-github-copilot" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Anthropic）：模型 ID、两档价格、Sonnet 5.5 缓存读取减半，以及文中的基准，取自这篇日期为 October 7, 2026 的页面。页面没有钟点。没有调用接口。</p><p class="source-note">核验说明（GitHub）：Copilot 的计划、客户端和逐步推送，取自这篇 Changelog。时间取自订阅源的 2026-10-07T20:12:18+00:00。</p></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">产品 · 系统</span></div><h3 id="event-3-title">Windows 11 上的执行容器正式可用，Copilot 本地沙箱同时转正</h3><div><p>Pavan Davuluri 的 Windows 博客写 published October 7, 2026，没有钟点。Microsoft Execution Containers（MXC）今天在 Windows 11 上正式可用。组织可以规定智能体能访问哪些文件和网络，策略在运行时执行。个人电脑上，这些限制做成智能体体验的一部分。博客写，MXC 不只有 Windows，但 Windows 上可以从进程和会话隔离做到 WSLc、虚拟机和 Windows 365 for Agents。</p><p>博客列出已经支持 MXC 的有 OpenAI 的 Codex、GitHub Copilot、OpenClaw、Replit、LM Studio、英伟达 OpenShell 和 Unsloth AI。写成即将支持的有 Anthropic Claude Code、Box、Egnyte、Heidi Health、Nous Research 的 Hermes Agent、Manus、Perplexity、Raycast 和 Simular。Meta 的 Muse for Windows 写成即将作为带 MXC 的原生应用出现，不是今天已经可以安装。</p><p>GitHub Changelog 的时间是 2026-10-07T15:46:17+00:00。Copilot 的本地沙箱在 Copilot CLI、Copilot 应用，以及使用 Agent Host 的 VS Code 会话里正式可用，不另收费。沙箱由 MXC 把同一套策略翻译成 Windows、macOS 和 Linux 的系统控制。可以限制智能体命令能读写的文件和目录，控制互联网、本地网络、Git 凭据和 GitHub CLI 凭据，并在支持的地方覆盖本地 MCP 和语言服务器。企业设置可以强制打开沙箱，开发者不能把策略放宽。模型在哪里运行，和工具被隔离到哪里，是两件事。策略管的是工具执行，不随所选模型改变。</p><p>同一篇 Windows 博客写，Build 时介绍的 MAI Code 1.1 Flash 总参数 1370 亿、激活 68 亿。今天把它放到本机，用 3-bit 把体积减少近 80%，并在本地使用 256K 上下文。GitHub HydraFusion 调用本机模型，写成 10 月晚些时候才在 Copilot 应用、CLI 和 VS Code 做实验性预览。llama.cpp 写进 Windows ML，是今天宣布的。Copilot 在 Copilot+ PC 上读取本机内容、在本机做动作和调用本机模型，写成未来数月才开始，而且要用户允许。Windows Search 里直接执行的新动作，今天起向实验通道的 Windows Insider 推出。</p><div class="condition"><strong>适用范围：</strong><ul><li>博客没有钟点。没有在 Windows 11 上运行 MXC，也没有在 Copilot 里打开本地沙箱。</li><li>HydraFusion 的本机路由、Copilot 的混合智能，以及 Muse for Windows，都还没有到可安装的正式版。</li><li>即将支持 MXC 的产品名单是微软写下的计划，不是这些产品今天已经打开了开关。</li></ul></div><div class="source"><a href="https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/" target="_blank" rel="noopener noreferrer">Microsoft · 一手来源 · 已核对</a><a href="https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Microsoft）：MXC 在 Windows 11 正式可用、已支持和即将支持的名单，以及 MAI Code 1.1 Flash 的 3-bit 和 256K，取自这篇标为 October 7, 2026 的博客。页面没有钟点。</p><p class="source-note">核验说明（GitHub）：Copilot CLI、应用和 VS Code Agent Host 上的本地沙箱正式可用，以及不另收费，取自这篇 Changelog。时间取自订阅源的 2026-10-07T15:46:17+00:00。</p></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">产品 · 硬件</span></div><h3 id="event-4-title">RTX Spark 笔记本今天可预订，10 月 16 日开始交付</h3><div><p>Windows 博客写，Surface Laptop Ultra 和 Surface RTX Spark Dev Box 今天可以预订。Laptop Ultra 从 10 月 16 日起供货，统一内存最高 128GB，页面写可以在本地运行超过 1200 亿参数的模型。Dev Box 向美国客户发货的时间写成 11 月。华硕、戴尔、惠普、联想和微星的 RTX Spark Windows 电脑同样是今天预订、10 月 16 日开始出货。基于 RTX Spark 的开发盒和迷你桌面写成今年晚些时候。</p><p>英伟达博客的日期是 October 7, 2026。正文写，笔记本今天开放预订，10 月 16 日可以拿到；紧凑桌面 11 月开售。RTX Spark 把 Blackwell RTX GPU 和最多 20 核的 Grace CPU 以 600 GB/s 连在一起，GPU 最多 6144 个核。页面写 FP4 性能为 1 petaflop，统一内存最多 128GB，并举例可以本地运行它称为 125B、带 51B n-gram 的 Qwen 3.8 Flash Next。页面元描述把预订写成 October 16，和正文不一致。这里采用正文。</p><p>Windows 博客写，Windows 版 DGX Station 今年晚些时候推出，使用 GB300 Grace Blackwell Ultra，可在本地运行超过一万亿参数的模型，并点名戴尔的 Pro Precision with GB300 和惠普的 ZGX Fury AI Station。英伟达博客写，这台机器有 748GB 一致内存，FP4 最多 20 petaFLOPS。这是预告，不是今天开售。10 月 2 日已经报道的 64GB DGX Spark、10 月 23 日发售，不是这一条。</p><div class="condition"><strong>适用范围：</strong><ul><li>今天能做的是预订。Laptop Ultra 的供货从 10 月 16 日开始，Dev Box 的美国发货写成 11 月，DGX Station for Windows 还没有发售日。</li><li>128GB、1200 亿参数、1 petaflop 和 748GB 是两家在发布里给出的规格，没有实测。</li><li>两篇都没有写出 Laptop Ultra 或 Dev Box 的售价。</li></ul></div><div class="source"><a href="https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/" target="_blank" rel="noopener noreferrer">Microsoft · 一手来源 · 已核对</a><a href="https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/" target="_blank" rel="noopener noreferrer">NVIDIA · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Microsoft）：预订、10 月 16 日、11 月发货和超过 1200 亿参数，取自这篇标为 October 7, 2026 的博客。页面没有钟点，也没有售价。</p><p class="source-note">核验说明（NVIDIA）：1 petaflop、128GB、6144 核，以及 DGX Station for Windows 的 748GB 和 20 petaFLOPS，取自这篇日期为 October 7, 2026 的博客。预订日期以正文为准，不采用把预订写成 October 16 的元描述。</p></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">政策 · 标识</span><time datetime="2026-10-07T22:00:00+08:00">10.07 22:00 北京时间</time></div><h3 id="event-5-title">SynthID Detector 向所有人开放，英文版今天全球可用</h3><div><p>谷歌博客的发布时间是 2026-10-07T14:00:00+00:00。Pushmeet Kohli 写，SynthID Detector 从今天起向所有人开放，英文版全球可用。它用来检查一张图像、一段视频或一段音频是不是由谷歌或其伙伴的 AI 生成。伙伴写成 OpenAI、NVIDIA、Kakao，以及即将加入的 Apple。</p><p>博客写，从 2023 年的 SynthID 算起，已经给超过 1800 亿张图像和视频，以及相当于 24 万年的音频打上水印。去年的检测器是给媒体从业者的早期版本。Search、Gemini 应用和 Chrome 里已有的核验，现在每天经常处理超过 100 万次请求。</p><p>synthid.com 上的检测页写，它只认采用了 SynthID 的公司，不是通用的 AI 检测器。目前支持图像、视频和音频。检测到水印，表示内容很可能由启用 SynthID 的模型编辑或生成。没有检测到，不能排除别的模型生成，重度修改也可能把信号弄没。页面还写，极少数情况下也可能对没有水印的内容误报。没有上传文件。</p><div class="condition"><strong>适用范围：</strong><ul><li>开放范围是英文、图像、视频和音频。Apple 写成即将加入，不是今天已经能检测 Apple 的生成结果。</li><li>1800 亿和 24 万年是谷歌这篇给出的累计数字。没有上传样本，也没有核对水印是否还在。</li><li>2025 年 5 月 20 日的旧页面写的是早期测试和候补名单，当时的累计数字是超过 100 亿条。那不是今天的范围。</li></ul></div><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synth-id-ai-content/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a><a href="https://synthid.com/" target="_blank" rel="noopener noreferrer">SynthID · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：全球英文开放、伙伴名单，以及 1800 亿和 24 万年，取自这篇博客。时间是 2026-10-07T14:00:00+00:00。</p><p class="source-note">核验说明（SynthID）：只检测合作方媒体、当前支持图像视频和音频，以及检不出不能排除其他模型，取自这个检测页。页面没有发布时间。没有上传文件。</p></div></article><article class="story" id="event-6" aria-labelledby="event-6-title"><div class="kicker"><span class="tag">模型 · 开源</span><time datetime="2026-10-08T00:54:33+08:00">10.08 00:54 北京时间</time></div><h3 id="event-6-title">Liquid AI 说明两款 d1 决策模型，主权重早于这篇博客</h3><div><p>Hugging Face 博客的时间是 2026-10-07T16:54:33+00:00。Liquid AI 写，今天发布 d1 家族的两款开放决策模型：d1-3B，以及实验性的 d1-omni-600M。它们基于 Liquid Foundation Models，一次前向传播就给出答案，不生成 token。d1-3B 从 LFM2.5-VL-3B 训练，输入文本和图像。d1-omni-600M 从 LFM2.5-Encoder-350M 训练，输入是文本加图像，或文本加音频。后者写成早期研究发布，还在继续做。</p><p>博客里的公司自测写，Decision Index 0.2.1 上 d1-3B 是 48.57，高于文中列出的每个 4B 和 9B 模型，也高于 Decider 35B-A3B 的 47.11。七个公开数据集的平均分，d1-3B 是 82.9，d1-omni-600M 是 78.4。速度写成 d1-3B 在 Jetson AGX Thor 上 16 毫秒，AGX Orin 上 26 毫秒，Orin Nano 上 50 毫秒。</p><p>Hugging Face 模型接口的 createdAt：LiquidAI/d1-3B 是 2026-10-05T09:55:28Z，d1-omni-600M 是 2026-10-05T17:18:48Z，两款 GGUF 分别是 2026-10-06T10:36:09Z 和 2026-10-06T15:30:13Z。d1-3B-w8a8 是 2026-10-07T18:58:54Z。模型卡的许可证是 other，license_name 为 lfm1.0。因此这篇博客是公开说明。主权重不是 10 月 7 日才第一次出现。窗口里新出现的仓库是 w8a8 量化。</p><div class="condition"><strong>适用范围：</strong><ul><li>48.57、82.9 和毫秒数是公司在博客里的数字，没有复测，也没有加载权重。</li><li>d1-omni-600M 仍是早期研究发布。许可证是 lfm1.0，不是 Apache-2.0。</li><li>主权重和 GGUF 的创建时间早于这篇博客。此前各期没有写过它们。</li></ul></div><div class="source"><a href="https://huggingface.co/blog/LiquidAI/open-d1" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a><a href="https://huggingface.co/LiquidAI/d1-3B" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Hugging Face）：两款模型的输入、Decision Index 0.2.1 的 48.57，以及 Jetson 上的毫秒数，取自这篇博客。时间取自订阅源的 2026-10-07T16:54:33+00:00。没有复测。</p><p class="source-note">核验说明（Hugging Face）：d1-3B 的 createdAt 和 lfm1.0 许可证取自模型卡与模型接口。创建时间是 2026-10-05T09:55:28Z，早于博客。</p></div></article><article class="story" id="event-7" aria-labelledby="event-7-title"><div class="kicker"><span class="tag">产品 · 游戏</span><time datetime="2026-10-07T20:00:00+08:00">10.07 20:00 北京时间</time></div><h3 id="event-7-title">谷歌的实验性游戏平台 Playground 在美国上线，创作权限按订阅分批</h3><div><p>谷歌博客的日期是 Oct 07, 2026，订阅源时间是 2026-10-07T12:00:00+00:00。Playground 是实验性平台，用文字描述来做、改和玩自己的游戏，不需要写代码。它在浏览器里运行，作品可以保持私有、用链接分享，或发布到 Explore。部分类型有排行榜和多人。发布出去的游戏要经过与社区准则一致的安全筛查。</p><p>今天向美国 18 岁及以上的用户在 playground.google 开放。创作权限按 Google AI 订阅分批给。Unity Spark 仍在测试，封闭测试即将开始。它还不是今天就能用来做专业 3D 游戏的已发布接入。没有注册，也没有生成一款游戏。</p><div class="condition"><strong>适用范围：</strong><ul><li>只向美国、18 岁及以上开放。创作权限不是所有登录用户同时拿到。</li><li>Unity Spark 是即将到来的封闭测试，不是今天的功能。</li><li>没有实际创建或发布游戏，安全筛查的具体规则没有另读。</li></ul></div><div class="source"><a href="https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：美国 18 岁以上、按 Google AI 订阅分批开放创作，以及 Unity Spark 仍是即将开始的封闭测试，取自这篇博客。时间是 2026-10-07T12:00:00+00:00。没有注册。</p></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
