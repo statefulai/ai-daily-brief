@@ -1,0 +1,489 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-08",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-08T08:00:00+08:00",
+  "generated_at": "2026-10-08T08:08:11+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "claude",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 9,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 13,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "jiqizhixin.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv",
+      "status": "success",
+      "item_count": 857,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "success",
+      "item_count": 224,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news/rss.xml 返回 HTTP 404，/news 返回 HTTP 403"
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 4,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 12,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "apple",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "failed",
+      "item_count": 0,
+      "error": "api-docs.deepseek.com/news/rss.xml 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "google_research",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 7,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "infoq",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "reflection",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "gpt6-intelligent-ui",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "ChatGPT 付费档开始换上 GPT-6，回答可以变成可交互界面",
+      "kicker": "产品 · ChatGPT",
+      "facts": [
+        "OpenAI 新闻源把《GPT-6 and Intelligent UI for everyone》标在 2026-10-07T00:00:00+00:00。摘要写，GPT-6 正在全球向 ChatGPT 推出 Intelligent UI，回答可以带上可视化和能直接使用的交互。公告正文页这次没有打开。部署安全中心的系统卡写 Published October 7, 2026，没有钟点。卡写，ChatGPT 里的这些模型将替换 GPT-5.6 Sol 和 GPT-5.6 Luna。Codex 和 ChatGPT Work 里的 GPT-6 Sol、GPT-6 Luna 仍是此前发布的版本。卡把今天这一版标成 October，把仍留在 Codex 和 Work 里的标成 September。",
+        "The Verge 的页面时间是 2026-10-07T19:10:42+00:00。报道称，Intelligent UI 让回答可以包含图示、图表、表单和可点的按钮；OpenAI 给的例子包括七速自行车的可交互图、麻将牌面，以及退休储蓄计算器、复古游戏和账单分摊这类当场生成的小工具。付费的 Plus、Pro、Business 和 Enterprise 从今天起在 Chat 里使用 GPT-6 Sol。Go 和免费档从周四起使用 GPT-6 Luna。TechCrunch 写，不想要这么多视觉元素的人可以把它调少。企业版是否出现，The Verge 写还要看管理员设置。这两篇是对公告和演示的转述。",
+        "系统卡写，相对各自的 GPT-5.6，GPT-6 更能抵抗越狱，包括会随着多轮对话调整的攻击；不诚实、欺骗和绕过护栏的情况也减少。按 Preparedness Framework，October 版的 Sol 和 Luna 在网络安全、生物与化学上都按 High 对待，人工智能自我改进没有达到 High。采用的是 GPT-5.6 系统卡里为 5.6 Sol 和 Luna 写的同一套防护。",
+        "系统卡写，相对 2026 年 8 月的 GPT-5.6，October 版 Sol 和 Luna 在未满 18 岁的评测里，年龄限制内容、性内容和情感依赖都有统计上显著的退步；Luna 在血腥内容上也有统计上显著的退步。其余差异不显著。自我伤害、性内容和血腥内容另有一层分类器拦截，不计入这些分数。情感依赖的退步被写成评测对 bro、bestie 这类昵称过于敏感。在故意选难的生产例子上，Sol 在标准自我伤害一项退步，Luna 在标准自我伤害、血腥和性内容上退步。人工复核写成越界回答总体严重程度低，并且这些分数不代表线上平均出现的频率。MentalHealthBench 上，Luna 相对 8 月的 Luna 在各紧急程度上都有提升，Sol 的提升主要在紧急对话。"
+      ],
+      "conditions": [
+        "公告正文没有读到。分档时间和界面例子来自 The Verge、TechCrunch 对官方材料的转述，不是在 ChatGPT 里点过。",
+        "系统卡写免费和付费都会换上 October 版，但没有写免费档的钟点。周四才到免费档和 Go，是两家媒体的说法。",
+        "Codex 和 ChatGPT Work 不在这次更换里。安全评测是公司自己的难例，没有复跑。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/gpt-6-for-everyone",
+          "kind": "primary",
+          "published_at": "2026-10-07T00:00:00+00:00",
+          "verified": true,
+          "note": "标题、时间和一句摘要取自 OpenAI 新闻源。公告正文页没有打开，界面细节不以此页为准。"
+        },
+        {
+          "label": "OpenAI",
+          "url": "https://deploymentsafety.openai.com/gpt-6-october/model-safety-training-and-evaluation",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "October 与 September 的区分、Codex 和 Work 不更换，以及未满 18 岁评测的退步类别，取自这篇标为 October 7, 2026 的系统卡。页面没有钟点。没有复跑评测。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1007276/openai-chatgpt-intelligent-ui-gpt-6",
+          "kind": "secondary",
+          "published_at": "2026-10-07T19:10:42+00:00",
+          "verified": true,
+          "note": "付费档今天用 Sol、免费档和 Go 周四用 Luna，以及图示、图表、表单和按钮，取自这篇。时间取自订阅源的 2026-10-07T19:10:42+00:00。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/07/chatgpt-is-getting-a-lot-more-visual-with-the-launch-of-a-new-interface/",
+          "kind": "secondary",
+          "published_at": "2026-10-07T18:00:19+00:00",
+          "verified": true,
+          "note": "视觉元素可以调少，取自这篇。时间取自订阅源的 2026-10-07T18:00:19+00:00。"
+        }
+      ]
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Claude Haiku 5.5 发布：十万 token 以内比上一代便宜九成",
+      "kicker": "模型 · 价格",
+      "facts": [
+        "Anthropic 的页面日期是 October 7, 2026，没有钟点。Claude Haiku 5.5 的模型 ID 是 claude-haiku-5-5。页面称它是该公司最快、最便宜、也最强的小模型，用来做摘要、压缩、数据库查询、分类，以及在编码时给 Opus 5.5 和 Sonnet 5.5 当子代理。已在 Claude Platform、Amazon Web Services、Google Cloud 和 Microsoft Azure 提供。它是 Haiku 系列里第一个可以调节 effort 的型号。脚注写，按各模型的标准速度，它是最快的，但仍慢于打开 Fast 模式的 Opus。",
+        "价格按每百万 token，并分成提示不超过 10 万 token 和超过 10 万 token。Haiku 5.5 的缓存读取是 0.01 或 0.05 美元，缓存写入是 0.125 或 0.625 美元，输入是 0.10 或 0.50 美元，输出是 0.50 或 2.50 美元。对照表里的 Haiku 4.5 是缓存读取 0.10 美元、缓存写入 1.25 美元、输入 1.00 美元、输出 5.00 美元。脚注写，10 万 token 以内比 Haiku 4.5 低 90%，以上低 50%。Haiku 4.5 大约 90% 的请求落在前一档，所以平均大约便宜 75%。新的分词器和 Sonnet 5.5、Opus 5.5 类似，同样的任务会多用一些 token。",
+        "从今天起，Sonnet 5.5 的缓存读取从每百万 token 0.20 美元降到 0.10 美元。页面称，因此多数智能体任务大约便宜 20%。本周还会给 Max 和 Team 发放只能在 Claude Platform 使用的月度 API 额度：Max 5x 每月 100 美元，Max 20x 每月 200 美元，Team 最多 500 美元并且在用户之间共享，任何模型都能用。Python 和 TypeScript SDK 增加仍在测试中的计算机使用和浏览器使用。",
+        "公司自己的表写，Haiku 5.5 相对 Haiku 4.5：GDPval-AA v2.1 是 1620 对 735，OSWorld 2.1 的离线子集是 72.4% 对 15.7%，Humanity’s Last Exam 无工具是 45.9% 对 10.2%、有工具是 57.4% 对 18.7%，Terminal-Bench 4.0 是 39.2% 对 0.0%。同一张表里的 GPT-6 Luna 是 GDPval-AA 1437、OSWorld 离线子集 48.9%、Terminal-Bench 16.4%。网络安全防护比 Haiku 4.5 更严，但比 Sonnet 5.5 宽：更多防守任务可以通过，渗透测试仍然拦截。生物学防护与 Sonnet 5、Sonnet 5.5 和 Opus 5 相同。",
+        "GitHub Changelog 的时间是 2026-10-07T20:12:18+00:00。Haiku 5.5 已向 Copilot Pro、Pro+、Max、Business 和 Enterprise 正式提供，可以在 VS Code、Visual Studio、Copilot CLI、云端代理、Copilot 应用、github.com、GitHub Mobile、JetBrains、Xcode 和 Eclipse 的模型列表里选择。推送是逐步的。按用量计费，价格用提供商的标价。企业和 Business 的管理员默认开启新模型，除非关掉了全局默认，或单独禁用这一款。Changelog 写，早期测试里它在许多编码任务上接近 Claude Sonnet 5，同时用的 token 和步骤更少。这是 GitHub 的说法。"
+      ],
+      "conditions": [
+        "页面没有钟点。基准、75% 和 20% 都是 Anthropic 在这篇里的计算，没有复测，也没有调用 claude-haiku-5-5。",
+        "Max 和 Team 的 API 额度写的是本周才发放，不是这篇发布时已经到账。",
+        "Copilot 里能不能看到，还要等逐步推送和管理员策略。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/claude-haiku-5-5",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "模型 ID、两档价格、Sonnet 5.5 缓存读取减半，以及文中的基准，取自这篇日期为 October 7, 2026 的页面。页面没有钟点。没有调用接口。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.blog/changelog/2026-10-07-claude-haiku-5-5-in-github-copilot",
+          "kind": "primary",
+          "published_at": "2026-10-07T20:12:18+00:00",
+          "verified": true,
+          "note": "Copilot 的计划、客户端和逐步推送，取自这篇 Changelog。时间取自订阅源的 2026-10-07T20:12:18+00:00。"
+        }
+      ]
+    },
+    {
+      "id": "windows-mxc",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Windows 11 上的执行容器正式可用，Copilot 本地沙箱同时转正",
+      "kicker": "产品 · 系统",
+      "facts": [
+        "Pavan Davuluri 的 Windows 博客写 published October 7, 2026，没有钟点。Microsoft Execution Containers（MXC）今天在 Windows 11 上正式可用。组织可以规定智能体能访问哪些文件和网络，策略在运行时执行。个人电脑上，这些限制做成智能体体验的一部分。博客写，MXC 不只有 Windows，但 Windows 上可以从进程和会话隔离做到 WSLc、虚拟机和 Windows 365 for Agents。",
+        "博客列出已经支持 MXC 的有 OpenAI 的 Codex、GitHub Copilot、OpenClaw、Replit、LM Studio、英伟达 OpenShell 和 Unsloth AI。写成即将支持的有 Anthropic Claude Code、Box、Egnyte、Heidi Health、Nous Research 的 Hermes Agent、Manus、Perplexity、Raycast 和 Simular。Meta 的 Muse for Windows 写成即将作为带 MXC 的原生应用出现，不是今天已经可以安装。",
+        "GitHub Changelog 的时间是 2026-10-07T15:46:17+00:00。Copilot 的本地沙箱在 Copilot CLI、Copilot 应用，以及使用 Agent Host 的 VS Code 会话里正式可用，不另收费。沙箱由 MXC 把同一套策略翻译成 Windows、macOS 和 Linux 的系统控制。可以限制智能体命令能读写的文件和目录，控制互联网、本地网络、Git 凭据和 GitHub CLI 凭据，并在支持的地方覆盖本地 MCP 和语言服务器。企业设置可以强制打开沙箱，开发者不能把策略放宽。模型在哪里运行，和工具被隔离到哪里，是两件事。策略管的是工具执行，不随所选模型改变。",
+        "同一篇 Windows 博客写，Build 时介绍的 MAI Code 1.1 Flash 总参数 1370 亿、激活 68 亿。今天把它放到本机，用 3-bit 把体积减少近 80%，并在本地使用 256K 上下文。GitHub HydraFusion 调用本机模型，写成 10 月晚些时候才在 Copilot 应用、CLI 和 VS Code 做实验性预览。llama.cpp 写进 Windows ML，是今天宣布的。Copilot 在 Copilot+ PC 上读取本机内容、在本机做动作和调用本机模型，写成未来数月才开始，而且要用户允许。Windows Search 里直接执行的新动作，今天起向实验通道的 Windows Insider 推出。"
+      ],
+      "conditions": [
+        "博客没有钟点。没有在 Windows 11 上运行 MXC，也没有在 Copilot 里打开本地沙箱。",
+        "HydraFusion 的本机路由、Copilot 的混合智能，以及 Muse for Windows，都还没有到可安装的正式版。",
+        "即将支持 MXC 的产品名单是微软写下的计划，不是这些产品今天已经打开了开关。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Microsoft",
+          "url": "https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "MXC 在 Windows 11 正式可用、已支持和即将支持的名单，以及 MAI Code 1.1 Flash 的 3-bit 和 256K，取自这篇标为 October 7, 2026 的博客。页面没有钟点。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.blog/changelog/2026-10-07-local-sandboxing-for-github-copilot-now-generally-available",
+          "kind": "primary",
+          "published_at": "2026-10-07T15:46:17+00:00",
+          "verified": true,
+          "note": "Copilot CLI、应用和 VS Code Agent Host 上的本地沙箱正式可用，以及不另收费，取自这篇 Changelog。时间取自订阅源的 2026-10-07T15:46:17+00:00。"
+        }
+      ]
+    },
+    {
+      "id": "rtx-spark",
+      "placement": "story",
+      "window": "in_window",
+      "title": "RTX Spark 笔记本今天可预订，10 月 16 日开始交付",
+      "kicker": "产品 · 硬件",
+      "facts": [
+        "Windows 博客写，Surface Laptop Ultra 和 Surface RTX Spark Dev Box 今天可以预订。Laptop Ultra 从 10 月 16 日起供货，统一内存最高 128GB，页面写可以在本地运行超过 1200 亿参数的模型。Dev Box 向美国客户发货的时间写成 11 月。华硕、戴尔、惠普、联想和微星的 RTX Spark Windows 电脑同样是今天预订、10 月 16 日开始出货。基于 RTX Spark 的开发盒和迷你桌面写成今年晚些时候。",
+        "英伟达博客的日期是 October 7, 2026。正文写，笔记本今天开放预订，10 月 16 日可以拿到；紧凑桌面 11 月开售。RTX Spark 把 Blackwell RTX GPU 和最多 20 核的 Grace CPU 以 600 GB/s 连在一起，GPU 最多 6144 个核。页面写 FP4 性能为 1 petaflop，统一内存最多 128GB，并举例可以本地运行它称为 125B、带 51B n-gram 的 Qwen 3.8 Flash Next。页面元描述把预订写成 October 16，和正文不一致。这里采用正文。",
+        "Windows 博客写，Windows 版 DGX Station 今年晚些时候推出，使用 GB300 Grace Blackwell Ultra，可在本地运行超过一万亿参数的模型，并点名戴尔的 Pro Precision with GB300 和惠普的 ZGX Fury AI Station。英伟达博客写，这台机器有 748GB 一致内存，FP4 最多 20 petaFLOPS。这是预告，不是今天开售。10 月 2 日已经报道的 64GB DGX Spark、10 月 23 日发售，不是这一条。"
+      ],
+      "conditions": [
+        "今天能做的是预订。Laptop Ultra 的供货从 10 月 16 日开始，Dev Box 的美国发货写成 11 月，DGX Station for Windows 还没有发售日。",
+        "128GB、1200 亿参数、1 petaflop 和 748GB 是两家在发布里给出的规格，没有实测。",
+        "两篇都没有写出 Laptop Ultra 或 Dev Box 的售价。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Microsoft",
+          "url": "https://blogs.windows.com/windowsexperience/2026/10/07/building-windows-for-hybrid-intelligence/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "预订、10 月 16 日、11 月发货和超过 1200 亿参数，取自这篇标为 October 7, 2026 的博客。页面没有钟点，也没有售价。"
+        },
+        {
+          "label": "NVIDIA",
+          "url": "https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "1 petaflop、128GB、6144 核，以及 DGX Station for Windows 的 748GB 和 20 petaFLOPS，取自这篇日期为 October 7, 2026 的博客。预订日期以正文为准，不采用把预订写成 October 16 的元描述。"
+        }
+      ]
+    },
+    {
+      "id": "synthid-detector",
+      "placement": "story",
+      "window": "in_window",
+      "title": "SynthID Detector 向所有人开放，英文版今天全球可用",
+      "kicker": "政策 · 标识",
+      "facts": [
+        "谷歌博客的发布时间是 2026-10-07T14:00:00+00:00。Pushmeet Kohli 写，SynthID Detector 从今天起向所有人开放，英文版全球可用。它用来检查一张图像、一段视频或一段音频是不是由谷歌或其伙伴的 AI 生成。伙伴写成 OpenAI、NVIDIA、Kakao，以及即将加入的 Apple。",
+        "博客写，从 2023 年的 SynthID 算起，已经给超过 1800 亿张图像和视频，以及相当于 24 万年的音频打上水印。去年的检测器是给媒体从业者的早期版本。Search、Gemini 应用和 Chrome 里已有的核验，现在每天经常处理超过 100 万次请求。",
+        "synthid.com 上的检测页写，它只认采用了 SynthID 的公司，不是通用的 AI 检测器。目前支持图像、视频和音频。检测到水印，表示内容很可能由启用 SynthID 的模型编辑或生成。没有检测到，不能排除别的模型生成，重度修改也可能把信号弄没。页面还写，极少数情况下也可能对没有水印的内容误报。没有上传文件。"
+      ],
+      "conditions": [
+        "开放范围是英文、图像、视频和音频。Apple 写成即将加入，不是今天已经能检测 Apple 的生成结果。",
+        "1800 亿和 24 万年是谷歌这篇给出的累计数字。没有上传样本，也没有核对水印是否还在。",
+        "2025 年 5 月 20 日的旧页面写的是早期测试和候补名单，当时的累计数字是超过 100 亿条。那不是今天的范围。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synth-id-ai-content/",
+          "kind": "primary",
+          "published_at": "2026-10-07T14:00:00+00:00",
+          "verified": true,
+          "note": "全球英文开放、伙伴名单，以及 1800 亿和 24 万年，取自这篇博客。时间是 2026-10-07T14:00:00+00:00。"
+        },
+        {
+          "label": "SynthID",
+          "url": "https://synthid.com/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "只检测合作方媒体、当前支持图像视频和音频，以及检不出不能排除其他模型，取自这个检测页。页面没有发布时间。没有上传文件。"
+        }
+      ]
+    },
+    {
+      "id": "liquid-d1",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Liquid AI 说明两款 d1 决策模型，主权重早于这篇博客",
+      "kicker": "模型 · 开源",
+      "facts": [
+        "Hugging Face 博客的时间是 2026-10-07T16:54:33+00:00。Liquid AI 写，今天发布 d1 家族的两款开放决策模型：d1-3B，以及实验性的 d1-omni-600M。它们基于 Liquid Foundation Models，一次前向传播就给出答案，不生成 token。d1-3B 从 LFM2.5-VL-3B 训练，输入文本和图像。d1-omni-600M 从 LFM2.5-Encoder-350M 训练，输入是文本加图像，或文本加音频。后者写成早期研究发布，还在继续做。",
+        "博客里的公司自测写，Decision Index 0.2.1 上 d1-3B 是 48.57，高于文中列出的每个 4B 和 9B 模型，也高于 Decider 35B-A3B 的 47.11。七个公开数据集的平均分，d1-3B 是 82.9，d1-omni-600M 是 78.4。速度写成 d1-3B 在 Jetson AGX Thor 上 16 毫秒，AGX Orin 上 26 毫秒，Orin Nano 上 50 毫秒。",
+        "Hugging Face 模型接口的 createdAt：LiquidAI/d1-3B 是 2026-10-05T09:55:28Z，d1-omni-600M 是 2026-10-05T17:18:48Z，两款 GGUF 分别是 2026-10-06T10:36:09Z 和 2026-10-06T15:30:13Z。d1-3B-w8a8 是 2026-10-07T18:58:54Z。模型卡的许可证是 other，license_name 为 lfm1.0。因此这篇博客是公开说明。主权重不是 10 月 7 日才第一次出现。窗口里新出现的仓库是 w8a8 量化。"
+      ],
+      "conditions": [
+        "48.57、82.9 和毫秒数是公司在博客里的数字，没有复测，也没有加载权重。",
+        "d1-omni-600M 仍是早期研究发布。许可证是 lfm1.0，不是 Apache-2.0。",
+        "主权重和 GGUF 的创建时间早于这篇博客。此前各期没有写过它们。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/blog/LiquidAI/open-d1",
+          "kind": "primary",
+          "published_at": "2026-10-07T16:54:33+00:00",
+          "verified": true,
+          "note": "两款模型的输入、Decision Index 0.2.1 的 48.57，以及 Jetson 上的毫秒数，取自这篇博客。时间取自订阅源的 2026-10-07T16:54:33+00:00。没有复测。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/LiquidAI/d1-3B",
+          "kind": "primary",
+          "published_at": "2026-10-05T09:55:28+00:00",
+          "verified": true,
+          "note": "d1-3B 的 createdAt 和 lfm1.0 许可证取自模型卡与模型接口。创建时间是 2026-10-05T09:55:28Z，早于博客。"
+        }
+      ]
+    },
+    {
+      "id": "google-playground",
+      "placement": "story",
+      "window": "in_window",
+      "title": "谷歌的实验性游戏平台 Playground 在美国上线，创作权限按订阅分批",
+      "kicker": "产品 · 游戏",
+      "facts": [
+        "谷歌博客的日期是 Oct 07, 2026，订阅源时间是 2026-10-07T12:00:00+00:00。Playground 是实验性平台，用文字描述来做、改和玩自己的游戏，不需要写代码。它在浏览器里运行，作品可以保持私有、用链接分享，或发布到 Explore。部分类型有排行榜和多人。发布出去的游戏要经过与社区准则一致的安全筛查。",
+        "今天向美国 18 岁及以上的用户在 playground.google 开放。创作权限按 Google AI 订阅分批给。Unity Spark 仍在测试，封闭测试即将开始。它还不是今天就能用来做专业 3D 游戏的已发布接入。没有注册，也没有生成一款游戏。"
+      ],
+      "conditions": [
+        "只向美国、18 岁及以上开放。创作权限不是所有登录用户同时拿到。",
+        "Unity Spark 是即将到来的封闭测试，不是今天的功能。",
+        "没有实际创建或发布游戏，安全筛查的具体规则没有另读。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/technology/ai/playground-experimental-gaming-platform/",
+          "kind": "primary",
+          "published_at": "2026-10-07T12:00:00+00:00",
+          "verified": true,
+          "note": "美国 18 岁以上、按 Google AI 订阅分批开放创作，以及 Unity Spark 仍是即将开始的封闭测试，取自这篇博客。时间是 2026-10-07T12:00:00+00:00。没有注册。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:0e792a9a335e1c867e5d5bcf72e57b81a8cf9dd6264aa0b2635a61824aee7c3f"
+}
