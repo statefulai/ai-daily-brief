@@ -1,0 +1,456 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-09",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-09T08:00:00+08:00",
+  "generated_at": "2026-10-09T09:00:11+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 1258,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    },
+    {
+      "id": "claude",
+      "status": "failed",
+      "item_count": 0,
+      "error": "claude.com/blog/rss.xml、www.anthropic.com/engineering/rss.xml 与 /news/rss 返回 HTTP 404"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 876,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "jiqizhixin.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv",
+      "status": "success",
+      "item_count": 447,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "success",
+      "item_count": 190,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "failed",
+      "item_count": 0,
+      "error": "mistral.ai/news/rss.xml 与 /feed.xml 返回 HTTP 404"
+    },
+    {
+      "id": "meta",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news/rss.xml 返回 HTTP 404，/blog/rss.xml 返回 HTTP 403"
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 80,
+      "error": null
+    },
+    {
+      "id": "apple",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "failed",
+      "item_count": 0,
+      "error": "api-docs.deepseek.com/news/rss.xml 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "google_research",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "infoq",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reflection",
+      "status": "failed",
+      "item_count": 0,
+      "error": "reflection.ai/blog/rss.xml、/rss.xml 与 /feed.xml 返回 HTTP 404"
+    },
+    {
+      "id": "claude_code",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com/claude-code/rss.xml 返回 HTTP 404"
+    }
+  ],
+  "events": [
+    {
+      "id": "anthropic-cyber-mission",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Anthropic 启动网络安全计划，开源扫描报告不经人工复核就送出",
+      "kicker": "产品 · 安全",
+      "facts": [
+        "Anthropic 新闻页的 datePublished 是 2026-10-08T09:04:16.632Z，站点地图 lastmod 是 2026-10-08T19:00:45.000Z，可见日期写 Oct 8, 2026。今天启动 Anthropic Cyber Mission，先做关键基础设施和开源软件。关键基础设施这边推出 Critical Infrastructure Defense Program，把前沿模型、驻场工程师和威胁研究提供给保护运营技术的机构。创始伙伴写成 Accenture、Booz Allen、CrowdStrike、Deloitte、Dragos、Hitachi、Insane Cyber、Nozomi Networks、Palo Alto Networks、PwC 和 Rockwell Automation。页面写这项工作已经在进行，几家伙伴正在用 Claude 修漏洞；扩大到更多伙伴和行业写成未来数月。",
+        "同一篇写，今天推出 OSS Scanner，给开源项目用最强模型做定期安全扫描，不收费。每份报告包含漏洞如何被利用的概念验证、解释，以及在有的时候附上建议修复。报告由模型生成，不经人工复核，因此更快，但可能不准确，例如严重程度标错。公司预期真阳性率高于 90%，并写会继续提高真阳性率和修复质量。服务面向有能力跟上这些发现的项目；其余项目继续接收人工核验后的协调披露。6 月启动的州和地方政府网络防御项目，此后已向超过一半的美国州提供前沿 Claude 和技术支持。8 月推出的 Defender Advantage Fund（0xDAF）支持相关试点，并让 OSS Scanner 保持免费。已资助 Python Software Foundation、经 Linux Foundation 的 Alpha-Omega 和 OpenSSF、Apache Software Foundation，并支持 Akrites 和 Gold Eagle。",
+        "研究页的 datePublished 是 2026-10-08T19:00:00.000Z，可见日期同样是 Oct 8, 2026。过去六个月发现超过 29000 个候选漏洞，人工复核大约 6000 个；应维护者要求，已直接送出近 5000 份未经核验的报告。OSS Scanner 的输出完全由模型生成，不做人工分拣，使用的模型包括 Claude Mythos。过去几周在数十个开源项目上验证，初期披露包含数百份报告，其中有能串成未认证远程代码执行的漏洞。每份报告含可独立复现的材料、解释，在可能时包括用二分找出缺陷何时引入，以及在有的时候附候选补丁。审阅协调披露的渗透测试人员检查了 48 个项目上的 97 个严重和高危发现，其中 85 个（88%）达到协调披露门槛；其余 12 个里 11 个是真问题但与已知问题或其他发现重复，1 个无效。wolfSSL 的引语写，收到的 74 份报告里除 2 份外都有效，5 个成为 CVE。合格项目的核心维护者通过向指定 GitHub 仓库提交拉取请求来登记。资格参照 OSS-Fuzz：对基础设施和用户安全有关键影响，逐案决定。"
+      ],
+      "conditions": [
+        "高于 90% 是公司对这项服务的预期，不是已经对全部公开扫描复测过的比例。88% 只覆盖那 97 个严重和高危发现。",
+        "没有提交登记，也没有收到一份报告。创始伙伴名单是 Anthropic 写下的，没有逐家核对是否已经签完。",
+        "扩大到更多行业、自动分拣和改写代码，都写成后续步骤，不是今天已经完成的范围。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/news/anthropic-cyber-mission",
+          "kind": "primary",
+          "published_at": "2026-10-08T09:04:16.632Z",
+          "verified": true,
+          "note": "Cyber Mission、11 家创始伙伴、OSS Scanner 不经人工复核，以及预期真阳性率高于 90%，取自这篇。datePublished 是 2026-10-08T09:04:16.632Z；站点地图 lastmod 是 2026-10-08T19:00:45.000Z。可见日期没有钟点。"
+        },
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/research/launching-opt-in-vuln-finding-service-for-open-source",
+          "kind": "primary",
+          "published_at": "2026-10-08T19:00:00.000Z",
+          "verified": true,
+          "note": "29000 与 6000、近 5000 份未核验报告、97 个发现里的 88%，以及 wolfSSL 的 74 份报告，取自这篇。datePublished 是 2026-10-08T19:00:00.000Z。没有复跑扫描。"
+        }
+      ]
+    },
+    {
+      "id": "anthropic-usage-policy",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 更新使用政策，11 月 12 日生效",
+      "kicker": "政策 · 使用规则",
+      "facts": [
+        "Anthropic 新闻页的 datePublished 是 2026-10-08T17:00:00.000Z，可见日期写 Oct 8, 2026。今天发布新版使用政策，11 月 12 日生效。多数修改是把已有规则写清楚。新增禁止对模型持续且没有必要的虐待或残忍行为，只针对极端情况：用户反复残忍，且看不出目的。普通不满、反驳、黑暗创作题材、模型测试和研究不包括。执行仍主要依靠已经上线的做法：Claude 可以在 claude.ai 和 Claude Code 上结束少数持续虐待的对话。",
+        "新设 Do Not Engage in Deceptive Campaigns or Artificial Activity，把原先散在选举、欺诈、隐私和虚假信息里的规则收在一起。它覆盖政治或商业的欺骗活动，包括掩盖消息背后是谁、用假账号或假帖放大内容，以及搭建用于影响力行动的工具和基础设施。选举一节改名为 Do Not Undermine Democratic Processes，范围收成禁止用 Claude 欺骗选民或扰乱选举。取消了对个性化投票和竞选定向的一揽子禁止。依赖欺骗或滥用选民个人数据的定向，仍由欺骗行动、监控和隐私条款禁止。",
+        "武器条款写明，禁止包括让武器运转的软件和部件，以及给无人机和其他自主载具装弹。页面写这反映的是以往已经在执行的范围。监控和刑事司法条款写明：未经同意追踪人，无论是实时还是分析已经收集的数据，都禁止；不能用 Claude 决定或建议在执法或刑事司法程序里调查、逮捕或指控谁；也禁止用它建造或改进为监控而设计的工具。页面写这是把已经在执行的做法写明确。仍允许人们同意的追踪，例如欺诈监测，以及内容审核、新闻和法律研究。高风险用途仍要求有权复核并在必要时改变建议的合格人工，并告知受影响的人使用了 AI。连接到可能造成伤害、会自主做物理动作的硬件时，合格操作员必须能够观察设备并在需要时停下，设备在 Claude 断开后必须能够保持安全状态。支持地区页澄清：人在不支持的地区、实体在那里注册或设立总部，或由那里的人或实体多数持股或控制，都不能使用 Claude。"
+      ],
+      "conditions": [
+        "新版 11 月 12 日才生效。今天公布的是变更说明，没有逐条对照新旧政策全文。",
+        "武器、监控和刑事司法这几处，Anthropic 写的是把已有执法范围写明确，不是今天新扩大的禁令。虐待模型这一条是新增禁止。",
+        "没有在 claude.ai 上触发结束对话，也没有看到 11 月 12 日之后的执行记录。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/news/2026-usage-policy-update",
+          "kind": "primary",
+          "published_at": "2026-10-08T17:00:00.000Z",
+          "verified": true,
+          "note": "11 月 12 日生效、虐待模型的新增禁止、欺骗行动专节，以及武器和监控条款的写法，取自这篇。datePublished 是 2026-10-08T17:00:00.000Z。没有对照政策全文。"
+        }
+      ]
+    },
+    {
+      "id": "genesis-science-summit",
+      "placement": "story",
+      "window": "in_window",
+      "title": "白宫科学峰会列出超过 60 亿美元计划，11 家公司承诺 24 亿美元算力额度",
+      "kicker": "政策 · 科研",
+      "facts": [
+        "白宫事实清单的 datePublished 是 2026-10-08T15:05:06+00:00。在 Science: A New Golden Age Summit 上，政府称今天启动数十年来最雄心的一组科学计划，联邦政府、产业、学界和慈善合计超过 60 亿美元。清单写，为 Genesis Mission Consortium 宣布 24 亿美元的超级智能科学工具和算力额度，来自 11 家产业伙伴，支持超过 15 个联邦机构做国家科学与技术挑战。伙伴承诺写成：NVIDIA 10 亿美元，AMD 5 亿美元，OpenAI 2 亿美元，Anthropic 和 Google 各 1.5 亿美元，AMP 和 Emerald AI 各 1 亿美元，AWS、Armada、Crusoe 和 Micron 各 5000 万美元。清单写，这跟在 7 月把 Genesis Mission 扩到超过 15 个联邦机构、以及 50 亿美元联邦承诺之后。",
+        "同一份清单写，美国国家科学基金会和能源部宣布超过 1 亿美元，用于超级智能科学仪器和自主实验室。佐治亚的大学、产业和州政府宣布 10 亿美元科学计算和相关劳动力培训。Genesis Mission Fellowship 是 1 亿美元，给学生做四年加速博士，同时具备超级智能和另一门科学或工程的能力。能源部宣布八个 Quantum Computing Priority Applications，用来引导 2.15 亿美元的 Quantum Genesis Q Competition，资助团队演示容错且有科学意义的量子计算机。清单写，本周美国国立卫生研究院、能源部和 Biohub 启动 18 亿美元虚拟生物学计划。X-Labs Consortium 有超过 3.1 亿美元的产业和慈善承诺。",
+        "Anthropic 的页面可见日期是 Oct 8, 2026，站点地图 lastmod 是 2026-10-08T15:49:10.000Z。公司确认在这次峰会上承诺，三年内向 Genesis Mission 投入 1.5 亿美元，让 Claude 提供给该计划里超过 15 个机构，点名 NASA、美国国立卫生研究院和美国国家科学基金会。未来三年将向数百个研究项目提供 Claude、Claude Code 和 API 额度，并在聚变能和量子计算上与机构和国家实验室合作。页面写，与能源部和 Genesis Mission 的合作去年 12 月已经宣布，这次是新增承诺。"
+      ],
+      "conditions": [
+        "24 亿美元和各家金额是白宫清单里的承诺。除 Anthropic 自己的页面外，没有打开另外十家公司的宣布。没有看到额度已经到账。",
+        "18 亿美元虚拟生物学计划在清单里写成本周，不是单独标成今天。10 月 4 日已经报道的京都愿景是另一份文件，不是这些金额。",
+        "Anthropic 的 1.5 亿美元写成三年。白宫清单只写了金额，没有写年限。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "White House",
+          "url": "https://www.whitehouse.gov/fact-sheets/2026/10/fact-sheet-trump-administration-announces-the-most-ambitious-set-of-science-initiatives-this-century/",
+          "kind": "primary",
+          "published_at": "2026-10-08T15:05:06+00:00",
+          "verified": true,
+          "note": "超过 60 亿美元、24 亿美元及 11 家公司的分项、1 亿美元仪器和 2.15 亿美元量子竞赛，取自这份事实清单。datePublished 是 2026-10-08T15:05:06+00:00。"
+        },
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/news/genesis-mission-commitment",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "三年 1.5 亿美元、数百个项目的 Claude、Claude Code 和 API 额度，取自这篇。可见日期是 Oct 8, 2026，没有钟点。站点地图 lastmod 是 2026-10-08T15:49:10.000Z。"
+        }
+      ]
+    },
+    {
+      "id": "openai-math-withdrawals",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 撤回三篇数学手稿，顶线结果的形式化比例写成约 42%",
+      "kicker": "研究 · 数学",
+      "facts": [
+        "GitHub 上 openai/math 更新 history.md 的提交时间是 2026-10-08T05:03:50Z，说明是 Update manuscripts and Lean formalizations。提交是 301488868beec11bfd897168433b0a64f5258559。history.md 把这一节的标题写成 October 7, 2026。该节写，Algebraicity of Weil classes on split abelian eightfolds 里的一个符号错误，使稳定化迹的相消论证失效，并影响到另外两篇所依赖的构造，因此撤回三篇：Algebraicity of Weil classes on split abelian eightfolds、Algebraicity of Kuga–Satake Correspondences for K3 Surfaces、The rational Hodge conjecture for products of K3 surfaces。撤回的论文换成说明缺口、并链到存档手稿的通知。",
+        "同一节写，另外修订了 14 篇手稿：Lipschitz heights and Ashkin–Teller currents 4 篇，Kähler minimal model programs and abundance 6 篇，Taming and hypersymplectic deformation 2 篇，Incompressible Box Transport and Finite Computation 与 Exact Birch–Swinnerton-Dyer Formula from Low Selmer Corank 各 1 篇。作为这些修订的结果，又更新了 13 篇的引用和版本日期。新增 6 份形式化和 5 项其他补充。顶线结果的形式化比例写成 300/719，约 42%。10 月 7 日的报道写的是当时目录里的 722 篇手稿、372 个家族。这次没有重读全部手稿，也没有复现那个符号错误。"
+      ],
+      "conditions": [
+        "文件里的日期标题是 10 月 7 日，提交时间是 10 月 8 日 05:03:50 UTC。10 月 7 日的报道没有包含这次撤回。",
+        "300/719 是顶线结果，722 是当时的手稿篇数，两套数字不是同一个分母。",
+        "符号错误和缺口说明是仓库里的文字。没有请数学家复核，也没有打开三篇存档稿的证明。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/openai/math/blob/301488868beec11bfd897168433b0a64f5258559/history.md",
+          "kind": "primary",
+          "published_at": "2026-10-08T05:03:50+00:00",
+          "verified": true,
+          "note": "三篇撤回、14 篇修订、13 篇引用更新，以及 300/719，取自这次提交里的 history.md。提交时间是 2026-10-08T05:03:50Z。没有复现符号错误。"
+        }
+      ]
+    },
+    {
+      "id": "gemini-agent",
+      "placement": "story",
+      "window": "in_window",
+      "title": "谷歌宣布面向工作的 Gemini 智能体，正文没有写全量上线日期",
+      "kicker": "产品 · 企业",
+      "facts": [
+        "Google Cloud 博客的页面日期是 October 8, 2026，datePublished 只写到日期。blog.google 摘要页的 datePublished 是 2026-10-08T12:05:00+00:00，并链到这篇。Thomas Kurian 在 Gemini at Work 2026 的主题演讲改编稿里宣布 Gemini agent：一个用于工作的统一智能体，回答问题、处理知识工作、生成图像和媒体、编写并运行代码。稿件写，交给它的是目标而不是步骤说明；它制定计划、使用技能和工具、连接业务系统，并把完成的结果放回已有的文档、收件箱和开发环境。模型是单独的选择：今天在 Gemini 家族和 Anthropic 的 Claude 之间编排，以后还会加入其他私有和开放模型。",
+        "稿件写，可以从网页、iOS、Android、Windows 和 Mac，以及命令行、Google Workspace、Microsoft 365 或 Slack 进入，也可以嵌进第三方应用，作为不需要单独界面的智能体。它在云端保持同一套记忆和上下文；关掉笔记本之后，持续数小时或数天的工作会继续。它可以临时建立各有身份的子智能体，也可以建立同事智能体。同事智能体有固定角色、自己的 @agents.company.com 邮箱和自己的持久存储，只能访问用户或团队提供的上下文。在 Workspace 里，同事智能体有自己的账号，包括邮箱、日历、Drive 和公司目录中的身份；动作记在它自己名下。金融和法律的行业版本现在处于预览，政府、医疗和零售写成即将到来。可以在 Cloud Billing Console 给项目设置硬性支出上限，触发后该项目的智能体暂停。",
+        "同一篇写，最新 TPU 8i 系统的价格性能比上一代好 80%。这是公司自己的比较。The Verge 的时间是 2026-10-08T14:28:03+00:00，写 Gemini agent 目前只对企业客户做私人预览。这句不在 Google Cloud 这篇正文里。正文没有写出全量可用的日期。没有登录 Gemini Enterprise。"
+      ],
+      "conditions": [
+        "私人预览只出现在 The Verge 的转述里。Google Cloud 正文没有写全量上线日期，也没有写是否另收费。",
+        "80% 是谷歌对 TPU 8i 和上一代的比较，没有复测。客户案例里的小时数和转化率是这篇稿件里的说法。",
+        "没有在 Workspace 里 @ 一个同事智能体，也没有看到 @agents.company.com 的真实邮箱。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Google Cloud",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning/welcome-to-gemini-at-work-2026",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "统一智能体、Claude 与 Gemini 的模型选择、同事智能体的独立账号，以及金融和法律处于预览，取自这篇日期为 October 8, 2026 的博客。页面没有钟点。没有登录。"
+        },
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/infrastructure-and-cloud/google-cloud/gemini-at-work/",
+          "kind": "primary",
+          "published_at": "2026-10-08T12:05:00+00:00",
+          "verified": true,
+          "note": "摘要页确认今天在 Gemini at Work 2026 宣布 Gemini agent，并链到 Google Cloud 博客。datePublished 是 2026-10-08T12:05:00+00:00。细节以 Cloud 博客为准。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/tech/1007904/google-gemini-ai-agent-enterprise",
+          "kind": "secondary",
+          "published_at": "2026-10-08T14:28:03+00:00",
+          "verified": true,
+          "note": "目前只对企业客户私人预览，取自这篇。时间是 2026-10-08T14:28:03+00:00。Google Cloud 正文没有这一句。"
+        }
+      ]
+    },
+    {
+      "id": "openai-false-front",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 称打掉一起第 5 类影响力行动，用的是假智库和假记者",
+      "kicker": "安全 · 影响力",
+      "facts": [
+        "OpenAI 新闻源把《Disrupting AI-enabled “false front” operations》标在 2026-10-08T00:00:00+00:00。摘要写，公司打掉两个用假记者和智库传播地缘政治信息的行动。正文页写 October 8, 2026，没有钟点。公司称最近封禁了来自俄罗斯和伊朗的两个影响力行动。伊朗这边有七个记者人设，向中小网络媒体投长文，并批量生成与美伊战争相关的社交媒体评论。俄罗斯这边似乎动员了不知情的拉美人士，在当地运营名为 Social Research Center 的智库；操作者使用的假人设叫 Mia Clark，公司把这次行动称作 Dark Clark。两边都大量使用模型撰写内部报告。",
+        "按 IO Breakout Scale（1 到 6），公司把俄罗斯行动评为第 5 类，并写这是他们开始发布这类报告以来打掉的第一个第 5 类；伊朗行动评为第 4 类。两边都把内容送进了主流媒体，而不只是发在社交媒体上。公司写，过去两年半公开了 30 个隐蔽影响力行动。俄罗斯行动的内部报告声称，2026 年 5 月用假的利马教育部门邮箱让学校举办与乌克兰有关的活动；公司写，公开检索对上了秘鲁和波兰媒体的相关报道，以及厄瓜多尔教育部长对另一则假消息的辟谣。这些对照是 OpenAI 自己做的。没有看到被封禁的账号。"
+      ],
+      "conditions": [
+        "新闻源时间是 2026-10-08T00:00:00+00:00，正文没有钟点。第 5 类和第 4 类是 OpenAI 按 Breakout Scale 给自己案例的评级。",
+        "学校邮件、媒体稿和部长辟谣能否对上这次行动，只采用了 OpenAI 的检索，没有另找秘鲁、波兰或厄瓜多尔的原文。",
+        "没有看到被封禁的账号，也没有看到两家行动自己的确认。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/disrupting-ai-enabled-false-front-operations",
+          "kind": "primary",
+          "published_at": "2026-10-08T00:00:00+00:00",
+          "verified": true,
+          "note": "两个行动、Dark Clark、第 5 类和第 4 类，以及过去两年半的 30 个行动，取自这篇。时间取自新闻源的 2026-10-08T00:00:00+00:00。正文只写 October 8, 2026。没有另核媒体原文。"
+        }
+      ]
+    },
+    {
+      "id": "amie-lancet",
+      "placement": "story",
+      "window": "in_window",
+      "title": "谷歌称 98 人的 AMIE 临床研究今天刊出",
+      "kicker": "研究 · 医疗",
+      "facts": [
+        "谷歌博客的 datePublished 是 2026-10-08T22:30:00+00:00。Mike Schaekermann 写，由谷歌和 Beth Israel Deaconess Medical Center 主导的研究今天发表在 The Lancet，并称这是谷歌第一次在 The Lancet 主刊发文。在该中心的门诊初级保健诊所，98 名患者在紧急就诊前咨询了研究用诊断聊天机器人 AMIE。监督医师实时看着对话，按预定的安全标准，没有一次需要打断。临床医生报告，AI 摘要在 75% 的病例里帮助他们准备就诊，并在超过一半的病例里影响了诊疗方式。AMIE 的鉴别诊断与医生的最终诊断在 90% 的时候一致。页面写，还需要更大规模的临床试验。这些数字来自这篇博客。没有读 The Lancet 原文。"
+      ],
+      "conditions": [
+        "98 人、75%、超过一半和 90% 都是谷歌这篇对论文的转述，没有读 The Lancet 原文，也没有接触患者数据。",
+        "页面写还需要更大规模临床试验。这次不是产品上线，也没有写出患者能否自己打开 AMIE。",
+        "监督医师没有打断，依据的是博客所写的预定安全标准，标准文本没有另读。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/technology/health/amie-clinical-study-lancet/",
+          "kind": "primary",
+          "published_at": "2026-10-08T22:30:00+00:00",
+          "verified": true,
+          "note": "98 名患者、没有一次按预定标准被打断、75% 和 90%，取自这篇。datePublished 是 2026-10-08T22:30:00+00:00。没有读 The Lancet 原文。"
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:e154c5cb10b08900e1c3c145a8e2f864884f515674aa5cb93030502016745b6d"
+}
