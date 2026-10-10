@@ -131,6 +131,13 @@ class ReaderContractTest(unittest.TestCase):
             {"lede": "甲" * 20 + "2026-10-09 16:09:00"},
             {"lede": "甲" * 20 + "16:09+0800"},
             {"lede": "甲" * 20 + "16:09 +0800"},
+            {"lede": "甲" * 20 + "16:09 +08:00"},
+            {"lede": "甲" * 20 + "16:09 UTC+8"},
+            {"lede": "甲" * 20 + "16:09 GMT+0800"},
+            {"lede": "甲" * 20 + "16:09Z"},
+            {"lede": "甲" * 20 + "16:09:00.000Z"},
+            {"lede": "甲" * 20 + "16:09+08"},
+            {"lede": "甲" * 20 + "2026/10/09 16:09"},
             {"lede": "甲" * 20 + "T16:09:00 UTC"},
             {"lede": "甲" * 20 + "DatePublished"},
             {"lede": "甲" * 30, "caveat": "页面 lastmod 刚更新"},
@@ -184,6 +191,9 @@ class ReaderContractTest(unittest.TestCase):
         self.assertEqual(reader_contract_warnings(edition), [])
         self.assertIn("2026-10-09", edition["events"][0]["lede"])
         self.assertIn("0.042", edition["events"][0]["lede"])
+        self.assertFalse(text_has_time_metadata("2026-10-09"))
+        self.assertFalse(text_has_time_metadata("2026/10/09"))
+        self.assertFalse(text_has_time_metadata("10 月 9 日"))
 
     def test_signed_amounts_scores_and_bare_clock_utc_pass(self):
         phrases = (
