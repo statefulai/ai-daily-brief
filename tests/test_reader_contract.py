@@ -7,6 +7,7 @@ from edition import (
     content_hash,
     reader_contract_warnings,
     strip_leading_time_metadata,
+    text_has_time_metadata,
     validate_edition,
     visible_char_count,
 )
@@ -128,12 +129,12 @@ class ReaderContractTest(unittest.TestCase):
             {"lede": "甲" * 20 + "2026-10-09T16:09:00"},
             {"lede": "甲" * 20 + "2026-10-09T16:09"},
             {"lede": "甲" * 20 + "2026-10-09 16:09:00"},
-            {"lede": "甲" * 20 + "+0800"},
+            {"lede": "甲" * 20 + "16:09+0800"},
             {"lede": "甲" * 20 + "T16:09:00 UTC"},
             {"lede": "甲" * 20 + "DatePublished"},
             {"lede": "甲" * 30, "caveat": "页面 lastmod 刚更新"},
             {"lede": "甲" * 30, "caveat": "createdAt 不该出现"},
-            {"lede": "甲" * 30, "caveat": "时区写成 +0800"},
+            {"lede": "甲" * 30, "caveat": "时区写成 16:09:00+08:00"},
             {"lede": "甲" * 30, "caveat": "2026-10-09T16:09:00"},
             {"lede": "甲" * 30, "caveat": "DatePublished"},
         ]
@@ -182,6 +183,22 @@ class ReaderContractTest(unittest.TestCase):
         self.assertEqual(reader_contract_warnings(edition), [])
         self.assertIn("2026-10-09", edition["events"][0]["lede"])
         self.assertIn("0.042", edition["events"][0]["lede"])
+
+    def test_signed_amounts_scores_and_bare_clock_utc_pass(self):
+        phrases = (
+            "营收 +1500 万",
+            "裁员 -1200 人",
+            "gpt-4o-2024-08-06",
+            "比分 +12:30",
+            "17:00 UTC 起生效",
+        )
+        for phrase in phrases:
+            with self.subTest(phrase=phrase):
+                self.assertFalse(text_has_time_metadata(phrase))
+        lede = "甲" * 20 + "。".join(phrases)
+        edition = validate_edition(wrap([reader_event(lede=lede)]))
+        self.assertEqual(reader_contract_warnings(edition), [])
+        self.assertFalse(text_has_time_metadata(edition["events"][0]["lede"]))
 
     def test_reader_links_follow_public_url_once(self):
         document = wrap([reader_event(lede="甲" * 80, caveat="还没上线")])
