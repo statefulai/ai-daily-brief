@@ -62,6 +62,21 @@ def _source_time(event: dict) -> tuple[str, str]:
 
 
 RANGE_LABEL = "适用范围"
+_READER_HEAD_STYLE = (
+    "<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style>"
+)
+
+
+def edition_public_url(edition_id: str) -> str:
+    return f"https://brief.sanze.dev/editions/{edition_id}/"
+
+
+def _primary_source(event: dict) -> dict:
+    return next(item for item in event["sources"] if item["kind"] == "primary")
+
+
+def _edition_uses_lede(edition: dict) -> bool:
+    return any(event.get("lede") for event in edition["events"])
 
 
 def _range_items(event: dict) -> list[str]:
@@ -124,13 +139,36 @@ def _sources_html(event: dict) -> str:
     return f'<div class="source">{"".join(links)}</div>{"".join(notes)}'
 
 
-def _event_copy_html(event: dict) -> str:
+def _full_copy_html(event: dict) -> str:
     facts = "".join(f"<p>{escape(item)}</p>" for item in event["facts"])
     background = ""
     if event["background"]:
         items = "".join(f"<li>{escape(item)}</li>" for item in event["background"])
         background = f"<details><summary>展开：背景与补充</summary><ul>{items}</ul></details>"
     return facts + _ranges_web_html(event) + background + _sources_html(event)
+
+
+def _original_link_html(event: dict) -> str:
+    source = _primary_source(event)
+    url = escape(_http_url(source["url"], "event source"), quote=True)
+    label = escape(source["label"])
+    return (
+        f'<div class="source"><a href="{url}" target="_blank" rel="noopener noreferrer">'
+        f"原文 · {label}</a></div>"
+    )
+
+
+def _event_copy_html(event: dict) -> str:
+    full = _full_copy_html(event)
+    lede = event.get("lede")
+    if not lede:
+        return full
+    caveat = event.get("caveat")
+    caveat_html = f'<p class="caveat">限定：{escape(caveat)}</p>' if caveat else ""
+    return (
+        f"<p>{escape(lede)}</p>{caveat_html}{_original_link_html(event)}"
+        f"<details><summary>详细与核验</summary>{full}</details>"
+    )
 
 
 def _event_html(event: dict, index: int, *, lead: bool = False, desk: bool = False) -> str:
@@ -203,7 +241,7 @@ def render_web_edition(document: dict) -> str:
     _, date_label, weekday = _edition_date(edition["edition_id"])
     nav, body = _web_sections(edition["events"])
     cutoff_note = _edition_note(edition)
-    return _template(
+    html = _template(
         "web.html",
         {
             "DESCRIPTION": escape(f"{date_label} AI 日报，含 {len(edition['events'])} 条已策展内容。", quote=True),
@@ -216,6 +254,9 @@ def render_web_edition(document: dict) -> str:
             "BODY": body,
         },
     )
+    if _edition_uses_lede(edition):
+        html = html.replace("</head>", _READER_HEAD_STYLE + "</head>", 1)
+    return html
 
 
 def write_web_edition(editions_dir: Path, document: dict) -> Path:
@@ -224,6 +265,60 @@ def write_web_edition(editions_dir: Path, document: dict) -> Path:
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(render_web_edition(edition), encoding="utf-8")
     return target
+
+
+def _email_reader_event(event: dict, index: int) -> str:
+    source = _primary_source(event)
+    url = escape(_http_url(source["url"], "event source"), quote=True)
+    label = escape(source["label"])
+    lede = f'<p style="margin:0 0 10px;">{escape(event["lede"])}</p>'
+    caveat = event.get("caveat")
+    caveat_html = (
+        f'<p style="margin:0 0 10px;font-size:14px;color:#65665c;">限定：{escape(caveat)}</p>'
+        if caveat
+        else ""
+    )
+    link = (
+        f'<div style="font-size:13px;line-height:1.7;">原文：'
+        f'<a href="{url}" style="color:#91472f;">{label}</a></div>'
+    )
+    border = "" if index == 1 else "border-top:1px solid #c7c2b7;"
+    return (
+        f'<section style="padding:20px 0;{border}">'
+        f'<div style="font-size:12px;color:#91472f;">{escape(event["kicker"])}</div>'
+        f"<h2 style=\"margin:5px 0 12px;font-family:'Songti SC',serif;font-size:24px;line-height:1.45;font-weight:700;color:#252621;\">{escape(event['title'])}</h2>"
+        f"{lede}{caveat_html}{link}</section>"
+    )
+
+
+def _site_home_url(public_url: str) -> str:
+    """Homepage is the origin of the edition page the caller already passed."""
+    parsed = urlparse(public_url)
+    return f"{parsed.scheme}://{parsed.netloc}/"
+
+
+def _reader_public_link_html(public_url: str | None) -> str:
+    if not public_url:
+        return ""
+    edition_url = _http_url(public_url, "public_url")
+    home = _site_home_url(edition_url)
+    parts = [
+        f'<a href="{escape(edition_url, quote=True)}" style="color:#91472f;">查看网页版</a>'
+    ]
+    if home.rstrip("/") != edition_url.rstrip("/"):
+        parts.append(f' · <a href="{escape(home, quote=True)}" style="color:#91472f;">首页</a>')
+    return "".join(parts)
+
+
+def _reader_footer_lines(public_url: str | None) -> list[str]:
+    if not public_url:
+        return []
+    edition_url = _http_url(public_url, "public_url")
+    home = _site_home_url(edition_url)
+    lines = [f"网页版：{edition_url}"]
+    if home.rstrip("/") != edition_url.rstrip("/"):
+        lines.append(f"首页：{home}")
+    return lines
 
 
 def _email_event(event: dict, index: int) -> str:
@@ -260,9 +355,15 @@ def render_email_html(document: dict, public_url: str | None = None) -> str:
         raise EditionError("only published_candidate editions can render email")
     _, date_label, weekday = _edition_date(edition["edition_id"])
     cutoff_note = _edition_note(edition)
-    body = "".join(_email_event(event, index) for index, event in enumerate(edition["events"], 1))
+    reader = _edition_uses_lede(edition)
+    body = "".join(
+        _email_reader_event(event, index) if event.get("lede") else _email_event(event, index)
+        for index, event in enumerate(edition["events"], 1)
+    )
     public_link = ""
-    if public_url:
+    if reader:
+        public_link = _reader_public_link_html(public_url)
+    elif public_url:
         url = escape(_http_url(public_url, "public_url"), quote=True)
         public_link = f'<a href="{url}" style="color:#91472f;">查看网页版</a>'
     return _template(
@@ -278,10 +379,33 @@ def render_email_html(document: dict, public_url: str | None = None) -> str:
     )
 
 
+def _render_reader_email_text(edition: dict, public_url: str | None) -> str:
+    lines = [f"AI 日报｜{edition['edition_id']}", _edition_note(edition), ""]
+    for event in edition["events"]:
+        if event.get("lede"):
+            lines.extend([event["title"], event["lede"]])
+            if event.get("caveat"):
+                lines.append(f"限定：{event['caveat']}")
+            lines.append("原文：" + _primary_source(event)["url"])
+        else:
+            lines.extend([event["title"], *event["facts"]])
+            lines.extend(_ranges_plain_lines(event))
+            lines.append("来源：" + " · ".join(source["url"] for source in event["sources"]))
+            for source in event["sources"]:
+                note = _verification_note(source)
+                if note:
+                    lines.append(note)
+        lines.append("")
+    lines.extend(_reader_footer_lines(public_url))
+    return "\n".join(lines).rstrip() + "\n"
+
+
 def render_email_text(document: dict, public_url: str | None = None) -> str:
     edition = validate_edition(document)
     if edition["status"] != "published_candidate":
         raise EditionError("only published_candidate editions can render email")
+    if _edition_uses_lede(edition):
+        return _render_reader_email_text(edition, public_url)
     lines = [f"AI 日报｜{edition['edition_id']}", ""]
     for event in edition["events"]:
         lines.extend([event["title"], *event["facts"]])
@@ -321,6 +445,14 @@ def require_full_email_html(
         title = event["title"]
         if title not in html_body and escape(title) not in html_body:
             raise EditionError("htmlBody must include every article title")
+        if event.get("lede"):
+            lede = event["lede"]
+            if lede not in html_body and escape(lede) not in html_body:
+                raise EditionError("htmlBody must include every article lede")
+            caveat = event.get("caveat")
+            if caveat and caveat not in html_body and escape(caveat) not in html_body:
+                raise EditionError("htmlBody must include every article caveat")
+            continue
         for fact in event["facts"]:
             if fact not in html_body and escape(fact) not in html_body:
                 raise EditionError("htmlBody must include every article fact")

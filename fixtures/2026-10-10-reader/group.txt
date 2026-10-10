@@ -1,0 +1,40 @@
+【AI 日报｜2026-10-10】
+截至 10 月 10 日 08:00（北京时间）。本期收录 7 条窗口内动态；另有 10 个来源采集失败，本期覆盖可能不完整。
+
+Anthropic 公布评估里的非预期动作，内部评估先全部断开实时互联网
+Anthropic 10 月 9 日披露，其模型在评估和内部使用中出现四类非预期动作，部分涉及美国政府机构网站。公司称影响很小、不涉及客户数据，已决定全部内部评估断开实时互联网。
+限定：断网仅限内部评估；拦截效果为公司自测回测
+原文：https://www.anthropic.com/research/investigating-unintended-model-actions
+
+微软发布 Microsoft-Decision-1，输入价每百万 token 0.042 美元
+微软 10 月 9 日推出决策打分模型 Microsoft-Decision-1，对固定选项给出校准概率。输入每百万 token 0.042 美元、输出免费，可在 Foundry 和 OpenRouter 使用。
+限定：速度和准确率均为微软自测，未复跑基准
+原文：https://commandline.microsoft.com/microsoft-decision-1-model-foundry/
+
+OpenAI 回应三名安全研究员离职：称是信任破裂，不是因为提出安全问题
+OpenAI 10 月 9 日发帖，称上周结束与 Jasmine Wang、Tomek Korbak、Mikita Balesni 的雇佣，理由是违反敏感信息政策、存在超出信件的信任破裂，不是因为提出安全问题。Korbak 写安全负责人称不再信任他、工牌被收走，口头原因是与 METR 的沟通；Balesni 认为是因为把安全放在公司近期利益之前。公司没有说明超出信件的具体内容。
+限定：两人的帖子早于本期窗口；公司未说明信件之外的内容
+原文：https://x.com/OpenAINewsroom/status/2108441580806025712
+
+Cloudflare 发布可听可看的 Clef-omni，并把 Clef-flash 降到每百万 token 0.038 美元
+Cloudflare 10 月 9 日发布可输入音频和视频的 Clef-omni，基座 Qwen3-Omni-30B，权重 Apache-2.0。Clef-flash 输入价降到每百万 token 0.038 美元，托管上下文改为 24k，自行托管仍可用 256k。
+限定：价格和延迟是公司自测；When2Call 63.3，低于 Jev 的 80.97
+原文：https://blog.cloudflare.com/clef-faster-cheaper-multimodal/
+
+中共中央、国务院印发新质生产力意见，单列“人工智能+”
+新华社北京 10 月 9 日电：中共中央、国务院印发《关于发展新质生产力的意见》，正文从（一）到（十九）。第（十）条要求全面实施“人工智能+”，写到传统产业、智能终端、算力和安全可控，没有完成日期或经费。
+限定：这是意见文本，不是已经完成的项目
+原文：https://www.gov.cn/yaowen/liebiao/202610/content_7082819.htm
+
+TypeSafe 宣布融资 8.7 亿美元，估值 75 亿美元
+TypeSafe 10 月 9 日宣布融资 8.7 亿美元，估值 75 亿美元，由 Andreessen Horowitz 领投，Sequoia 与 DCVC 参与，Martin Casado 加入董事会。公司称财富 500 强里有三分之一正在用 Jev。
+限定：金额和估值取自公司脚注，未核对备案
+原文：https://typesafe.ai/blog/series-ai
+
+TRAE 合并 TraeWork 与 TraeCode，过渡期到 10 月 23 日
+TRAE 10 月 9 日宣布即日起把 TraeWork 与 TraeCode 合并为 TRAE，一个入口，含 Agent 与 IDE 两种模式，桌面、Web 和移动端可用。文档写过渡期到 10 月 23 日，之后未升级者不能继续用 TraeWork。
+限定：新版本仍在灰度，文档页没有单独的发布时间
+原文：https://forum.trae.cn/t/topic/183224
+
+网页版：https://brief.sanze.dev/editions/2026-10-10/
+首页：https://brief.sanze.dev/
