@@ -130,6 +130,7 @@ class ReaderContractTest(unittest.TestCase):
             {"lede": "甲" * 20 + "2026-10-09T16:09"},
             {"lede": "甲" * 20 + "2026-10-09 16:09:00"},
             {"lede": "甲" * 20 + "16:09+0800"},
+            {"lede": "甲" * 20 + "16:09 +0800"},
             {"lede": "甲" * 20 + "T16:09:00 UTC"},
             {"lede": "甲" * 20 + "DatePublished"},
             {"lede": "甲" * 30, "caveat": "页面 lastmod 刚更新"},

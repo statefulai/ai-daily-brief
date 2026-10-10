@@ -33,8 +33,8 @@ READER_TIME_METADATA_RE = re.compile(
     r"datepublished|datemodified|createdat|lastmod"
     rf"|\d{{4}}-\d{{2}}-\d{{2}}(?:[Tt]| +){_READER_CLOCK}(?:\s*{_READER_TZ})?"
     rf"|(?<![A-Za-z0-9])[Tt]{_READER_CLOCK}(?:\s*{_READER_TZ})?"
-    rf"|{_READER_OFFSET_CLOCK}[+-]\d{{2}}:\d{{2}}(?!\d)"
-    rf"|{_READER_OFFSET_CLOCK}[+-]\d{{4}}(?!\d)",
+    rf"|{_READER_OFFSET_CLOCK}\s*[+-]\d{{2}}:\d{{2}}(?!\d)"
+    rf"|{_READER_OFFSET_CLOCK}\s*[+-]\d{{4}}(?!\d)",
     re.IGNORECASE,
 )
 _READER_URL_RE = re.compile(r"https?://\S+")
