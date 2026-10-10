@@ -137,6 +137,7 @@ class ReaderContractTest(unittest.TestCase):
             {"lede": "甲" * 20 + "16:09Z"},
             {"lede": "甲" * 20 + "16:09:00.000Z"},
             {"lede": "甲" * 20 + "16:09+08"},
+            {"lede": "甲" * 20 + "20:30-0700"},
             {"lede": "甲" * 20 + "2026/10/09 16:09"},
             {"lede": "甲" * 20 + "T16:09:00 UTC"},
             {"lede": "甲" * 20 + "DatePublished"},
@@ -210,6 +211,24 @@ class ReaderContractTest(unittest.TestCase):
         edition = validate_edition(wrap([reader_event(lede=lede)]))
         self.assertEqual(reader_contract_warnings(edition), [])
         self.assertFalse(text_has_time_metadata(edition["events"][0]["lede"]))
+        ranges = (
+            "14:00-16:00",
+            "09:00-18:00",
+            "08:30-11:30",
+            "22:00-06:00",
+            "14:00-16",
+            "15:00 -12 点",
+            "16:09 Z世代用户",
+            "16:09 Z轴",
+            "10:30 z轴",
+            "会议 14:00-16:00",
+            "09:00-17:00 开放",
+        )
+        for phrase in ranges:
+            with self.subTest(phrase=phrase):
+                self.assertFalse(text_has_time_metadata(phrase))
+                ranged = validate_edition(wrap([reader_event(lede="甲" * 20 + phrase)]))
+                self.assertEqual(reader_contract_warnings(ranged), [])
 
     def test_reader_links_follow_public_url_once(self):
         document = wrap([reader_event(lede="甲" * 80, caveat="还没上线")])

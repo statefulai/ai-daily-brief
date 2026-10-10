@@ -23,9 +23,10 @@ READER_LEDE_MAX = 200
 READER_CAVEAT_GUIDE = 40
 READER_EXCEPTION_MAX = 2
 # A bare date (2026-10-09, 2026/10/09) or a Chinese date is not a timestamp.
-# A clock followed by Z, ±HH, ±HHMM, or ±HH:MM is; whitespace may sit between
-# the clock and that suffix. UTC/GMT count only when an offset follows, so
-# “17:00 UTC” stays. A signed amount with no preceding clock stays.
+# After a clock, only a glued uppercase Z counts, and it cannot be followed
+# by a letter, digit, or CJK character. +HH:MM and +HHMM may have whitespace
+# before the sign. +HH and -HHMM count only when glued. -HH:MM and -HH are
+# ranges, not offsets. UTC/GMT count only when an offset follows.
 _READER_CLOCK = r"\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?"
 _READER_TZ = r"(?:Z|UTC|GMT|[+-]\d{2}:?\d{2})"
 _READER_OFFSET_CLOCK = r"(?<!\d)\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?"
@@ -34,10 +35,11 @@ READER_TIME_METADATA_RE = re.compile(
     rf"|\d{{4}}-\d{{2}}-\d{{2}}(?:[Tt]| +){_READER_CLOCK}(?:\s*{_READER_TZ})?"
     rf"|\d{{4}}/\d{{2}}/\d{{2}}(?:[Tt]| +){_READER_CLOCK}(?:\s*{_READER_TZ})?"
     rf"|(?<![A-Za-z0-9])[Tt]{_READER_CLOCK}(?:\s*{_READER_TZ})?"
-    rf"|{_READER_OFFSET_CLOCK}\s*[+-]\d{{2}}:\d{{2}}(?!\d)"
-    rf"|{_READER_OFFSET_CLOCK}\s*[+-]\d{{4}}(?!\d)"
-    rf"|{_READER_OFFSET_CLOCK}\s*[+-]\d{{2}}(?!\d)"
-    rf"|{_READER_OFFSET_CLOCK}\s*Z(?![A-Za-z0-9])"
+    rf"|{_READER_OFFSET_CLOCK}\s*\+\d{{2}}:\d{{2}}(?!\d)"
+    rf"|{_READER_OFFSET_CLOCK}\s*\+\d{{4}}(?!\d)"
+    rf"|{_READER_OFFSET_CLOCK}-\d{{4}}(?!\d)"
+    rf"|{_READER_OFFSET_CLOCK}\+\d{{2}}(?![\d:])"
+    rf"|{_READER_OFFSET_CLOCK}(?-i:Z)(?![A-Za-z0-9\u4e00-\u9fff])"
     rf"|{_READER_OFFSET_CLOCK}\s*(?:UTC|GMT)\s*[+-]\d{{1,4}}(?::\d{{2}})?(?!\d)",
     re.IGNORECASE,
 )
