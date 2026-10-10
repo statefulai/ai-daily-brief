@@ -17,7 +17,13 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from edition import EDITION_ID_RE, EditionError, validate_edition  # noqa: E402
+from edition import (  # noqa: E402
+    EDITION_ID_RE,
+    EditionError,
+    reader_contract_warnings,
+    strip_leading_time_metadata,
+    validate_edition,
+)
 from outputs import WEEKDAYS_ZH, _edition_note, render_web_edition  # noqa: E402
 
 MASTHEAD_NAME = "masthead-art.webp"
@@ -198,6 +204,13 @@ def _edition_day(edition_id: str) -> datetime:
     return datetime.strptime(edition_id, "%Y-%m-%d")
 
 
+def _lead_excerpt(event: dict) -> str:
+    lede = event.get("lede")
+    if isinstance(lede, str) and lede.strip():
+        return lede.strip()
+    return strip_leading_time_metadata(event["facts"][0])
+
+
 def _select_lead(events: list[dict]) -> tuple[int, dict]:
     for index, event in enumerate(events, start=1):
         if event["placement"] == "lead":
@@ -265,7 +278,7 @@ def _latest_html(edition: dict) -> str:
         f'<div class="lead-actions"><a class="read-edition" href="{read_href}">'
         '阅读完整一期 <span aria-hidden="true">→</span></a></div>'
         '<p class="excerpt-label">头条摘录</p>'
-        f'<p class="excerpt">{escape(lead["facts"][0])}</p>'
+        f'<p class="excerpt">{escape(_lead_excerpt(lead))}</p>'
         f"{_conditions_html(lead.get('conditions') or [])}</article>{sidebar}</div>"
     )
 
@@ -367,6 +380,11 @@ def build_site(editions_dir: Path, output_dir: Path) -> list[dict]:
     return editions
 
 
+def _print_reader_warnings(edition: dict) -> None:
+    for message in reader_contract_warnings(edition):
+        print(f"warning: {edition['edition_id']}: {message}", file=sys.stderr)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     subparsers = parser.add_subparsers(dest="command", required=True)
@@ -388,9 +406,12 @@ def main() -> None:
     args = parser.parse_args()
     if args.command == "validate":
         editions = validate_tree(args.editions)
+        for edition in editions:
+            _print_reader_warnings(edition)
         print(f"validated {len(editions)} edition(s)")
     elif args.command == "render":
         edition = render_edition_file(args.edition)
+        _print_reader_warnings(edition)
         print(f"rendered edition {edition['edition_id']}")
     elif args.command == "scope":
         paths, deleted = changed_paths(args.base, args.head)

@@ -18,6 +18,15 @@ EVENT_WINDOWS = ("in_window", "recent")
 EVENT_PLACEMENTS = ("lead", "story", "desk")
 SCHEMA_VERSION = "1"
 HASH_EXCLUDED_FIELDS = ("content_hash", "generated_at", "attempt")
+READER_LEDE_GUIDE = 120
+READER_LEDE_MAX = 200
+READER_CAVEAT_GUIDE = 40
+READER_EXCEPTION_MAX = 2
+READER_TIME_METADATA_RE = re.compile(
+    r"datePublished|dateModified|createdAt|lastmod|"
+    r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})"
+)
+_READER_URL_RE = re.compile(r"https?://\S+")
 
 
 class EditionError(ValueError):
@@ -65,6 +74,90 @@ def _require_optional_text(value: Any, label: str) -> str | None:
     if value is None:
         return None
     return _require_text(value, label)
+
+
+def visible_char_count(text: str) -> int:
+    """Reader-facing length: drop links and whitespace; each remaining character counts as 1."""
+    return len(re.sub(r"\s+", "", _READER_URL_RE.sub("", text)))
+
+
+def reader_visible_text(text: str) -> str:
+    return _READER_URL_RE.sub("", text)
+
+
+def text_has_time_metadata(text: str) -> bool:
+    return READER_TIME_METADATA_RE.search(reader_visible_text(text)) is not None
+
+
+def strip_leading_time_metadata(text: str) -> str:
+    """Drop leading sentences that leak source timestamps. Used only for display."""
+    parts = re.split(r"(?<=[。！？])", text)
+    kept: list[str] = []
+    skipping = True
+    for part in parts:
+        if skipping and part.strip() and text_has_time_metadata(part):
+            continue
+        skipping = False
+        kept.append(part)
+    result = "".join(kept).strip()
+    return result or text.strip()
+
+
+def _reader_field(payload: Mapping[str, Any], key: str) -> str | None:
+    if key not in payload or payload[key] is None:
+        return None
+    return _require_text(payload[key], f"event.{key}")
+
+
+def _reject_reader_time_metadata(text: str, label: str) -> None:
+    if text_has_time_metadata(text):
+        raise EditionError(f"{label} must not include source time metadata")
+
+
+def _check_reader_contract(events: list[dict[str, Any]]) -> None:
+    """Hard limits for events that opt into lede/caveat. Legacy events are skipped."""
+    exceptions = 0
+    for event in events:
+        lede = event.get("lede")
+        caveat = event.get("caveat")
+        reason = event.get("length_exception")
+        if lede is None and caveat is None and reason is None:
+            continue
+        if not lede:
+            raise EditionError("event.lede is required when caveat or length_exception is set")
+        _reject_reader_time_metadata(lede, f"event.lede ({event['id']})")
+        if caveat is not None:
+            _reject_reader_time_metadata(caveat, f"event.caveat ({event['id']})")
+        count = visible_char_count(lede)
+        if count > READER_LEDE_MAX:
+            raise EditionError(f"event.lede exceeds 200 characters ({count})")
+        if count > READER_LEDE_GUIDE and not reason:
+            raise EditionError(
+                f"event.lede exceeds 120 characters without length_exception ({count})"
+            )
+        if reason:
+            exceptions += 1
+    if exceptions > READER_EXCEPTION_MAX:
+        raise EditionError("edition may include at most 2 length_exception events")
+
+
+def reader_contract_warnings(edition: Mapping[str, Any]) -> list[str]:
+    """Soft limits. Callers may print these; they do not fail validation."""
+    warnings: list[str] = []
+    for event in edition.get("events") or []:
+        if not isinstance(event, Mapping):
+            continue
+        lede = event.get("lede")
+        caveat = event.get("caveat")
+        reason = event.get("length_exception")
+        event_id = event.get("id", "?")
+        if isinstance(lede, str) and reason and visible_char_count(lede) > READER_LEDE_GUIDE:
+            warnings.append(
+                f"{event_id}: lede is {visible_char_count(lede)} characters with length_exception"
+            )
+        if isinstance(caveat, str) and visible_char_count(caveat) > READER_CAVEAT_GUIDE:
+            warnings.append(f"{event_id}: caveat is {visible_char_count(caveat)} characters")
+    return warnings
 
 
 def _require_http_url(value: Any, label: str) -> str:
@@ -159,7 +252,7 @@ def validate_event(record: Mapping[str, Any]) -> dict[str, Any]:
         raise EditionError("event.sources must not be empty")
     if not any(source["kind"] == "primary" for source in sources):
         raise EditionError("event must include a primary source")
-    return {
+    event = {
         "id": _require_text(payload.get("id"), "event.id"),
         "placement": placement,
         "window": window,
@@ -170,6 +263,16 @@ def validate_event(record: Mapping[str, Any]) -> dict[str, Any]:
         "background": background,
         "sources": sources,
     }
+    lede = _reader_field(payload, "lede")
+    caveat = _reader_field(payload, "caveat")
+    length_exception = _reader_field(payload, "length_exception")
+    if lede is not None:
+        event["lede"] = lede
+    if caveat is not None:
+        event["caveat"] = caveat
+    if length_exception is not None:
+        event["length_exception"] = length_exception
+    return event
 
 
 def canonical_payload(edition: Mapping[str, Any]) -> dict[str, Any]:
@@ -197,6 +300,7 @@ def validate_edition(document: Mapping[str, Any]) -> dict[str, Any]:
         raise EditionError("attempt must be an integer >= 1")
     sources = [validate_source_record(item) for item in _require_list(payload.get("sources"), "sources")]
     events = [validate_event(item) for item in _require_list(payload.get("events", []), "events")]
+    _check_reader_contract(events)
     source_ids = [item["id"] for item in sources]
     event_ids = [item["id"] for item in events]
     if len(source_ids) != len(set(source_ids)):
