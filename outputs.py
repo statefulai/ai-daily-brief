@@ -62,7 +62,6 @@ def _source_time(event: dict) -> tuple[str, str]:
 
 
 RANGE_LABEL = "适用范围"
-PUBLIC_SITE = "https://brief.sanze.dev/"
 _READER_HEAD_STYLE = (
     "<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style>"
 )
@@ -292,28 +291,33 @@ def _email_reader_event(event: dict, index: int) -> str:
     )
 
 
-def _reader_public_link_html(edition_id: str, public_url: str | None) -> str:
-    edition_url = edition_public_url(edition_id)
+def _site_home_url(public_url: str) -> str:
+    """Homepage is the origin of the edition page the caller already passed."""
+    parsed = urlparse(public_url)
+    return f"{parsed.scheme}://{parsed.netloc}/"
+
+
+def _reader_public_link_html(public_url: str | None) -> str:
+    if not public_url:
+        return ""
+    edition_url = _http_url(public_url, "public_url")
+    home = _site_home_url(edition_url)
     parts = [
-        f'<a href="{escape(edition_url, quote=True)}" style="color:#91472f;">查看网页版</a>',
-        f' · <a href="{escape(PUBLIC_SITE, quote=True)}" style="color:#91472f;">首页</a>',
+        f'<a href="{escape(edition_url, quote=True)}" style="color:#91472f;">查看网页版</a>'
     ]
-    if public_url:
-        url = _http_url(public_url, "public_url")
-        if url.rstrip("/") != edition_url.rstrip("/"):
-            parts.append(
-                f' · <a href="{escape(url, quote=True)}" style="color:#91472f;">查看网页版</a>'
-            )
+    if home.rstrip("/") != edition_url.rstrip("/"):
+        parts.append(f' · <a href="{escape(home, quote=True)}" style="color:#91472f;">首页</a>')
     return "".join(parts)
 
 
-def _reader_footer_lines(edition_id: str, public_url: str | None) -> list[str]:
-    edition_url = edition_public_url(edition_id)
-    lines = [f"网页版：{edition_url}", f"首页：{PUBLIC_SITE}"]
-    if public_url:
-        url = _http_url(public_url, "public_url")
-        if url.rstrip("/") != edition_url.rstrip("/"):
-            lines.append(f"网页版：{url}")
+def _reader_footer_lines(public_url: str | None) -> list[str]:
+    if not public_url:
+        return []
+    edition_url = _http_url(public_url, "public_url")
+    home = _site_home_url(edition_url)
+    lines = [f"网页版：{edition_url}"]
+    if home.rstrip("/") != edition_url.rstrip("/"):
+        lines.append(f"首页：{home}")
     return lines
 
 
@@ -358,7 +362,7 @@ def render_email_html(document: dict, public_url: str | None = None) -> str:
     )
     public_link = ""
     if reader:
-        public_link = _reader_public_link_html(edition["edition_id"], public_url)
+        public_link = _reader_public_link_html(public_url)
     elif public_url:
         url = escape(_http_url(public_url, "public_url"), quote=True)
         public_link = f'<a href="{url}" style="color:#91472f;">查看网页版</a>'
@@ -392,7 +396,7 @@ def _render_reader_email_text(edition: dict, public_url: str | None) -> str:
                 if note:
                     lines.append(note)
         lines.append("")
-    lines.extend(_reader_footer_lines(edition["edition_id"], public_url))
+    lines.extend(_reader_footer_lines(public_url))
     return "\n".join(lines).rstrip() + "\n"
 
 

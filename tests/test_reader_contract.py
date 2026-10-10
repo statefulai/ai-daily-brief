@@ -125,13 +125,75 @@ class ReaderContractTest(unittest.TestCase):
             {"lede": "甲" * 20 + "dateModified"},
             {"lede": "甲" * 20 + "2026-10-09T16:09:00.000Z"},
             {"lede": "甲" * 20 + "2026-10-09T18:35:51+00:00"},
+            {"lede": "甲" * 20 + "2026-10-09T16:09:00"},
+            {"lede": "甲" * 20 + "2026-10-09T16:09"},
+            {"lede": "甲" * 20 + "2026-10-09 16:09:00"},
+            {"lede": "甲" * 20 + "+0800"},
+            {"lede": "甲" * 20 + "T16:09:00 UTC"},
+            {"lede": "甲" * 20 + "DatePublished"},
             {"lede": "甲" * 30, "caveat": "页面 lastmod 刚更新"},
             {"lede": "甲" * 30, "caveat": "createdAt 不该出现"},
+            {"lede": "甲" * 30, "caveat": "时区写成 +0800"},
+            {"lede": "甲" * 30, "caveat": "2026-10-09T16:09:00"},
+            {"lede": "甲" * 30, "caveat": "DatePublished"},
         ]
         for extra in cases:
             with self.subTest(extra=extra):
                 with self.assertRaisesRegex(EditionError, "time metadata"):
                     validate_edition(wrap([reader_event(**extra)]))
+
+    def test_lede_length_boundaries_ignore_whitespace(self):
+        exact_120 = "甲" * 120
+        spaced = "甲 \n" * 120
+        self.assertEqual(visible_char_count(exact_120), 120)
+        self.assertEqual(visible_char_count(spaced), visible_char_count(exact_120))
+        for event_id, lede in (("exact120", exact_120), ("spaced120", spaced)):
+            edition = validate_edition(wrap([reader_event(event_id, lede=lede)]))
+            self.assertEqual(visible_char_count(edition["events"][0]["lede"]), 120)
+            self.assertEqual(reader_contract_warnings(edition), [])
+
+        exact_200 = "乙" * 200
+        edition = validate_edition(
+            wrap([
+                reader_event(
+                    "exact200",
+                    lede=exact_200,
+                    length_exception="政策全文需要把关键条款写进正文",
+                )
+            ])
+        )
+        self.assertEqual(visible_char_count(edition["events"][0]["lede"]), 200)
+        self.assertEqual(
+            reader_contract_warnings(edition),
+            ["exact200: lede is 200 characters with length_exception"],
+        )
+
+    def test_caveat_without_lede_fails(self):
+        event = reader_event()
+        del event["lede"]
+        event["caveat"] = "还没上线"
+        with self.assertRaisesRegex(EditionError, "lede is required"):
+            validate_edition(wrap([event]))
+
+    def test_plain_date_and_numbers_are_not_time_metadata(self):
+        lede = "公司于 2026-10-09 公布，价格 0.042 美元，另有 1000 个名额，10 月 9 日可以申请。"
+        caveat = "10 月 9 日上线"
+        edition = validate_edition(wrap([reader_event(lede=lede, caveat=caveat)]))
+        self.assertEqual(reader_contract_warnings(edition), [])
+        self.assertIn("2026-10-09", edition["events"][0]["lede"])
+        self.assertIn("0.042", edition["events"][0]["lede"])
+
+    def test_reader_links_follow_public_url_once(self):
+        document = wrap([reader_event(lede="甲" * 80, caveat="还没上线")])
+        public_url = "https://example.com/editions/2026-10-11/"
+        text = render_email_text(document, public_url)
+        email = render_email_html(document, public_url)
+        self.assertIn("网页版：https://example.com/editions/2026-10-11/", text)
+        self.assertIn("首页：https://example.com/", text)
+        self.assertEqual(text.count("网页版："), 1)
+        self.assertNotIn("brief.sanze.dev", text)
+        self.assertNotIn("brief.sanze.dev", email)
+        self.assertEqual(email.count("查看网页版"), 1)
 
     def test_reader_plain_date_passes(self):
         lede = "Anthropic 10 月 9 日披露，其模型在评估里出现非预期动作，公司决定内部评估断开实时互联网。"

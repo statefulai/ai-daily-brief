@@ -22,9 +22,19 @@ READER_LEDE_GUIDE = 120
 READER_LEDE_MAX = 200
 READER_CAVEAT_GUIDE = 40
 READER_EXCEPTION_MAX = 2
+# Clock times are source timestamps. A bare date (2026-10-09) or a Chinese
+# date is not. ±HHMM and ±HH:MM are timezone offsets (+0800), including when
+# they stand alone. UTC/GMT count only when attached to a clock time, so a
+# sentence can still say “按 UTC 理解” without a clock.
+_READER_CLOCK = r"\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?"
+_READER_TZ = r"(?:Z|UTC|GMT|[+-]\d{2}:?\d{2})"
 READER_TIME_METADATA_RE = re.compile(
-    r"datePublished|dateModified|createdAt|lastmod|"
-    r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?(?:Z|[+-]\d{2}:\d{2})"
+    r"datepublished|datemodified|createdat|lastmod"
+    rf"|\d{{4}}-\d{{2}}-\d{{2}}(?:[Tt]| +){_READER_CLOCK}(?:\s*{_READER_TZ})?"
+    rf"|(?<![A-Za-z0-9])[Tt]{_READER_CLOCK}(?:\s*{_READER_TZ})?"
+    rf"|(?<!\d)[+-]\d{{2}}:\d{{2}}(?!\d)"
+    rf"|(?<!\d)[+-]\d{{4}}(?!\d)",
+    re.IGNORECASE,
 )
 _READER_URL_RE = re.compile(r"https?://\S+")
 
