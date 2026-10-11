@@ -1,0 +1,373 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-11",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-11T08:00:00+08:00",
+  "generated_at": "2026-10-11T08:03:56.196198+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 1287,
+      "error": null
+    },
+    {
+      "id": "openai_news",
+      "status": "success",
+      "item_count": 1287,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com/news/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "anthropic_research",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com/research/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "google_blog",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 876,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.jiqizhixin.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 472,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "microsoft_ai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "blogs.microsoft.com/ai/feed/ 返回 HTTP 410"
+    },
+    {
+      "id": "azure",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "ms_devblogs",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "failed",
+      "item_count": 0,
+      "error": "ai.meta.com/blog/rss/ 返回 HTTP 404"
+    },
+    {
+      "id": "mistral",
+      "status": "failed",
+      "item_count": 0,
+      "error": "mistral.ai/news/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/blog/rss.xml 返回 HTTP 403"
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "apple",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "infoq",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "huggingface_papers",
+      "status": "failed",
+      "item_count": 0,
+      "error": "paperswithcode.com/rss 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 50,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "nadella-insider-risk",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "纳德拉要求默认把前沿模型当已被攻破，授权的人必须能中途停机",
+      "kicker": "安全 · 行业表态",
+      "facts": [
+        "snscratchpad.com 这篇《Models as Insider Risks in the Super Intelligence Era》的 datePublished 与 article:published_time 都是 2026-10-10T00:00:00Z，可见日期写 OCT 10, 2026。页脚链到 linkedin.com/in/satyanadella。文章要求把前沿闭源和开放权重模型当成内部人风险来设计，不是因为它们必然恶意，而是因为拿到重要系统权限的行动者会犯错或被攻破。",
+        "同一篇写，要先把智能的供给和对它的权限分开。控制必须放在模型外面，把模型、编排工作的 harness，以及它能采取的动作空间分开。可观测性包括这些要求：重要结果不能只依赖一个模型，也不能让模型核对自己的工作；每个有意义的模型动作都要留下防篡改、人能读的证据；要持续测试整个系统，包括失败、攻击、边界情况和系统变更；机构要能独立决定模型能访问什么、能做什么；核验必须独立于被核验的智能；默认假设模型已被攻破并隔离，授权的人必须始终能在任务中途暂停或关掉模型，更强的模型需要标准化的更强隔离。出事要及时向受影响的人披露，并分享哪些控制失效。",
+        "文章最后写，最可信的超级智能系统不是我们最信任那个模型的系统，而是让我们最少需要信任模型的系统。文中使用 Super Intelligence 和 SI。x.com 上对应的文章页这次打开返回 HTTP 404。CNBC 的 datePublished 是 2026-10-10T20:59:28+00:00，The Verge 是 2026-10-10T22:10:17+00:00。两篇对紧急刹车和默认假设模型被攻破的转述，与这篇一致。"
+      ],
+      "conditions": [
+        "页面时间是日期级的 2026-10-10T00:00:00Z，没有更细的钟点。没有打开到 X 正文。",
+        "这是架构主张，不是微软已经发布的产品开关，文中也没有给出实施日期。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Satya Nadella",
+          "url": "https://snscratchpad.com/posts/models-as-insider-risks/",
+          "kind": "primary",
+          "published_at": "2026-10-10T00:00:00Z",
+          "verified": true,
+          "note": "紧急刹车、默认假设模型已被攻破，以及控制必须放在模型外面，取自这篇。datePublished 是 2026-10-10T00:00:00Z。页脚链到纳德拉的 LinkedIn。X 文章页返回 HTTP 404。"
+        },
+        {
+          "label": "CNBC",
+          "url": "https://www.cnbc.com/2026/10/10/microsoft-satya-nadella-ai-emergency-brake-safety.html",
+          "kind": "secondary",
+          "published_at": "2026-10-10T20:59:28+00:00",
+          "verified": true,
+          "note": "周六发文、隔离和紧急刹车的转述取自这篇。datePublished 是 2026-10-10T20:59:28+00:00。原文以纳德拉站点上的长文为准。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1009337/satya-nadella-says-we-should-assume-all-ai-models-are-compromised",
+          "kind": "secondary",
+          "published_at": "2026-10-10T22:10:17+00:00",
+          "verified": true,
+          "note": "防篡改、人能读的证据，以及授权人员可中途停机，取自这篇转述。datePublished 是 2026-10-10T22:10:17+00:00。"
+        }
+      ],
+      "lede": "微软首席执行官萨提亚·纳德拉周六发文，要求默认把前沿模型当成已被攻破的内部人来隔离，授权人员必须能在任务中途暂停或关掉模型。他称这是紧急刹车，并写最可信的系统是让人最少要信任模型的那一个。",
+      "caveat": "这是架构主张，不是已经交付的产品开关。"
+    },
+    {
+      "id": "turing-foreign-ai",
+      "placement": "story",
+      "window": "in_window",
+      "title": "图灵研究所所长说，英国不能只靠可能被关掉的外国人工智能",
+      "kicker": "政策 · 英国",
+      "facts": [
+        "《卫报》这篇的 datePublished 是 2026-10-10T10:00:55.000Z，作者 Dan Milmo。艾伦·图灵研究所所长乔治·威廉森说，人工智能进入国防、国家安全、关键基础设施和医疗后，英国不应只依赖无法检查、无法控制，或可能被限制甚至关掉的系统。他说国家韧性会成为该所重点，方向是保护关键系统免受中断、应对人工智能本身带来的威胁，以及帮助形成英国自己的战略人工智能能力。",
+        "同一篇写，今年 6 月华盛顿曾暂时阻止 Anthropic 最新模型向美国以外发布，并据称要求主要实验室在美国对应机构检查之前，不要把模型交给英国人工智能安全研究所测试。威廉森说，政治和商业压力意味着需要用的时候未必拿得到。他是政府通信中心前负责人。他说用百分比报灭绝风险，没有让他看到如何得出那个数字的证据。他又说气候对他而言同样是国家安全问题。"
+      ],
+      "conditions": [
+        "6 月美国限制模型外流，以及要求实验室暂缓向英国安全研究所提供模型，都只出现在这篇采访里，没有另核政府文件。",
+        "国家韧性是他所长提出的工作重点，不是已经公布的新预算或新立法。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/oct/10/uk-foreign-ai-head-alan-turing-institute-george-williamson",
+          "kind": "primary",
+          "published_at": "2026-10-10T10:00:55.000Z",
+          "verified": true,
+          "note": "不能只依赖可能被关掉的外国系统、国家韧性，以及 6 月模型外流的说法，取自这篇采访。datePublished 是 2026-10-10T10:00:55.000Z。没有另核美国政府文件。"
+        }
+      ],
+      "lede": "艾伦·图灵研究所所长乔治·威廉森对《卫报》说，英国不能只依赖可能被关掉的外国人工智能，并称今年 6 月华盛顿曾短暂挡住模型外流。国家韧性会成为该所接下来的工作重点。",
+      "caveat": "美国限制模型外流出自这篇采访，没有另核政府文件。"
+    },
+    {
+      "id": "distrokid-umg-takedown",
+      "placement": "story",
+      "window": "in_window",
+      "title": "DistroKid 确认因环球音乐的主张下架了很少一部分录音",
+      "kicker": "行业 · 音乐",
+      "facts": [
+        "The Verge 这篇的 datePublished 是 2026-10-10T18:52:07+00:00。DistroKid 艺术家服务副总裁 Amanda Ferri 对 The Verge 说，很少一部分经 DistroKid 发行的录音已因环球音乐的主张被移除。她说公司强烈否认环球诉讼里的指控，并对受影响的艺人受到打扰表示遗憾，同时说正在尽量减少这种打扰，并保护艺人发行音乐的能力。",
+        "同一篇写，环球音乐于 9 月起诉，指控 DistroKid 建成了一条人工智能劣质音乐的发行管道。艺人向该刊说，非人工智能作品也被下架，而且事前事后都没有通知。文章没有给出下架总数或筛选标准。"
+      ],
+      "conditions": [
+        "下架数量和标准没有公布。艺人个案来自 The Verge 的采访，没有逐首核对曲目。",
+        "环球起诉是 9 月的旧案。本期新写下来的是 DistroKid 当天的确认。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/entertainment/1009309/distrokid-take-down-songs-umg-lawsuit",
+          "kind": "primary",
+          "published_at": "2026-10-10T18:52:07+00:00",
+          "verified": true,
+          "note": "很少一部分录音被移除、公司否认指控，取自 Amanda Ferri 对这篇的说法。datePublished 是 2026-10-10T18:52:07+00:00。没有公布下架数量。"
+        }
+      ],
+      "lede": "DistroKid 艺术家服务副总裁阿曼达·费里向《The Verge》确认，已有很少一部分经该平台发行的录音，因环球音乐的主张被下架。公司强烈否认环球关于人工智能劣质音乐管道的指控，但没有公布下架数量。",
+      "caveat": "下架数量和筛选标准都没有公布。"
+    },
+    {
+      "id": "lancet-ai-extinction-threat",
+      "placement": "story",
+      "window": "in_window",
+      "title": "卫报引述柳叶刀委员会：恶意使用人工智能被列入灭绝级威胁",
+      "kicker": "研究 · 健康",
+      "facts": [
+        "《卫报》这篇的 datePublished 是 2026-10-10T23:01:09.000Z，作者 Kat Lay。报道称《柳叶刀》21 世纪全球健康威胁委员会列出 17 项未来 75 年的重大健康威胁。报道引报告写，恶意使用人工智能（包括生物武器）和伴随核饥荒的核冲突，在未来 75 年有灭绝风险，但可能性仍然低。委员会联合主席、华盛顿大学健康指标与评估研究所所长 Christopher Murray 说，他们三年前以为主要是冲突、气候和大流行三类威胁。",
+        "同一篇写，委员会有 35 名专家，发现将于周日在柏林世界卫生峰会分享，之后每年更新。把升温限制在约 1.8 摄氏度而不是 4.4 摄氏度，按报道可避免 18.9 亿健康生命年损失。国际卫生援助若崩溃或陡降，到 2100 年最多造成 15 亿健康生命年损失，其中近 70% 在撒哈拉以南非洲。这篇没有链到 thelancet.com，本次也没有打开委员会报告原文。"
+      ],
+      "conditions": [
+        "17 项威胁、灭绝风险和健康生命年数字都来自《卫报》对委员会的转述，没有打开《柳叶刀》原文。",
+        "峰会分享写的是周日，报道本身的 datePublished 是 2026-10-10T23:01:09.000Z。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Guardian",
+          "url": "https://www.theguardian.com/global-development/2026/oct/11/nuclear-war-and-malicious-use-of-ai-threaten-end-of-humanity-by-2100-says-lancet-assessment",
+          "kind": "primary",
+          "published_at": "2026-10-10T23:01:09.000Z",
+          "verified": true,
+          "note": "17 项威胁、恶意使用人工智能的灭绝风险，以及最多 15 亿健康生命年，取自这篇。datePublished 是 2026-10-10T23:01:09.000Z。没有打开《柳叶刀》原文。"
+        }
+      ],
+      "lede": "《卫报》报道，《柳叶刀》一个 35 人委员会把恶意使用人工智能和核冲突列为未来 75 年可能让人类灭绝的威胁，并写概率仍然低。按该报道，卫生援助若陡降，到 2100 年最多损失 15 亿健康生命年。",
+      "caveat": "没有打开《柳叶刀》原文，数字取自《卫报》。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:2634c6a8324fbcaa9214bec6989f17a1f4467474309335fb10e82b196102866a"
+}
