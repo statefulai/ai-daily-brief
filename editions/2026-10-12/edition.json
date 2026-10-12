@@ -1,0 +1,340 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-12",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-12T08:00:00+08:00",
+  "generated_at": "2026-10-12T08:02:12.648933+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com/news/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "anthropic_research",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com/research/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "apple",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "azure",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "failed",
+      "item_count": 0,
+      "error": "api-docs.deepseek.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "google_blog",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 876,
+      "error": null
+    },
+    {
+      "id": "huggingface_papers",
+      "status": "failed",
+      "item_count": 0,
+      "error": "paperswithcode.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "importai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "importai.substack.com/feed 返回 HTTP 403"
+    },
+    {
+      "id": "infoq",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.infoq.com/ai-ml-data-eng/feed 返回 HTTP 404"
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.jiqizhixin.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "marktechpost",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "failed",
+      "item_count": 0,
+      "error": "ai.meta.com/blog/rss/ 返回 HTTP 404"
+    },
+    {
+      "id": "microsoft",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "microsoft_ai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "blogs.microsoft.com/ai/feed/ 返回 HTTP 410"
+    },
+    {
+      "id": "mistral",
+      "status": "failed",
+      "item_count": 0,
+      "error": "mistral.ai/news/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "mit_tech",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "ms_devblogs",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 1287,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "semianalysis",
+      "status": "failed",
+      "item_count": 0,
+      "error": "semianalysis.com/feed/ 返回 HTTP 403"
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/news/rss.xml 返回 HTTP 404"
+    },
+    {
+      "id": "xai_blog",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai/blog/rss.xml 返回 HTTP 403"
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 40,
+      "error": null
+    },
+    {
+      "id": "hf_daily_papers",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "moonshot-ipo-settlement",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "月之暗面高管在香港上市前与股东商谈和解",
+      "kicker": "行业 · 上市",
+      "facts": [
+        "路透社电讯的 dateline 写 Oct 12 (Reuters)。lufkindailynews.com 的转载页标注 Oct 11, 2026；Devdiscourse 的未改写转载写 Created 12-10-2026 04:30 IST。reuters.com 打开返回 HTTP 401。两份转载都写：知情人士称，月之暗面高管正在计划中的香港上市之前，与一名要求赔偿的股东商谈和解。循环智能 Recurrent.ai 及其部分投资者指控首席执行官杨植麟、首席技术官张宇韬向循环智能投资者作出虚假陈述，并以牺牲循环智能利益为代价中饱私囊。依据是路透社看到的、循环智能律师 3 月 11 日写给月之暗面投资者的信。杨植麟和张宇韬 2016 年共同创立循环智能，2023 年创立月之暗面，公司记录显示两人仍是循环智能控股公司的董事。电讯写，这段和解谈判此前没有被报道。路透社无法独立判断信中指控是否准确，信里也没有点名循环智能的投资人。",
+        "杨植麟和张宇韬没有回复置评邮件。杨植麟此前否认过相关指控。月之暗面不予置评。代表两人及月之暗面的 MinterEllison 资深合伙人 David Morrison 在 2024 年 11 月对中国媒体说，该案既缺乏法律依据，也缺乏事实基础，律所将提出抗辩。循环智能没有回复置评。纠纷在香港进入仲裁，自 2024 年持续至今。信中指控但没有提供证据：2023 年 4 月，载有关键大语言模型数据的服务器未经授权从循环智能转到月之暗面的一家子公司；2024 年 9 月，另一些关键数据按张宇韬的指示被删除。循环智能及其投资者还考虑对月之暗面总裁 Zhang Yutong 在开曼另案起诉。信称 Zhang Yutong 2022 年卸任循环智能董事后获得月之暗面的大量股份，而且这一事实被刻意对股东隐瞒；路透社未能证实这一点。循环智能在月之暗面成立时获得 9.5% 的原始股份。循环智能及其投资者寻求相当于原始股份 10.5% 的赔偿。一名知情人士说，按月之暗面 6 月那轮 300 亿美元估值计算，这可能超过 7 亿美元。知情人士说，他们不知道和解是否即将达成；纠纷预计不会危及上市计划，但未解决的争议可能给潜在投资者带来治理、所有权和披露问题，并可能使上市过程更复杂。香港交易所和香港证监会拒绝置评。中国证监会和国家网信办没有回复置评请求。"
+      ],
+      "conditions": [
+        "和解是否即将达成，知情人士说他们也不知道。月之暗面不予置评。",
+        "超过 7 亿美元是一名知情人士按 6 月 300 亿美元估值做的估算，不是公司公布的和解金额。",
+        "信中关于服务器转移、删数据和股份隐瞒的指控，路透社写明未能独立核实，信本身也没有附证据。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Reuters",
+          "url": "https://www.devdiscourse.com/article/international/3990554-exclusive-moonshot-execs-in-talks-to-settle-dispute-with-shareholder-ahead-of-planned-ipo-people-say",
+          "kind": "primary",
+          "published_at": "2026-10-12T04:30:00+05:30",
+          "verified": true,
+          "note": "和解谈判此前未被报道、10.5% 原始股份、以及按 6 月 300 亿美元估值可能超过 7 亿美元，取自这份未改写的路透社电讯。页面时间写成 12-10-2026 04:30 IST。reuters.com 返回 HTTP 401。"
+        },
+        {
+          "label": "Reuters",
+          "url": "https://lufkindailynews.com/news_reuters/business/exclusive-moonshot-execs-in-talks-to-settle-dispute-with-shareholder-ahead-of-planned-ipo-people/article_b4b0155d-4237-5889-8608-1d7eab226f5e.html",
+          "kind": "secondary",
+          "published_at": "2026-10-11T23:02:26Z",
+          "verified": true,
+          "note": "同一电讯的另一份转载，dateline 为 Oct 12 (Reuters)，页面标注 Oct 11, 2026。10.5%、7 亿美元和 300 亿美元与上一份一致。"
+        }
+      ],
+      "lede": "月之暗面首席执行官杨植麟、首席技术官张宇韬正在和股东谈和解，想在香港上市前处理与循环智能的纠纷。路透社看到的律师函要求赔偿相当于原始股份的 10.5%，按一名知情人士用 6 月 300 亿美元估值估算，可能超过 7 亿美元。",
+      "caveat": "和解还没谈成，公司不予置评，函里的指控没有经独立核实。"
+    },
+    {
+      "id": "uk-model-theft-warning",
+      "placement": "story",
+      "window": "in_window",
+      "title": "英国人工智能安全研究所前首席科学家说，公司的安全挡不住敌国偷走未发布模型",
+      "kicker": "政策 · 英国",
+      "facts": [
+        "《卫报》这篇的 datePublished 是 2026-10-11T23:01:39.000Z，作者 Robert Booth 和 Dan Milmo。文章用将来时写，人工智能大臣 Kanishka Narayan 将在伦敦西区发表演讲，这是 Andy Burnham 把人工智能列为内阁级职责之后他的第一次这类演讲。他将要求开发最先进人工智能的公司加强安全努力，将说英国不能完全依靠科技公司自己监管模型，并主张英国需要建设更多自己的人工智能基础设施。gov.uk 新闻与通讯检索截至核验时，人工智能相关条目最近一条是 2026-10-09，没有这篇讲稿。",
+        "同一篇写，英国人工智能安全研究所前首席科学家 Geoffrey Irving 告诉《卫报》，人工智能公司不具备能阻止敌对国家偷走模型的安全措施。他举的例子是 OpenAI 近期一次事件：网络安全研究人员在该公司奖励道德黑客测试系统的计划中动手，并说理论上能够接触的范围很大。文章写，OpenAI 表示防止模型被盗有多层保护，包括加密和持续监测。欧文曾在 OpenAI 和 Google DeepMind 工作，现在运营一家人工智能安全研究机构，文章没有写出机构名称。他说超级智能让人类灭绝的可能性是 50%，眼下的办法是尽快停止开发先进系统；按当前路径，有可能在不到 12 个月内出现超级智能。这些是他对《卫报》说的判断，不是研究所发布的评估。"
+      ],
+      "conditions": [
+        "大臣的话是演讲预告，不是已经刊出的讲稿。gov.uk 上还没有对应页面。",
+        "50% 和不到 12 个月是欧文对《卫报》说的判断，不是安全研究所的正式评估。",
+        "OpenAI 关于加密和持续监测的说法，只出现在《卫报》的转述里，没有另开公司说明。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Guardian",
+          "url": "https://www.theguardian.com/technology/2026/oct/12/uk-strengthen-cyber-defences-minister-ai-firms-safety",
+          "kind": "primary",
+          "published_at": "2026-10-11T23:01:39.000Z",
+          "verified": true,
+          "note": "欧文关于模型可能被敌对国家偷走的话，以及纳拉扬演讲仍是将来时，取自这篇。datePublished 是 2026-10-11T23:01:39.000Z。gov.uk 没有对应讲稿。文中复述的警局表单和纳德拉紧急刹车已分别写在 10 月 10 日和 10 月 11 日，这里不重复。"
+        }
+      ],
+      "lede": "英国人工智能安全研究所前首席科学家杰弗里·欧文对《卫报》说，公司现有的安全措施挡不住敌对国家偷走尚未发布的模型。人工智能大臣卡尼什卡·纳拉扬将在演讲中要求前沿公司加强安全，并说英国不能只靠企业自己监管。",
+      "caveat": "大臣的演讲还没有政府讲稿。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:96557d536c343fec19b6a61ac06e1d245ec2c119753f6da3bb48c473a4a14fc4"
+}
