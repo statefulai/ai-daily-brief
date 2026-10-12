@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 12 日 AI 日报，含 2 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 12 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-12">2026 年 10 月 12 日</time> · 星期一</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 12 日 08:00（北京时间）。本期收录 2 条窗口内动态；另有 14 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">行业 · 上市</span><time datetime="2026-10-12T07:00:00+08:00">10.12 07:00 北京时间</time></div><h2 id="event-1-title">月之暗面高管在香港上市前与股东商谈和解</h2><div class="lead-copy"><p>月之暗面首席执行官杨植麟、首席技术官张宇韬正在和股东谈和解，想在香港上市前处理与循环智能的纠纷。路透社看到的律师函要求赔偿相当于原始股份的 10.5%，按一名知情人士用 6 月 300 亿美元估值估算，可能超过 7 亿美元。</p><p class="caveat">限定：和解还没谈成，公司不予置评，函里的指控没有经独立核实。</p><div class="source"><a href="https://www.devdiscourse.com/article/international/3990554-exclusive-moonshot-execs-in-talks-to-settle-dispute-with-shareholder-ahead-of-planned-ipo-people-say" target="_blank" rel="noopener noreferrer">原文 · Reuters</a></div><details><summary>详细与核验</summary><p>路透社电讯的 dateline 写 Oct 12 (Reuters)。lufkindailynews.com 的转载页标注 Oct 11, 2026；Devdiscourse 的未改写转载写 Created 12-10-2026 04:30 IST。reuters.com 打开返回 HTTP 401。两份转载都写：知情人士称，月之暗面高管正在计划中的香港上市之前，与一名要求赔偿的股东商谈和解。循环智能 Recurrent.ai 及其部分投资者指控首席执行官杨植麟、首席技术官张宇韬向循环智能投资者作出虚假陈述，并以牺牲循环智能利益为代价中饱私囊。依据是路透社看到的、循环智能律师 3 月 11 日写给月之暗面投资者的信。杨植麟和张宇韬 2016 年共同创立循环智能，2023 年创立月之暗面，公司记录显示两人仍是循环智能控股公司的董事。电讯写，这段和解谈判此前没有被报道。路透社无法独立判断信中指控是否准确，信里也没有点名循环智能的投资人。</p><p>杨植麟和张宇韬没有回复置评邮件。杨植麟此前否认过相关指控。月之暗面不予置评。代表两人及月之暗面的 MinterEllison 资深合伙人 David Morrison 在 2024 年 11 月对中国媒体说，该案既缺乏法律依据，也缺乏事实基础，律所将提出抗辩。循环智能没有回复置评。纠纷在香港进入仲裁，自 2024 年持续至今。信中指控但没有提供证据：2023 年 4 月，载有关键大语言模型数据的服务器未经授权从循环智能转到月之暗面的一家子公司；2024 年 9 月，另一些关键数据按张宇韬的指示被删除。循环智能及其投资者还考虑对月之暗面总裁 Zhang Yutong 在开曼另案起诉。信称 Zhang Yutong 2022 年卸任循环智能董事后获得月之暗面的大量股份，而且这一事实被刻意对股东隐瞒；路透社未能证实这一点。循环智能在月之暗面成立时获得 9.5% 的原始股份。循环智能及其投资者寻求相当于原始股份 10.5% 的赔偿。一名知情人士说，按月之暗面 6 月那轮 300 亿美元估值计算，这可能超过 7 亿美元。知情人士说，他们不知道和解是否即将达成；纠纷预计不会危及上市计划，但未解决的争议可能给潜在投资者带来治理、所有权和披露问题，并可能使上市过程更复杂。香港交易所和香港证监会拒绝置评。中国证监会和国家网信办没有回复置评请求。</p><div class="condition"><strong>适用范围：</strong><ul><li>和解是否即将达成，知情人士说他们也不知道。月之暗面不予置评。</li><li>超过 7 亿美元是一名知情人士按 6 月 300 亿美元估值做的估算，不是公司公布的和解金额。</li><li>信中关于服务器转移、删数据和股份隐瞒的指控，路透社写明未能独立核实，信本身也没有附证据。</li></ul></div><div class="source"><a href="https://www.devdiscourse.com/article/international/3990554-exclusive-moonshot-execs-in-talks-to-settle-dispute-with-shareholder-ahead-of-planned-ipo-people-say" target="_blank" rel="noopener noreferrer">Reuters · 一手来源 · 已核对</a><a href="https://lufkindailynews.com/news_reuters/business/exclusive-moonshot-execs-in-talks-to-settle-dispute-with-shareholder-ahead-of-planned-ipo-people/article_b4b0155d-4237-5889-8608-1d7eab226f5e.html" target="_blank" rel="noopener noreferrer">Reuters · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Reuters）：和解谈判此前未被报道、10.5% 原始股份、以及按 6 月 300 亿美元估值可能超过 7 亿美元，取自这份未改写的路透社电讯。页面时间写成 12-10-2026 04:30 IST。reuters.com 返回 HTTP 401。</p><p class="source-note">核验说明（Reuters）：同一电讯的另一份转载，dateline 为 Oct 12 (Reuters)，页面标注 Oct 11, 2026。10.5%、7 亿美元和 300 亿美元与上一份一致。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">政策 · 英国</span><time datetime="2026-10-12T07:01:39+08:00">10.12 07:01 北京时间</time></div><h3 id="event-2-title">英国人工智能安全研究所前首席科学家说，公司的安全挡不住敌国偷走未发布模型</h3><div><p>英国人工智能安全研究所前首席科学家杰弗里·欧文对《卫报》说，公司现有的安全措施挡不住敌对国家偷走尚未发布的模型。人工智能大臣卡尼什卡·纳拉扬将在演讲中要求前沿公司加强安全，并说英国不能只靠企业自己监管。</p><p class="caveat">限定：大臣的演讲还没有政府讲稿。</p><div class="source"><a href="https://www.theguardian.com/technology/2026/oct/12/uk-strengthen-cyber-defences-minister-ai-firms-safety" target="_blank" rel="noopener noreferrer">原文 · The Guardian</a></div><details><summary>详细与核验</summary><p>《卫报》这篇的 datePublished 是 2026-10-11T23:01:39.000Z，作者 Robert Booth 和 Dan Milmo。文章用将来时写，人工智能大臣 Kanishka Narayan 将在伦敦西区发表演讲，这是 Andy Burnham 把人工智能列为内阁级职责之后他的第一次这类演讲。他将要求开发最先进人工智能的公司加强安全努力，将说英国不能完全依靠科技公司自己监管模型，并主张英国需要建设更多自己的人工智能基础设施。gov.uk 新闻与通讯检索截至核验时，人工智能相关条目最近一条是 2026-10-09，没有这篇讲稿。</p><p>同一篇写，英国人工智能安全研究所前首席科学家 Geoffrey Irving 告诉《卫报》，人工智能公司不具备能阻止敌对国家偷走模型的安全措施。他举的例子是 OpenAI 近期一次事件：网络安全研究人员在该公司奖励道德黑客测试系统的计划中动手，并说理论上能够接触的范围很大。文章写，OpenAI 表示防止模型被盗有多层保护，包括加密和持续监测。欧文曾在 OpenAI 和 Google DeepMind 工作，现在运营一家人工智能安全研究机构，文章没有写出机构名称。他说超级智能让人类灭绝的可能性是 50%，眼下的办法是尽快停止开发先进系统；按当前路径，有可能在不到 12 个月内出现超级智能。这些是他对《卫报》说的判断，不是研究所发布的评估。</p><div class="condition"><strong>适用范围：</strong><ul><li>大臣的话是演讲预告，不是已经刊出的讲稿。gov.uk 上还没有对应页面。</li><li>50% 和不到 12 个月是欧文对《卫报》说的判断，不是安全研究所的正式评估。</li><li>OpenAI 关于加密和持续监测的说法，只出现在《卫报》的转述里，没有另开公司说明。</li></ul></div><div class="source"><a href="https://www.theguardian.com/technology/2026/oct/12/uk-strengthen-cyber-defences-minister-ai-firms-safety" target="_blank" rel="noopener noreferrer">The Guardian · 一手来源 · 已核对</a></div><p class="source-note">核验说明（The Guardian）：欧文关于模型可能被敌对国家偷走的话，以及纳拉扬演讲仍是将来时，取自这篇。datePublished 是 2026-10-11T23:01:39.000Z。gov.uk 没有对应讲稿。文中复述的警局表单和纳德拉紧急刹车已分别写在 10 月 10 日和 10 月 11 日，这里不重复。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
