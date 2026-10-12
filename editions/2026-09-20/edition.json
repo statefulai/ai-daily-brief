@@ -1,0 +1,178 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-09-20",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-09-20T08:00:00+08:00",
+  "generated_at": "2026-09-20T16:20:00+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "openai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "grok-bot",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "cursor",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "google",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "whitehouse",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "truthsocial",
+      "status": "failed",
+      "item_count": 0,
+      "error": "truthsocial.com/@realDonaldTrump/117298821562014906 returned only the account name, not the post body"
+    },
+    {
+      "id": "trumpstruth",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "reuters",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "cnn",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "bbc",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "tibo",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "trump-ai-force",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "特朗普宣布组建 AI Force，并将另设人工智能“沙皇”",
+      "kicker": "焦点 · 政策",
+      "facts": [
+        "美国总统特朗普周六在 Truth Social 发文称：正在组建 AI Force，比照其第一任期设立的 Space Force；并将在近期宣布人工智能“沙皇”，未点名人选。",
+        "他同时写明“不会以任何方式阻碍或压制”该行业发展，对“BAD”将用现有刑事和民事司法系统处理，并称 AI 可能占到美国 GDP 的 25%。白宫官网当日没有对应声明，也未说明编制、权限、是否军方或时间表。"
+      ],
+      "conditions": [
+        "这是社交平台表态，不是行政令或立法，也还没有成立的机构或已任命人选。",
+        "编制、预算、职责和隶属关系均未公布；路透社、CNN 向白宫求证后，未立即得到补充说明。",
+        "“占 GDP 的 25%”是其本人估计，帖文未给出依据。"
+      ],
+      "background": [
+        "这是在行业领袖讨论放缓前沿开发、加州行政令之后的联邦表态。上一任 AI 兼加密“沙皇” David Sacks 已于今春卸任，现任总统科技顾问委员会联合主席。",
+        "窗口内 OpenAI、Anthropic、Cursor、GitHub、xAI 官网没有新产品公告。Tibo 只回复称“也还是周二到”，没有点名产品，不另作一条。"
+      ],
+      "sources": [
+        {
+          "label": "特朗普原帖存档",
+          "url": "https://www.trumpstruth.org/statuses/41808",
+          "kind": "primary",
+          "published_at": "2026-09-19T13:12:00-04:00",
+          "verified": true,
+          "note": "存档标明原帖时间为 2026-09-19 13:12 EDT，对应 https://truthsocial.com/@realDonaldTrump/117298821562014906。原站页面未展开完整正文；正文与路透社、CNN、BBC 引述核对一致。"
+        },
+        {
+          "label": "路透社报道",
+          "url": "https://www.reuters.com/world/us/trump-says-he-will-create-ai-force-name-ai-czar-2026-09-19/",
+          "kind": "secondary",
+          "published_at": "2026-09-19T17:25:00+00:00",
+          "verified": true,
+          "note": "发布时间取自路透社页面标示的 5:25 PM UTC。标题一度写成“任命新顾问”，正文与原帖一致是宣布将组建 AI Force 并在近期宣布“沙皇”。"
+        },
+        {
+          "label": "CNN 报道",
+          "url": "https://www.cnn.com/2026/09/19/politics/trump-ai-task-force-czar",
+          "kind": "secondary",
+          "published_at": "2026-09-19T17:52:06.083Z",
+          "verified": true,
+          "note": null
+        },
+        {
+          "label": "BBC 报道",
+          "url": "https://www.bbc.co.uk/news/articles/cqlykr2vrv04o",
+          "kind": "secondary",
+          "published_at": "2026-09-19T21:01:56.347Z",
+          "verified": true,
+          "note": null
+        }
+      ]
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:08a7367950d6f5902de662a8cba4160876e43d095c29ea480486a32f7d840467"
+}
