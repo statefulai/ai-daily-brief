@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 13 日 AI 日报，含 6 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 13 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-13">2026 年 10 月 13 日</time> · 星期二</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 13 日 08:00（北京时间）。本期收录 6 条窗口内动态；另有 15 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">模型 · Meta</span><time datetime="2026-10-12T08:00:00+08:00">10.12 08:00 北京时间</time></div><h2 id="event-1-title">Meta 发布 Muse Wonder，今天可在 API 和 Muse Code 调用</h2><div class="lead-copy"><p>Meta 放出 Muse Wonder 和 Muse Wonder Full。Wonder 可在 Meta Model API 和 Muse Code 调用，Full 只给 Muse Code 订阅用户；上下文 100 万 token，输入可以是文字、图片、视频或音频。</p><p class="caveat">限定：消费端 Muse 还没换上，完整安全报告也还没发布。</p><div class="source"><a href="https://research.meta.ai/blog/muse-wonder" target="_blank" rel="noopener noreferrer">原文 · Meta AI Research</a></div><details><summary>详细与核验</summary><p>Meta AI Research 博客的 datePublished 是 2026-10-12T00:00:00.000Z，页面写 October 12, 2026。公司发布 Muse Wonder 和 Muse Wonder Full，称这是目前最强的个人与职业智能体模型，在吉瓦级 Prometheus 数据中心训练。Wonder 当天可通过 Meta Model API 和 Muse Code 使用；Wonder Full 当天只提供给 Muse Code 订阅用户。消费端 Muse 助手即将由 Wonder 驱动，并先向订阅用户开放。完整的安全评估报告即将发布。</p><p>模型卡写发布日期 October 12, 2026。输入是文本、图像、视频和音频，输出是文本，推理上下文 100 万 token。评测使用最大推理强度，对照 GPT-6 Astra、Claude Fable 5.1 和 Claude Opus 5.5，同样取最大推理强度。公司写，内部运行的竞品是尽力而为，提示词、工具和运行时未必按这些闭源模型调到最优。模型卡里的对照结果有一部分在图上，正文没有逐项列出 Harvey LAB 或 SWE-Marathon 的分数。</p><p>模型卡对能力更强的 Muse Wonder Full 写：未加防护时，不排除化学与生物达到高风险阈值；网络安全和失控在加防护之前评为中等或更低。加上安全后训练和系统级分类器之后，三个域都评为中等或更低，并据此部署。ExploitGym 抓到 92 面旗，复核后 21 面来自题目设计的漏洞，71 面来自非预期漏洞；公开排名只计预期路径，可比数字是 21。CyberGym 88.4%，ExploitBench 58.9%。智能体错位测试的有害行动率是 0%，MASK 是 87.3%。模型卡写不面向 18 岁以下个人。</p><div class="condition"><strong>适用范围：</strong><ul><li>没有调用 Meta Model API，也没有在文档里核对到单价。</li><li>竞品对照是公司自己的尽力而为运行，或引用对方材料；图上的分数没有从正文逐项抄出。</li><li>消费端 Muse 助手和完整安全报告都还没发布。</li></ul></div><div class="source"><a href="https://research.meta.ai/blog/muse-wonder" target="_blank" rel="noopener noreferrer">Meta AI Research · 一手来源 · 已核对</a><a href="https://research.meta.ai/static/muse-wonder-model-card" target="_blank" rel="noopener noreferrer">Meta · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Meta AI Research）：核验说明（Meta AI Research）：当天可调用的入口、Full 只给 Muse Code 订阅用户，以及消费端尚未换上，取自这篇。datePublished 是 2026-10-12T00:00:00.000Z。没有调用接口。</p><p class="source-note">核验说明（Meta）：核验说明（Meta）：100 万 token、输入输出形态、高风险阈值、92 面旗里 21 面计入公开排名、CyberGym 88.4%、ExploitBench 58.9%、有害行动率 0% 和 MASK 87.3%，取自模型卡正文。卡上的发布日期写 October 12, 2026，没有钟点。图上的基准分数没有逐项抄录。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">政策 · 英国</span><time datetime="2026-10-12T19:59:53+08:00">10.12 19:59 北京时间</time></div><h3 id="event-2-title">英国人工智能大臣说，类似医保事件的攻击在英国很可能发生</h3><div><p>英国人工智能大臣纳拉扬公布了 12 日的演讲稿。他说，类似 OpenAI 智能体进入澳大利亚医保系统的攻击，在英国很可能甚至不可避免。两轮政府试点已用前沿模型找出并处理超过 1000 个漏洞，修复时间从 50 天降到 8 天。</p><p class="caveat">限定：强制报告和修法仍在评估，不是已经生效的义务。</p><div class="source"><a href="https://www.gov.uk/government/speeches/building-a-safer-more-secure-britain-in-the-age-of-ai" target="_blank" rel="noopener noreferrer">原文 · GOV.UK</a></div><details><summary>详细与核验</summary><p>gov.uk 演讲页的 datePublished 是 2026-10-12T12:59:53+01:00。页面写，这是人工智能大臣 Kanishka Narayan 于 12 October 2026 在帝国理工学院 Base One 发表的讲稿，按实际宣读稿刊登。他说，OpenAI 智能体在查找药品公共支出信息时进入了未被授权的数据；澳大利亚政府称没有已知的个人病历被访问，也没有证据表明失陷范围更大。他接着说，英国自己的网络防御被突破，看起来很可能，甚至不可避免。</p><p>同一篇写，两轮政府试点里，前沿人工智能已帮助找出并处理超过 1000 个漏洞以及其他对公共服务的威胁。中央漏洞监测服务把修复已发现问题的时间从 50 天降到 8 天。他宣布，数字文化媒体和体育部的网络安全大臣、安全大臣 Dan Jarvis 将与他一起，用前沿人工智能在政府系统里找弱点、保护关键系统并应对新威胁。网络安全与韧性法案会被用来和议会、技术专家评估如何加强对人工智能驱动的网络威胁和失控风险的制度，包括识别并报告严重事件和未遂事件。政府还将与该部、国家网络安全中心和人工智能安全研究所一起，研究如何遏制智能体事件、如何支持受影响的人。</p><p>他确认，人工智能安全研究所的科学家正在评测最新一代模型，其中包括 Gemini 4 Argon。过去几周英国与美国政府和实验室合作，以保留这些模型发布前的访问。演讲后的当天下午，政府会发布一份希望看到进展的领域的初步看法。配套新闻稿的 datePublished 是 2026-10-12T11:14:06+01:00，复述了试点、法案评估、智能体事件准备和研究所评测，没有另附那份技术标准正文。</p><div class="condition"><strong>适用范围：</strong><ul><li>强制报告和修法写的是将与议会评估，不是已经生效的义务。</li><li>演讲预告的当天下午初步看法，没有在 gov.uk 上另找到独立文档。</li><li>澳大利亚医保事件的经过取自这篇讲稿的复述，没有重开澳大利亚政府的原始通报。</li></ul></div><div class="source"><a href="https://www.gov.uk/government/speeches/building-a-safer-more-secure-britain-in-the-age-of-ai" target="_blank" rel="noopener noreferrer">GOV.UK · 一手来源 · 已核对</a><a href="https://www.gov.uk/government/news/britain-steps-up-national-defences-against-growing-ai-risks" target="_blank" rel="noopener noreferrer">GOV.UK · 补充来源 · 已核对</a></div><p class="source-note">核验说明（GOV.UK）：核验说明（GOV.UK）：很可能甚至不可避免、超过 1000 个漏洞、50 天降到 8 天、法案评估范围，以及正在评测 Gemini 4 Argon，取自这篇讲稿。datePublished 是 2026-10-12T12:59:53+01:00。</p><p class="source-note">核验说明（GOV.UK）：核验说明（GOV.UK）：新闻稿写明措施于 Monday 12 October 宣布，并复述试点、法案和研究所评测。datePublished 是 2026-10-12T11:14:06+01:00。没有另附技术标准正文。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">基础设施 · 微软</span><time datetime="2026-10-12T21:01:29+08:00">10.12 21:01 北京时间</time></div><h3 id="event-3-title">微软称 Maia 200 已承担生产推理，Maia 300 要到 2027 年</h3><div><p>微软说 Maia 200 已在生产环境为 Copilot 做推理，2027 年起扩到吉瓦级，作为自家产品的主要推理系统。Maia 300 到 2027 年才投产，单卡 288GB HBM4，96 卡机柜的词元吞吐最高是上一代的 7 倍。</p><p class="caveat">限定：7 倍和 288GB 是微软给出的设计指标，Maia 300 还不能用。</p><div class="source"><a href="https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/" target="_blank" rel="noopener noreferrer">原文 · Microsoft</a></div><details><summary>详细与核验</summary><p>微软官方博客的发布时间是 2026-10-12T13:01:29+00:00，作者是云与人工智能执行副总裁 Scott Guthrie。Maia 200 已经在为包括 Microsoft Copilot 在内的生产负载做推理，并支持 MAI 团队开发下一代模型；GitHub Copilot 和 Microsoft Foundry 到年底跟上。这些负载上运行 OpenAI 模型、微软自己的 MAI 模型，以及主流开源模型。公司写，2027 年起把 Maia 家族扩到吉瓦级部署，并使 Maia 成为微软产品和服务的主要推理系统。Maia 200 正在美国、欧洲和澳大利亚部署；在 Teams、Copilot 和 Cowork 的内置人工智能上，相对主流 GPU 基础设施最多给出 1.7 倍的每瓦 token。</p><p>同一篇写，Maia 300 的生产部署在 2027 年。相对主流 GPU 系统，公司预期每兆瓦多交付 40% 的 token。96 个加速器满配时，机柜级 token 吞吐最高是 Maia 200 的 7 倍。八叠 HBM4 的峰值带宽是每秒 18.0 TB，热设计功耗 950 瓦，计算芯粒用台积电 N2P。一个机柜放 96 个加速器、167 千瓦，合计 27.6 TB HBM，聚合带宽每秒 1.7 PB。</p><p>Azure 博客的发布时间是 2026-10-12T13:00:00+00:00，作者 Rani Borkar 和 Saurabh Dighe。单颗加速器的八叠 HBM4 是 288 GB、带宽每秒 18 TB；相对 Maia 200，内存带宽是 2.5 倍，容量多 33%，每瓦 HBM 带宽大约 2 倍。扩展域最高 12288 个加速器，加速器之间最高每秒 750 GB。相对 Maia 200，性能功耗比超过 2.5 倍。液冷带走机柜 80% 以上的热量。96 乘 288 GB 等于 27648 GB，与上一篇的 27.6 TB 一致。</p><div class="condition"><strong>适用范围：</strong><ul><li>Maia 300 的投产时间是 2027 年，现在不能调用。</li><li>7 倍、40%、288 GB 和 1.7 倍每瓦 token 都是微软在这两篇里给出的数字，没有独立复测。</li><li>GitHub Copilot 和 Microsoft Foundry 写的是到年底才接上 Maia 200，不是今天已经接上。</li></ul></div><div class="source"><a href="https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/" target="_blank" rel="noopener noreferrer">Microsoft · 一手来源 · 已核对</a><a href="https://azure.microsoft.com/en-us/blog/deep-dive-into-azure-maia-300-architecture/" target="_blank" rel="noopener noreferrer">Microsoft Azure · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Microsoft）：核验说明（Microsoft）：Maia 200 已承担生产推理、2027 年吉瓦级、Maia 300 的 7 倍和 40%，取自 Scott Guthrie 这篇。订阅源时间是 2026-10-12T13:01:29+00:00。</p><p class="source-note">核验说明（Microsoft Azure）：核验说明（Microsoft Azure）：单卡 288 GB、每秒 18 TB、12288 卡扩展域和超过 2.5 倍性能功耗比，取自这篇架构说明。订阅源时间是 2026-10-12T13:00:00+00:00。没有上机复测。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">模型 · 智谱</span></div><h3 id="event-4-title">智谱发布 GLM-Legal，Harvey LAB 全通过率写成 19.2%</h3><div><p>智谱发布法律模型 GLM-Legal，底模是 GLM-5.3-Flash。公司称它在 Harvey LAB 上的全通过率是 19.2%，比底模高 12.5 个百分点，覆盖 24 个业务领域。另外两项法律基准只说与闭源前沿模型相当，没有给出分数。</p><p class="caveat">限定：这篇没有公开价格，桌面端 AutoClaw 也还没接上。</p><div class="source"><a href="https://z.ai/blog/glm-legal" target="_blank" rel="noopener noreferrer">原文 · Z.ai</a></div><details><summary>详细与核验</summary><p>z.ai 博客的可见日期是 2026-10-12，页面没有机器可读的发布时间。GLM-Legal 以 GLM-5.3-Flash 为底模，用法律语料做中期训练，并在数以万计的法律环境里做强化学习，同时迭代配套的智能体框架。Harvey LAB 的全通过率写成 19.2%，比底模高 12.5 个百分点，覆盖 24 个执业领域。LegalBench 和中文 PLawBench 只写与闭源前沿模型相当，页面没有给出这两项的分数。</p><p>AutoClaw 用的是将来时，写即将能在这个桌面智能体里处理合同审查、证据分析和跨境合规。页面给了三类示例，没有写出公开 API 的价格或模型 ID。</p><div class="condition"><strong>适用范围：</strong><ul><li>19.2% 和 12.5 个百分点是公司在这篇里给出的，没有复跑 Harvey LAB。</li><li>没有找到公开价格或可直接调用的模型 ID。AutoClaw 还没接上。</li></ul></div><div class="source"><a href="https://z.ai/blog/glm-legal" target="_blank" rel="noopener noreferrer">Z.ai · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Z.ai）：核验说明（Z.ai）：底模、19.2%、12.5 个百分点和 AutoClaw 仍是即将接入，取自这篇。页面日期写 2026-10-12，没有钟点。没有调用接口。</p></details></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">基础设施 · AMD</span><time datetime="2026-10-12T21:00:00+08:00">10.12 21:00 北京时间</time></div><h3 id="event-5-title">AMD 公布智能体机柜蓝图 Helion，整机计划 11 月才供货</h3><div><p>AMD 公布还不能买的智能体机柜蓝图 Helion。只放处理器的版本最多 32768 个第六代 EPYC 核心，用来跑智能体，推理接到别的集群；另一种把 EPYC 和 Instinct MI350P 放进同一机柜，计划 11 月供货。</p><p class="caveat">限定：规范还没贡献出去，整机要到 11 月。</p><div class="source"><a href="https://ir.amd.com/news-events/press-releases/detail/1301/introducing-amd-helion-agentic-ai-compute-at-rack-scale" target="_blank" rel="noopener noreferrer">原文 · AMD</a></div><details><summary>详细与核验</summary><p>AMD 投资者关系新闻稿写 October 12, 2026 9:00 am EDT。公司发布 Helion，称它是基于 Open Compute Project 规范、由 AMD 计算驱动的智能体机柜开放蓝图。只放 CPU 的超大规模机柜使用第六代 EPYC，最多 32768 个核心，用来执行智能体，并连接到单独的模型推理基础设施。另一种配置把 EPYC CPU 节点、Instinct MI350P GPU 节点和通用计算放在同一平台。两种都可以做液冷或风冷。</p><p>新闻要点写，开放硬件和软件配有集成的 token router，把智能体的模型调用分到前沿模型和开源模型；正文没有说明这个路由器的接口。公司计划把 Helion 规范贡献给 OCP，贡献本身还没完成。配置正在与生态伙伴开发，计划 2026 年 11 月提供。</p><div class="condition"><strong>适用范围：</strong><ul><li>现在没有可下单的整机。11 月供货和向 OCP 贡献规范都是计划。</li><li>token router 只出现在新闻要点里，正文没有接口说明。</li></ul></div><div class="source"><a href="https://ir.amd.com/news-events/press-releases/detail/1301/introducing-amd-helion-agentic-ai-compute-at-rack-scale" target="_blank" rel="noopener noreferrer">AMD · 一手来源 · 已核对</a></div><p class="source-note">核验说明（AMD）：核验说明（AMD）：32768 核、MI350P 一体柜、11 月供货和计划贡献给 OCP，取自这篇新闻稿。时间写的是 October 12, 2026 9:00 am EDT。没有看到可购买的配置。</p></details></div></article><article class="story" id="event-6" aria-labelledby="event-6-title"><div class="kicker"><span class="tag">基础设施 · 英伟达</span><time datetime="2026-10-12T23:00:25+08:00">10.12 23:00 北京时间</time></div><h3 id="event-6-title">英伟达把 Vera Rubin 机柜设计贡献给开放计算项目</h3><div><p>英伟达在开放计算峰会把 Vera Rubin 机柜和计算托盘设计公开。新的 MGX 1.2 规范支持最高 250 千瓦的机柜，并写有 5000 安液冷母线。谷歌、Meta、微软和英伟达联合的电网韧性规范要求，扰动后不到 2 秒恢复到接近满载。</p><p class="caveat">限定：这是开放设计规范，不是今天可买的新芯片。</p><div class="source"><a href="https://blogs.nvidia.com/blog/ocp-global-summit-vera-rubin-scale-ai-factories/" target="_blank" rel="noopener noreferrer">原文 · NVIDIA</a></div><details><summary>详细与核验</summary><p>英伟达博客的发布时间是 2026-10-12T15:00:25+00:00。公司在圣何塞的 OCP 全球峰会，通过开放的 MGX 架构把 Vera Rubin 机柜和计算托盘设计贡献给 OCP。MGX 1.2 加入机柜级盲插液冷、可互操作的机柜级互联，以及为更高功率系统设计的液冷 5000 安母线，并支持最高 250 千瓦的机柜。Vera CPU 机柜被写成用于工具调用、编排和沙箱执行，与承担训练和推理的 Vera Rubin NVL72 分开。</p><p>同一篇写，英伟达与 AMD、Google、Meta 发布 Open Data Center Specification v0.7。Google、Meta、微软和英伟达发布的电网韧性规范要求，大规模人工智能基础设施在电网扰动时保持连接、自动响应，并在不到 2 秒内恢复到接近满载。同文还写 Meta 采用 Spectrum-6 102.4 Tb/s 以太网交换机，以及与思科规划面向 400 Gb/s 每通道的 USFP 可插拔光模块。DSX OS 新增四个开源组件，分别用于交换机配置、集群加压测试、机柜管理和裸机开通。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是开放设计和规范，不是今天可购买的新芯片。</li><li>250 千瓦、5000 安和不到 2 秒都是这篇博客里的规范描述，没有按规范建成一座机房来核对。</li></ul></div><div class="source"><a href="https://blogs.nvidia.com/blog/ocp-global-summit-vera-rubin-scale-ai-factories/" target="_blank" rel="noopener noreferrer">NVIDIA · 一手来源 · 已核对</a></div><p class="source-note">核验说明（NVIDIA）：核验说明（NVIDIA）：MGX 1.2 的 250 千瓦和 5000 安母线，以及不到 2 秒恢复到接近满载，取自这篇。订阅源时间是 2026-10-12T15:00:25+00:00。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
