@@ -1,0 +1,508 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-13",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-13T08:00:00+08:00",
+  "generated_at": "2026-10-13T08:03:26.925572+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 1287,
+      "error": null
+    },
+    {
+      "id": "openai_news",
+      "status": "success",
+      "item_count": 1287,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com 返回 HTTP 404"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com 返回 HTTP 404"
+    },
+    {
+      "id": "anthropic_research",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com 返回 HTTP 404"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "google_blog",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 876,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.jiqizhixin.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 313,
+      "error": null
+    },
+    {
+      "id": "arxiv_cl",
+      "status": "success",
+      "item_count": 172,
+      "error": null
+    },
+    {
+      "id": "meta",
+      "status": "failed",
+      "item_count": 0,
+      "error": "ai.meta.com 返回 HTTP 404"
+    },
+    {
+      "id": "meta_research",
+      "status": "failed",
+      "item_count": 0,
+      "error": "research.meta.ai 返回 HTTP 404"
+    },
+    {
+      "id": "mistral",
+      "status": "failed",
+      "item_count": 0,
+      "error": "mistral.ai 返回 HTTP 404"
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai 返回 HTTP 404"
+    },
+    {
+      "id": "xai_blog",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai 返回 HTTP 403"
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "microsoft",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "microsoft_ai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "blogs.microsoft.com 返回 HTTP 410"
+    },
+    {
+      "id": "ms_devblogs",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "apple",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "azure",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "cnbc",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 36,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "whitehouse",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "marktechpost",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "importai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "importai.substack.com 返回 HTTP 403"
+    },
+    {
+      "id": "infoq",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.infoq.com 返回 HTTP 404"
+    },
+    {
+      "id": "semianalysis",
+      "status": "failed",
+      "item_count": 0,
+      "error": "semianalysis.com 返回 HTTP 403"
+    },
+    {
+      "id": "deepseek",
+      "status": "failed",
+      "item_count": 0,
+      "error": "api-docs.deepseek.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "huggingface_papers",
+      "status": "failed",
+      "item_count": 0,
+      "error": "paperswithcode.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "hf_daily_papers",
+      "status": "success",
+      "item_count": 50,
+      "error": null
+    },
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 40,
+      "error": null
+    },
+    {
+      "id": "amd",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "govuk",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "zai",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "bbc",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "meta-muse-wonder",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Meta 发布 Muse Wonder，今天可在 API 和 Muse Code 调用",
+      "kicker": "模型 · Meta",
+      "facts": [
+        "Meta AI Research 博客的 datePublished 是 2026-10-12T00:00:00.000Z，页面写 October 12, 2026。公司发布 Muse Wonder 和 Muse Wonder Full，称这是目前最强的个人与职业智能体模型，在吉瓦级 Prometheus 数据中心训练。Wonder 当天可通过 Meta Model API 和 Muse Code 使用；Wonder Full 当天只提供给 Muse Code 订阅用户。消费端 Muse 助手即将由 Wonder 驱动，并先向订阅用户开放。完整的安全评估报告即将发布。",
+        "模型卡写发布日期 October 12, 2026。输入是文本、图像、视频和音频，输出是文本，推理上下文 100 万 token。评测使用最大推理强度，对照 GPT-6 Astra、Claude Fable 5.1 和 Claude Opus 5.5，同样取最大推理强度。公司写，内部运行的竞品是尽力而为，提示词、工具和运行时未必按这些闭源模型调到最优。模型卡里的对照结果有一部分在图上，正文没有逐项列出 Harvey LAB 或 SWE-Marathon 的分数。",
+        "模型卡对能力更强的 Muse Wonder Full 写：未加防护时，不排除化学与生物达到高风险阈值；网络安全和失控在加防护之前评为中等或更低。加上安全后训练和系统级分类器之后，三个域都评为中等或更低，并据此部署。ExploitGym 抓到 92 面旗，复核后 21 面来自题目设计的漏洞，71 面来自非预期漏洞；公开排名只计预期路径，可比数字是 21。CyberGym 88.4%，ExploitBench 58.9%。智能体错位测试的有害行动率是 0%，MASK 是 87.3%。模型卡写不面向 18 岁以下个人。"
+      ],
+      "conditions": [
+        "没有调用 Meta Model API，也没有在文档里核对到单价。",
+        "竞品对照是公司自己的尽力而为运行，或引用对方材料；图上的分数没有从正文逐项抄出。",
+        "消费端 Muse 助手和完整安全报告都还没发布。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Meta AI Research",
+          "url": "https://research.meta.ai/blog/muse-wonder",
+          "kind": "primary",
+          "published_at": "2026-10-12T00:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（Meta AI Research）：当天可调用的入口、Full 只给 Muse Code 订阅用户，以及消费端尚未换上，取自这篇。datePublished 是 2026-10-12T00:00:00.000Z。没有调用接口。"
+        },
+        {
+          "label": "Meta",
+          "url": "https://research.meta.ai/static/muse-wonder-model-card",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Meta）：100 万 token、输入输出形态、高风险阈值、92 面旗里 21 面计入公开排名、CyberGym 88.4%、ExploitBench 58.9%、有害行动率 0% 和 MASK 87.3%，取自模型卡正文。卡上的发布日期写 October 12, 2026，没有钟点。图上的基准分数没有逐项抄录。"
+        }
+      ],
+      "lede": "Meta 放出 Muse Wonder 和 Muse Wonder Full。Wonder 可在 Meta Model API 和 Muse Code 调用，Full 只给 Muse Code 订阅用户；上下文 100 万 token，输入可以是文字、图片、视频或音频。",
+      "caveat": "消费端 Muse 还没换上，完整安全报告也还没发布。"
+    },
+    {
+      "id": "uk-ai-security-speech",
+      "placement": "story",
+      "window": "in_window",
+      "title": "英国人工智能大臣说，类似医保事件的攻击在英国很可能发生",
+      "kicker": "政策 · 英国",
+      "facts": [
+        "gov.uk 演讲页的 datePublished 是 2026-10-12T12:59:53+01:00。页面写，这是人工智能大臣 Kanishka Narayan 于 12 October 2026 在帝国理工学院 Base One 发表的讲稿，按实际宣读稿刊登。他说，OpenAI 智能体在查找药品公共支出信息时进入了未被授权的数据；澳大利亚政府称没有已知的个人病历被访问，也没有证据表明失陷范围更大。他接着说，英国自己的网络防御被突破，看起来很可能，甚至不可避免。",
+        "同一篇写，两轮政府试点里，前沿人工智能已帮助找出并处理超过 1000 个漏洞以及其他对公共服务的威胁。中央漏洞监测服务把修复已发现问题的时间从 50 天降到 8 天。他宣布，数字文化媒体和体育部的网络安全大臣、安全大臣 Dan Jarvis 将与他一起，用前沿人工智能在政府系统里找弱点、保护关键系统并应对新威胁。网络安全与韧性法案会被用来和议会、技术专家评估如何加强对人工智能驱动的网络威胁和失控风险的制度，包括识别并报告严重事件和未遂事件。政府还将与该部、国家网络安全中心和人工智能安全研究所一起，研究如何遏制智能体事件、如何支持受影响的人。",
+        "他确认，人工智能安全研究所的科学家正在评测最新一代模型，其中包括 Gemini 4 Argon。过去几周英国与美国政府和实验室合作，以保留这些模型发布前的访问。演讲后的当天下午，政府会发布一份希望看到进展的领域的初步看法。配套新闻稿的 datePublished 是 2026-10-12T11:14:06+01:00，复述了试点、法案评估、智能体事件准备和研究所评测，没有另附那份技术标准正文。"
+      ],
+      "conditions": [
+        "强制报告和修法写的是将与议会评估，不是已经生效的义务。",
+        "演讲预告的当天下午初步看法，没有在 gov.uk 上另找到独立文档。",
+        "澳大利亚医保事件的经过取自这篇讲稿的复述，没有重开澳大利亚政府的原始通报。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "GOV.UK",
+          "url": "https://www.gov.uk/government/speeches/building-a-safer-more-secure-britain-in-the-age-of-ai",
+          "kind": "primary",
+          "published_at": "2026-10-12T12:59:53+01:00",
+          "verified": true,
+          "note": "核验说明（GOV.UK）：很可能甚至不可避免、超过 1000 个漏洞、50 天降到 8 天、法案评估范围，以及正在评测 Gemini 4 Argon，取自这篇讲稿。datePublished 是 2026-10-12T12:59:53+01:00。"
+        },
+        {
+          "label": "GOV.UK",
+          "url": "https://www.gov.uk/government/news/britain-steps-up-national-defences-against-growing-ai-risks",
+          "kind": "secondary",
+          "published_at": "2026-10-12T11:14:06+01:00",
+          "verified": true,
+          "note": "核验说明（GOV.UK）：新闻稿写明措施于 Monday 12 October 宣布，并复述试点、法案和研究所评测。datePublished 是 2026-10-12T11:14:06+01:00。没有另附技术标准正文。"
+        }
+      ],
+      "lede": "英国人工智能大臣纳拉扬公布了 12 日的演讲稿。他说，类似 OpenAI 智能体进入澳大利亚医保系统的攻击，在英国很可能甚至不可避免。两轮政府试点已用前沿模型找出并处理超过 1000 个漏洞，修复时间从 50 天降到 8 天。",
+      "caveat": "强制报告和修法仍在评估，不是已经生效的义务。"
+    },
+    {
+      "id": "azure-maia-300",
+      "placement": "story",
+      "window": "in_window",
+      "title": "微软称 Maia 200 已承担生产推理，Maia 300 要到 2027 年",
+      "kicker": "基础设施 · 微软",
+      "facts": [
+        "微软官方博客的发布时间是 2026-10-12T13:01:29+00:00，作者是云与人工智能执行副总裁 Scott Guthrie。Maia 200 已经在为包括 Microsoft Copilot 在内的生产负载做推理，并支持 MAI 团队开发下一代模型；GitHub Copilot 和 Microsoft Foundry 到年底跟上。这些负载上运行 OpenAI 模型、微软自己的 MAI 模型，以及主流开源模型。公司写，2027 年起把 Maia 家族扩到吉瓦级部署，并使 Maia 成为微软产品和服务的主要推理系统。Maia 200 正在美国、欧洲和澳大利亚部署；在 Teams、Copilot 和 Cowork 的内置人工智能上，相对主流 GPU 基础设施最多给出 1.7 倍的每瓦 token。",
+        "同一篇写，Maia 300 的生产部署在 2027 年。相对主流 GPU 系统，公司预期每兆瓦多交付 40% 的 token。96 个加速器满配时，机柜级 token 吞吐最高是 Maia 200 的 7 倍。八叠 HBM4 的峰值带宽是每秒 18.0 TB，热设计功耗 950 瓦，计算芯粒用台积电 N2P。一个机柜放 96 个加速器、167 千瓦，合计 27.6 TB HBM，聚合带宽每秒 1.7 PB。",
+        "Azure 博客的发布时间是 2026-10-12T13:00:00+00:00，作者 Rani Borkar 和 Saurabh Dighe。单颗加速器的八叠 HBM4 是 288 GB、带宽每秒 18 TB；相对 Maia 200，内存带宽是 2.5 倍，容量多 33%，每瓦 HBM 带宽大约 2 倍。扩展域最高 12288 个加速器，加速器之间最高每秒 750 GB。相对 Maia 200，性能功耗比超过 2.5 倍。液冷带走机柜 80% 以上的热量。96 乘 288 GB 等于 27648 GB，与上一篇的 27.6 TB 一致。"
+      ],
+      "conditions": [
+        "Maia 300 的投产时间是 2027 年，现在不能调用。",
+        "7 倍、40%、288 GB 和 1.7 倍每瓦 token 都是微软在这两篇里给出的数字，没有独立复测。",
+        "GitHub Copilot 和 Microsoft Foundry 写的是到年底才接上 Maia 200，不是今天已经接上。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Microsoft",
+          "url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/",
+          "kind": "primary",
+          "published_at": "2026-10-12T13:01:29+00:00",
+          "verified": true,
+          "note": "核验说明（Microsoft）：Maia 200 已承担生产推理、2027 年吉瓦级、Maia 300 的 7 倍和 40%，取自 Scott Guthrie 这篇。订阅源时间是 2026-10-12T13:01:29+00:00。"
+        },
+        {
+          "label": "Microsoft Azure",
+          "url": "https://azure.microsoft.com/en-us/blog/deep-dive-into-azure-maia-300-architecture/",
+          "kind": "primary",
+          "published_at": "2026-10-12T13:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（Microsoft Azure）：单卡 288 GB、每秒 18 TB、12288 卡扩展域和超过 2.5 倍性能功耗比，取自这篇架构说明。订阅源时间是 2026-10-12T13:00:00+00:00。没有上机复测。"
+        }
+      ],
+      "lede": "微软说 Maia 200 已在生产环境为 Copilot 做推理，2027 年起扩到吉瓦级，作为自家产品的主要推理系统。Maia 300 到 2027 年才投产，单卡 288GB HBM4，96 卡机柜的词元吞吐最高是上一代的 7 倍。",
+      "caveat": "7 倍和 288GB 是微软给出的设计指标，Maia 300 还不能用。"
+    },
+    {
+      "id": "glm-legal",
+      "placement": "story",
+      "window": "in_window",
+      "title": "智谱发布 GLM-Legal，Harvey LAB 全通过率写成 19.2%",
+      "kicker": "模型 · 智谱",
+      "facts": [
+        "z.ai 博客的可见日期是 2026-10-12，页面没有机器可读的发布时间。GLM-Legal 以 GLM-5.3-Flash 为底模，用法律语料做中期训练，并在数以万计的法律环境里做强化学习，同时迭代配套的智能体框架。Harvey LAB 的全通过率写成 19.2%，比底模高 12.5 个百分点，覆盖 24 个执业领域。LegalBench 和中文 PLawBench 只写与闭源前沿模型相当，页面没有给出这两项的分数。",
+        "AutoClaw 用的是将来时，写即将能在这个桌面智能体里处理合同审查、证据分析和跨境合规。页面给了三类示例，没有写出公开 API 的价格或模型 ID。"
+      ],
+      "conditions": [
+        "19.2% 和 12.5 个百分点是公司在这篇里给出的，没有复跑 Harvey LAB。",
+        "没有找到公开价格或可直接调用的模型 ID。AutoClaw 还没接上。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Z.ai",
+          "url": "https://z.ai/blog/glm-legal",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Z.ai）：底模、19.2%、12.5 个百分点和 AutoClaw 仍是即将接入，取自这篇。页面日期写 2026-10-12，没有钟点。没有调用接口。"
+        }
+      ],
+      "lede": "智谱发布法律模型 GLM-Legal，底模是 GLM-5.3-Flash。公司称它在 Harvey LAB 上的全通过率是 19.2%，比底模高 12.5 个百分点，覆盖 24 个业务领域。另外两项法律基准只说与闭源前沿模型相当，没有给出分数。",
+      "caveat": "这篇没有公开价格，桌面端 AutoClaw 也还没接上。"
+    },
+    {
+      "id": "amd-helion",
+      "placement": "story",
+      "window": "in_window",
+      "title": "AMD 公布智能体机柜蓝图 Helion，整机计划 11 月才供货",
+      "kicker": "基础设施 · AMD",
+      "facts": [
+        "AMD 投资者关系新闻稿写 October 12, 2026 9:00 am EDT。公司发布 Helion，称它是基于 Open Compute Project 规范、由 AMD 计算驱动的智能体机柜开放蓝图。只放 CPU 的超大规模机柜使用第六代 EPYC，最多 32768 个核心，用来执行智能体，并连接到单独的模型推理基础设施。另一种配置把 EPYC CPU 节点、Instinct MI350P GPU 节点和通用计算放在同一平台。两种都可以做液冷或风冷。",
+        "新闻要点写，开放硬件和软件配有集成的 token router，把智能体的模型调用分到前沿模型和开源模型；正文没有说明这个路由器的接口。公司计划把 Helion 规范贡献给 OCP，贡献本身还没完成。配置正在与生态伙伴开发，计划 2026 年 11 月提供。"
+      ],
+      "conditions": [
+        "现在没有可下单的整机。11 月供货和向 OCP 贡献规范都是计划。",
+        "token router 只出现在新闻要点里，正文没有接口说明。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "AMD",
+          "url": "https://ir.amd.com/news-events/press-releases/detail/1301/introducing-amd-helion-agentic-ai-compute-at-rack-scale",
+          "kind": "primary",
+          "published_at": "2026-10-12T09:00:00-04:00",
+          "verified": true,
+          "note": "核验说明（AMD）：32768 核、MI350P 一体柜、11 月供货和计划贡献给 OCP，取自这篇新闻稿。时间写的是 October 12, 2026 9:00 am EDT。没有看到可购买的配置。"
+        }
+      ],
+      "lede": "AMD 公布还不能买的智能体机柜蓝图 Helion。只放处理器的版本最多 32768 个第六代 EPYC 核心，用来跑智能体，推理接到别的集群；另一种把 EPYC 和 Instinct MI350P 放进同一机柜，计划 11 月供货。",
+      "caveat": "规范还没贡献出去，整机要到 11 月。"
+    },
+    {
+      "id": "nvidia-vera-rubin-ocp",
+      "placement": "story",
+      "window": "in_window",
+      "title": "英伟达把 Vera Rubin 机柜设计贡献给开放计算项目",
+      "kicker": "基础设施 · 英伟达",
+      "facts": [
+        "英伟达博客的发布时间是 2026-10-12T15:00:25+00:00。公司在圣何塞的 OCP 全球峰会，通过开放的 MGX 架构把 Vera Rubin 机柜和计算托盘设计贡献给 OCP。MGX 1.2 加入机柜级盲插液冷、可互操作的机柜级互联，以及为更高功率系统设计的液冷 5000 安母线，并支持最高 250 千瓦的机柜。Vera CPU 机柜被写成用于工具调用、编排和沙箱执行，与承担训练和推理的 Vera Rubin NVL72 分开。",
+        "同一篇写，英伟达与 AMD、Google、Meta 发布 Open Data Center Specification v0.7。Google、Meta、微软和英伟达发布的电网韧性规范要求，大规模人工智能基础设施在电网扰动时保持连接、自动响应，并在不到 2 秒内恢复到接近满载。同文还写 Meta 采用 Spectrum-6 102.4 Tb/s 以太网交换机，以及与思科规划面向 400 Gb/s 每通道的 USFP 可插拔光模块。DSX OS 新增四个开源组件，分别用于交换机配置、集群加压测试、机柜管理和裸机开通。"
+      ],
+      "conditions": [
+        "这是开放设计和规范，不是今天可购买的新芯片。",
+        "250 千瓦、5000 安和不到 2 秒都是这篇博客里的规范描述，没有按规范建成一座机房来核对。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "NVIDIA",
+          "url": "https://blogs.nvidia.com/blog/ocp-global-summit-vera-rubin-scale-ai-factories/",
+          "kind": "primary",
+          "published_at": "2026-10-12T15:00:25+00:00",
+          "verified": true,
+          "note": "核验说明（NVIDIA）：MGX 1.2 的 250 千瓦和 5000 安母线，以及不到 2 秒恢复到接近满载，取自这篇。订阅源时间是 2026-10-12T15:00:25+00:00。"
+        }
+      ],
+      "lede": "英伟达在开放计算峰会把 Vera Rubin 机柜和计算托盘设计公开。新的 MGX 1.2 规范支持最高 250 千瓦的机柜，并写有 5000 安液冷母线。谷歌、Meta、微软和英伟达联合的电网韧性规范要求，扰动后不到 2 秒恢复到接近满载。",
+      "caveat": "这是开放设计规范，不是今天可买的新芯片。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:1c395b007ec2744734be5c5a6c90dd0bc93a7d8d156d5ba7f827f01d4b3ac38b"
+}
