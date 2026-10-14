@@ -1,0 +1,407 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-14",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-14T08:00:00+08:00",
+  "generated_at": "2026-10-14T08:08:42.233811+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 1288,
+      "error": null
+    },
+    {
+      "id": "openai_news",
+      "status": "success",
+      "item_count": 1288,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com 返回 HTTP 404"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com 返回 HTTP 404"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "google_blog",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 876,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github_changelog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.jiqizhixin.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "nvidia_dev",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "marktechpost",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "bbc",
+      "status": "success",
+      "item_count": 21,
+      "error": null
+    },
+    {
+      "id": "mit_tech",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "failed",
+      "item_count": 0,
+      "error": "mistral.ai 返回 HTTP 404"
+    },
+    {
+      "id": "xai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "x.ai 返回 HTTP 404"
+    },
+    {
+      "id": "deepseek",
+      "status": "failed",
+      "item_count": 0,
+      "error": "api-docs.deepseek.com 返回 HTTP 200，但不是可解析的 RSS"
+    },
+    {
+      "id": "ms_ai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "blogs.microsoft.com 返回 HTTP 410"
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "failed",
+      "item_count": 0,
+      "error": "huggingface.co 返回 HTTP 401"
+    },
+    {
+      "id": "mi5",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "failed",
+      "item_count": 0,
+      "error": "committees.parliament.uk 返回 HTTP 403"
+    },
+    {
+      "id": "cityam",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "huggingface_model",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "gemini-4-argon-public",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "谷歌开放 Gemini 4 Argon，入门价每百万 token 输入 2 美元、输出 10 美元",
+      "kicker": "模型 · Google",
+      "facts": [
+        "blog.google 文章的 datePublished 是 2026-10-13T16:00:00+00:00，作者是 Koray Kavukcuoglu。页面写，Gemini 4 Argon 面向开发者和企业，通过 AI Studio 与 Gemini 平台的 API 全球可用；Google AI Ultra 订阅用户可在 Google Antigravity 使用；Google AI Ultra 和 Pro 订阅用户可在 Gemini 应用以及搜索中的 AI Mode 使用。",
+        "同一页写入门价为每百万 token 输入 2 美元、输出 10 美元，缓存输入优惠 95%。脚注写介绍期于 2026 年 11 月 30 日结束，之后为每百万 token 输入 4 美元、输出 20 美元，适用于面向公众的 Argon。页面写 Gemini API 的统一输入输出 token 上限是 100 万。公司称 Argon 在衡量金融、编程、法律和税务的 Vals Index 上排名第一，没有给出分数。",
+        "同一页写，Fairwind 从这一天起扩大到另外数百个伙伴。1 万名科学家可申请 Google Antigravity 最高用量档免费 6 个月，滚动录取，并受资格、容量和筛选限制。公司自述的安全与能力数字是：外部生物红队只能解开所测生物子任务的不到 1%；在没有理由克制的编码基准上，走捷径的尝试降到 2%；Gray Swan 间接提示注入在 15 次自适应尝试中的攻击成功率降到 0.7%；具身推理基准 ERQA 为 87%。",
+        "GitHub Changelog 的发布时间是 2026-10-13T18:39:56+00:00。页面写 Gemini 4 Argon 已在 GitHub Copilot 一般可用，面向 Copilot Pro+、Max、Business 和 Enterprise，按供应商目录价和用量计费，推送是逐步的。"
+      ],
+      "conditions": [
+        "没有调用 API，也没有在独立的价目页上复核单价。",
+        "Vals Index 排名、生物红队、走捷径比例、Gray Swan 0.7% 和 ERQA 87% 都是公司在这篇发布页上的说法。",
+        "Copilot 写明推送是逐步的，页面没有说每个付费用户此刻都能在模型列表里看到它。",
+        "2026-10-01 期已经写过 9 月 30 日的介绍价和 100 万输出上限。那一页没有写介绍期截止日期，也没有把模型写成已经对普通开发者开放。"
+      ],
+      "background": [
+        "9 月 30 日的发布只向 Fairwind 里受信任的网络防御者推出，并写护栏加强后再向付费 API 客户和 Ultra 订阅用户开放。本期是这次开放，不是那次预告的重写。"
+      ],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
+          "kind": "primary",
+          "published_at": "2026-10-13T16:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（Google）：付费开发者和企业的 API、Ultra 的 Antigravity、Ultra 与 Pro 的 Gemini 应用和搜索 AI Mode、入门价 2 美元和 10 美元、11 月 30 日之后的 4 美元和 20 美元、统一输入输出 100 万 token、Fairwind 扩大到数百个伙伴、1 万个科学家名额，以及不到 1%、2%、0.7% 和 ERQA 87%，取自这篇。datePublished 是 2026-10-13T16:00:00+00:00。没有调用接口。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.blog/changelog/2026-10-13-gemini-4-argon-in-github-copilot",
+          "kind": "primary",
+          "published_at": "2026-10-13T18:39:56+00:00",
+          "verified": true,
+          "note": "核验说明（GitHub）：Copilot Pro+、Max、Business 和 Enterprise 可接入，按供应商目录价和用量计费，推送逐步进行，取自这篇更新说明。发布时间是 2026-10-13T18:39:56+00:00。"
+        }
+      ],
+      "lede": "谷歌把 Gemini 4 Argon 开放给付费开发者和企业，API 入门价是每百万 token 输入 2 美元、输出 10 美元。Ultra 和 Pro 可在 Gemini 应用里用，GitHub Copilot 付费档也开始接入。",
+      "caveat": "免费用户还用不了。入门价写到 11 月 30 日，之后是输入 4 美元、输出 20 美元。"
+    },
+    {
+      "id": "uk-frontier-hearing",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 和 Anthropic 对英国议员说，前沿风险不能只靠自愿承诺",
+      "kicker": "政策 · 英国",
+      "facts": [
+        "WIRED 文章的 datePublished 是 2026-10-13T15:35:29.912-04:00。文章写，英国下院商务、创新、科学和贸易委员会在周二举行听证会，出席者包括四家前沿公司、四名已离职的前员工和英国公务员。Anthropic 欧洲负责人 Liam Booth-Smith 说规则应当有约束力，并说公司一直认为应当有约束公司的规则，自愿承诺不够。",
+        "同一篇写，OpenAI 副总裁 Tom Duff Gordon 支持法定框架和国际公约，并说应当有一些强制内容，先从事件报告开始。他的原话包括应当有一些强制要素，以及不认为把前沿风险长期全部放在自愿承诺上是好计划。被直接问到是否支持法定框架时，Google DeepMind 的 Owen Larter 说会把重点放在标准上。Meta 的 Rob Sherman 指向英国现有监管机构，说不是在白纸上写规则。委员会主席 Liam Byrne 会后对 WIRED 说，这场会是要表明不能依赖自愿自我监管。",
+        "同一篇写，Booth-Smith 说当时没能向英国人工智能安全研究所提供 Mythos 5.1 的完整不受限访问，那是美国政府的问题，并补充说研究所现在已经有访问。前 OpenAI 员工 Daniel Kokotajlo 对议员说，他认为这些公司不能被信任去自我监管。",
+        "City AM 文章的 datePublished 是 2026-10-13T14:49:23+00:00。文章写 Kokotajlo 周二告诉同一委员会，业界的风险容忍高到灾难性的程度。committees.parliament.uk 上的相关页面本次返回 HTTP 403，没有读到官方速记。"
+      ],
+      "conditions": [
+        "公司负责人和前员工的话取自 WIRED 与 City AM 的报道，不是议会速记。",
+        "支持或反对法定框架是听证表态，不是已经生效的法律义务。",
+        "Mythos 5.1 先前未能提供完整访问、现在研究所已经有访问，只依据 WIRED 对 Booth-Smith 的引述。"
+      ],
+      "background": [
+        "2026-10-13 期写的是人工智能大臣 10 月 12 日的演讲。本期是 10 月 13 日公司和政策研究人员出席的委员会听证会，不是那篇讲稿。"
+      ],
+      "sources": [
+        {
+          "label": "WIRED",
+          "url": "https://www.wired.com/story/openai-and-anthropic-tell-british-lawmakers-regulate-us/",
+          "kind": "primary",
+          "published_at": "2026-10-13T15:35:29.912-04:00",
+          "verified": true,
+          "note": "核验说明（WIRED）：Booth-Smith 认为规则应当有约束力，Duff Gordon 要求至少把事件报告做成强制，Larter 把重点放在标准上，Sherman 指向现有监管机构，以及 Mythos 5.1 的访问说法，取自这篇。datePublished 是 2026-10-13T15:35:29.912-04:00。议会速记没有打开。"
+        },
+        {
+          "label": "City AM",
+          "url": "https://www.cityam.com/ai-firms-taking-catastrophically-high-risks-ex-openai-researcher-warns-mps/",
+          "kind": "secondary",
+          "published_at": "2026-10-13T14:49:23+00:00",
+          "verified": true,
+          "note": "核验说明（City AM）：Kokotajlo 称业界风险容忍高到灾难性程度，取自这篇。datePublished 是 2026-10-13T14:49:23+00:00。"
+        }
+      ],
+      "lede": "OpenAI 和 Anthropic 在英国下院说，前沿风险不能长期只靠自愿承诺。Anthropic 欧洲负责人说规则应当有约束力，OpenAI 说至少事件报告应当强制。谷歌 DeepMind 和 Meta 没有支持新的法定框架。",
+      "caveat": "这是听证表态，不是已经生效的法律。议会速记没有打开。"
+    },
+    {
+      "id": "mi5-aitac",
+      "placement": "story",
+      "window": "in_window",
+      "title": "军情五处局长说，最看重的人工智能滥用是生物武器，并宣布威胁评估中心",
+      "kicker": "安全 · 英国",
+      "facts": [
+        "MI5 页面写发布日期是 13 Oct 2026，没有钟点。局长 Ken McCallum 在泰晤士楼向受邀听众发表年度威胁讲话，正文以早晨的问候起头。他谈技术韧性时把人工智能单独拿出来说。",
+        "讲话写，人工智能已经在加剧攻防双方的网络安全竞赛。军情五处抓到过恐怖分子试图用人工智能改进侦察和攻击方法，人工智能无人机是其中的新变化。尚未发生、但他给予最大权重的滥用，是人工智能可能改变现有甚至新型生物武器的利害。英国情报界正与人工智能安全研究所一起处理这些风险。",
+        "讲话宣布，2026 年军情五处设立了人工智能威胁评估中心，设在军情五处，汇集人工智能安全研究所、国家犯罪局和国家网络安全中心等机构，做全源评估，用来把夸张说法和实际情况分开。"
+      ],
+      "conditions": [
+        "生物武器滥用在讲话里被写成尚未发生，不是已经出现的案件。",
+        "威胁评估中心被写成 2026 年已经设立，这场讲话是宣布，不是说机构在讲话当天才成立。",
+        "页面没有钟点。按英国当天上午的讲话理解，它落在本期窗口内。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "MI5",
+          "url": "https://www.mi5.gov.uk/mi5-director-general-delivers-annual-threat-update",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（MI5）：网络安全竞赛、恐怖分子使用人工智能改进侦察和攻击、生物武器滥用尚未发生但权重最高，以及 2026 年设立的人工智能威胁评估中心，取自这篇年度威胁讲话。页面只写 13 Oct 2026，没有钟点。"
+        }
+      ],
+      "lede": "英国军情五处局长麦卡勒姆说，他最看重、但还没发生的滥用，是人工智能改变现有或新的生物武器利害。他宣布军情五处今年设立人工智能威胁评估中心，会同安全研究所、国家犯罪局和网络安全中心做全源评估。",
+      "caveat": "生物武器滥用被写成尚未发生。评估中心是今年设立的。"
+    },
+    {
+      "id": "lfm25-24b-a2b",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Liquid AI 公布 240 亿参数、激活 20 亿的开放权重模型",
+      "kicker": "开源 · Liquid AI",
+      "facts": [
+        "Hugging Face 博客写发布日期是 October 13, 2026，页面里的时间戳是 2026-10-13T17:05:48.636Z。Liquid AI 公布 LFM2.5-24B-A2B，总参数 240 亿，每个 token 激活 20 亿，面向本地智能体。博客写它和基座模型都是开放权重，当天可以在 Hugging Face 下载，并支持 llama.cpp、MLX、vLLM、SGLang 和 ONNX。",
+        "同一篇写，上下文从 3.2 万 token 增到 13.1 万，词表从 6.5 万扩到 12.8 万，预训练数据从大约 17 万亿 token 增到大约 33 万亿。结构是 40 层，每个混合专家块 64 个专家、每次取 4 个。公司自测写，在 M5 Max 上每秒 184 个 token，在 Ryzen AI Max+ 395 上每秒 114 个 token，最多比下一个模型快 1.7 倍且占用内存最少；单张 B300 在高并发下输出超过每秒 2.1 万 token。",
+        "Hugging Face 模型接口写 LiquidAI/LFM2.5-24B-A2B 的 createdAt 是 2026-10-12T05:35:46.000Z，lastModified 是 2026-10-13T16:59:33.000Z。模型卡的 license 是 other，license_name 是 lfm1.0。仓库创建早于本期窗口，这篇博客落在窗口内。"
+      ],
+      "conditions": [
+        "每秒 token 和 1.7 倍是公司在博客里的自测，没有在本机复现。",
+        "开放权重不等于 Apache 或 MIT。模型卡写的许可证名称是 lfm1.0。",
+        "模型仓库的 createdAt 是 10 月 12 日，早于本期窗口。本期采用的是 10 月 13 日这篇发布说明。"
+      ],
+      "background": [
+        "2026-09-25 期写过 LFM2.5-VL 的草稿模型，2026-10-08 期写过 d1 决策模型。本期是另一款 240 亿总参数的文本智能体模型。"
+      ],
+      "sources": [
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/blog/LiquidAI/lfm25-24b-a2b",
+          "kind": "primary",
+          "published_at": "2026-10-13T17:05:48.636Z",
+          "verified": true,
+          "note": "核验说明（Hugging Face）：240 亿总参数、20 亿激活、13.1 万上下文、约 33 万亿 token 预训练，以及 M5 Max 每秒 184 token 和单张 B300 超过每秒 2.1 万 token，取自这篇博客。页面时间戳是 2026-10-13T17:05:48.636Z。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+          "kind": "primary",
+          "published_at": "2026-10-12T05:35:46.000Z",
+          "verified": true,
+          "note": "核验说明（Hugging Face）：license 为 other、license_name 为 lfm1.0，createdAt 是 2026-10-12T05:35:46.000Z，lastModified 是 2026-10-13T16:59:33.000Z，取自模型接口和模型卡。创建时间早于本期窗口。"
+        }
+      ],
+      "lede": "Liquid AI 公布 LFM2.5-24B-A2B，总参数 240 亿，每个 token 激活 20 亿，上下文 13.1 万。权重已放上 Hugging Face，模型卡写的许可证名称是 lfm1.0。",
+      "caveat": "模型仓库创建早于这篇博客。许可证是 lfm1.0。"
+    },
+    {
+      "id": "character-ai-chapter-11",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Character.AI 申请美国破产法第 11 章保护",
+      "kicker": "行业 · Character.AI",
+      "facts": [
+        "TechCrunch 文章的 datePublished 是 2026-10-13T12:23:42+00:00。文章写 Character.AI 已申请美国破产法第 11 章保护，并称法庭文件写资产和负债都在 5000 万到 1 亿美元之间。这次没有打开那份法庭文件。",
+        "同一篇引首席执行官 Colin Adams 的声明：董事会认为法庭监督下的出售最有利于相关各方。文章写公司已同意以 2000 万美元把部分资产卖给迪士尼，并给出技术的非独占永久许可；迪士尼将由上月加入的前员工提供过渡服务，其中包含前首席执行官 Karandeep Singh Anand。Adams 说出售期间平台继续运营，预计 11 月下旬或 12 月初完成，但目前还没有出价或买家；如果没有可行出价，平台会被收掉。"
+      ],
+      "conditions": [
+        "资产范围、迪士尼交易和没有买家，都来自 TechCrunch 对法庭文件和公司声明的转述。法庭文件本身没有打开。",
+        "收掉平台是没有可行出价时的公司说法，不是已经发生的关停。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy/",
+          "kind": "primary",
+          "published_at": "2026-10-13T12:23:42+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：第 11 章申请、资产和负债 5000 万到 1 亿美元、以 2000 万美元向迪士尼出售部分资产，以及目前没有买家，取自这篇。datePublished 是 2026-10-13T12:23:42+00:00。法庭文件没有打开。"
+        }
+      ],
+      "lede": "Character.AI 申请美国破产法第 11 章保护。TechCrunch 引述法庭文件，资产和负债都在 5000 万到 1 亿美元，并写公司同意以 2000 万美元向迪士尼出售部分资产，目前还没有买家。",
+      "caveat": "法庭文件没有打开。没有买家的话，平台可能被收掉。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:cd15c1d2910ed4c5d641bb4dd9189f3707386b25b580440d909457b60e9b5d23"
+}

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 14 日 AI 日报，含 5 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 14 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-14">2026 年 10 月 14 日</time> · 星期三</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 14 日 08:00（北京时间）。本期收录 5 条窗口内动态；另有 9 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">模型 · Google</span><time datetime="2026-10-14T00:00:00+08:00">10.14 00:00 北京时间</time></div><h2 id="event-1-title">谷歌开放 Gemini 4 Argon，入门价每百万 token 输入 2 美元、输出 10 美元</h2><div class="lead-copy"><p>谷歌把 Gemini 4 Argon 开放给付费开发者和企业，API 入门价是每百万 token 输入 2 美元、输出 10 美元。Ultra 和 Pro 可在 Gemini 应用里用，GitHub Copilot 付费档也开始接入。</p><p class="caveat">限定：免费用户还用不了。入门价写到 11 月 30 日，之后是输入 4 美元、输出 20 美元。</p><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/" target="_blank" rel="noopener noreferrer">原文 · Google</a></div><details><summary>详细与核验</summary><p>blog.google 文章的 datePublished 是 2026-10-13T16:00:00+00:00，作者是 Koray Kavukcuoglu。页面写，Gemini 4 Argon 面向开发者和企业，通过 AI Studio 与 Gemini 平台的 API 全球可用；Google AI Ultra 订阅用户可在 Google Antigravity 使用；Google AI Ultra 和 Pro 订阅用户可在 Gemini 应用以及搜索中的 AI Mode 使用。</p><p>同一页写入门价为每百万 token 输入 2 美元、输出 10 美元，缓存输入优惠 95%。脚注写介绍期于 2026 年 11 月 30 日结束，之后为每百万 token 输入 4 美元、输出 20 美元，适用于面向公众的 Argon。页面写 Gemini API 的统一输入输出 token 上限是 100 万。公司称 Argon 在衡量金融、编程、法律和税务的 Vals Index 上排名第一，没有给出分数。</p><p>同一页写，Fairwind 从这一天起扩大到另外数百个伙伴。1 万名科学家可申请 Google Antigravity 最高用量档免费 6 个月，滚动录取，并受资格、容量和筛选限制。公司自述的安全与能力数字是：外部生物红队只能解开所测生物子任务的不到 1%；在没有理由克制的编码基准上，走捷径的尝试降到 2%；Gray Swan 间接提示注入在 15 次自适应尝试中的攻击成功率降到 0.7%；具身推理基准 ERQA 为 87%。</p><p>GitHub Changelog 的发布时间是 2026-10-13T18:39:56+00:00。页面写 Gemini 4 Argon 已在 GitHub Copilot 一般可用，面向 Copilot Pro+、Max、Business 和 Enterprise，按供应商目录价和用量计费，推送是逐步的。</p><div class="condition"><strong>适用范围：</strong><ul><li>没有调用 API，也没有在独立的价目页上复核单价。</li><li>Vals Index 排名、生物红队、走捷径比例、Gray Swan 0.7% 和 ERQA 87% 都是公司在这篇发布页上的说法。</li><li>Copilot 写明推送是逐步的，页面没有说每个付费用户此刻都能在模型列表里看到它。</li><li>2026-10-01 期已经写过 9 月 30 日的介绍价和 100 万输出上限。那一页没有写介绍期截止日期，也没有把模型写成已经对普通开发者开放。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>9 月 30 日的发布只向 Fairwind 里受信任的网络防御者推出，并写护栏加强后再向付费 API 客户和 Ultra 订阅用户开放。本期是这次开放，不是那次预告的重写。</li></ul></details><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a><a href="https://github.blog/changelog/2026-10-13-gemini-4-argon-in-github-copilot" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：核验说明（Google）：付费开发者和企业的 API、Ultra 的 Antigravity、Ultra 与 Pro 的 Gemini 应用和搜索 AI Mode、入门价 2 美元和 10 美元、11 月 30 日之后的 4 美元和 20 美元、统一输入输出 100 万 token、Fairwind 扩大到数百个伙伴、1 万个科学家名额，以及不到 1%、2%、0.7% 和 ERQA 87%，取自这篇。datePublished 是 2026-10-13T16:00:00+00:00。没有调用接口。</p><p class="source-note">核验说明（GitHub）：核验说明（GitHub）：Copilot Pro+、Max、Business 和 Enterprise 可接入，按供应商目录价和用量计费，推送逐步进行，取自这篇更新说明。发布时间是 2026-10-13T18:39:56+00:00。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">政策 · 英国</span><time datetime="2026-10-14T03:35:29.912000+08:00">10.14 03:35 北京时间</time></div><h3 id="event-2-title">OpenAI 和 Anthropic 对英国议员说，前沿风险不能只靠自愿承诺</h3><div><p>OpenAI 和 Anthropic 在英国下院说，前沿风险不能长期只靠自愿承诺。Anthropic 欧洲负责人说规则应当有约束力，OpenAI 说至少事件报告应当强制。谷歌 DeepMind 和 Meta 没有支持新的法定框架。</p><p class="caveat">限定：这是听证表态，不是已经生效的法律。议会速记没有打开。</p><div class="source"><a href="https://www.wired.com/story/openai-and-anthropic-tell-british-lawmakers-regulate-us/" target="_blank" rel="noopener noreferrer">原文 · WIRED</a></div><details><summary>详细与核验</summary><p>WIRED 文章的 datePublished 是 2026-10-13T15:35:29.912-04:00。文章写，英国下院商务、创新、科学和贸易委员会在周二举行听证会，出席者包括四家前沿公司、四名已离职的前员工和英国公务员。Anthropic 欧洲负责人 Liam Booth-Smith 说规则应当有约束力，并说公司一直认为应当有约束公司的规则，自愿承诺不够。</p><p>同一篇写，OpenAI 副总裁 Tom Duff Gordon 支持法定框架和国际公约，并说应当有一些强制内容，先从事件报告开始。他的原话包括应当有一些强制要素，以及不认为把前沿风险长期全部放在自愿承诺上是好计划。被直接问到是否支持法定框架时，Google DeepMind 的 Owen Larter 说会把重点放在标准上。Meta 的 Rob Sherman 指向英国现有监管机构，说不是在白纸上写规则。委员会主席 Liam Byrne 会后对 WIRED 说，这场会是要表明不能依赖自愿自我监管。</p><p>同一篇写，Booth-Smith 说当时没能向英国人工智能安全研究所提供 Mythos 5.1 的完整不受限访问，那是美国政府的问题，并补充说研究所现在已经有访问。前 OpenAI 员工 Daniel Kokotajlo 对议员说，他认为这些公司不能被信任去自我监管。</p><p>City AM 文章的 datePublished 是 2026-10-13T14:49:23+00:00。文章写 Kokotajlo 周二告诉同一委员会，业界的风险容忍高到灾难性的程度。committees.parliament.uk 上的相关页面本次返回 HTTP 403，没有读到官方速记。</p><div class="condition"><strong>适用范围：</strong><ul><li>公司负责人和前员工的话取自 WIRED 与 City AM 的报道，不是议会速记。</li><li>支持或反对法定框架是听证表态，不是已经生效的法律义务。</li><li>Mythos 5.1 先前未能提供完整访问、现在研究所已经有访问，只依据 WIRED 对 Booth-Smith 的引述。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>2026-10-13 期写的是人工智能大臣 10 月 12 日的演讲。本期是 10 月 13 日公司和政策研究人员出席的委员会听证会，不是那篇讲稿。</li></ul></details><div class="source"><a href="https://www.wired.com/story/openai-and-anthropic-tell-british-lawmakers-regulate-us/" target="_blank" rel="noopener noreferrer">WIRED · 一手来源 · 已核对</a><a href="https://www.cityam.com/ai-firms-taking-catastrophically-high-risks-ex-openai-researcher-warns-mps/" target="_blank" rel="noopener noreferrer">City AM · 补充来源 · 已核对</a></div><p class="source-note">核验说明（WIRED）：核验说明（WIRED）：Booth-Smith 认为规则应当有约束力，Duff Gordon 要求至少把事件报告做成强制，Larter 把重点放在标准上，Sherman 指向现有监管机构，以及 Mythos 5.1 的访问说法，取自这篇。datePublished 是 2026-10-13T15:35:29.912-04:00。议会速记没有打开。</p><p class="source-note">核验说明（City AM）：核验说明（City AM）：Kokotajlo 称业界风险容忍高到灾难性程度，取自这篇。datePublished 是 2026-10-13T14:49:23+00:00。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">安全 · 英国</span></div><h3 id="event-3-title">军情五处局长说，最看重的人工智能滥用是生物武器，并宣布威胁评估中心</h3><div><p>英国军情五处局长麦卡勒姆说，他最看重、但还没发生的滥用，是人工智能改变现有或新的生物武器利害。他宣布军情五处今年设立人工智能威胁评估中心，会同安全研究所、国家犯罪局和网络安全中心做全源评估。</p><p class="caveat">限定：生物武器滥用被写成尚未发生。评估中心是今年设立的。</p><div class="source"><a href="https://www.mi5.gov.uk/mi5-director-general-delivers-annual-threat-update" target="_blank" rel="noopener noreferrer">原文 · MI5</a></div><details><summary>详细与核验</summary><p>MI5 页面写发布日期是 13 Oct 2026，没有钟点。局长 Ken McCallum 在泰晤士楼向受邀听众发表年度威胁讲话，正文以早晨的问候起头。他谈技术韧性时把人工智能单独拿出来说。</p><p>讲话写，人工智能已经在加剧攻防双方的网络安全竞赛。军情五处抓到过恐怖分子试图用人工智能改进侦察和攻击方法，人工智能无人机是其中的新变化。尚未发生、但他给予最大权重的滥用，是人工智能可能改变现有甚至新型生物武器的利害。英国情报界正与人工智能安全研究所一起处理这些风险。</p><p>讲话宣布，2026 年军情五处设立了人工智能威胁评估中心，设在军情五处，汇集人工智能安全研究所、国家犯罪局和国家网络安全中心等机构，做全源评估，用来把夸张说法和实际情况分开。</p><div class="condition"><strong>适用范围：</strong><ul><li>生物武器滥用在讲话里被写成尚未发生，不是已经出现的案件。</li><li>威胁评估中心被写成 2026 年已经设立，这场讲话是宣布，不是说机构在讲话当天才成立。</li><li>页面没有钟点。按英国当天上午的讲话理解，它落在本期窗口内。</li></ul></div><div class="source"><a href="https://www.mi5.gov.uk/mi5-director-general-delivers-annual-threat-update" target="_blank" rel="noopener noreferrer">MI5 · 一手来源 · 已核对</a></div><p class="source-note">核验说明（MI5）：核验说明（MI5）：网络安全竞赛、恐怖分子使用人工智能改进侦察和攻击、生物武器滥用尚未发生但权重最高，以及 2026 年设立的人工智能威胁评估中心，取自这篇年度威胁讲话。页面只写 13 Oct 2026，没有钟点。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">开源 · Liquid AI</span><time datetime="2026-10-14T01:05:48.636000+08:00">10.14 01:05 北京时间</time></div><h3 id="event-4-title">Liquid AI 公布 240 亿参数、激活 20 亿的开放权重模型</h3><div><p>Liquid AI 公布 LFM2.5-24B-A2B，总参数 240 亿，每个 token 激活 20 亿，上下文 13.1 万。权重已放上 Hugging Face，模型卡写的许可证名称是 lfm1.0。</p><p class="caveat">限定：模型仓库创建早于这篇博客。许可证是 lfm1.0。</p><div class="source"><a href="https://huggingface.co/blog/LiquidAI/lfm25-24b-a2b" target="_blank" rel="noopener noreferrer">原文 · Hugging Face</a></div><details><summary>详细与核验</summary><p>Hugging Face 博客写发布日期是 October 13, 2026，页面里的时间戳是 2026-10-13T17:05:48.636Z。Liquid AI 公布 LFM2.5-24B-A2B，总参数 240 亿，每个 token 激活 20 亿，面向本地智能体。博客写它和基座模型都是开放权重，当天可以在 Hugging Face 下载，并支持 llama.cpp、MLX、vLLM、SGLang 和 ONNX。</p><p>同一篇写，上下文从 3.2 万 token 增到 13.1 万，词表从 6.5 万扩到 12.8 万，预训练数据从大约 17 万亿 token 增到大约 33 万亿。结构是 40 层，每个混合专家块 64 个专家、每次取 4 个。公司自测写，在 M5 Max 上每秒 184 个 token，在 Ryzen AI Max+ 395 上每秒 114 个 token，最多比下一个模型快 1.7 倍且占用内存最少；单张 B300 在高并发下输出超过每秒 2.1 万 token。</p><p>Hugging Face 模型接口写 LiquidAI/LFM2.5-24B-A2B 的 createdAt 是 2026-10-12T05:35:46.000Z，lastModified 是 2026-10-13T16:59:33.000Z。模型卡的 license 是 other，license_name 是 lfm1.0。仓库创建早于本期窗口，这篇博客落在窗口内。</p><div class="condition"><strong>适用范围：</strong><ul><li>每秒 token 和 1.7 倍是公司在博客里的自测，没有在本机复现。</li><li>开放权重不等于 Apache 或 MIT。模型卡写的许可证名称是 lfm1.0。</li><li>模型仓库的 createdAt 是 10 月 12 日，早于本期窗口。本期采用的是 10 月 13 日这篇发布说明。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>2026-09-25 期写过 LFM2.5-VL 的草稿模型，2026-10-08 期写过 d1 决策模型。本期是另一款 240 亿总参数的文本智能体模型。</li></ul></details><div class="source"><a href="https://huggingface.co/blog/LiquidAI/lfm25-24b-a2b" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a><a href="https://huggingface.co/LiquidAI/LFM2.5-24B-A2B" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Hugging Face）：核验说明（Hugging Face）：240 亿总参数、20 亿激活、13.1 万上下文、约 33 万亿 token 预训练，以及 M5 Max 每秒 184 token 和单张 B300 超过每秒 2.1 万 token，取自这篇博客。页面时间戳是 2026-10-13T17:05:48.636Z。</p><p class="source-note">核验说明（Hugging Face）：核验说明（Hugging Face）：license 为 other、license_name 为 lfm1.0，createdAt 是 2026-10-12T05:35:46.000Z，lastModified 是 2026-10-13T16:59:33.000Z，取自模型接口和模型卡。创建时间早于本期窗口。</p></details></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">行业 · Character.AI</span><time datetime="2026-10-13T20:23:42+08:00">10.13 20:23 北京时间</time></div><h3 id="event-5-title">Character.AI 申请美国破产法第 11 章保护</h3><div><p>Character.AI 申请美国破产法第 11 章保护。TechCrunch 引述法庭文件，资产和负债都在 5000 万到 1 亿美元，并写公司同意以 2000 万美元向迪士尼出售部分资产，目前还没有买家。</p><p class="caveat">限定：法庭文件没有打开。没有买家的话，平台可能被收掉。</p><div class="source"><a href="https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 文章的 datePublished 是 2026-10-13T12:23:42+00:00。文章写 Character.AI 已申请美国破产法第 11 章保护，并称法庭文件写资产和负债都在 5000 万到 1 亿美元之间。这次没有打开那份法庭文件。</p><p>同一篇引首席执行官 Colin Adams 的声明：董事会认为法庭监督下的出售最有利于相关各方。文章写公司已同意以 2000 万美元把部分资产卖给迪士尼，并给出技术的非独占永久许可；迪士尼将由上月加入的前员工提供过渡服务，其中包含前首席执行官 Karandeep Singh Anand。Adams 说出售期间平台继续运营，预计 11 月下旬或 12 月初完成，但目前还没有出价或买家；如果没有可行出价，平台会被收掉。</p><div class="condition"><strong>适用范围：</strong><ul><li>资产范围、迪士尼交易和没有买家，都来自 TechCrunch 对法庭文件和公司声明的转述。法庭文件本身没有打开。</li><li>收掉平台是没有可行出价时的公司说法，不是已经发生的关停。</li></ul></div><div class="source"><a href="https://techcrunch.com/2026/10/13/just-5-years-in-interactive-chatbot-platform-character-ai-files-for-bankruptcy/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：第 11 章申请、资产和负债 5000 万到 1 亿美元、以 2000 万美元向迪士尼出售部分资产，以及目前没有买家，取自这篇。datePublished 是 2026-10-13T12:23:42+00:00。法庭文件没有打开。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
