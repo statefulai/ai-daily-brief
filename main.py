@@ -33,6 +33,7 @@ from outputs import (
     write_readme,
     write_web_edition,
 )
+from source_health import observe_source_health
 from source_status import SourceResult, parse_source_specs, run_source
 from curate import assemble_curated_events
 from contributions import (
@@ -226,6 +227,8 @@ async def run(args: argparse.Namespace):
             f"{result.name}: {result.status}"
             + (f" ({result.error})" if result.error else f" items={len(result.items)}")
         )
+    for alert in observe_source_health(edition_id, source_results, persist=not args.dry_run):
+        logger.warning(alert.text)
     logger.info(f"Total raw items: {len(raw_items)}")
 
     # 2. Deduplicate (within same run)

@@ -1,11 +1,17 @@
+import argparse
+import io
 import json
+import os
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from unittest.mock import AsyncMock, patch
 
-from main import filter_by_window, load_contributions, write_legacy_outputs
+from main import filter_by_window, load_contributions, run, write_legacy_outputs
+from source_health import observe_source_health
+from source_status import SourceResult
 from sources import NewsItem
 
 
@@ -102,6 +108,39 @@ class LegacyMigrationTest(unittest.IsolatedAsyncioTestCase):
         write_readme.assert_called_once_with("brief", "daily-brief.md")
         write_archive.assert_called_once()
         push_to_notion.assert_awaited_once()
+
+
+class SourceHealthWiringTest(unittest.IsolatedAsyncioTestCase):
+    async def test_dry_run_previews_the_alert_and_a_real_run_writes_it(self):
+        cutoff = datetime(2026, 10, 14, 8, 0, tzinfo=timezone(timedelta(hours=8)))
+        failed = [SourceResult("mistral", "Mistral", "failed", error="mistral.ai: HTTP 404")]
+        text = "来源告警：Mistral（mistral）已连续 3 天抓取失败，自 2026-10-12 起。原因：mistral.ai: HTTP 404"
+        args = argparse.Namespace(
+            config="config.yaml", contributions=None, sources_only=True, dry_run=True
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "source_health"
+            observe_source_health("2026-10-12", failed, persist=True, root=root)
+            observe_source_health("2026-10-13", failed, persist=True, root=root)
+            with (
+                patch.dict(os.environ, {"AI_DAILY_PRIVATE_RUN_DIR": directory}),
+                patch("main.edition_window", return_value=(cutoff - timedelta(days=1), cutoff)),
+                patch("main.fetch_all_source_results", new_callable=AsyncMock, return_value=failed),
+                redirect_stdout(io.StringIO()),
+            ):
+                with self.assertLogs("ai-news", level="WARNING") as dry_run_logs:
+                    await run(args)
+                self.assertIn(f"WARNING:ai-news:{text}", dry_run_logs.output)
+                self.assertFalse((root / "alerts").exists(), "dry run writes no alert")
+                self.assertFalse((root / "days" / "2026-10-14").exists(), "dry run writes no day")
+
+                args.dry_run = False
+                await run(args)
+
+            alert = json.loads(
+                (root / "alerts" / "2026-10-14" / "mistral.1.json").read_text(encoding="utf-8")
+            )
+            self.assertEqual((alert["alert_id"], alert["text"]), ("2026-10-14:mistral:1", text))
 
 
 if __name__ == "__main__":
