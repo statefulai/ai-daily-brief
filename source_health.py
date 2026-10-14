@@ -155,8 +155,13 @@ class _Store:
         return self.root / "days" / edition_id / f"{source_id}.json"
 
     def _failed_on(self, edition_id: str, source_id: str) -> bool:
-        day = self._load(self._day_path(edition_id, source_id), DAY_KIND)
-        return day is not None and day.get("status") == "failed"
+        path = self._day_path(edition_id, source_id)
+        if not path.is_file():
+            return False
+        day = self._load(path, DAY_KIND)
+        if day is None:
+            return True
+        return day.get("status") == "failed"
 
     def _alerts_on(self, edition_id: str, source_id: str) -> list[tuple[int, dict | None]]:
         directory = self.root / "alerts" / edition_id

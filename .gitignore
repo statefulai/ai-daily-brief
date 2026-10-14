@@ -9,4 +9,7 @@ assets/avatars/
 output
 _site/
 
-runs/
+# Private generation run state (Jev quota / reuse). Never publish.
+runs/jev/
+
+runs/source_health/
