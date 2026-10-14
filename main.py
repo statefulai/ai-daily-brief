@@ -24,15 +24,7 @@ from dotenv import load_dotenv
 # Load .env file (won't override existing env vars)
 load_dotenv()
 
-from sources import (
-    NewsItem,
-    fetch_hackernews,
-    fetch_github_trending,
-    fetch_huggingface,
-    fetch_rss_feeds,
-    fetch_ruanyf_weekly,
-    fetch_reddit,
-)
+from sources import NewsItem
 from summarizer import CurationError, curate_daily_brief
 from outputs import (
     format_daily_brief,
@@ -41,7 +33,7 @@ from outputs import (
     write_readme,
     write_web_edition,
 )
-from source_status import SourceResult, run_source
+from source_status import SourceResult, parse_source_specs, run_source
 from curate import assemble_curated_events
 from contributions import (
     event_overrides as contribution_event_overrides,
@@ -174,34 +166,10 @@ def cross_day_dedup(items: list[NewsItem], previous_urls: set[str]) -> list[News
     return filtered
 
 
-SOURCE_SPECS = (
-    ("hackernews", "HackerNews", fetch_hackernews),
-    ("github_trending", "GitHub", fetch_github_trending),
-    ("huggingface", "HuggingFace", fetch_huggingface),
-    ("rss_feeds", "RSS", fetch_rss_feeds),
-    ("ruanyf_weekly", "阮一峰周刊", fetch_ruanyf_weekly),
-    ("reddit", "Reddit", fetch_reddit),
-)
-
-
 async def fetch_all_source_results(config: dict) -> list[SourceResult]:
-    """Fetch every configured source and keep success / empty / failure distinct."""
-    sources_cfg = config.get("sources", {})
-    tasks = [
-        run_source(source_id, name, fetcher, sources_cfg.get(source_id, {}))
-        for source_id, name, fetcher in SOURCE_SPECS
-    ]
-    return list(await asyncio.gather(*tasks))
-
-
-async def fetch_all_sources(config: dict) -> list[NewsItem]:
-    """Fetch from all configured sources concurrently."""
-    all_items: list[NewsItem] = []
-    for result in await fetch_all_source_results(config):
-        if result.status == "failed":
-            logger.error(f"{result.name} source failed: {result.error}")
-        all_items.extend(result.items)
-    return all_items
+    """Fetch every configured source and keep success / empty / failure / skipped distinct."""
+    specs = parse_source_specs(config.get("sources") or {})
+    return list(await asyncio.gather(*(run_source(spec) for spec in specs)))
 
 
 def load_contributions(path: str | None) -> list[dict]:

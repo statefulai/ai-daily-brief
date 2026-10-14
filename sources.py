@@ -1,22 +1,59 @@
 """
 AI News Aggregator - Data Sources
 
-Fetches news from: HackerNews, GitHub Trending, HuggingFace, RSS feeds,
-阮一峰周刊, Reddit r/LocalLLaMA.
+Fetches news from: HackerNews, GitHub Trending, HuggingFace, RSS and Atom feeds,
+official HTML listings, DeepSeek release pages, 阮一峰周刊, Reddit r/LocalLLaMA.
+FETCHERS maps each config `kind` to its fetcher.
 """
 
 import re
 import httpx
 import feedparser
 import logging
-from datetime import datetime, timezone, timedelta
+from calendar import timegm
+from datetime import date, datetime, time, timezone, timedelta
 from dataclasses import dataclass, field
+from html import unescape
+from html.parser import HTMLParser
+from urllib.parse import urljoin, urlparse
+
+from edition import BEIJING_TZ
 
 logger = logging.getLogger(__name__)
+
+USER_AGENT = "ai-daily-brief/1.0"
+# Listings give a date with no clock. Noon Beijing on day D lands in edition D+1's
+# window [D 08:00, D+1 08:00), where most same-day posts belong.
+DATE_ONLY_TIME = time(12, 0, tzinfo=BEIJING_TZ)
 
 
 class SourceFetchError(RuntimeError):
     """Raised when a source request fails and must not look like an empty day."""
+
+
+def _client(timeout: float = 30) -> httpx.AsyncClient:
+    # news.microsoft.com answers httpx's default User-Agent with HTTP 403.
+    return httpx.AsyncClient(
+        timeout=timeout,
+        follow_redirects=True,
+        headers={"User-Agent": USER_AGENT},
+    )
+
+
+def _host(url: str) -> str:
+    return urlparse(url).netloc
+
+
+def _tag(name: str) -> str:
+    return name.lower().replace(" ", "-")
+
+
+async def _get_ok(client: httpx.AsyncClient, url: str) -> httpx.Response:
+    resp = await client.get(url)
+    if resp.status_code != 200:
+        # Host and status only, because source_health compares error strings across days.
+        raise SourceFetchError(f"{_host(url)}: HTTP {resp.status_code}")
+    return resp
 
 
 @dataclass
@@ -38,14 +75,11 @@ class NewsItem:
 
 async def fetch_hackernews(config: dict) -> list[NewsItem]:
     """Fetch top stories from HackerNews API."""
-    if not config.get("enabled", True):
-        return []
-
     top_n = config.get("top_n", 30)
     min_score = config.get("min_score", 50)
     items = []
 
-    async with httpx.AsyncClient(timeout=30) as client:
+    async with _client() as client:
         resp = await client.get("https://hacker-news.firebaseio.com/v0/topstories.json")
         if resp.status_code != 200:
             raise SourceFetchError(f"HackerNews topstories returned HTTP {resp.status_code}")
@@ -82,9 +116,6 @@ async def fetch_hackernews(config: dict) -> list[NewsItem]:
 
 async def fetch_github_trending(config: dict) -> list[NewsItem]:
     """Fetch trending repos from GitHub (unofficial scrape-free approach via search API)."""
-    if not config.get("enabled", True):
-        return []
-
     languages = config.get("languages", ["python", "typescript"])
     since = config.get("since", "daily")
     items = []
@@ -99,7 +130,7 @@ async def fetch_github_trending(config: dict) -> list[NewsItem]:
     days = date_map.get(since, 1)
     since_date = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%d")
 
-    async with httpx.AsyncClient(timeout=30) as client:
+    async with _client() as client:
         for lang in languages:
             try:
                 query = f"language:{lang} pushed:>{since_date} stars:>10"
@@ -140,12 +171,9 @@ async def fetch_github_trending(config: dict) -> list[NewsItem]:
 
 async def fetch_huggingface(config: dict) -> list[NewsItem]:
     """Fetch daily papers and trending models from HuggingFace."""
-    if not config.get("enabled", True):
-        return []
-
     items = []
     errors: list[str] = []
-    async with httpx.AsyncClient(timeout=30) as client:
+    async with _client() as client:
         # Daily papers
         if config.get("daily_papers", True):
             try:
@@ -214,70 +242,209 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
     return items
 
 
-async def fetch_rss_feeds(config: dict) -> list[NewsItem]:
-    """Fetch and parse RSS feeds."""
-    if not config.get("enabled", True):
-        return []
+async def fetch_feed(config: dict) -> list[NewsItem]:
+    """One RSS or Atom feed. An HTTP 200 body that is not a feed fails instead of reading as empty."""
+    url, name = config["url"], config["name"]
+    async with _client(timeout=20) as client:
+        resp = await _get_ok(client, url)
+
+    # Bytes, not text: mistral.ai serves its feed as text/plain.
+    parsed = feedparser.parse(resp.content)
+    if not parsed.version and not parsed.entries:
+        raise SourceFetchError(f"{_host(url)}: HTTP 200 but not a feed")
 
     items = []
-    feeds = config.get("feeds", [])
-    errors: list[str] = []
+    for entry in parsed.entries[: config.get("max_items", 10)]:
+        timestamp = entry.get("published_parsed") or entry.get("updated_parsed")
+        if not timestamp:
+            continue
+        items.append(NewsItem(
+            title=entry.get("title", "Untitled"),
+            url=entry.get("link", ""),
+            source=name,
+            summary=re.sub(r"<[^>]+>", "", entry.get("summary", ""))[:200],
+            published=datetime.fromtimestamp(timegm(timestamp), tz=timezone.utc),
+            tags=["rss", _tag(name)],
+        ))
+    logger.info(f"{name}: fetched {len(items)} feed items")
+    return items
 
-    async with httpx.AsyncClient(timeout=20, follow_redirects=True) as client:
-        for feed_cfg in feeds:
+
+@dataclass
+class _Anchor:
+    href: str
+    time_attr: str = ""
+    time_text: str = ""
+    heading: list[str] = field(default_factory=list)
+    texts: list[str] = field(default_factory=list)
+
+
+class _ListingParser(HTMLParser):
+    """Each <a href> with its <time>, its first h1-h4, and its other text runs."""
+
+    HEADINGS = ("h1", "h2", "h3", "h4")
+
+    def __init__(self):
+        super().__init__()
+        self.anchors: list[_Anchor] = []
+        self._anchor: _Anchor | None = None
+        self._capture: str | None = None
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if tag == "a":
+            href = attributes.get("href")
+            self._anchor = _Anchor(href) if href else None
+            if self._anchor:
+                self.anchors.append(self._anchor)
+        elif self._anchor is None:
+            return
+        elif tag == "time":
+            self._anchor.time_attr = attributes.get("datetime") or ""
+            self._capture = "time"
+        elif tag in self.HEADINGS and not self._anchor.heading:
+            self._capture = "heading"
+
+    def handle_endtag(self, tag):
+        if tag == "a":
+            self._anchor = None
+            self._capture = None
+        elif tag == "time" or tag in self.HEADINGS:
+            self._capture = None
+
+    def handle_data(self, data):
+        if self._anchor is None:
+            return
+        if self._capture == "time":
+            self._anchor.time_text += data.strip()
+        elif self._capture == "heading":
+            self._anchor.heading.append(data)
+        elif data.strip():
+            self._anchor.texts.append(data.strip())
+
+
+def _listing_date(time_attr: str, time_text: str) -> datetime | None:
+    try:
+        if time_attr:
+            day = date.fromisoformat(time_attr[:10])
+        else:
+            day = datetime.strptime(time_text, "%b %d, %Y").date()
+    except ValueError:
+        return None
+    return datetime.combine(day, DATE_ONLY_TIME)
+
+
+def parse_html_listing(html: str, listing_url: str, source: str) -> list[NewsItem]:
+    """Links one path segment below listing_url that carry a <time>. First URL wins.
+
+    Title is the first h1-h4 inside the link, else its last text run outside <time>.
+    """
+    parser = _ListingParser()
+    parser.feed(html)
+    host = _host(listing_url)
+    prefix = urlparse(listing_url).path.rstrip("/") + "/"
+    items: list[NewsItem] = []
+    seen: set[str] = set()
+    for anchor in parser.anchors:
+        url = urljoin(listing_url, anchor.href)
+        path = urlparse(url).path
+        slug = path[len(prefix):].rstrip("/") if path.startswith(prefix) else ""
+        if _host(url) != host or not slug or "/" in slug or url in seen:
+            continue
+        published = _listing_date(anchor.time_attr, anchor.time_text)
+        heading = " ".join("".join(anchor.heading).split())
+        title = heading or (anchor.texts[-1] if anchor.texts else "")
+        if published is None or not title:
+            continue
+        seen.add(url)
+        items.append(NewsItem(
+            title=title,
+            url=url,
+            source=source,
+            published=published,
+            tags=["web", _tag(source)],
+        ))
+    return items
+
+
+async def fetch_html_listing(config: dict) -> list[NewsItem]:
+    """An official HTML index of dated posts. main.filter_by_window does the window cut."""
+    url, name = config["url"], config["name"]
+    async with _client(timeout=20) as client:
+        resp = await _get_ok(client, url)
+    items = parse_html_listing(resp.text, url, name)
+    if not items:
+        raise SourceFetchError(f"{_host(url)}: HTTP 200 but no dated article links")
+    logger.info(f"{name}: fetched {len(items)} listing items")
+    return items
+
+
+_DEEPSEEK_PAGE = re.compile(r"/news/news(\d{2})(\d{2})(\d{2})/?$")
+
+
+def parse_deepseek_links(html: str, base_url: str) -> list[tuple[str, datetime]]:
+    """Release pages /news/newsYYMMDD with the date read from the slug. Unique, newest first."""
+    links: dict[str, datetime] = {}
+    for href in re.findall(r"""href=["']([^"']+)["']""", html):
+        url = urljoin(base_url, href)
+        match = _DEEPSEEK_PAGE.search(urlparse(url).path)
+        if not match or _host(url) != _host(base_url) or url in links:
+            continue
+        yy, mm, dd = (int(part) for part in match.groups())
+        try:
+            links[url] = datetime.combine(date(2000 + yy, mm, dd), DATE_ONLY_TIME)
+        except ValueError:
+            continue
+    return sorted(links.items(), key=lambda link: link[1], reverse=True)
+
+
+def _first_h1(html: str) -> str:
+    match = re.search(r"<h1\b[^>]*>(.*?)</h1>", html, re.S | re.I)
+    if not match:
+        return ""
+    return " ".join(unescape(re.sub(r"<[^>]+>", "", match.group(1))).split())
+
+
+async def fetch_deepseek_updates(config: dict) -> list[NewsItem]:
+    """The newest release pages linked from api-docs.deepseek.com/updates/.
+
+    The updates page links each release as "this documentation", so the title is the page's h1.
+    """
+    url, name = config["url"], config["name"]
+    items = []
+    async with _client(timeout=20) as client:
+        links = parse_deepseek_links((await _get_ok(client, url)).text, url)
+        if not links:
+            raise SourceFetchError(f"{_host(url)}: HTTP 200 but no /news/newsYYMMDD links")
+        for page_url, published in links[: config.get("max_items", 3)]:
             try:
-                resp = await client.get(feed_cfg["url"])
-                if resp.status_code != 200:
-                    logger.warning(f"RSS {feed_cfg['name']}: HTTP {resp.status_code}")
-                    errors.append(f"{feed_cfg['name']}: HTTP {resp.status_code}")
-                    continue
-
-                parsed = feedparser.parse(resp.text)
-                for entry in parsed.entries[:10]:
-                    published_parsed = getattr(entry, "published_parsed", None)
-                    updated_parsed = getattr(entry, "updated_parsed", None)
-                    timestamp = published_parsed or updated_parsed
-                    if not timestamp:
-                        continue
-                    from calendar import timegm
-
-                    published = datetime.fromtimestamp(
-                        timegm(timestamp), tz=timezone.utc
-                    )
-
-                    summary = ""
-                    if hasattr(entry, "summary"):
-                        # Strip HTML tags naively
-                        import re
-                        summary = re.sub(r"<[^>]+>", "", entry.summary)[:200]
-
-                    items.append(NewsItem(
-                        title=entry.get("title", "Untitled"),
-                        url=entry.get("link", ""),
-                        source=feed_cfg["name"],
-                        summary=summary,
-                        published=published,
-                        tags=["rss", feed_cfg["name"].lower().replace(" ", "-")],
-                    ))
-            except Exception as e:
-                logger.warning(f"Failed to fetch RSS {feed_cfg['name']}: {e}")
-                errors.append(f"{feed_cfg['name']}: {e}")
-
-    if feeds and not items and errors:
-        raise SourceFetchError("RSS feeds failed: " + "; ".join(errors))
-    logger.info(f"RSS Feeds: fetched {len(items)} items from {len(feeds)} feeds")
+                page = await _get_ok(client, page_url)
+            except (SourceFetchError, httpx.HTTPError) as exc:
+                logger.warning(f"DeepSeek page skipped: {page_url}: {exc}")
+                continue
+            title = _first_h1(page.text)
+            if not title:
+                logger.warning(f"DeepSeek page skipped: {page_url}: no h1")
+                continue
+            items.append(NewsItem(
+                title=title,
+                url=page_url,
+                source=name,
+                published=published,
+                tags=["web", _tag(name)],
+            ))
+    if not items:
+        raise SourceFetchError(f"{_host(url)}: no readable /news/newsYYMMDD page")
+    logger.info(f"{name}: fetched {len(items)} release pages")
     return items
 
 
 async def fetch_ruanyf_weekly(config: dict) -> list[NewsItem]:
     """Fetch latest issue from ruanyf/weekly (阮一峰科技爱好者周刊)."""
-    if not config.get("enabled", True):
-        return []
-
     items = []
     repo = config.get("repo", "ruanyf/weekly")
 
-    async with httpx.AsyncClient(timeout=30) as client:
+    async with _client() as client:
         try:
             # Find latest issue number and its commit date
             resp = await client.get(
@@ -384,20 +551,13 @@ def _parse_ruanyf_markdown(
 
 async def fetch_reddit(config: dict) -> list[NewsItem]:
     """Fetch hot posts from configured subreddits (default: r/LocalLLaMA)."""
-    if not config.get("enabled", True):
-        return []
-
     subreddits = config.get("subreddits", ["LocalLLaMA"])
     top_n = config.get("top_n", 15)
     min_score = config.get("min_score", 50)
     items = []
     errors: list[str] = []
 
-    async with httpx.AsyncClient(
-        timeout=30,
-        headers={"User-Agent": "ai-daily-brief/1.0"},
-        follow_redirects=True,
-    ) as client:
+    async with _client() as client:
         for sub in subreddits:
             try:
                 resp = await client.get(
@@ -448,3 +608,15 @@ async def fetch_reddit(config: dict) -> list[NewsItem]:
         raise SourceFetchError("Reddit failed: " + "; ".join(errors))
     logger.info(f"Reddit: fetched {len(items)} posts")
     return items
+
+
+FETCHERS = {
+    "hackernews": fetch_hackernews,
+    "github_trending": fetch_github_trending,
+    "huggingface": fetch_huggingface,
+    "ruanyf_weekly": fetch_ruanyf_weekly,
+    "reddit": fetch_reddit,
+    "feed": fetch_feed,
+    "html_listing": fetch_html_listing,
+    "deepseek_updates": fetch_deepseek_updates,
+}
