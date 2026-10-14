@@ -149,6 +149,17 @@ class SourceHealthTest(unittest.TestCase):
         )
         self.assertEqual(self.observe("2026-10-14", failed("HTTP 404")), expected, "dry run consumed nothing")
 
+    def test_corrupt_day_file_counts_as_a_failing_day(self):
+        self.assertEqual(self.observe("2026-10-12", failed("HTTP 404")), [])
+        corrupt = self.root / "days" / "2026-10-13" / "mistral.json"
+        corrupt.parent.mkdir(parents=True)
+        corrupt.write_text("{not json", encoding="utf-8")
+        self.assertEqual(
+            self.observe("2026-10-14", failed("HTTP 404")),
+            [threshold_alert("2026-10-14:mistral:1", "2026-10-12", 3, "HTTP 404")],
+            "a corrupt day keeps the streak",
+        )
+
     def test_failed_alert_write_warns_once_and_next_day_recovers(self):
         self.observe("2026-10-12", failed("HTTP 404"))
         self.observe("2026-10-13", failed("HTTP 404"))
