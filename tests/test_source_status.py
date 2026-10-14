@@ -268,19 +268,19 @@ class FetcherTest(unittest.IsolatedAsyncioTestCase):
                     "Expanding the Cyber Verification Program",
                     "https://www.anthropic.com/news/cyber-verification-program",
                     "Anthropic",
-                    datetime(2026, 10, 6, 12, 0, tzinfo=BEIJING),
+                    datetime(2026, 10, 6, 20, 0, tzinfo=BEIJING),
                 ),
                 (
                     "2026 Usage Policy update",
                     "https://www.anthropic.com/news/2026-usage-policy-update",
                     "Anthropic",
-                    datetime(2026, 10, 8, 12, 0, tzinfo=BEIJING),
+                    datetime(2026, 10, 8, 20, 0, tzinfo=BEIJING),
                 ),
                 (
                     "How we contain Claude across products",
                     "https://www.anthropic.com/engineering/how-we-contain-claude",
                     "Anthropic Engineering",
-                    datetime(2026, 5, 25, 12, 0, tzinfo=BEIJING),
+                    datetime(2026, 5, 25, 20, 0, tzinfo=BEIJING),
                 ),
             ],
         )
@@ -289,10 +289,10 @@ class FetcherTest(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(
             parse_deepseek_links(DEEPSEEK_UPDATES, "https://api-docs.deepseek.com/updates/"),
             [
-                ("https://api-docs.deepseek.com/news/news260910", datetime(2026, 9, 10, 12, 0, tzinfo=BEIJING)),
-                ("https://api-docs.deepseek.com/news/news260813", datetime(2026, 8, 13, 12, 0, tzinfo=BEIJING)),
-                ("https://api-docs.deepseek.com/news/news260424/", datetime(2026, 4, 24, 12, 0, tzinfo=BEIJING)),
-                ("https://api-docs.deepseek.com/news/news251201", datetime(2025, 12, 1, 12, 0, tzinfo=BEIJING)),
+                ("https://api-docs.deepseek.com/news/news260910", datetime(2026, 9, 10, 20, 0, tzinfo=BEIJING)),
+                ("https://api-docs.deepseek.com/news/news260813", datetime(2026, 8, 13, 20, 0, tzinfo=BEIJING)),
+                ("https://api-docs.deepseek.com/news/news260424/", datetime(2026, 4, 24, 20, 0, tzinfo=BEIJING)),
+                ("https://api-docs.deepseek.com/news/news251201", datetime(2025, 12, 1, 20, 0, tzinfo=BEIJING)),
             ],
         )
 
@@ -329,13 +329,13 @@ class FetcherTest(unittest.IsolatedAsyncioTestCase):
                     "DeepSeek-V4.1-Flash: Smarter, Faster, More Efficient",
                     "https://api-docs.deepseek.com/news/news260910",
                     "DeepSeek",
-                    datetime(2026, 9, 10, 12, 0, tzinfo=BEIJING),
+                    datetime(2026, 9, 10, 20, 0, tzinfo=BEIJING),
                 ),
                 (
                     "DeepSeek-V4 Preview",
                     "https://api-docs.deepseek.com/news/news260424/",
                     "DeepSeek",
-                    datetime(2026, 4, 24, 12, 0, tzinfo=BEIJING),
+                    datetime(2026, 4, 24, 20, 0, tzinfo=BEIJING),
                 ),
             ],
         )

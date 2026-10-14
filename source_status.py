@@ -5,13 +5,15 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, Awaitable, Callable, Mapping
 
-from sources import FETCHERS, NewsItem
+import httpx
+
+from sources import FETCHERS, NewsItem, SourceFetchError
 
 FetchFn = Callable[[dict], Awaitable[list[NewsItem]]]
 
 
 class SourceConfigError(ValueError):
-    """config.yaml `sources:` is malformed. Raised before any fetch."""
+    pass
 
 
 @dataclass(frozen=True)
@@ -24,11 +26,6 @@ class SourceSpec:
 
 
 def parse_source_specs(sources_cfg: Mapping[str, Any]) -> list[SourceSpec]:
-    """The only reader of config `sources:`. Each key is a source id, and YAML order is kept.
-
-    `disabled: <reason>` is the only off switch, so an `enabled` key is rejected.
-    Disabled entries are checked in full, so restoring one cannot surface a typo later.
-    """
     if not isinstance(sources_cfg, Mapping):
         raise SourceConfigError("sources must be a mapping of source id to entry")
     specs = []
@@ -79,7 +76,7 @@ async def run_source(spec: SourceSpec) -> SourceResult:
         return SourceResult(spec.id, spec.name, "skipped")
     try:
         items = await spec.fetch(dict(spec.params))
-    except Exception as exc:  # noqa: BLE001 - source failures must stay visible
+    except (SourceFetchError, httpx.HTTPError) as exc:
         # str(httpx.ReadTimeout("")) is "", and a failed edition record needs an error.
         return SourceResult(spec.id, spec.name, "failed", error=str(exc) or type(exc).__name__)
     if items:

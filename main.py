@@ -168,7 +168,6 @@ def cross_day_dedup(items: list[NewsItem], previous_urls: set[str]) -> list[News
 
 
 async def fetch_all_source_results(config: dict) -> list[SourceResult]:
-    """Fetch every configured source and keep success / empty / failure / skipped distinct."""
     specs = parse_source_specs(config.get("sources") or {})
     return list(await asyncio.gather(*(run_source(spec) for spec in specs)))
 

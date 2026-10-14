@@ -1,15 +1,3 @@
-"""Consecutive-day source failures, derived from private per-day observations.
-
-Layout under $AI_DAILY_PRIVATE_RUN_DIR/source_health, else runs/source_health:
-
-  days/<edition_id>/<source_id>.json        Private. The latest observation of that source
-                                            on that edition day.
-  alerts/<edition_id>/<source_id>.<n>.json  The daily bot's interface. One report item per
-                                            emission. Post each alert_id once. Never delete
-                                            these files: an alert file is the record that
-                                            its alert was emitted.
-"""
-
 from __future__ import annotations
 
 import json
@@ -44,8 +32,6 @@ class SourceDay:
 
 @dataclass(frozen=True)
 class Streak:
-    """The unbroken run of failing edition days that ends today."""
-
     since: str
     days: int
 
@@ -68,11 +54,6 @@ def observe_source_health(
     root: Path | None = None,
     now: datetime | None = None,
 ) -> list[SourceAlert]:
-    """Record this edition day's outcome per source and return the alerts this call emits.
-
-    persist=False returns the alerts a real run would emit now and writes nothing.
-    A store failure logs one warning and never fails the edition run.
-    """
     store = _Store(root or _default_root())
     observed_at = (now or datetime.now(BEIJING_TZ)).isoformat()
     emitted: list[SourceAlert] = []
@@ -80,11 +61,10 @@ def observe_source_health(
         alerts = [alert for result in results if (alert := _alert_for(store, edition_id, result))]
         if not persist:
             return alerts
-        # Days before alerts: a crash in between re-emits on the next run because the alert file is absent.
-        for result in results:
-            store.write_day(SourceDay(
-                edition_id, result.id, result.status, len(result.items), result.error, observed_at
-            ))
+        store.write_days([
+            SourceDay(edition_id, result.id, result.status, len(result.items), result.error, observed_at)
+            for result in results
+        ])
         for alert in alerts:
             store.write_alert(alert)
             emitted.append(alert)
@@ -100,8 +80,7 @@ def _alert_for(store: _Store, edition_id: str, result: SourceResult) -> SourceAl
     if streak.days < ALERT_AFTER_DAYS:
         return None
     earlier = store.streak_alerts(result.id, streak)
-    # Compare with the newest alert, so a reason that returns after a change emits again.
-    if earlier and earlier[-1]["error"] == result.error:
+    if earlier and _newest_error(earlier) == result.error:
         return None
     head = f"来源告警：{result.name}（{result.id}）已连续 {streak.days} 天抓取失败，"
     if earlier:
@@ -119,6 +98,12 @@ def _alert_for(store: _Store, edition_id: str, result: SourceResult) -> SourceAl
     )
 
 
+def _newest_error(alerts: list[dict]) -> str | None:
+    if not alerts:
+        return None
+    return alerts[-1]["error"]
+
+
 def _default_root() -> Path:
     private = os.environ.get("AI_DAILY_PRIVATE_RUN_DIR", "").strip()
     return (Path(private) if private else Path.cwd() / "runs") / "source_health"
@@ -129,24 +114,19 @@ def _shift(edition_id: str, days: int) -> str:
 
 
 class _Store:
-    """The only code that knows the on-disk layout."""
-
     def __init__(self, root: Path):
         self.root = root
 
     def streak(self, edition_id: str, source_id: str) -> Streak:
-        """Today is failing. A missing, unreadable, or non-failing earlier day ends the walk.
-
-        Today's own file is never read, so a same-day rerun counts that day once.
-        """
         since = edition_id
-        while self._failed_on(_shift(since, -1), source_id):
-            since = _shift(since, -1)
+        prior = _shift(edition_id, -1)
+        while self._failed_on(prior, source_id):
+            since = prior
+            prior = _shift(prior, -1)
         days = (date.fromisoformat(edition_id) - date.fromisoformat(since)).days + 1
         return Streak(since, days)
 
     def streak_alerts(self, source_id: str, streak: Streak) -> list[dict]:
-        """Alerts already written for this streak, oldest first."""
         return [
             alert
             for offset in range(streak.days)
@@ -156,6 +136,10 @@ class _Store:
 
     def next_alert_number(self, edition_id: str, source_id: str) -> int:
         return max((n for n, _ in self._alerts_on(edition_id, source_id)), default=0) + 1
+
+    def write_days(self, days: list[SourceDay]) -> None:
+        for day in days:
+            self.write_day(day)
 
     def write_day(self, day: SourceDay) -> None:
         payload = {"version": STORE_VERSION, "kind": DAY_KIND, **asdict(day)}

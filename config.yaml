@@ -18,9 +18,6 @@ llm:
   max_tokens: 1024
   temperature: 0.3
 
-# Each key is a source id and gets its own record in every edition.
-# `kind` picks the fetcher. `name` labels the items. The only off switch is
-# `disabled: "<reason>"`; keep the URL so restoring is deleting that one line.
 sources:
   hackernews:
     kind: hackernews

@@ -1,11 +1,3 @@
-"""
-AI News Aggregator - Data Sources
-
-Fetches news from: HackerNews, GitHub Trending, HuggingFace, RSS and Atom feeds,
-official HTML listings, DeepSeek release pages, 阮一峰周刊, Reddit r/LocalLLaMA.
-FETCHERS maps each config `kind` to its fetcher.
-"""
-
 import re
 import httpx
 import feedparser
@@ -17,14 +9,19 @@ from html import unescape
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
 
-from edition import BEIJING_TZ
+from edition import BEIJING_TZ, edition_window
 
 logger = logging.getLogger(__name__)
 
 USER_AGENT = "ai-daily-brief/1.0"
-# Listings give a date with no clock. Noon Beijing on day D lands in edition D+1's
-# window [D 08:00, D+1 08:00), where most same-day posts belong.
-DATE_ONLY_TIME = time(12, 0, tzinfo=BEIJING_TZ)
+
+
+def _published_on(day: date) -> datetime:
+    probe = datetime.combine(day, time(23, 59, 59), tzinfo=BEIJING_TZ)
+    start, cutoff = edition_window(probe)
+    if not start <= probe < cutoff:
+        start, cutoff = cutoff, cutoff + timedelta(days=1)
+    return start + (cutoff - start) / 2
 
 
 class SourceFetchError(RuntimeError):
@@ -48,11 +45,14 @@ def _tag(name: str) -> str:
     return name.lower().replace(" ", "-")
 
 
+def _status_error(url: str, status_code: int) -> SourceFetchError:
+    return SourceFetchError(f"{_host(url)}: HTTP {status_code}")
+
+
 async def _get_ok(client: httpx.AsyncClient, url: str) -> httpx.Response:
     resp = await client.get(url)
     if resp.status_code != 200:
-        # Host and status only, because source_health compares error strings across days.
-        raise SourceFetchError(f"{_host(url)}: HTTP {resp.status_code}")
+        raise _status_error(url, resp.status_code)
     return resp
 
 
@@ -243,12 +243,10 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
 
 
 async def fetch_feed(config: dict) -> list[NewsItem]:
-    """One RSS or Atom feed. An HTTP 200 body that is not a feed fails instead of reading as empty."""
     url, name = config["url"], config["name"]
     async with _client(timeout=20) as client:
         resp = await _get_ok(client, url)
 
-    # Bytes, not text: mistral.ai serves its feed as text/plain.
     parsed = feedparser.parse(resp.content)
     if not parsed.version and not parsed.entries:
         raise SourceFetchError(f"{_host(url)}: HTTP 200 but not a feed")
@@ -280,8 +278,6 @@ class _Anchor:
 
 
 class _ListingParser(HTMLParser):
-    """Each <a href> with its <time>, its first h1-h4, and its other text runs."""
-
     HEADINGS = ("h1", "h2", "h3", "h4")
 
     def __init__(self):
@@ -331,14 +327,10 @@ def _listing_date(time_attr: str, time_text: str) -> datetime | None:
             day = datetime.strptime(time_text, "%b %d, %Y").date()
     except ValueError:
         return None
-    return datetime.combine(day, DATE_ONLY_TIME)
+    return _published_on(day)
 
 
 def parse_html_listing(html: str, listing_url: str, source: str) -> list[NewsItem]:
-    """Links one path segment below listing_url that carry a <time>. First URL wins.
-
-    Title is the first h1-h4 inside the link, else its last text run outside <time>.
-    """
     parser = _ListingParser()
     parser.feed(html)
     host = _host(listing_url)
@@ -368,7 +360,6 @@ def parse_html_listing(html: str, listing_url: str, source: str) -> list[NewsIte
 
 
 async def fetch_html_listing(config: dict) -> list[NewsItem]:
-    """An official HTML index of dated posts. main.filter_by_window does the window cut."""
     url, name = config["url"], config["name"]
     async with _client(timeout=20) as client:
         resp = await _get_ok(client, url)
@@ -383,7 +374,6 @@ _DEEPSEEK_PAGE = re.compile(r"/news/news(\d{2})(\d{2})(\d{2})/?$")
 
 
 def parse_deepseek_links(html: str, base_url: str) -> list[tuple[str, datetime]]:
-    """Release pages /news/newsYYMMDD with the date read from the slug. Unique, newest first."""
     links: dict[str, datetime] = {}
     for href in re.findall(r"""href=["']([^"']+)["']""", html):
         url = urljoin(base_url, href)
@@ -392,7 +382,7 @@ def parse_deepseek_links(html: str, base_url: str) -> list[tuple[str, datetime]]
             continue
         yy, mm, dd = (int(part) for part in match.groups())
         try:
-            links[url] = datetime.combine(date(2000 + yy, mm, dd), DATE_ONLY_TIME)
+            links[url] = _published_on(date(2000 + yy, mm, dd))
         except ValueError:
             continue
     return sorted(links.items(), key=lambda link: link[1], reverse=True)
@@ -406,10 +396,7 @@ def _first_h1(html: str) -> str:
 
 
 async def fetch_deepseek_updates(config: dict) -> list[NewsItem]:
-    """The newest release pages linked from api-docs.deepseek.com/updates/.
-
-    The updates page links each release as "this documentation", so the title is the page's h1.
-    """
+    """The updates page links each release as "this documentation", so the title is the page's h1."""
     url, name = config["url"], config["name"]
     items = []
     async with _client(timeout=20) as client:

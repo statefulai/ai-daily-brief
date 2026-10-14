@@ -9,5 +9,4 @@ assets/avatars/
 output
 _site/
 
-# Private run state (Jev quota and reuse, source health). Never publish.
 runs/
