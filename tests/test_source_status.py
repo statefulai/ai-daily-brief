@@ -14,6 +14,7 @@ from sources import (
     fetch_deepseek_updates,
     fetch_feed,
     fetch_html_listing,
+    fetch_html_pages,
     parse_deepseek_links,
     parse_html_listing,
 )
@@ -141,7 +142,7 @@ class SourceRegistryTest(unittest.IsolatedAsyncioTestCase):
         self.assertLessEqual(REPAIRED_IDS, {spec.id for spec in specs})
         self.assertEqual(
             {spec.id for spec in specs if spec.disabled},
-            {"jiqizhixin", "xai", "parliament"},
+            {"jiqizhixin", "parliament"},
         )
 
         requested_hosts = []
@@ -155,14 +156,13 @@ class SourceRegistryTest(unittest.IsolatedAsyncioTestCase):
 
         outcome = {result.id: (result.status, result.error) for result in results}
         self.assertEqual(outcome["parliament"], ("skipped", None))
-        self.assertEqual(outcome["xai"], ("skipped", None))
+        self.assertEqual(outcome["xai"], ("failed", "xAI: no readable article page"))
         self.assertEqual(outcome["jiqizhixin"], ("skipped", None))
         self.assertEqual(outcome["mistral"], ("failed", "mistral.ai: HTTP 404"))
         self.assertEqual(outcome["ms_ai"], ("failed", "news.microsoft.com: HTTP 404"))
         self.assertEqual(outcome["anthropic"], ("failed", "www.anthropic.com: HTTP 404"))
         self.assertEqual(outcome["deepseek"], ("failed", "api-docs.deepseek.com: HTTP 404"))
         self.assertNotIn("committees.parliament.uk", requested_hosts)
-        self.assertNotIn("x.ai", requested_hosts)
         self.assertNotIn("www.jiqizhixin.com", requested_hosts)
 
     async def test_each_configured_url_is_requested_once(self):
@@ -185,6 +185,13 @@ class SourceRegistryTest(unittest.IsolatedAsyncioTestCase):
             {},
         )
         self.assertEqual(counts.get("https://huggingface.co/api/daily_papers"), 1)
+        self.assertEqual(counts.get("https://x.ai/news/grok-voice-3"), 1)
+        self.assertEqual(counts.get("https://x.ai/news/x-subscription"), 1)
+        self.assertEqual(counts.get("https://x.ai/news/grok-4-7"), 1)
+        self.assertNotIn("https://x.ai/news", requested)
+        self.assertNotIn("https://x.ai/news/", requested)
+        self.assertNotIn("https://x.ai/blog", requested)
+        self.assertNotIn("https://x.ai/news/rss.xml", requested)
 
 
 MICROSOFT_FEED = """<?xml version="1.0" encoding="UTF-8"?>
@@ -275,6 +282,37 @@ class FetcherTest(unittest.IsolatedAsyncioTestCase):
                 await fetch_html_listing({"name": "Anthropic", "url": "https://www.anthropic.com/news"})
         self.assertEqual(
             str(caught.exception), "www.anthropic.com: HTTP 200 but no dated article links"
+        )
+
+    async def test_html_pages_read_the_article_and_skip_blocked_indexes(self):
+        html = """<html><script type="application/ld+json">
+        {"datePublished":"2026-10-14T00:00:00Z"}</script>
+        <h1>Introducing Grok Voice 3.0</h1></html>"""
+        requested = []
+
+        def handler(request):
+            requested.append(request.url.path)
+            return httpx.Response(200, text=html)
+
+        with mock_http(handler):
+            items = await fetch_html_pages({
+                "name": "xAI",
+                "pages": [
+                    "https://x.ai/news",
+                    "https://x.ai/blog",
+                    "https://x.ai/news/grok-voice-3",
+                ],
+            })
+
+        self.assertEqual(requested, ["/news/grok-voice-3"])
+        self.assertEqual(
+            [(item.title, item.url, item.source, item.published) for item in items],
+            [(
+                "Introducing Grok Voice 3.0",
+                "https://x.ai/news/grok-voice-3",
+                "xAI",
+                datetime(2026, 10, 14, 0, 0, tzinfo=timezone.utc),
+            )],
         )
 
     def test_listing_parser_reads_dated_article_links(self):

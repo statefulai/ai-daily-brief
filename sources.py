@@ -370,6 +370,52 @@ async def fetch_html_listing(config: dict) -> list[NewsItem]:
     return items
 
 
+_DATE_PUBLISHED = re.compile(r'"datePublished"\s*:\s*"([^"]+)"')
+_BLOCKED_INDEXES = {"/news", "/blog"}
+
+
+def parse_html_page(html: str, page_url: str, source: str) -> NewsItem | None:
+    title = _first_h1(html)
+    match = _DATE_PUBLISHED.search(html)
+    if not title or match is None:
+        return None
+    try:
+        published = datetime.fromisoformat(match.group(1).replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return NewsItem(
+        title=title,
+        url=page_url,
+        source=source,
+        published=published,
+        tags=["web", _tag(source)],
+    )
+
+
+async def fetch_html_pages(config: dict) -> list[NewsItem]:
+    name = config["name"]
+    items = []
+    async with _client(timeout=20) as client:
+        for url in config.get("pages") or []:
+            if urlparse(url).path.rstrip("/") in _BLOCKED_INDEXES:
+                logger.warning(f"{name}: skipped blocked index {url}")
+                continue
+            try:
+                page = await _get_ok(client, url)
+            except (SourceFetchError, httpx.HTTPError) as exc:
+                logger.warning(f"{name}: page skipped: {url}: {exc}")
+                continue
+            item = parse_html_page(page.text, url, name)
+            if item is None:
+                logger.warning(f"{name}: page skipped: {url}: no h1 or datePublished")
+                continue
+            items.append(item)
+    if not items:
+        raise SourceFetchError(f"{name}: no readable article page")
+    logger.info(f"{name}: fetched {len(items)} article pages")
+    return items
+
+
 _DEEPSEEK_PAGE = re.compile(r"/news/news(\d{2})(\d{2})(\d{2})/?$")
 
 
@@ -605,5 +651,6 @@ FETCHERS = {
     "reddit": fetch_reddit,
     "feed": fetch_feed,
     "html_listing": fetch_html_listing,
+    "html_pages": fetch_html_pages,
     "deepseek_updates": fetch_deepseek_updates,
 }

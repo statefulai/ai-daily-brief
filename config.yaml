@@ -35,7 +35,7 @@ sources:
   huggingface:
     kind: huggingface
     name: "HuggingFace Models"
-    daily_papers: true
+    daily_papers: false
     trending_models: true
     top_n: 10
 
@@ -103,10 +103,12 @@ sources:
     url: "https://mistral.ai/news/rss"
 
   xai:
-    kind: feed
+    kind: html_pages
     name: "xAI"
-    url: "https://x.ai/news/rss.xml"
-    disabled: "x.ai/news/rss.xml is HTTP 404. x.ai/news and x.ai/blog are HTTP 403. Do not request x.ai and do not bypass the block."
+    pages:
+      - https://x.ai/news/grok-voice-3
+      - https://x.ai/news/x-subscription
+      - https://x.ai/news/grok-4-7
 
   deepseek:
     kind: deepseek_updates
