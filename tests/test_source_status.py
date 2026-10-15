@@ -165,6 +165,27 @@ class SourceRegistryTest(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("x.ai", requested_hosts)
         self.assertNotIn("www.jiqizhixin.com", requested_hosts)
 
+    async def test_each_configured_url_is_requested_once(self):
+        config = yaml.safe_load(Path("config.yaml").read_text(encoding="utf-8"))
+        specs = parse_source_specs(config["sources"])
+        requested = []
+
+        def handler(request):
+            requested.append(str(request.url))
+            return httpx.Response(404)
+
+        with mock_http(handler):
+            await asyncio.gather(*(run_source(spec) for spec in specs))
+
+        counts = {}
+        for url in requested:
+            counts[url] = counts.get(url, 0) + 1
+        self.assertEqual(
+            {url: count for url, count in counts.items() if count > 1},
+            {},
+        )
+        self.assertEqual(counts.get("https://huggingface.co/api/daily_papers"), 1)
+
 
 MICROSOFT_FEED = """<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"><channel><title>Microsoft Source</title>
