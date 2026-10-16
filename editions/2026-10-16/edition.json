@@ -1,0 +1,455 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-16",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-16T08:00:00+08:00",
+  "generated_at": "2026-10-16T08:10:05.954899+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "contributions",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 1295,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "https://www.anthropic.com/rss.xml HTTP 404"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "https://www.anthropic.com/news/rss.xml HTTP 404"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "deepmind",
+      "status": "success",
+      "item_count": 100,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 879,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "failed",
+      "item_count": 0,
+      "error": "https://www.jiqizhixin.com/rss 返回的不是可用 RSS"
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 1353,
+      "error": null
+    },
+    {
+      "id": "nvidia",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "qbitai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "ithome",
+      "status": "success",
+      "item_count": 60,
+      "error": null
+    },
+    {
+      "id": "wired",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "guardian",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "bbc",
+      "status": "success",
+      "item_count": 21,
+      "error": null
+    },
+    {
+      "id": "marktechpost",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "aws",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "cloudflare",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "meta_ai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "https://ai.meta.com/blog/rss/ HTTP 404"
+    },
+    {
+      "id": "ms_ai",
+      "status": "failed",
+      "item_count": 0,
+      "error": "https://blogs.microsoft.com/ai/feed/ HTTP 410"
+    },
+    {
+      "id": "meta_research",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "microsoft_ai",
+      "status": "success",
+      "item_count": 1,
+      "error": null
+    },
+    {
+      "id": "anthropic_primary",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "openai_release_notes",
+      "status": "success",
+      "item_count": 5,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "muse-spark-open",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Meta 放出 Muse Spark Open 权重，称两台 Mac Studio 可以跑",
+      "kicker": "开源 · Meta",
+      "facts": [
+        "Meta AI Research 博文的可见日期是 October 15, 2026。页面 datePublished 是 2026-10-15T00:00:00.000Z，等于本期窗口起点，没有更细的钟点。",
+        "博文称当天放出 Muse Spark Open 权重，并称它是迄今能力最强的美国开放权重模型。模型原生多模态，总参数 816B，激活 42B，上下文 100 万 token。",
+        "博文称这是同类里第一个能在桌面运行的模型，配置是两台 Apple M5 Ultra Mac Studio 加上最新 MLX。每台统一内存最高 512GB，内存带宽 1.2TB/s。",
+        "API 可在 Baseten、Fireworks AI、Groq、Modal、Nebius、OpenRouter 和 Together AI 调用。权重可在 Amazon SageMaker AI、Google Cloud Model Garden、Hugging Face 和 Microsoft Foundry Models 下载。",
+        "开放权重版带 Helion GPU 内核。博文称在 NVIDIA 和 AMD GPU 上内核加速 1.03 到 3.95 倍，在 AMD MI350 上端到端加速 3%。",
+        "许可证是带有限商业条款的 Muse Model License。博文称模型达到 Meta Superintelligence Scaling Framework 的放行门槛，完整评估报告稍后才提供。"
+      ],
+      "conditions": [
+        "最强美国开放权重、桌面可跑和内核加速都是 Meta 的说法，这次没有独立复测。",
+        "结构化时间停在 2026-10-15T00:00:00.000Z，不能把它读成一个实测到秒的发布时间。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Meta AI Research",
+          "url": "https://research.meta.ai/blog/muse-spark-open",
+          "kind": "primary",
+          "published_at": "2026-10-15T00:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（Meta AI Research）：816B、42B、100 万 token、两台 M5 Ultra、Muse Model License 和 Helion 加速倍数，取自这篇博文。datePublished 是 2026-10-15T00:00:00.000Z。"
+        }
+      ],
+      "lede": "Meta 放出 Muse Spark Open 的权重。这是总参数 8160 亿、每次激活 420 亿的多模态模型，上下文 100 万 token。公司称它能在两台 M5 Ultra Mac Studio 上本地运行。许可证带有限商业条款。",
+      "caveat": "两台 Mac 放下整模，是公司自己的桌面测试说法。"
+    },
+    {
+      "id": "nemotron-3-5-super-vl",
+      "placement": "story",
+      "window": "in_window",
+      "title": "英伟达发布 Nemotron 3.5 Super VL，Bolt 74B 放进 24GB",
+      "kicker": "开源 · 英伟达",
+      "facts": [
+        "英伟达博客 datePublished 是 2026-10-15T15:00:24+00:00，作者 Kari Briski。博客称当天发布 Nemotron 3.5 Super VL，总参数 1200 亿。",
+        "Super VL 和 Bolt 74B-A9B 24GB 现在可用。Bolt E4B 4GB 写明 10 月 23 日才到。Bolt 74B 用原生 2 比特量化放进 24GB，支持 llama.cpp、Ollama、LM Studio、Unsloth 和 vLLM。",
+        "博客称 Super VL 的准确度可与英伟达最大的推理模型相比，参数量大约五分之一，并且比同类下一名快 5 倍。PinchBench 同类开放模型第一、BrowseComp 第二，页面没有给分数。",
+        "预训练加持续预训练大约 26 万亿 token，后训练大约 380 万条样本。模型可在 Hugging Face、OpenRouter、ModelScope 和 NVIDIA NIM 获得。",
+        "Hugging Face 仓库 nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16 的 createdAt 是 2026-10-12T15:32:06.000Z，早于博客。"
+      ],
+      "conditions": [
+        "5 倍、五分之一参数和排行名次是英伟达自己的比较，这次没有打开排行榜原文。",
+        "博客还写模型跑在 NVIDIA Dynamo 上最多服务 8 倍用户、延迟降低 85%，同样是公司数字。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nemotron-3-5-super-vl/",
+          "kind": "primary",
+          "published_at": "2026-10-15T15:00:24+00:00",
+          "verified": true,
+          "note": "核验说明（NVIDIA Blog）：1200 亿参数、24GB 的 2 比特 Bolt、10 月 23 日的 4GB 版，以及 5 倍吞吐的公司比较，取自这篇。datePublished 是 2026-10-15T15:00:24+00:00。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Super-VL-120B-A12B-BF16",
+          "kind": "secondary",
+          "published_at": "2026-10-12T15:32:06.000Z",
+          "verified": true,
+          "note": "核验说明（Hugging Face）：仓库 createdAt 是 2026-10-12T15:32:06.000Z，早于博客。lastModified 是 2026-10-15T21:37:18.000Z。"
+        }
+      ],
+      "lede": "英伟达发布开放模型 Nemotron 3.5 Super VL，总参数 1200 亿，面向一直开着的智能体。同系列 Bolt 74B 用 2 比特量化放进 24GB，现在可以下载。4GB 版写明 10 月 23 日才提供。",
+      "caveat": "快 5 倍是英伟达自己的比较。权重仓库 10 月 12 日已经建好。"
+    },
+    {
+      "id": "gpt-live-1-1",
+      "placement": "story",
+      "window": "in_window",
+      "title": "ChatGPT 语音开始换上 GPT-Live-1.1，系统卡写了几类退步",
+      "kicker": "产品 · OpenAI",
+      "facts": [
+        "OpenAI 发布说明最新一条的日期是 Oct 15, 2026，没有钟点。条目称正在把 GPT-Live-1.1 和更小的 GPT-Live-1.1 Quip 推到 ChatGPT Voice，口音更自然。新语音包括法语、德语、印地语、日语、韩语、墨西哥西班牙语，以及英语 Bubbie。可见语音因地区和账号而不同。",
+        "系统卡写 Published October 15, 2026，没有钟点。GPT-Live-1.1 是 GPT-Live-1 的后继，Quip 是 mini 的后继，两者都是全双工。Plus 及以上，包括 Codex 和 Dots，默认用 1.1。其余用户默认用 Quip。",
+        "系统卡称，用真实用户音频做的生产提示评估与前代持平，没有统计显著退步。这些评估不按真实出现频率加权。",
+        "同一份系统卡称，合成音频评估里 1.1 相对 GPT-Live-1 在性、心理健康、情感依赖和血腥类别上有统计显著退步。评估不计入 Trusted Contact、危机热线和家长控制。",
+        "不委托给其他模型时，系统卡称两者在生物与化学、网络安全、自我改进三类准备框架追踪项上都不像会达到 High。发布说明没有写 API 何时开放。"
+      ],
+      "conditions": [
+        "退步和持平都是 OpenAI 系统卡的结论，页面没有给出可复核的百分比。",
+        "社区帖里的 API 即将到来没有写进发布说明，不作为事实。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "OpenAI Release Notes",
+          "url": "https://openai.com/products/release-notes/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（OpenAI Release Notes）：ChatGPT Voice 开始推送 GPT-Live-1.1 和 Quip，以及新增语音的语言，取自 Oct 15, 2026 这条。页面没有钟点。"
+        },
+        {
+          "label": "OpenAI Deployment Safety Hub",
+          "url": "https://deploymentsafety.openai.com/gpt-live-1-1/introduction",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（OpenAI Deployment Safety Hub）：默认用户、全双工，以及合成测试里四类统计显著退步，取自系统卡。页面写 Published October 15, 2026，没有钟点。"
+        }
+      ],
+      "lede": "OpenAI 开始向 ChatGPT 语音推送 GPT-Live-1.1。Plus 及以上默认用它，Codex 和 Dots 也是。其余用户默认用更小的 Quip。系统卡写，合成测试里 1.1 在性内容、心理健康、情感依赖和血腥几类上比上一代显著变差。",
+      "caveat": "生产流量上的难例评估写成与前代持平。退步出在合成测试。"
+    },
+    {
+      "id": "opus-5-5-fast-mode",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Claude Opus 5.5 快速模式结束研究预览，输出 40 美元",
+      "kicker": "产品 · Anthropic",
+      "facts": [
+        "Claude Platform 发布说明在 October 15, 2026 下写，Opus 5.5 的快速模式结束研究预览，不用再申请。请求不再需要 fast-mode-2026-02-01 这个 beta 头，旧请求带这个头仍然有效。每个用量档都有默认速率限制。Opus 5 和 Opus 4.8 的快速模式仍是研究预览。页面没有钟点。",
+        "同一天另一条写，Opus 5.5 快速模式已可在 Microsoft Foundry 上用于托管在 Azure 的部署。",
+        "快速模式文档称，把 speed 设为 fast 后，Opus 5.5、Opus 5 和 Opus 4.8 的输出 token 速度最高到 2.5 倍。收益在输出速度，不在首 token 时间。模型 ID 是 claude-opus-5-5。",
+        "定价页列出 Opus 5.5 快速模式为每百万 token 输入 8 美元、输出 40 美元。Opus 5 和 Opus 4.8 是输入 10 美元、输出 50 美元。价格覆盖整个上下文，包括输入超过 20 万 token 的请求。切换速度会使提示缓存失效。",
+        "文档写快速模式不用于托管在 Anthropic 的 Foundry 部署，也不在 Amazon Bedrock、Claude Platform on AWS 和 Google Cloud 上提供。Batch API 和 Priority Tier 不能用。Opus 4.7 带 speed fast 会返回错误。"
+      ],
+      "conditions": [
+        "2.5 倍是文档写的输出速度上限，不是这次实测。",
+        "发布说明没有单独的钟点，窗口判断依据是 October 15, 2026 这条位于 October 14 之前。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Claude Platform release notes",
+          "url": "https://platform.claude.com/docs/en/release-notes/overview",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Claude Platform release notes）：研究预览结束、不用 beta 头，以及 Foundry 上 Azure 部署可用，取自 October 15, 2026 的两条。页面没有钟点。"
+        },
+        {
+          "label": "Claude fast mode",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/fast-mode",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Claude fast mode）：2.5 倍输出速度、Bedrock、AWS 和 Google Cloud 不可用，取自这篇文档。"
+        },
+        {
+          "label": "Claude pricing",
+          "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Claude pricing）：Opus 5.5 快速模式输入 8 美元、输出 40 美元，取自定价表。"
+        }
+      ],
+      "lede": "Anthropic 结束了 Claude Opus 5.5 快速模式的研究预览，不用再申请，也不用再带 beta 头。文档标价是每百万 token 输入 8 美元、输出 40 美元，输出速度最高到标准档的 2.5 倍。",
+      "caveat": "Opus 5 和 4.8 仍要申请。Bedrock、AWS 和 Google Cloud 没有。"
+    },
+    {
+      "id": "rosalind-academic-plan",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 给美国大学实验室最多 30 个免费席位用 GPT-Rosalind",
+      "kicker": "科研 · OpenAI",
+      "facts": [
+        "OpenAI 文章的可见日期是 October 15, 2026。新闻 RSS 的 pubDate 是 Thu, 15 Oct 2026 19:00:00 GMT。文章宣布 Rosalind Academic Plan。",
+        "符合条件的实验室最多 30 个 Business Standard 席位，每个用户每月 0 美元，最长 12 个月。GPT-Rosalind 仍要经过 trusted-access 批准。",
+        "计划目前只面向美国大学实验室。没有 Enterprise 协议的学校由 PI 或实验室负责人申请。已有协议的学校走学校的 Enterprise 流程。",
+        "批准后可为最多 30 名点名成员开通。文章写明目前不包括 API。通过该计划分享的研究数据默认不用于训练。"
+      ],
+      "conditions": [
+        "页面上的实验室引言是使用体验，不是独立评估。",
+        "文章页只写了 October 15, 2026。钟点来自 OpenAI 新闻 RSS，不是文章页上的钟点。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/introducing-the-rosalind-academic-plan",
+          "kind": "primary",
+          "published_at": "2026-10-15T19:00:00Z",
+          "verified": true,
+          "note": "核验说明（OpenAI）：30 个席位、每月 0 美元、最长 12 个月、不含 API，取自这篇文章。可见日期是 October 15, 2026。钟点取自新闻 RSS 的 pubDate，Thu, 15 Oct 2026 19:00:00 GMT。"
+        }
+      ],
+      "lede": "OpenAI 推出 Rosalind Academic Plan。美国大学实验室最多可获得 30 个 Business Standard 席位，每个用户每月 0 美元，最长 12 个月，用来使用 GPT-Rosalind。这份计划目前不含 API。",
+      "caveat": "仍要过可信访问审批。已有企业协议的学校得走校内流程。"
+    },
+    {
+      "id": "anthropic-metr",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 让 METR 六名评估员获得接近员工的权限",
+      "kicker": "政策 · Anthropic",
+      "facts": [
+        "Anthropic 文章日期是 Oct 15, 2026，datePublished 是 2026-10-15T17:20:00.000Z。文章称已开始给 METR 接近员工的权限。",
+        "6 名 METR 员工获得公司硬件、办公室，以及与内部风险评估团队大致相当的工具。除客户数据、律师客户特权信息和模型架构等预先划定的类别外，员工被鼓励向他们提供对齐风险信息。",
+        "METR 将发表对风险水平、事件或做法的分析。Anthropic 不能否决发表，但可以要求删去落入上述类别的信息。METR 可以公开说明删改是否有道理，只要不泄露被删内容。",
+        "其他 METR 员工与这组工作隔离。第一档评估发表需要 Anthropic 批准。第二档可以不经批准发表。与 METR 的安排是第三档。",
+        "SecureBio 正在审阅 8 月风险报告的化学与生物武器章节。Accenture 和 Faculty 仍在早期合作。脚注写 10 月 15 日更新了 SecureBio 的项目条款。嵌入是自愿的。"
+      ],
+      "conditions": [
+        "文章没有写这 6 人已经发表了哪一份新报告。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/news/an-update-on-independent-evaluators",
+          "kind": "primary",
+          "published_at": "2026-10-15T17:20:00.000Z",
+          "verified": true,
+          "note": "核验说明（Anthropic）：6 名评估员、不能否决发表、可以要求删改，取自这篇文章。datePublished 是 2026-10-15T17:20:00.000Z。"
+        }
+      ],
+      "lede": "Anthropic 已让 METR 的 6 名评估员使用公司设备和内部工具，权限大致对齐自己的风险评估团队。METR 可以发表风险结论。Anthropic 不能否决发表，但可以要求删去预先划定的客户数据、特权信息和模型架构。",
+      "caveat": "其余 METR 员工接触不到这组材料。安排是公司自愿的。"
+    },
+    {
+      "id": "mai-base-2",
+      "placement": "story",
+      "window": "in_window",
+      "title": "微软称 MAI-Base-2 预训练完成，权重还没发布",
+      "kicker": "行业 · 微软",
+      "facts": [
+        "微软 AI 文章 datePublished 是 2026-10-15T16:09:01+00:00。文章称 MAI-Base-2 预训练完成。它是 MoE，激活 800 亿参数，总参数 2.8 万亿。",
+        "训练用 1.6 万块 GB200，在 2026 年 8 月和 9 月跑了 38 天。平均 MFU 21%，goodput 89%。MFU 按 GB200 在 BF16 的理论上限 2.5 PFLOPS 归一化，不含重计算和优化器。",
+        "文章称相对 DeepSeek-V4-Pro-Base 的预训练 FLOPs 效率是 4.2 到 12.3 倍。这个估计把 MAI-Base-2 的最终成绩也放进了拟合。相对 6 月的 MAI-Base-1 是 6.3 到 12.7 倍。",
+        "Kimi K3、Qwen3.8-2.4T-A95B 和 MiMo-V2.6-Pro-RL 只有后训练检查点。文章写明后训练可能影响比较。",
+        "数据不从其他模型蒸馏。相对 MAI-Base-1，独特训练 token 大约增加 36%。混合物是 50 万亿 token，知识截止是 2026 年 3 月。视觉语料 4.5 万亿独特 token，按重复计算占 18%。",
+        "模型正在后训练，没有发布日期，现在不能下载。文章称之后会先用于自家产品，再给 Foundry 客户。MAI-Base-3 的准备已经开始。"
+      ],
+      "conditions": [
+        "优于每一个被测开放权重模型，以及 FLOPs 效率倍数，都是微软自己的留出评估。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Microsoft AI",
+          "url": "https://microsoft.ai/news/frontier-pre-training-at-microsoft-ai/",
+          "kind": "primary",
+          "published_at": "2026-10-15T16:09:01+00:00",
+          "verified": true,
+          "note": "核验说明（Microsoft AI）：2.8 万亿参数、800 亿激活、1.6 万块 GB200、38 天和 MFU 21%，取自这篇文章。datePublished 是 2026-10-15T16:09:01+00:00。"
+        }
+      ],
+      "lede": "微软称 MAI-Base-2 预训练已经完成。这是总参数 2.8 万亿、激活 800 亿的模型，用 1.6 万块 GB200 训练了 38 天，平均算力利用率 21%。权重还没有发布，后训练仍在进行。",
+      "caveat": "效率倍数是微软把自家最终成绩放进拟合后的估计。"
+    },
+    {
+      "id": "anthropic-investor-revenue",
+      "placement": "story",
+      "window": "in_window",
+      "title": "BBC 称 Anthropic 向投资者说上季收入 168 亿美元",
+      "kicker": "行业 · Anthropic",
+      "facts": [
+        "BBC 文章日期是 15 October 2026，RSS 时间是 Thu, 15 Oct 2026 11:34:55 GMT。作者是 Osmond Chia 和 Tom Espiner。",
+        "BBC 写 it understands，截至 9 月底的三个月收入增长 45%，到 168 亿美元。今年前三个月是 47 亿美元，随后一个季度是 116 亿美元。",
+        "同一篇写，公司在旧金山总部的活动上告诉投资者，第三季度按调整后口径盈利。这个口径不计非经常性成本。文章没有给出利润数字，也没有上市日期或招股书。",
+        "投资者离场时的乐观，文章写成 reportedly。收入数字不是公司公开发布的财报。"
+      ],
+      "conditions": [
+        "只有 BBC 这一处来源。没有打开邀请函、演示文稿或备案。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "BBC News",
+          "url": "https://www.bbc.co.uk/news/articles/cqzjx448vxkgo",
+          "kind": "primary",
+          "published_at": "2026-10-15T11:34:55Z",
+          "verified": true,
+          "note": "核验说明（BBC News）：45% 到 168 亿美元、前两季 47 亿和 116 亿美元，以及调整后口径盈利，取自这篇。文章写的是 BBC understands，不是财报。RSS 时间是 Thu, 15 Oct 2026 11:34:55 GMT。"
+        }
+      ],
+      "lede": "BBC 称，Anthropic 在旧金山的投资者活动上说，截至 9 月底那个季度收入到了 168 亿美元，较前一季增长 45%，并按调整后口径盈利。文章没有写上市日期，也没有给出利润数字。",
+      "caveat": "168 亿美元是 BBC 所说的了解，不是公司公开财报。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:b08d4b8557b97915da6e14591c96eecb264213257b12471fbe0bd479e79cf873"
+}
