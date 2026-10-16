@@ -8,7 +8,7 @@
 2. 只保留明确要进入公开日报的候选，按下表映射为通用供稿字段。
 3. 把结果写到临时的 `contributions.json`；不复制原始扫描记录、投递状态或内部字段。
 4. 启动当期唯一 Cloud Agent 时，通过 `files` 上传该文件。
-5. Cloud Agent 使用自身模型采集公开来源，与上传的候选合并，并检查必填字段。
+5. Cloud Agent 按 [`delivery/STEPS.md`](../../delivery/STEPS.md) 采集公开来源，与上传的候选合并，并检查必填字段。
 6. 日报在最终选稿之前接入 Jev 辅助判断（有没有新变化、值不值得读）。调用、密钥、关闭（`JEV_ASSIST=0`）与额度交接见 [`generation/CA-JEV-ASSIST.md`](../../generation/CA-JEV-ASSIST.md)。Jev 不裁定入选或空刊；失败时继续原选稿。
 7. Cloud Agent 回源核验并做最终选稿，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。
 8. Cloud Agent 用仓库的固定渲染器生成 HTML，并执行校验：
@@ -18,7 +18,7 @@
    python scripts/edition_ci.py validate --editions output/cloud-agent-check/editions
    ```
 
-临时供稿和验证产物不进入 Git、Pages 或正式期次目录。没有可用候选时不创建供稿文件，Cloud Agent 只使用自身采集的公开来源。Cloud Agent 不需要把自身模型作为 API 提供给 Python。
+临时供稿和验证产物不进入 Git、Pages 或正式期次目录。没有可用候选时不创建供稿文件。公开来源仍按 [`delivery/STEPS.md`](../../delivery/STEPS.md) 采集。Cloud Agent 不需要把自身模型作为 API 提供给 Python。
 
 | 闪报候选 | 通用供稿 |
 | --- | --- |
