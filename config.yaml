@@ -20,51 +20,122 @@ llm:
 
 sources:
   hackernews:
-    enabled: true
+    kind: hackernews
+    name: "HackerNews"
     top_n: 30
     min_score: 50
 
   github_trending:
-    enabled: true
+    kind: github_trending
+    name: "GitHub"
     languages: ["python", "typescript", "rust", "go"]
     since: "daily"
     max_existing_stars: 100000
 
   huggingface:
-    enabled: true
-    daily_papers: true
+    kind: huggingface
+    name: "HuggingFace Models"
+    daily_papers: false
     trending_models: true
     top_n: 10
 
-  rss_feeds:
-    enabled: true
-    feeds:
-      - name: "OpenAI Blog"
-        url: "https://openai.com/blog/rss.xml"
-      - name: "Anthropic"
-        url: "https://www.anthropic.com/rss.xml"
-      - name: "Google AI Blog"
-        url: "https://blog.google/technology/ai/rss/"
-      - name: "Hugging Face Blog"
-        url: "https://huggingface.co/blog/feed.xml"
-      - name: "GitHub Blog"
-        url: "https://github.blog/feed/"
-      - name: "The Verge AI"
-        url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
-      - name: "TechCrunch AI"
-        url: "https://techcrunch.com/category/artificial-intelligence/feed/"
-      - name: "机器之心"
-        url: "https://www.jiqizhixin.com/rss"
-      - name: "arXiv cs.AI"
-        url: "https://rss.arxiv.org/rss/cs.AI"
+  hf_papers:
+    kind: huggingface
+    name: "HuggingFace Papers"
+    daily_papers: true
+    trending_models: false
+    top_n: 10
+
+  openai:
+    kind: feed
+    name: "OpenAI Blog"
+    url: "https://openai.com/blog/rss.xml"
+
+  anthropic:
+    kind: html_listing
+    name: "Anthropic Engineering"
+    url: "https://www.anthropic.com/engineering"
+
+  anthropic_news:
+    kind: html_listing
+    name: "Anthropic"
+    url: "https://www.anthropic.com/news"
+
+  google_ai:
+    kind: feed
+    name: "Google AI Blog"
+    url: "https://blog.google/technology/ai/rss/"
+
+  huggingface_blog:
+    kind: feed
+    name: "Hugging Face Blog"
+    url: "https://huggingface.co/blog/feed.xml"
+
+  github:
+    kind: feed
+    name: "GitHub Blog"
+    url: "https://github.blog/feed/"
+
+  theverge:
+    kind: feed
+    name: "The Verge AI"
+    url: "https://www.theverge.com/rss/ai-artificial-intelligence/index.xml"
+
+  techcrunch:
+    kind: feed
+    name: "TechCrunch AI"
+    url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+
+  jiqizhixin:
+    kind: feed
+    name: "机器之心"
+    url: "https://www.jiqizhixin.com/rss"
+    disabled: "www.jiqizhixin.com returns the data-service landing page at /, /rss, /articles, and /api/article. There is no article list."
+
+  arxiv_ai:
+    kind: feed
+    name: "arXiv cs.AI"
+    url: "https://rss.arxiv.org/rss/cs.AI"
+
+  mistral:
+    kind: feed
+    name: "Mistral"
+    url: "https://mistral.ai/news/rss"
+
+  xai:
+    kind: html_pages
+    name: "xAI"
+    pages:
+      - https://x.ai/news/grok-voice-3
+      - https://x.ai/news/x-subscription
+      - https://x.ai/news/grok-4-7
+
+  deepseek:
+    kind: deepseek_updates
+    name: "DeepSeek"
+    url: "https://api-docs.deepseek.com/updates/"
+    max_items: 3
+
+  ms_ai:
+    kind: feed
+    name: "Microsoft AI"
+    url: "https://news.microsoft.com/source/topics/ai/feed/"
+
+  parliament:
+    kind: feed
+    name: "UK Parliament Committees"
+    url: "https://committees.parliament.uk/"
+    disabled: "committees.parliament.uk returns HTTP 403. Do not request it and do not bypass the block."
 
   ruanyf_weekly:
-    enabled: true
+    kind: ruanyf_weekly
+    name: "阮一峰周刊"
     repo: "ruanyf/weekly"
     max_items: 20
 
   reddit:
-    enabled: true
+    kind: reddit
+    name: "Reddit"
     subreddits: ["LocalLLaMA"]
     top_n: 15
     min_score: 50
