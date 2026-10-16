@@ -243,6 +243,82 @@
       "caveat": "快 5 倍是英伟达自己的比较。权重仓库 10 月 12 日已经建好。"
     },
     {
+      "id": "granite-switch-4-1",
+      "placement": "story",
+      "window": "in_window",
+      "title": "IBM 放出 Granite Switch 4.1，8B 和 30B 共用一个端点",
+      "kicker": "开源 · IBM",
+      "facts": [
+        "Hugging Face 博文写 Published October 15, 2026，作者 Kate Soule 和 Luis A Lastras。RSS 时间是 Thu, 15 Oct 2026 20:34:01 GMT。",
+        "博文称 Granite-Switch-4.1-8B 和 30B 把 Decision aLoRA、Guardian aLoRA 和 Granite-Speech-5.0-Turbo-CTC 放进同一个模型，显存大约等于底模本身。",
+        "博文称 Guardian 在安全决策上平均超过 Jev 1.13、Microsoft-Decision-1、GPT-Luna-Decisions 和 Clef-Flash，语音模型是 OpenASR 榜上最快的。这些是 IBM 的对照。",
+        "仓库 ibm-granite/granite-switch-4.1-8b 的 createdAt 是 2026-10-14T21:38:09.000Z，30b 是 2026-10-14T21:23:12.000Z。license 是 apache-2.0，gated 为 false。"
+      ],
+      "conditions": [
+        "两份仓库的创建时间早于本期窗口起点大约两个半小时。",
+        "最快语音识别和决策胜负没有独立复测。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Hugging Face blog",
+          "url": "https://huggingface.co/blog/ibm-granite/granite-switch-4-1",
+          "kind": "primary",
+          "published_at": "2026-10-15T20:34:01Z",
+          "verified": true,
+          "note": "核验说明（Hugging Face blog）：8B、30B、同一个端点和显存接近底模，取自这篇。RSS 时间是 Thu, 15 Oct 2026 20:34:01 GMT。"
+        },
+        {
+          "label": "ibm-granite/granite-switch-4.1-8b",
+          "url": "https://huggingface.co/ibm-granite/granite-switch-4.1-8b",
+          "kind": "secondary",
+          "published_at": "2026-10-14T21:38:09.000Z",
+          "verified": true,
+          "note": "核验说明（模型仓库）：createdAt 是 2026-10-14T21:38:09.000Z，license 为 apache-2.0，gated 为 false。30b 仓库 createdAt 是 2026-10-14T21:23:12.000Z，许可相同。"
+        }
+      ],
+      "lede": "IBM 放出 Granite Switch 4.1 的 8B 和 30B。同一个端点可以聊天、做决策，也能把语音转成文字，占用的显存和底模差不多。两份权重都是 Apache-2.0，现在可以下载。",
+      "caveat": "最快识别和决策胜负，都是 IBM 自己的对照。"
+    },
+    {
+      "id": "flux-3-image-klein",
+      "placement": "story",
+      "window": "in_window",
+      "title": "FLUX.3 Image Klein 接入 Diffusers，H100 上约 2 秒出图",
+      "kicker": "开源 · Black Forest Labs",
+      "facts": [
+        "Hugging Face 博文写 Published October 15, 2026。采集到的 RSS 时间是 Thu, 15 Oct 2026 00:00:00 GMT，没有更细的钟点。",
+        "博文称蒸馏版 black-forest-labs/flux-3-image-klein 默认 16 步、不用 CFG，底模 flux-3-image-klein-base 默认 50 步、用 CFG。同一模型做文生图、多参考图生图，并可以用框指定布局。",
+        "博文的表写，单张 H100 80GB、不卸载、默认 attention，文生图 1024 大约 1.93 秒，占用 23.8 GiB。",
+        "仓库 createdAt：klein 是 2026-10-13T10:58:40.000Z，base 是 2026-10-13T10:19:46.000Z。license 字段是 other，gated 是 auto。"
+      ],
+      "conditions": [
+        "两个仓库在 10 月 13 日就已经创建，这篇是接入 Diffusers 的说明。",
+        "1.93 秒来自博文表格里的单卡测试，不是第三方复测。RSS 只有日期，没有钟点。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Hugging Face blog",
+          "url": "https://huggingface.co/blog/flux-3",
+          "kind": "primary",
+          "published_at": "2026-10-15T00:00:00Z",
+          "verified": true,
+          "note": "核验说明（Hugging Face blog）：16 步、不用 CFG、H100 上约 1.93 秒和 23.8 GiB，取自这篇。页面只写了 October 15, 2026。RSS 时间是 Thu, 15 Oct 2026 00:00:00 GMT。"
+        },
+        {
+          "label": "black-forest-labs/flux-3-image-klein",
+          "url": "https://huggingface.co/black-forest-labs/flux-3-image-klein",
+          "kind": "secondary",
+          "published_at": "2026-10-13T10:58:40.000Z",
+          "verified": true,
+          "note": "核验说明（模型仓库）：createdAt 是 2026-10-13T10:58:40.000Z，license 为 other，gated 为 auto。base 仓库 createdAt 是 2026-10-13T10:19:46.000Z。"
+        }
+      ],
+      "lede": "Black Forest Labs 的 FLUX.3 Image Klein 接到了 Diffusers。蒸馏版默认 16 步、不用 CFG，博文称在一张 H100 上生成一张 1024 图大约 2 秒。下载前要先同意许可。",
+      "caveat": "权重仓库早于这篇接入说明，许可不是 Apache。"
+    },
+    {
       "id": "gpt-live-1-1",
       "placement": "story",
       "window": "in_window",
@@ -451,5 +527,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:b08d4b8557b97915da6e14591c96eecb264213257b12471fbe0bd479e79cf873"
+  "content_hash": "sha256:d53175d33c23df42fccce26ca4e3589a92b573da97ea8da7b08fddd395dbad1e"
 }
