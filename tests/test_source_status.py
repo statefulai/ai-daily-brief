@@ -193,6 +193,52 @@ class SourceRegistryTest(unittest.IsolatedAsyncioTestCase):
         self.assertNotIn("https://x.ai/blog", requested)
         self.assertNotIn("https://x.ai/news/rss.xml", requested)
 
+    async def test_edition_gather_follows_config_yaml(self):
+        steps = Path("delivery/STEPS.md").read_text(encoding="utf-8")
+        bridge = Path("integrations/grok_bot/README.md").read_text(encoding="utf-8")
+        self.assertIn("python main.py --sources-only --dry-run", steps)
+        self.assertIn("config.yaml", steps)
+        self.assertIn("delivery/STEPS.md", bridge)
+        self.assertNotIn("使用自身模型采集公开来源", bridge)
+        self.assertNotIn("只使用自身采集的公开来源", bridge)
+
+        config = yaml.safe_load(Path("config.yaml").read_text(encoding="utf-8"))
+        specs = parse_source_specs(config["sources"])
+        requested = []
+
+        def handler(request):
+            requested.append(str(request.url))
+            return httpx.Response(404)
+
+        with mock_http(handler):
+            await asyncio.gather(*(run_source(spec) for spec in specs))
+
+        counts = {}
+        for url in requested:
+            counts[url] = counts.get(url, 0) + 1
+        self.assertEqual({url: count for url, count in counts.items() if count != 1}, {})
+        for url in (
+            "https://www.anthropic.com/engineering",
+            "https://www.anthropic.com/news",
+            "https://news.microsoft.com/source/topics/ai/feed/",
+            "https://x.ai/news/grok-voice-3",
+            "https://x.ai/news/x-subscription",
+            "https://x.ai/news/grok-4-7",
+        ):
+            self.assertEqual(counts.get(url), 1, url)
+        for url in (
+            "https://www.anthropic.com/rss.xml",
+            "https://www.anthropic.com/news/rss.xml",
+            "https://ai.meta.com/blog/rss/",
+            "https://blogs.microsoft.com/ai/feed/",
+            "https://www.reuters.com/technology/artificial-intelligence/rss",
+            "https://x.ai/news",
+            "https://x.ai/news/rss.xml",
+            "https://x.com/xai",
+            "https://x.com/SpaceXSI",
+        ):
+            self.assertNotIn(url, requested, url)
+
 
 MICROSOFT_FEED = """<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"><channel><title>Microsoft Source</title>
