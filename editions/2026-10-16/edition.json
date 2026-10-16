@@ -277,7 +277,7 @@
           "note": "核验说明（模型仓库）：createdAt 是 2026-10-14T21:38:09.000Z，license 为 apache-2.0，gated 为 false。30b 仓库 createdAt 是 2026-10-14T21:23:12.000Z，许可相同。"
         }
       ],
-      "lede": "IBM 放出 Granite Switch 4.1 的 8B 和 30B。同一个端点可以聊天、做决策，也能把语音转成文字，占用的显存和底模差不多。两份权重都是 Apache-2.0，现在可以下载。",
+      "lede": "IBM 放出 Granite Switch 4.1 的 8B 和 30B。同一个端点可以聊天、做决策，也能把语音转成文字。公司称显存和底模差不多。两份权重都是 Apache-2.0，现在可以下载。",
       "caveat": "最快识别和决策胜负，都是 IBM 自己的对照。"
     },
     {
@@ -527,5 +527,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:d53175d33c23df42fccce26ca4e3589a92b573da97ea8da7b08fddd395dbad1e"
+  "content_hash": "sha256:ade7b484b53670a4decafa90d3993586e80d21de8fc932ae80ac326a074555db"
 }
