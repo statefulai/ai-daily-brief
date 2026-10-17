@@ -3,7 +3,7 @@
   "edition_id": "2026-10-17",
   "timezone": "Asia/Shanghai",
   "cutoff_at": "2026-10-17T08:00:00+08:00",
-  "generated_at": "2026-10-17T08:09:29.657674+08:00",
+  "generated_at": "2026-10-17T08:16:46.655348+08:00",
   "attempt": 1,
   "status": "published_candidate",
   "sources": [
@@ -326,7 +326,7 @@
       "facts": [
         "Hugging Face 博文的 datePublished 是 2026-10-16T01:44:47.830Z，作者署名为 NVIDIA 与 AI4Bharat。页面可见日期是 October 16, 2026。",
         "博文介绍 Nemotron-pretraining-Indic-v1，约 2.8 万亿 token、22 种印度宪法语言，并写语料即将发布，同时开放用来生成它的 GPU 加速流程。",
-        "图注写原生文字 2601.0 亿 token、罗马化 224.6 亿 token，用 Gemma-4 分词器计数。十二种语言同时有原生文字和罗马化，另外十种只有原生文字。",
+        "图注写原生文字 2601.0 billion token、罗马化 224.6 billion token，折合 26010 亿和 2246 亿，用 Gemma-4 分词器计数。十二种语言同时有原生文字和罗马化，另外十种只有原生文字。",
         "博文写质量分低于 75 分的译文会返修，这个过程收回 4384 亿 token，已计入总量。十二语流程使用 Gemma-4-31B-it。",
         "博文写 Nemotron 3.5 Super VL 的继续预训练加入了 100 亿印度语言 token，来自这套语料里十二种语言的子集和自然印度语言文本。生成配方放在 GitHub 的 NVIDIA-NeMo/DataDesignerPlugins 仓库。"
       ],
@@ -342,7 +342,7 @@
           "kind": "primary",
           "published_at": "2026-10-16T01:44:47.830Z",
           "verified": true,
-          "note": "2.8 万亿 token、22 种语言、即将发布、2601.0 亿与 224.6 亿、100 亿 token 的继续预训练，取自这篇博文。datePublished 是 2026-10-16T01:44:47.830Z。"
+          "note": "2.8 万亿 token、22 种语言、即将发布、图注 2601.0 billion 与 224.6 billion（26010 亿与 2246 亿）、100 亿 token 的继续预训练，取自这篇博文。datePublished 是 2026-10-16T01:44:47.830Z。"
         }
       ],
       "lede": "英伟达和 AI4Bharat 预告 Nemotron-pretraining-Indic-v1，约 2.8 万亿 token，22 种印度语言。语料即将发布，生成流程同时开放。Nemotron 3.5 Super VL 继续预训练用了其中 100 亿 token。",
@@ -382,5 +382,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:b803e4ae51daa38a89ce336ac08da4b885c5251420d5386f6e9164eb22406c26"
+  "content_hash": "sha256:c741f56e7ed63644eb50b07e60d979eeb87bf3b72a498ca5b3cd3d534aa3af35"
 }
