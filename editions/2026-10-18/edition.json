@@ -1,0 +1,244 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-18",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-18T08:00:00+08:00",
+  "generated_at": "2026-10-18T08:06:35.360716+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "failed",
+      "item_count": 0,
+      "error": "HuggingFace failed: trending_models: HTTP 400"
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "failed",
+      "item_count": 0,
+      "error": "Reddit failed: r/LocalLLaMA: HTTP 403"
+    }
+  ],
+  "events": [
+    {
+      "id": "meta-removes-scrape-clause",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Meta 删掉商业条款里可用于训练的爬取句子",
+      "kicker": "政策 · Meta",
+      "facts": [
+        "The Verge 的 datePublished 是 2026-10-17T15:04:36+00:00，作者 Terrence O'Brien。TechCrunch 的 datePublished 是 2026-10-17T21:31:32+00:00，作者 Anthony Ha。",
+        "The Verge 写，Meta 再次修改商业条款，删掉了允许使用商家域名、网页或 URL 上任何内容，用来提供、开发、改进、研究、训练并维护产品完整性的句子。该句不再出现在商业条款页。",
+        "发言人 Daniel Roberts 对 The Verge 说，合并后的爬取条款只适用于广告和商业产品，他们已在条款里写明。这不改变 Meta 使用网络爬虫的方式。内容所有者仍可用 robots.txt 表达偏好。这次更新不给予压过这些偏好的新权利，也不是为了抓新闻站。",
+        "商业条款页本身这次没有打开。"
+      ],
+      "conditions": [
+        "删掉的是条款文字。Roberts 仍说爬虫用法没有变化。"
+      ],
+      "background": [
+        "上一期已经报道过这些条款的预告，以及公司当时否认爬虫用法改变。"
+      ],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/tech/1013409/meta-removes-language-that-may-have-allowed-it-to-scrape-news-sites",
+          "kind": "primary",
+          "published_at": "2026-10-17T15:04:36+00:00",
+          "verified": true,
+          "note": "被删句子、Roberts 关于广告和商业产品的新声明，取自这篇报道。datePublished 是 2026-10-17T15:04:36+00:00。商业条款页这次没有打开。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/",
+          "kind": "secondary",
+          "published_at": "2026-10-17T21:31:32+00:00",
+          "verified": true,
+          "note": "同一删改的简讯，作者 Anthony Ha。datePublished 是 2026-10-17T21:31:32+00:00。"
+        }
+      ],
+      "lede": "The Verge 写，Meta 删掉了商业条款里允许把商家网页用于训练的那句话。发言人 Daniel Roberts 说，爬取条款只适用于广告和商业产品，不改变爬虫用法，robots.txt 仍然有效。",
+      "caveat": "商业条款页这次没有打开，删改以 The Verge 所载为准。"
+    },
+    {
+      "id": "replit-openai-default",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Replit 把 ChatGPT 设为默认，Claude 仍可选",
+      "kicker": "产品 · Replit",
+      "facts": [
+        "TechCrunch 文章的 datePublished 是 2026-10-17T18:48:08+00:00。文末写原文发表于 10 月 16 日下午，其后更新了标题，并补充了合作关系的说明。",
+        "更新写，Disrupt 之后 Masad 澄清，用户仍可选用 Anthropic 模型，OpenAI 的 ChatGPT 成为默认。他在周末对 TechCrunch 说，Replit 保持模型中立，用户可选 Claude 或其他支持的模型。OpenAI 现在是 Replit Agent 的首选伙伴，理由是表现、成本和合作关系。",
+        "台上说法仍留在文中。他称 Replit 直到不久前是 Anthropic 的前五客户，并称 Sol 和 Astra 在从零做应用上一直更好。一名匿名知情者仍说合作还在。",
+        "他另预计 2027 年超过一半收入来自企业和政府客户。"
+      ],
+      "conditions": [
+        "这是 10 月 16 日那篇的更新，不是另一份独立公告。",
+        "CEO 的台上说法和一名匿名知情者的说法仍然相反。"
+      ],
+      "background": [
+        "上一期已写过台上称停止合作，以及企业合同占比从约 2% 到约 15%、B2B 超过一半。这些不是这次更新新增的数字。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/17/replit-is-no-longer-working-with-anthropic-ceo-says/",
+          "kind": "primary",
+          "published_at": "2026-10-17T18:48:08+00:00",
+          "verified": true,
+          "note": "ChatGPT 成为默认、Claude 仍可选、2027 年企业和政府收入预期，取自这篇更新。datePublished 是 2026-10-17T18:48:08+00:00。文末写明原文发表于 10 月 16 日。"
+        }
+      ],
+      "lede": "Replit 首席执行官 Amjad Masad 澄清，用户仍可选用 Claude，OpenAI 的 ChatGPT 成为默认。他称 OpenAI 现在是 Replit Agent 的首选伙伴。台上说不再合作的原话还留在报道里。",
+      "caveat": "这是 10 月 16 日旧稿的更新，不是另一份独立公告。"
+    },
+    {
+      "id": "sites-block-agents",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Yelp、达美、摩根大通和嘉信拦住智能体",
+      "kicker": "行业 · 智能体",
+      "facts": [
+        "The Verge 的 datePublished 是 2026-10-17T13:00:00+00:00，作者 Emma Roth。",
+        "文章写，近几周 Meta 的 Muse、xAI 的 Grok、OpenAI 的 Dots 和 Instinct 的用户报告智能体被网站拦住。Yelp 告诉 TechCrunch，只允许参加其数据许可计划并付费的智能体。达美航空不让智能体代用户订票。摩根大通和嘉信确认，因安全原因阻止智能体访问账户。",
+        "文章写，有用户称 Cars.com 和 Amtrak 以前可用、现在不行。亚马逊称 Muse 继续访问违反网站政策。Meta 本月早些时候发文说，拒绝个人智能体等于拒绝背后的顾客，并与沃尔玛、Gap、丝芙兰、百思买等零售商合作。Shopify 向智能体开放了店面网络。",
+        "The Verge 联系了 OpenAI 和 Google，发稿时没有立刻收到回复。Instinct 拒绝置评。EquiStamp 首席执行官 Chris Canal 对 The Verge 说，如果有公司主动阻止，智能体能做的有用事情就更少。",
+        "亚马逊与 Perplexity 的诉讼、上诉法院在 8 月推翻禁令，以及 Cloudflare 拦截爬虫，是更早的背景，不是这篇报道的新禁令。"
+      ],
+      "conditions": [
+        "Yelp、达美、摩根大通、嘉信和亚马逊的表态，都以 The Verge 的转述为准。",
+        "近几周的用户报告和更早的诉讼不是同一天的新禁令。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1013195/ai-agents-blocked-web",
+          "kind": "primary",
+          "published_at": "2026-10-17T13:00:00+00:00",
+          "verified": true,
+          "note": "Yelp 只允许付费许可、达美不让代订、摩根大通和嘉信因安全拦账户、亚马逊称 Muse 违规，取自这篇报道。datePublished 是 2026-10-17T13:00:00+00:00。各公司原文这次没有逐条打开。"
+        }
+      ],
+      "lede": "The Verge 写，Yelp 只放行付费许可的智能体，达美不让代订机票，摩根大通和嘉信因安全拦住账户访问。亚马逊称 Meta 的 Muse 继续访问违规。OpenAI 和 Google 发稿时没有回复。",
+      "caveat": "公司表态经 The Verge 转述，各家原文这次没有逐条打开。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:6fdef08c170fa5a5337cb9f5a74dc002ebd69e8816cbc67afb62a35e23961031"
+}

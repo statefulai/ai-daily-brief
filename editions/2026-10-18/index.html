@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 18 日 AI 日报，含 3 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 18 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-18">2026 年 10 月 18 日</time> · 星期日</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 18 日 08:00（北京时间）。本期收录 3 条窗口内动态；另有 2 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">政策 · Meta</span><time datetime="2026-10-17T23:04:36+08:00">10.17 23:04 北京时间</time></div><h2 id="event-1-title">Meta 删掉商业条款里可用于训练的爬取句子</h2><div class="lead-copy"><p>The Verge 写，Meta 删掉了商业条款里允许把商家网页用于训练的那句话。发言人 Daniel Roberts 说，爬取条款只适用于广告和商业产品，不改变爬虫用法，robots.txt 仍然有效。</p><p class="caveat">限定：商业条款页这次没有打开，删改以 The Verge 所载为准。</p><div class="source"><a href="https://www.theverge.com/tech/1013409/meta-removes-language-that-may-have-allowed-it-to-scrape-news-sites" target="_blank" rel="noopener noreferrer">原文 · The Verge</a></div><details><summary>详细与核验</summary><p>The Verge 的 datePublished 是 2026-10-17T15:04:36+00:00，作者 Terrence O&#x27;Brien。TechCrunch 的 datePublished 是 2026-10-17T21:31:32+00:00，作者 Anthony Ha。</p><p>The Verge 写，Meta 再次修改商业条款，删掉了允许使用商家域名、网页或 URL 上任何内容，用来提供、开发、改进、研究、训练并维护产品完整性的句子。该句不再出现在商业条款页。</p><p>发言人 Daniel Roberts 对 The Verge 说，合并后的爬取条款只适用于广告和商业产品，他们已在条款里写明。这不改变 Meta 使用网络爬虫的方式。内容所有者仍可用 robots.txt 表达偏好。这次更新不给予压过这些偏好的新权利，也不是为了抓新闻站。</p><p>商业条款页本身这次没有打开。</p><p class="condition"><strong>适用范围：</strong>删掉的是条款文字。Roberts 仍说爬虫用法没有变化。</p><details><summary>展开：背景与补充</summary><ul><li>上一期已经报道过这些条款的预告，以及公司当时否认爬虫用法改变。</li></ul></details><div class="source"><a href="https://www.theverge.com/tech/1013409/meta-removes-language-that-may-have-allowed-it-to-scrape-news-sites" target="_blank" rel="noopener noreferrer">The Verge · 一手来源 · 已核对</a><a href="https://techcrunch.com/2026/10/17/meta-removes-language-that-raised-scraping-and-ai-training-concerns/" target="_blank" rel="noopener noreferrer">TechCrunch · 补充来源 · 已核对</a></div><p class="source-note">核验说明（The Verge）：被删句子、Roberts 关于广告和商业产品的新声明，取自这篇报道。datePublished 是 2026-10-17T15:04:36+00:00。商业条款页这次没有打开。</p><p class="source-note">核验说明（TechCrunch）：同一删改的简讯，作者 Anthony Ha。datePublished 是 2026-10-17T21:31:32+00:00。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">产品 · Replit</span><time datetime="2026-10-18T02:48:08+08:00">10.18 02:48 北京时间</time></div><h3 id="event-2-title">Replit 把 ChatGPT 设为默认，Claude 仍可选</h3><div><p>Replit 首席执行官 Amjad Masad 澄清，用户仍可选用 Claude，OpenAI 的 ChatGPT 成为默认。他称 OpenAI 现在是 Replit Agent 的首选伙伴。台上说不再合作的原话还留在报道里。</p><p class="caveat">限定：这是 10 月 16 日旧稿的更新，不是另一份独立公告。</p><div class="source"><a href="https://techcrunch.com/2026/10/17/replit-is-no-longer-working-with-anthropic-ceo-says/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 文章的 datePublished 是 2026-10-17T18:48:08+00:00。文末写原文发表于 10 月 16 日下午，其后更新了标题，并补充了合作关系的说明。</p><p>更新写，Disrupt 之后 Masad 澄清，用户仍可选用 Anthropic 模型，OpenAI 的 ChatGPT 成为默认。他在周末对 TechCrunch 说，Replit 保持模型中立，用户可选 Claude 或其他支持的模型。OpenAI 现在是 Replit Agent 的首选伙伴，理由是表现、成本和合作关系。</p><p>台上说法仍留在文中。他称 Replit 直到不久前是 Anthropic 的前五客户，并称 Sol 和 Astra 在从零做应用上一直更好。一名匿名知情者仍说合作还在。</p><p>他另预计 2027 年超过一半收入来自企业和政府客户。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是 10 月 16 日那篇的更新，不是另一份独立公告。</li><li>CEO 的台上说法和一名匿名知情者的说法仍然相反。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>上一期已写过台上称停止合作，以及企业合同占比从约 2% 到约 15%、B2B 超过一半。这些不是这次更新新增的数字。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/10/17/replit-is-no-longer-working-with-anthropic-ceo-says/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：ChatGPT 成为默认、Claude 仍可选、2027 年企业和政府收入预期，取自这篇更新。datePublished 是 2026-10-17T18:48:08+00:00。文末写明原文发表于 10 月 16 日。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">行业 · 智能体</span><time datetime="2026-10-17T21:00:00+08:00">10.17 21:00 北京时间</time></div><h3 id="event-3-title">Yelp、达美、摩根大通和嘉信拦住智能体</h3><div><p>The Verge 写，Yelp 只放行付费许可的智能体，达美不让代订机票，摩根大通和嘉信因安全拦住账户访问。亚马逊称 Meta 的 Muse 继续访问违规。OpenAI 和 Google 发稿时没有回复。</p><p class="caveat">限定：公司表态经 The Verge 转述，各家原文这次没有逐条打开。</p><div class="source"><a href="https://www.theverge.com/ai-artificial-intelligence/1013195/ai-agents-blocked-web" target="_blank" rel="noopener noreferrer">原文 · The Verge</a></div><details><summary>详细与核验</summary><p>The Verge 的 datePublished 是 2026-10-17T13:00:00+00:00，作者 Emma Roth。</p><p>文章写，近几周 Meta 的 Muse、xAI 的 Grok、OpenAI 的 Dots 和 Instinct 的用户报告智能体被网站拦住。Yelp 告诉 TechCrunch，只允许参加其数据许可计划并付费的智能体。达美航空不让智能体代用户订票。摩根大通和嘉信确认，因安全原因阻止智能体访问账户。</p><p>文章写，有用户称 Cars.com 和 Amtrak 以前可用、现在不行。亚马逊称 Muse 继续访问违反网站政策。Meta 本月早些时候发文说，拒绝个人智能体等于拒绝背后的顾客，并与沃尔玛、Gap、丝芙兰、百思买等零售商合作。Shopify 向智能体开放了店面网络。</p><p>The Verge 联系了 OpenAI 和 Google，发稿时没有立刻收到回复。Instinct 拒绝置评。EquiStamp 首席执行官 Chris Canal 对 The Verge 说，如果有公司主动阻止，智能体能做的有用事情就更少。</p><p>亚马逊与 Perplexity 的诉讼、上诉法院在 8 月推翻禁令，以及 Cloudflare 拦截爬虫，是更早的背景，不是这篇报道的新禁令。</p><div class="condition"><strong>适用范围：</strong><ul><li>Yelp、达美、摩根大通、嘉信和亚马逊的表态，都以 The Verge 的转述为准。</li><li>近几周的用户报告和更早的诉讼不是同一天的新禁令。</li></ul></div><div class="source"><a href="https://www.theverge.com/ai-artificial-intelligence/1013195/ai-agents-blocked-web" target="_blank" rel="noopener noreferrer">The Verge · 一手来源 · 已核对</a></div><p class="source-note">核验说明（The Verge）：Yelp 只允许付费许可、达美不让代订、摩根大通和嘉信因安全拦账户、亚马逊称 Muse 违规，取自这篇报道。datePublished 是 2026-10-17T13:00:00+00:00。各公司原文这次没有逐条打开。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
