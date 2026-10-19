@@ -1,0 +1,182 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-19",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-19T08:00:00+08:00",
+  "generated_at": "2026-10-19T08:06:20.253275+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 19,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "failed",
+      "item_count": 0,
+      "error": "HuggingFace failed: trending_models: HTTP 400"
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "failed",
+      "item_count": 0,
+      "error": "Reddit failed: r/LocalLLaMA: HTTP 403"
+    }
+  ],
+  "events": [
+    {
+      "id": "anthropic-public-benefit-fund",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Anthropic 承诺把 5% 股份放进公益基金",
+      "kicker": "行业 · Anthropic",
+      "facts": [
+        "Anthropic 新闻页的 datePublished 是 2026-10-18T16:49:35.513Z。",
+        "公司宣布设立 Anthropic Public Benefit Fund。在股东批准的前提下，今天承诺放入 5% 股份。公司价值每在既定基线上再增加 50%，董事会可自行再增加 2%。",
+        "基金设为全资有限责任公司，而不是 501(c)(3)。该有限责任公司持有的 Anthropic 股权不用于美国或海外的游说和政治捐赠。",
+        "估值台阶和治理结构，公司说将在未来几个月公布。"
+      ],
+      "conditions": [
+        "5% 股份须经股东批准。",
+        "每上涨 50% 再加 2% 由董事会自行决定，具体估值台阶尚未公布。"
+      ],
+      "background": [
+        "公司写，联合创始人在创立时承诺捐出各自所持股权的 80%，约一半员工参加股权捐赠配比。公司把这些既有承诺和本次公告合在一起，说大约 20% 的公司股份会用于公益。公司还写已经承诺 2 亿美元研究劳动力市场影响。这些都不是这次新拨出的款项。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/news/public-benefit-fund",
+          "kind": "primary",
+          "published_at": "2026-10-18T16:49:35.513Z",
+          "verified": true,
+          "note": "5% 股份、每上涨 50% 再加 2%、全资有限责任公司，以及股份不用于游说，取自这篇公告。datePublished 是 2026-10-18T16:49:35.513Z。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/18/anthropic-says-its-committing-5-of-its-shares-to-a-public-benefit-fund/",
+          "kind": "secondary",
+          "published_at": "2026-10-18T20:37:40+00:00",
+          "verified": true,
+          "note": "同一承诺的简讯，作者 Anthony Ha。datePublished 是 2026-10-18T20:37:40+00:00。没有超出公告的新数字。"
+        }
+      ],
+      "lede": "Anthropic 宣布设立 Anthropic Public Benefit Fund。股东批准后，今天承诺放入 5% 股份。公司价值每在既定基线上再涨 50%，董事会还可自行再加 2%。基金是全资有限责任公司，所持股份不用于游说或政治捐赠。",
+      "caveat": "5% 仍须股东批准，加码的估值台阶还没公布。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:7f9a317b0a55b1641578bbfd70fdfb25bdd396e14299174d44588e9d25e86300"
+}
