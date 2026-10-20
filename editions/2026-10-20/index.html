@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 20 日 AI 日报，含 3 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 20 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-20">2026 年 10 月 20 日</time> · 星期二</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 20 日 08:00（北京时间）。本期收录 3 条窗口内动态；另有 2 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">模型 · Inception</span><time datetime="2026-10-20T03:46:00+08:00">10.20 03:46 北京时间</time></div><h2 id="event-1-title">Inception 发布扩散语言模型 Mercury 3</h2><div class="lead-copy"><p>Inception 发布扩散语言模型 Mercury 3，今天可在自家 API、OpenRouter 和 Vercel 调用。公司称英伟达 GPU 上每秒 1068 token。标价每百万 token 输入 0.20 美元、输出 0.70 美元，上线先打五折。</p><p class="caveat">限定：速度、基准和五折都是公司页面上的说法，五折没有写结束日期。</p><div class="source"><a href="https://www.inceptionlabs.ai/blog/introducing-mercury-3" target="_blank" rel="noopener noreferrer">原文 · Inception</a></div><details><summary>详细与核验</summary><p>Inception 博客页的 HTML 注释写 Published Oct 19, 2026, 7:46 PM UTC。data-framer-ssr-released-at 是 2026-10-19T11:56:06.388Z。正文写今天发布扩散语言模型 Mercury 3。</p><p>正文写 Mercury 3 在一批基准上超过 GPT-6 Luna 和 Claude Haiku 5.5，同时快 4 到 8 倍，速度在每秒 1000 token 以上。同页写英伟达 GPU 上每秒 1068 token，上下文 100 万 token，Mercury 2.5 是 26 万 token。</p><p>标价每百万 token 输入 0.20 美元、输出 0.70 美元。上线五折为输入 0.10 美元、输出 0.35 美元。缓存 token 按输入价的 10% 计费。正文写参数规模超过 Mercury 1 的 40 倍，相对 Mercury 1 mini，一组标准基准上的成绩提高到 3 倍。</p><p>正文写 Mercury 3 今天可在 Inception API Platform、OpenRouter、Baseten 和 Vercel 使用，兼容 OpenAI API。试用提供 1 亿免费 token。公司写在 50 个 Mind2Web 任务上完成 50%，高于 GPT-6.1-Sol。</p><div class="condition"><strong>适用范围：</strong><ul><li>速度、基准比较、50% 完成率和 3 倍成绩都是公司自己的测试，页面没有给出完整对照表。</li><li>五折没有写结束日期。</li><li>页面没有写出总参数量，只写超过 Mercury 1 的 40 倍。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>同页还介绍 Mercury Voice 和分类模型 Mercury Decide。Decide 称在 JevBench 和 LegalBench 上超过 Jev。这不是 Mercury 3 的标价。</li></ul></details><div class="source"><a href="https://www.inceptionlabs.ai/blog/introducing-mercury-3" target="_blank" rel="noopener noreferrer">Inception · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Inception）：核验说明（Inception）：每秒 1068 token、100 万上下文、0.20 与 0.70 美元标价、五折、今天可调用，以及 50 个 Mind2Web 任务完成 50%，取自这篇。HTML 注释写 Published Oct 19, 2026, 7:46 PM UTC。data-framer-ssr-released-at 是 2026-10-19T11:56:06.388Z。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">安全 · 微软</span><time datetime="2026-10-19T21:00:02+08:00">10.19 21:00 北京时间</time></div><h3 id="event-2-title">微软把内部智能体发现范围扩到 60 类</h3><div><p>微软把 Project Perception 扩到内部智能体。本地发现增至 60 类，包括 Claude Code、Codex 和 Copilot。Hayete Gallot 写道，前沿模型无论来自哪里都不能信任。Guardian Agents 在动作发生前监督。</p><p class="caveat">限定：60 类是微软自己的名单，页面描述写新能力在 Microsoft 365 E7。</p><div class="source"><a href="https://blogs.microsoft.com/blog/2026/10/19/securing-the-agentic-insider/" target="_blank" rel="noopener noreferrer">原文 · Microsoft</a></div><details><summary>详细与核验</summary><p>微软官方博客 datePublished 是 2026-10-19T13:00:02+00:00，作者 Hayete Gallot，微软安全执行副总裁。她写，前沿模型无论来自哪里都不能信任。原因不是模型有恶意，而是被训练去达成结果，常出现奖励黑客，并且没有按组织规范优化。</p><p>微软安全博客 datePublished 是 2026-10-19T13:00:00+00:00，作者 Nadim Abdo。正文写今天把 Project Perception 扩到企业内部智能体。本地智能体发现再增加 35 类，总数到 60 类，包括 Claude Code、OpenAI Codex 和 GitHub Copilot。</p><p>两篇都写 Guardian Agents 在动作发生前监督智能体。Gallot 写 Project Perception 在 7 月已经宣布，当时面向外部攻击。安全博客的页面描述写，新能力在 Microsoft 365 E7 和 Project Perception。</p><p>安全博客引用 Nadella：最值得信任的智能体系统，不会是我们最信任其模型的那一个，而是设计成让我们能够最不信任模型的那一个。</p><div class="condition"><strong>适用范围：</strong><ul><li>60 类是微软安全博客列出的发现范围，不是独立审计数字。</li><li>Microsoft 365 E7 出现在安全博客的页面描述里，正文没有另列价格或开通步骤。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>Gallot 写，7 月宣布的 Project Perception 用红队、蓝队和绿队应对外部攻击。这次写的是已经部署在企业内部的智能体。</li></ul></details><div class="source"><a href="https://blogs.microsoft.com/blog/2026/10/19/securing-the-agentic-insider/" target="_blank" rel="noopener noreferrer">Microsoft · 一手来源 · 已核对</a><a href="https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/" target="_blank" rel="noopener noreferrer">Microsoft Security · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Microsoft）：核验说明（Microsoft）：前沿模型无论来自哪里都不能信任，以及 Guardian Agents 要在动作发生前监督，取自 Hayete Gallot 这篇。datePublished 是 2026-10-19T13:00:02+00:00。</p><p class="source-note">核验说明（Microsoft Security）：核验说明（Microsoft Security）：本地智能体再增加 35 类、总数 60 类，包括 Claude Code、Codex 和 GitHub Copilot，取自 Nadim Abdo 这篇。datePublished 是 2026-10-19T13:00:00+00:00。页面描述写新能力在 Microsoft 365 E7。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">工具 · PyTorch</span><time datetime="2026-10-19T20:45:23+08:00">10.19 20:45 北京时间</time></div><h3 id="event-3-title">PyTorch 给 Trainium 加上原生后端 TorchNeuron</h3><div><p>PyTorch 宣布 TorchNeuron，模型改成 .to(&#x27;neuron&#x27;) 就能在 Trainium 上跑，支持 Trainium2 和 Trainium3。公开测试从 10 月 20 日开始。Hugging Face 写，文本生成架构支持率从 46% 升到 89%。</p><p class="caveat">限定：公开测试 10 月 20 日才开始，TorchAO 和 FP8 仍是私人测试。</p><div class="source"><a href="https://pytorch.org/blog/introducing-torchneuron-native-pytorch-backend-for-aws-trainium/" target="_blank" rel="noopener noreferrer">原文 · PyTorch</a></div><details><summary>详细与核验</summary><p>PyTorch 博客 datePublished 是 2026-10-19T05:45:23-07:00，可见日期是 October 19, 2026。宣布 TorchNeuron，把 AWS Trainium 注册为原生 PyTorch 设备。公开测试从 2026 年 10 月 20 日开始，安装命令是 pip install torch-neuronx，仓库是 github.com/aws-neuron/torch-neuronx，许可证是 Apache 2.0。</p><p>博客写支持 Trainium2 和 Trainium3 上的 eager、torch.compile 和 Neuron Kernel Interface。示例把模型改成 .to(&#x27;neuron&#x27;)。TorchAO 和 FP8 仍是私人测试。</p><p>Hugging Face 博客 datePublished 是 2026-10-19T00:00:00.755Z。写 Transformers、Diffusers 和 Kernels 原生支持 TorchNeuron。最常用的 100 种文本生成架构里，开箱支持从 Optimum Neuron v0.4.5 的 46% 升到 89%。</p><div class="condition"><strong>适用范围：</strong><ul><li>公开测试和 pip 安装从 10 月 20 日才开始。</li><li>89% 是 Hugging Face 相对 Optimum Neuron v0.4.5 的架构覆盖比较，不是一张速度表。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>Hugging Face 写，此前 Trainium 上的体验走 Optimum Neuron，底层是基于 PyTorch XLA 的 torch-neuronx。这次改为 PyTorch 原生设备。</li></ul></details><div class="source"><a href="https://pytorch.org/blog/introducing-torchneuron-native-pytorch-backend-for-aws-trainium/" target="_blank" rel="noopener noreferrer">PyTorch · 一手来源 · 已核对</a><a href="https://huggingface.co/blog/hf-torchneuron" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a></div><p class="source-note">核验说明（PyTorch）：核验说明（PyTorch）：原生设备、Trainium2 和 Trainium3、.to(&#x27;neuron&#x27;)、Apache 2.0，以及 10 月 20 日公开测试，取自这篇。datePublished 是 2026-10-19T05:45:23-07:00。</p><p class="source-note">核验说明（Hugging Face）：核验说明（Hugging Face）：Transformers、Diffusers 和 Kernels 原生支持，文本生成架构支持率从 46% 到 89%，取自这篇。datePublished 是 2026-10-19T00:00:00.755Z。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-20",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-20T08:00:00+08:00",
+  "generated_at": "2026-10-20T08:08:18.417567+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "failed",
+      "item_count": 0,
+      "error": "HuggingFace failed: trending_models: HTTP 400"
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "failed",
+      "item_count": 0,
+      "error": "Reddit failed: r/LocalLLaMA: HTTP 403"
+    }
+  ],
+  "events": [
+    {
+      "id": "mercury-3",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Inception 发布扩散语言模型 Mercury 3",
+      "kicker": "模型 · Inception",
+      "facts": [
+        "Inception 博客页的 HTML 注释写 Published Oct 19, 2026, 7:46 PM UTC。data-framer-ssr-released-at 是 2026-10-19T11:56:06.388Z。正文写今天发布扩散语言模型 Mercury 3。",
+        "正文写 Mercury 3 在一批基准上超过 GPT-6 Luna 和 Claude Haiku 5.5，同时快 4 到 8 倍，速度在每秒 1000 token 以上。同页写英伟达 GPU 上每秒 1068 token，上下文 100 万 token，Mercury 2.5 是 26 万 token。",
+        "标价每百万 token 输入 0.20 美元、输出 0.70 美元。上线五折为输入 0.10 美元、输出 0.35 美元。缓存 token 按输入价的 10% 计费。正文写参数规模超过 Mercury 1 的 40 倍，相对 Mercury 1 mini，一组标准基准上的成绩提高到 3 倍。",
+        "正文写 Mercury 3 今天可在 Inception API Platform、OpenRouter、Baseten 和 Vercel 使用，兼容 OpenAI API。试用提供 1 亿免费 token。公司写在 50 个 Mind2Web 任务上完成 50%，高于 GPT-6.1-Sol。"
+      ],
+      "conditions": [
+        "速度、基准比较、50% 完成率和 3 倍成绩都是公司自己的测试，页面没有给出完整对照表。",
+        "五折没有写结束日期。",
+        "页面没有写出总参数量，只写超过 Mercury 1 的 40 倍。"
+      ],
+      "background": [
+        "同页还介绍 Mercury Voice 和分类模型 Mercury Decide。Decide 称在 JevBench 和 LegalBench 上超过 Jev。这不是 Mercury 3 的标价。"
+      ],
+      "sources": [
+        {
+          "label": "Inception",
+          "url": "https://www.inceptionlabs.ai/blog/introducing-mercury-3",
+          "kind": "primary",
+          "published_at": "2026-10-19T19:46:00Z",
+          "verified": true,
+          "note": "核验说明（Inception）：每秒 1068 token、100 万上下文、0.20 与 0.70 美元标价、五折、今天可调用，以及 50 个 Mind2Web 任务完成 50%，取自这篇。HTML 注释写 Published Oct 19, 2026, 7:46 PM UTC。data-framer-ssr-released-at 是 2026-10-19T11:56:06.388Z。"
+        }
+      ],
+      "lede": "Inception 发布扩散语言模型 Mercury 3，今天可在自家 API、OpenRouter 和 Vercel 调用。公司称英伟达 GPU 上每秒 1068 token。标价每百万 token 输入 0.20 美元、输出 0.70 美元，上线先打五折。",
+      "caveat": "速度、基准和五折都是公司页面上的说法，五折没有写结束日期。"
+    },
+    {
+      "id": "microsoft-guardian-agents",
+      "placement": "story",
+      "window": "in_window",
+      "title": "微软把内部智能体发现范围扩到 60 类",
+      "kicker": "安全 · 微软",
+      "facts": [
+        "微软官方博客 datePublished 是 2026-10-19T13:00:02+00:00，作者 Hayete Gallot，微软安全执行副总裁。她写，前沿模型无论来自哪里都不能信任。原因不是模型有恶意，而是被训练去达成结果，常出现奖励黑客，并且没有按组织规范优化。",
+        "微软安全博客 datePublished 是 2026-10-19T13:00:00+00:00，作者 Nadim Abdo。正文写今天把 Project Perception 扩到企业内部智能体。本地智能体发现再增加 35 类，总数到 60 类，包括 Claude Code、OpenAI Codex 和 GitHub Copilot。",
+        "两篇都写 Guardian Agents 在动作发生前监督智能体。Gallot 写 Project Perception 在 7 月已经宣布，当时面向外部攻击。安全博客的页面描述写，新能力在 Microsoft 365 E7 和 Project Perception。",
+        "安全博客引用 Nadella：最值得信任的智能体系统，不会是我们最信任其模型的那一个，而是设计成让我们能够最不信任模型的那一个。"
+      ],
+      "conditions": [
+        "60 类是微软安全博客列出的发现范围，不是独立审计数字。",
+        "Microsoft 365 E7 出现在安全博客的页面描述里，正文没有另列价格或开通步骤。"
+      ],
+      "background": [
+        "Gallot 写，7 月宣布的 Project Perception 用红队、蓝队和绿队应对外部攻击。这次写的是已经部署在企业内部的智能体。"
+      ],
+      "sources": [
+        {
+          "label": "Microsoft",
+          "url": "https://blogs.microsoft.com/blog/2026/10/19/securing-the-agentic-insider/",
+          "kind": "primary",
+          "published_at": "2026-10-19T13:00:02+00:00",
+          "verified": true,
+          "note": "核验说明（Microsoft）：前沿模型无论来自哪里都不能信任，以及 Guardian Agents 要在动作发生前监督，取自 Hayete Gallot 这篇。datePublished 是 2026-10-19T13:00:02+00:00。"
+        },
+        {
+          "label": "Microsoft Security",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/10/19/agents-are-your-newest-insiders-security-must-move-at-their-speed/",
+          "kind": "primary",
+          "published_at": "2026-10-19T13:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（Microsoft Security）：本地智能体再增加 35 类、总数 60 类，包括 Claude Code、Codex 和 GitHub Copilot，取自 Nadim Abdo 这篇。datePublished 是 2026-10-19T13:00:00+00:00。页面描述写新能力在 Microsoft 365 E7。"
+        }
+      ],
+      "lede": "微软把 Project Perception 扩到内部智能体。本地发现增至 60 类，包括 Claude Code、Codex 和 Copilot。Hayete Gallot 写道，前沿模型无论来自哪里都不能信任。Guardian Agents 在动作发生前监督。",
+      "caveat": "60 类是微软自己的名单，页面描述写新能力在 Microsoft 365 E7。"
+    },
+    {
+      "id": "torchneuron-trainium",
+      "placement": "story",
+      "window": "in_window",
+      "title": "PyTorch 给 Trainium 加上原生后端 TorchNeuron",
+      "kicker": "工具 · PyTorch",
+      "facts": [
+        "PyTorch 博客 datePublished 是 2026-10-19T05:45:23-07:00，可见日期是 October 19, 2026。宣布 TorchNeuron，把 AWS Trainium 注册为原生 PyTorch 设备。公开测试从 2026 年 10 月 20 日开始，安装命令是 pip install torch-neuronx，仓库是 github.com/aws-neuron/torch-neuronx，许可证是 Apache 2.0。",
+        "博客写支持 Trainium2 和 Trainium3 上的 eager、torch.compile 和 Neuron Kernel Interface。示例把模型改成 .to('neuron')。TorchAO 和 FP8 仍是私人测试。",
+        "Hugging Face 博客 datePublished 是 2026-10-19T00:00:00.755Z。写 Transformers、Diffusers 和 Kernels 原生支持 TorchNeuron。最常用的 100 种文本生成架构里，开箱支持从 Optimum Neuron v0.4.5 的 46% 升到 89%。"
+      ],
+      "conditions": [
+        "公开测试和 pip 安装从 10 月 20 日才开始。",
+        "89% 是 Hugging Face 相对 Optimum Neuron v0.4.5 的架构覆盖比较，不是一张速度表。"
+      ],
+      "background": [
+        "Hugging Face 写，此前 Trainium 上的体验走 Optimum Neuron，底层是基于 PyTorch XLA 的 torch-neuronx。这次改为 PyTorch 原生设备。"
+      ],
+      "sources": [
+        {
+          "label": "PyTorch",
+          "url": "https://pytorch.org/blog/introducing-torchneuron-native-pytorch-backend-for-aws-trainium/",
+          "kind": "primary",
+          "published_at": "2026-10-19T05:45:23-07:00",
+          "verified": true,
+          "note": "核验说明（PyTorch）：原生设备、Trainium2 和 Trainium3、.to('neuron')、Apache 2.0，以及 10 月 20 日公开测试，取自这篇。datePublished 是 2026-10-19T05:45:23-07:00。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/blog/hf-torchneuron",
+          "kind": "primary",
+          "published_at": "2026-10-19T00:00:00.755Z",
+          "verified": true,
+          "note": "核验说明（Hugging Face）：Transformers、Diffusers 和 Kernels 原生支持，文本生成架构支持率从 46% 到 89%，取自这篇。datePublished 是 2026-10-19T00:00:00.755Z。"
+        }
+      ],
+      "lede": "PyTorch 宣布 TorchNeuron，模型改成 .to('neuron') 就能在 Trainium 上跑，支持 Trainium2 和 Trainium3。公开测试从 10 月 20 日开始。Hugging Face 写，文本生成架构支持率从 46% 升到 89%。",
+      "caveat": "公开测试 10 月 20 日才开始，TorchAO 和 FP8 仍是私人测试。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:aafdfb99453db9a9b74c60f3f4188b0b966a60f693fa3a7ef69530190cd6a551"
+}
