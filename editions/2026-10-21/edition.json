@@ -1,0 +1,309 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-21T08:00:00+08:00",
+  "generated_at": "2026-10-21T08:07:49.610086+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "failed",
+      "item_count": 0,
+      "error": "HuggingFace failed: trending_models: HTTP 400"
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "failed",
+      "item_count": 0,
+      "error": "Reddit failed: r/LocalLLaMA: HTTP 403"
+    }
+  ],
+  "events": [
+    {
+      "id": "meta-muse-share-pause",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Meta 暂停 Muse 的对话分享",
+      "kicker": "安全 · Meta",
+      "facts": [
+        "The Verge 写，Meta 发言人 Tracy Clayton 在邮件中说，用户可以分享特定 Muse 产物，从而生成一个持有链接的人能够打开的页面。公司已暂停这项功能，以便审阅这份报告，并考虑如何改变这些链接被发现的方式。",
+        "Claroc 写，过滤被动 DNS 扫描噪声后，cf.metaaiusercontent.com 下剩下 6800 多个分享主机名。主机名由对话标题加一段随机 ID 组成，从主机名可以拼回链接。他们只打开了其中几百个，看到营销公司的收入回顾、小企业贷款申请、全年员工日历，以及求职者与一家 AI 实验室通话的笔记。",
+        "Claroc 在 10 月 20 日的更新写，Ars Technica 当天报道后，Meta 告诉 Ars 正在暂停该功能。Claroc 复查了本月早些时候不登录就能打开的 40 个分享，现在都打不开，提供内容的主机名返回错误。主机名和标题仍留在被动 DNS 历史里。",
+        "Ars 写，Claroc 联合创始人 Asaf Aprozper 说，10 月 8 日已通过 Meta 的漏洞赏金提交，也在 LinkedIn 联系过，当时没有收到回复。暂停是 Ars 询问之后 Meta 给出的。"
+      ],
+      "conditions": [
+        "6800 多个是 Claroc 过滤噪声后的主机名数量，不是 Meta 公布的数字。他们只打开了其中几百个。",
+        "分享页是用户自己要求 Muse 生成的。不登录就能打开，是 Claroc 描述的产品设计。",
+        "10 月 8 日提交赏金后没有回复，只有 Claroc 联合创始人的说法，页面没有附上赏金回执。"
+      ],
+      "background": [
+        "Claroc 把能从被动 DNS 拼回的分享页叫 GhostShares。文中也提到 ChatGPT、Claude 和 Grok 以前出现过分享内容被搜到的事，那不是这次的新事实。"
+      ],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/tech/1014627/meta-muse-ai-sharing-ai-chats",
+          "kind": "primary",
+          "published_at": "2026-10-20T18:07:34+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：暂停分享，以及 Tracy Clayton 邮件里关于持有链接者可打开页面的话，取自这篇。datePublished 是 2026-10-20T18:07:34+00:00。"
+        },
+        {
+          "label": "Claroc",
+          "url": "https://blog.claroc.io/ghostshares-muse-passive-dns/",
+          "kind": "primary",
+          "published_at": "2026-10-20T00:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（Claroc）：6800 多个主机名、标题写在域名里，以及 10 月 20 日更新里复查的 40 个分享已打不开，取自这篇。页面 datePublished 是 2026-10-18T00:00:00.000Z，更新时间是 2026-10-20T00:00:00.000Z。"
+        },
+        {
+          "label": "Ars Technica",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/",
+          "kind": "primary",
+          "published_at": "2026-10-20T12:33:13+00:00",
+          "verified": true,
+          "note": "核验说明（Ars Technica）：Meta 称正在暂停分享功能，以及 Claroc 称 10 月 8 日交过漏洞赏金但当时没有回复，取自这篇。datePublished 是 2026-10-20T12:33:13+00:00。"
+        }
+      ],
+      "lede": "Meta 暂停了 Muse 的对话分享。Claroc 在被动 DNS 里看到 6800 多个分享主机名，对话标题就写在域名里。发言人说先停掉这项功能，再看怎样减少这些链接被找到。",
+      "caveat": "暂停的是分享链接，不是整个 Muse。已进被动 DNS 的标题仍可能留在记录里。"
+    },
+    {
+      "id": "google-torchtpu",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Google 宣布 TorchTPU 开源",
+      "kicker": "开源 · Google",
+      "facts": [
+        "Google Cloud 博客的日期是 2026-10-20。正文写，在 PyTorch Conference 2026 上宣布 TorchTPU 现已在 GitHub 开源，仓库是 google-pytorch/torch_tpu。TPU 成为 PyTorch 里与 GPU、CPU 并列的原生选项，可以训练、服务和部署。",
+        "博客写，TorchTPU 与 Meta 的 PyTorch 团队合作。现有 PyTorch 工作负载可以用熟悉的 API 在 TPU 上运行，代码改动很少。可以先用 eager 模式调试，再用 torch.compile 转到生产性能。",
+        "博客写，与 Hugging Face 合作后，Transformers v5 把模型部署到 TPU 时传入 device_map=\"tpu\" 即可。Diffusers 在 TPU 上支持 eager、torch.compile 和张量并行。",
+        "博客写，vLLM 的 TorchTPU 后端支持连续批处理、量化和多芯片并行，并称不需要改现有推理栈。SGLang 的 TorchTPU 后端保留上游 worker、调度器和 API 服务器。TPU agent suite 在 GitHub 上处于 preview，用来协助迁移、诊断和推理调优。"
+      ],
+      "conditions": [
+        "google-pytorch/torch_tpu 的 created_at 是 2026-03-09T16:59:42Z，pushed_at 是 2026-10-20T23:58:00Z。本期新事实是博客宣布它可以作为开源原生栈使用，不是今天新建仓库。",
+        "代码改动很少，以及 vLLM 不需要改现有推理栈，都是这篇博客的说法，页面没有给出对照实验。",
+        "TPU agent suite 仓库创建于 2026-10-16T20:13:31Z。博客现在把它标为 preview。"
+      ],
+      "background": [
+        "TechCrunch 同一天把这件事和亚马逊周一发布的 TorchNeuron 写在一起。TorchNeuron 已写入 10 月 20 日期次，不是本期新事实。",
+        "同一篇还写正在与 Red Hat、IBM 发布 llm-d 1.0，并称它是 CNCF Sandbox 项目，有 500 多位贡献者和 25 个组织。没有单独打开 llm-d 仓库。"
+      ],
+      "sources": [
+        {
+          "label": "Google Cloud Blog",
+          "url": "https://cloud.google.com/blog/topics/ai-infrastructure/torchtpu-is-now-open-source-run-native-pytorch-on-tpus",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Google Cloud Blog）：开源宣布、很少的代码改动、Transformers v5 的 device_map=\"tpu\"，以及 vLLM 不改现有推理栈，取自这篇。页面给出的日期是 2026-10-20，没有带时区的时钟。未在 TPU 上跑通示例。"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/google-pytorch/torch_tpu",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（GitHub）：仓库 created_at 是 2026-03-09T16:59:42Z，最近一次 pushed_at 是 2026-10-20T23:58:00Z。这是推送时间，不是公告发布时间。未克隆编译。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/google-has-joined-amazon-in-attacking-nvidias-stronghold-with-ai-app-developers/",
+          "kind": "secondary",
+          "published_at": "2026-10-20T18:38:24+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：这篇把宣布写在周二，datePublished 是 2026-10-20T18:38:24+00:00。Google 页面本身没有带时区的时钟。TorchNeuron 不是本期新事实。"
+        }
+      ],
+      "lede": "Google 在 PyTorch Conference 上宣布 TorchTPU 开源，让 PyTorch 能在 TPU 上训练和部署。公司称现有工作只需很少的代码改动。Hugging Face Transformers v5 已能直接把模型放到 TPU。",
+      "caveat": "仓库 3 月就已创建。这次宣布的是可以当开源原生栈使用，不是新建仓库。"
+    },
+    {
+      "id": "claude-scorpion-binders",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Claude 设计的蝎毒结合蛋白有 17 个通过实验",
+      "kicker": "研究 · Anthropic",
+      "facts": [
+        "Anthropic 研究页写 Published Oct 20, 2026。datePublished 是 2026-10-20T00:00:00.000Z，dateModified 是 2026-10-20T16:04:01.000Z。他们让一个内部研究模型设计针对蝎毒神经毒素的 minibinder。提示词和四次后续与 Citrini Research 一起写。",
+        "Adaptyv Bio 和 Twist Bioscience 实验测试了 211 个设计的结合。其中 17 个达到标准，而且每个只针对一种毒素。针对多种毒素的设计，没有一个对多于一种毒素达标。",
+        "达标要求两个实验室都命中、每次重复都看到结合、每个 KD 达到 1 µM 或更紧，并且对无关蛋白 CLEC12A 没有信号。最强的两个 Cn2-B1 和 Cn2-B2 针对墨西哥蝎 Centruroides noxius 的 Cn2，两边都测到个位数纳摩尔的 KD。",
+        "页面写没有在细胞环境或活体动物里测试中和或效力。竞争实验提示它们与已报道能在小鼠中中和 Cn2 的抗体 LR 靠近同一表位，因此页面推测可能中和 Cn2，但这不是实测。实验用的是重组毒素，不是从毒液纯化的毒素。",
+        "页面写 Claude 用 12 个设计工具生成 318484 个设计，共折叠筛选 553052 个设计与毒素的配对。第一次提示后 64 小时给出 180 个设计，这次活动大约用了 1 万 GPU 小时。211 个设计和结合数据公开。"
+      ],
+      "conditions": [
+        "17 个达标设计每个只对一种毒素有效。多毒素设计没有一个对多于一种毒素达标。",
+        "没有细胞中和实验，也没有动物效力实验。和抗体 LR 的竞争只说明结合位置可能接近。",
+        "测试的是重组毒素，不是从毒液里纯化的毒素。1 万 GPU 小时和 64 小时都是页面给出的数量，不是独立复现。"
+      ],
+      "background": [
+        "页面写蝎子每年蜇伤 120 万人以上、死亡超过 3250 人。这是背景，不是这次实验的结果。",
+        "8 月他们发表过一次单提示词的蛋白设计。这次新的是蝎毒神经毒素、两家实验室的结合测试，以及公开的 211 个设计。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/research/claude-scorpion-toxin-binder-design",
+          "kind": "primary",
+          "published_at": "2026-10-20T00:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（Anthropic）：211 个设计里 17 个达标、个位数纳摩尔、没有细胞或动物实验，以及大约 1 万 GPU 小时，取自这篇。datePublished 是 2026-10-20T00:00:00.000Z，dateModified 是 2026-10-20T16:04:01.000Z。未复现实验。"
+        }
+      ],
+      "lede": "Anthropic 用内部研究模型设计了针对蝎毒的结合蛋白。两家实验室测了 211 个设计，17 个达到结合标准。最强的两个对 Cn2 的结合在个位数纳摩尔，设计和数据已经公开。",
+      "caveat": "只测了重组毒素的结合，没有做细胞中和或动物实验。"
+    },
+    {
+      "id": "gemini-personal-intelligence-cars",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Gemini 的 Personal Intelligence 开始进入 Android Auto",
+      "kicker": "产品 · Google",
+      "facts": [
+        "Google 博客 datePublished 是 2026-10-20T20:00:00+00:00。正文写 Gemini 现已在 Android Auto 和带 Google built-in 的汽车上可用，可以用说话办事。",
+        "Personal Intelligence 从这篇发布时起在 Android Auto 推出，带 Google built-in 的汽车要到之后几个月。已经在 Gemini 应用里打开的设置会跟着进车。",
+        "打开后可连接 Workspace（含 Gmail 和 Google Calendar）、Google Photos、Google Maps、YouTube 和 Search。这些应用在用户选择打开之前不会连接，也可以随时在 Gemini 设置里关掉。带 Google built-in 的汽车只有在手机连接车辆时才分享个人回复。",
+        "脚注写，Personal Intelligence 目前向符合条件的个人 Google 账号推出，不包括 Workspace 的商业、企业和教育用户。用户须年满 18 岁。范围写的是全球，但不包括欧洲经济区、瑞士、英国和尼日利亚。"
+      ],
+      "conditions": [
+        "Personal Intelligence 不包括 Workspace 的商业、企业和教育账号。",
+        "地区不包括欧洲经济区、瑞士、英国和尼日利亚，而且用户须年满 18 岁。",
+        "带 Google built-in 的汽车是之后几个月，不是现在就能用个人回复。"
+      ],
+      "background": [
+        "不打开 Personal Intelligence 时，导航、音乐、电话和普通提问仍然可用，只是回答不会按个人资料定制。"
+      ],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/products-and-platforms/platforms/android/android-auto-cars-with-google-built-in-gemini-personal-intelligence/",
+          "kind": "primary",
+          "published_at": "2026-10-20T20:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（Google）：Android Auto 开始推出、汽车内置版要几个月、可连接的应用，以及 18 岁、个人账号和不含欧洲经济区、瑞士、英国、尼日利亚，取自这篇正文和脚注。datePublished 是 2026-10-20T20:00:00+00:00。未在车里实测。"
+        }
+      ],
+      "lede": "Google 开始把 Gemini 的 Personal Intelligence 放进 Android Auto。公司写，打开后可以读取 Gmail、日历、相册和地图。带 Google built-in 的汽车还要再等几个月。",
+      "caveat": "只面向年满 18 岁的个人账号，不含企业或教育账号，也不含欧洲经济区、瑞士、英国和尼日利亚。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:c37793d9c5adfa77c99c5e77fa16630b6baea5fc0729c1308931e0a9bbe71cf2"
+}
