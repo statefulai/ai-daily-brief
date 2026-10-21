@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 21 日 AI 日报，含 4 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 21 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-21">2026 年 10 月 21 日</time> · 星期三</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 21 日 08:00（北京时间）。本期收录 4 条窗口内动态；另有 4 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">安全 · Meta</span><time datetime="2026-10-21T02:07:34+08:00">10.21 02:07 北京时间</time></div><h2 id="event-1-title">Meta 暂停 Muse 的对话分享</h2><div class="lead-copy"><p>Meta 暂停了 Muse 的对话分享。Claroc 在被动 DNS 里看到 6800 多个分享主机名，对话标题就写在域名里。发言人说先停掉这项功能，再看怎样减少这些链接被找到。</p><p class="caveat">限定：暂停的是分享链接，不是整个 Muse。已进被动 DNS 的标题仍可能留在记录里。</p><div class="source"><a href="https://www.theverge.com/tech/1014627/meta-muse-ai-sharing-ai-chats" target="_blank" rel="noopener noreferrer">原文 · The Verge</a></div><details><summary>详细与核验</summary><p>The Verge 写，Meta 发言人 Tracy Clayton 在邮件中说，用户可以分享特定 Muse 产物，从而生成一个持有链接的人能够打开的页面。公司已暂停这项功能，以便审阅这份报告，并考虑如何改变这些链接被发现的方式。</p><p>Claroc 写，过滤被动 DNS 扫描噪声后，cf.metaaiusercontent.com 下剩下 6800 多个分享主机名。主机名由对话标题加一段随机 ID 组成，从主机名可以拼回链接。他们只打开了其中几百个，看到营销公司的收入回顾、小企业贷款申请、全年员工日历，以及求职者与一家 AI 实验室通话的笔记。</p><p>Claroc 在 10 月 20 日的更新写，Ars Technica 当天报道后，Meta 告诉 Ars 正在暂停该功能。Claroc 复查了本月早些时候不登录就能打开的 40 个分享，现在都打不开，提供内容的主机名返回错误。主机名和标题仍留在被动 DNS 历史里。</p><p>Ars 写，Claroc 联合创始人 Asaf Aprozper 说，10 月 8 日已通过 Meta 的漏洞赏金提交，也在 LinkedIn 联系过，当时没有收到回复。暂停是 Ars 询问之后 Meta 给出的。</p><div class="condition"><strong>适用范围：</strong><ul><li>6800 多个是 Claroc 过滤噪声后的主机名数量，不是 Meta 公布的数字。他们只打开了其中几百个。</li><li>分享页是用户自己要求 Muse 生成的。不登录就能打开，是 Claroc 描述的产品设计。</li><li>10 月 8 日提交赏金后没有回复，只有 Claroc 联合创始人的说法，页面没有附上赏金回执。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>Claroc 把能从被动 DNS 拼回的分享页叫 GhostShares。文中也提到 ChatGPT、Claude 和 Grok 以前出现过分享内容被搜到的事，那不是这次的新事实。</li></ul></details><div class="source"><a href="https://www.theverge.com/tech/1014627/meta-muse-ai-sharing-ai-chats" target="_blank" rel="noopener noreferrer">The Verge · 一手来源 · 已核对</a><a href="https://blog.claroc.io/ghostshares-muse-passive-dns/" target="_blank" rel="noopener noreferrer">Claroc · 一手来源 · 已核对</a><a href="https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/" target="_blank" rel="noopener noreferrer">Ars Technica · 一手来源 · 已核对</a></div><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：暂停分享，以及 Tracy Clayton 邮件里关于持有链接者可打开页面的话，取自这篇。datePublished 是 2026-10-20T18:07:34+00:00。</p><p class="source-note">核验说明（Claroc）：核验说明（Claroc）：6800 多个主机名、标题写在域名里，以及 10 月 20 日更新里复查的 40 个分享已打不开，取自这篇。页面 datePublished 是 2026-10-18T00:00:00.000Z，更新时间是 2026-10-20T00:00:00.000Z。</p><p class="source-note">核验说明（Ars Technica）：核验说明（Ars Technica）：Meta 称正在暂停分享功能，以及 Claroc 称 10 月 8 日交过漏洞赏金但当时没有回复，取自这篇。datePublished 是 2026-10-20T12:33:13+00:00。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">开源 · Google</span></div><h3 id="event-2-title">Google 宣布 TorchTPU 开源</h3><div><p>Google 在 PyTorch Conference 上宣布 TorchTPU 开源，让 PyTorch 能在 TPU 上训练和部署。公司称现有工作只需很少的代码改动。Hugging Face Transformers v5 已能直接把模型放到 TPU。</p><p class="caveat">限定：仓库 3 月就已创建。这次宣布的是可以当开源原生栈使用，不是新建仓库。</p><div class="source"><a href="https://cloud.google.com/blog/topics/ai-infrastructure/torchtpu-is-now-open-source-run-native-pytorch-on-tpus" target="_blank" rel="noopener noreferrer">原文 · Google Cloud Blog</a></div><details><summary>详细与核验</summary><p>Google Cloud 博客的日期是 2026-10-20。正文写，在 PyTorch Conference 2026 上宣布 TorchTPU 现已在 GitHub 开源，仓库是 google-pytorch/torch_tpu。TPU 成为 PyTorch 里与 GPU、CPU 并列的原生选项，可以训练、服务和部署。</p><p>博客写，TorchTPU 与 Meta 的 PyTorch 团队合作。现有 PyTorch 工作负载可以用熟悉的 API 在 TPU 上运行，代码改动很少。可以先用 eager 模式调试，再用 torch.compile 转到生产性能。</p><p>博客写，与 Hugging Face 合作后，Transformers v5 把模型部署到 TPU 时传入 device_map=&quot;tpu&quot; 即可。Diffusers 在 TPU 上支持 eager、torch.compile 和张量并行。</p><p>博客写，vLLM 的 TorchTPU 后端支持连续批处理、量化和多芯片并行，并称不需要改现有推理栈。SGLang 的 TorchTPU 后端保留上游 worker、调度器和 API 服务器。TPU agent suite 在 GitHub 上处于 preview，用来协助迁移、诊断和推理调优。</p><div class="condition"><strong>适用范围：</strong><ul><li>google-pytorch/torch_tpu 的 created_at 是 2026-03-09T16:59:42Z，pushed_at 是 2026-10-20T23:58:00Z。本期新事实是博客宣布它可以作为开源原生栈使用，不是今天新建仓库。</li><li>代码改动很少，以及 vLLM 不需要改现有推理栈，都是这篇博客的说法，页面没有给出对照实验。</li><li>TPU agent suite 仓库创建于 2026-10-16T20:13:31Z。博客现在把它标为 preview。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>TechCrunch 同一天把这件事和亚马逊周一发布的 TorchNeuron 写在一起。TorchNeuron 已写入 10 月 20 日期次，不是本期新事实。</li><li>同一篇还写正在与 Red Hat、IBM 发布 llm-d 1.0，并称它是 CNCF Sandbox 项目，有 500 多位贡献者和 25 个组织。没有单独打开 llm-d 仓库。</li></ul></details><div class="source"><a href="https://cloud.google.com/blog/topics/ai-infrastructure/torchtpu-is-now-open-source-run-native-pytorch-on-tpus" target="_blank" rel="noopener noreferrer">Google Cloud Blog · 一手来源 · 已核对</a><a href="https://github.com/google-pytorch/torch_tpu" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google Cloud Blog）：核验说明（Google Cloud Blog）：开源宣布、很少的代码改动、Transformers v5 的 device_map=&quot;tpu&quot;，以及 vLLM 不改现有推理栈，取自这篇。页面给出的日期是 2026-10-20，没有带时区的时钟。未在 TPU 上跑通示例。</p><p class="source-note">核验说明（GitHub）：核验说明（GitHub）：仓库 created_at 是 2026-03-09T16:59:42Z，pushed_at 是 2026-10-20T23:58:00Z。未克隆编译。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">研究 · Anthropic</span><time datetime="2026-10-20T08:00:00+08:00">10.20 08:00 北京时间</time></div><h3 id="event-3-title">Claude 设计的蝎毒结合蛋白有 17 个通过实验</h3><div><p>Anthropic 用内部研究模型设计了针对蝎毒的结合蛋白。两家实验室测了 211 个设计，17 个达到结合标准。最强的两个对 Cn2 的结合在个位数纳摩尔，设计和数据已经公开。</p><p class="caveat">限定：只测了重组毒素的结合，没有做细胞中和或动物实验。</p><div class="source"><a href="https://www.anthropic.com/research/claude-scorpion-toxin-binder-design" target="_blank" rel="noopener noreferrer">原文 · Anthropic</a></div><details><summary>详细与核验</summary><p>Anthropic 研究页写 Published Oct 20, 2026。datePublished 是 2026-10-20T00:00:00.000Z，dateModified 是 2026-10-20T16:04:01.000Z。他们让一个内部研究模型设计针对蝎毒神经毒素的 minibinder。提示词和四次后续与 Citrini Research 一起写。</p><p>Adaptyv Bio 和 Twist Bioscience 实验测试了 211 个设计的结合。其中 17 个达到标准，而且每个只针对一种毒素。针对多种毒素的设计，没有一个对多于一种毒素达标。</p><p>达标要求两个实验室都命中、每次重复都看到结合、每个 KD 达到 1 µM 或更紧，并且对无关蛋白 CLEC12A 没有信号。最强的两个 Cn2-B1 和 Cn2-B2 针对墨西哥蝎 Centruroides noxius 的 Cn2，两边都测到个位数纳摩尔的 KD。</p><p>页面写没有在细胞环境或活体动物里测试中和或效力。竞争实验提示它们与已报道能在小鼠中中和 Cn2 的抗体 LR 靠近同一表位，因此页面推测可能中和 Cn2，但这不是实测。实验用的是重组毒素，不是从毒液纯化的毒素。</p><p>页面写 Claude 用 12 个设计工具生成 318484 个设计，共折叠筛选 553052 个设计与毒素的配对。第一次提示后 64 小时给出 180 个设计，这次活动大约用了 1 万 GPU 小时。211 个设计和结合数据公开。</p><div class="condition"><strong>适用范围：</strong><ul><li>17 个达标设计每个只对一种毒素有效。多毒素设计没有一个对多于一种毒素达标。</li><li>没有细胞中和实验，也没有动物效力实验。和抗体 LR 的竞争只说明结合位置可能接近。</li><li>测试的是重组毒素，不是从毒液里纯化的毒素。1 万 GPU 小时和 64 小时都是页面给出的数量，不是独立复现。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>页面写蝎子每年蜇伤 120 万人以上、死亡超过 3250 人。这是背景，不是这次实验的结果。</li><li>8 月他们发表过一次单提示词的蛋白设计。这次新的是蝎毒神经毒素、两家实验室的结合测试，以及公开的 211 个设计。</li></ul></details><div class="source"><a href="https://www.anthropic.com/research/claude-scorpion-toxin-binder-design" target="_blank" rel="noopener noreferrer">Anthropic · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Anthropic）：核验说明（Anthropic）：211 个设计里 17 个达标、个位数纳摩尔、没有细胞或动物实验，以及大约 1 万 GPU 小时，取自这篇。datePublished 是 2026-10-20T00:00:00.000Z，dateModified 是 2026-10-20T16:04:01.000Z。未复现实验。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">产品 · Google</span><time datetime="2026-10-21T04:00:00+08:00">10.21 04:00 北京时间</time></div><h3 id="event-4-title">Gemini 的 Personal Intelligence 开始进入 Android Auto</h3><div><p>Google 开始把 Gemini 的 Personal Intelligence 放进 Android Auto。公司写，打开后可以读取 Gmail、日历、相册和地图。带 Google built-in 的汽车还要再等几个月。</p><p class="caveat">限定：只面向年满 18 岁的个人账号，不含企业或教育账号，也不含欧洲经济区、瑞士、英国和尼日利亚。</p><div class="source"><a href="https://blog.google/products-and-platforms/platforms/android/android-auto-cars-with-google-built-in-gemini-personal-intelligence/" target="_blank" rel="noopener noreferrer">原文 · Google</a></div><details><summary>详细与核验</summary><p>Google 博客 datePublished 是 2026-10-20T20:00:00+00:00。正文写 Gemini 现已在 Android Auto 和带 Google built-in 的汽车上可用，可以用说话办事。</p><p>Personal Intelligence 从这篇发布时起在 Android Auto 推出，带 Google built-in 的汽车要到之后几个月。已经在 Gemini 应用里打开的设置会跟着进车。</p><p>打开后可连接 Workspace（含 Gmail 和 Google Calendar）、Google Photos、Google Maps、YouTube 和 Search。这些应用在用户选择打开之前不会连接，也可以随时在 Gemini 设置里关掉。带 Google built-in 的汽车只有在手机连接车辆时才分享个人回复。</p><p>脚注写，Personal Intelligence 目前向符合条件的个人 Google 账号推出，不包括 Workspace 的商业、企业和教育用户。用户须年满 18 岁。范围写的是全球，但不包括欧洲经济区、瑞士、英国和尼日利亚。</p><div class="condition"><strong>适用范围：</strong><ul><li>Personal Intelligence 不包括 Workspace 的商业、企业和教育账号。</li><li>地区不包括欧洲经济区、瑞士、英国和尼日利亚，而且用户须年满 18 岁。</li><li>带 Google built-in 的汽车是之后几个月，不是现在就能用个人回复。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>不打开 Personal Intelligence 时，导航、音乐、电话和普通提问仍然可用，只是回答不会按个人资料定制。</li></ul></details><div class="source"><a href="https://blog.google/products-and-platforms/platforms/android/android-auto-cars-with-google-built-in-gemini-personal-intelligence/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：核验说明（Google）：Android Auto 开始推出、汽车内置版要几个月、可连接的应用，以及 18 岁、个人账号和不含欧洲经济区、瑞士、英国、尼日利亚，取自这篇正文和脚注。datePublished 是 2026-10-20T20:00:00+00:00。未在车里实测。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
