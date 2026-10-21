@@ -218,9 +218,17 @@
           "label": "GitHub",
           "url": "https://github.com/google-pytorch/torch_tpu",
           "kind": "primary",
-          "published_at": "2026-10-20T23:58:00Z",
+          "published_at": null,
           "verified": true,
-          "note": "核验说明（GitHub）：仓库 created_at 是 2026-03-09T16:59:42Z，pushed_at 是 2026-10-20T23:58:00Z。未克隆编译。"
+          "note": "核验说明（GitHub）：仓库 created_at 是 2026-03-09T16:59:42Z，最近一次 pushed_at 是 2026-10-20T23:58:00Z。这是推送时间，不是公告发布时间。未克隆编译。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/20/google-has-joined-amazon-in-attacking-nvidias-stronghold-with-ai-app-developers/",
+          "kind": "secondary",
+          "published_at": "2026-10-20T18:38:24+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：这篇把宣布写在周二，datePublished 是 2026-10-20T18:38:24+00:00。Google 页面本身没有带时区的时钟。TorchNeuron 不是本期新事实。"
         }
       ],
       "lede": "Google 在 PyTorch Conference 上宣布 TorchTPU 开源，让 PyTorch 能在 TPU 上训练和部署。公司称现有工作只需很少的代码改动。Hugging Face Transformers v5 已能直接把模型放到 TPU。",
@@ -297,5 +305,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:48e6965094f38d2edce82ce0de78b3ae62bf66b5e3aeb0120f27311b3eae2f3a"
+  "content_hash": "sha256:c37793d9c5adfa77c99c5e77fa16630b6baea5fc0729c1308931e0a9bbe71cf2"
 }
