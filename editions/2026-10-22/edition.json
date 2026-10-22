@@ -1,0 +1,606 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-22T08:00:00+08:00",
+  "generated_at": "2026-10-22T08:10:53.184329+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 12,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "failed",
+      "item_count": 0,
+      "error": "HuggingFace failed: trending_models: HTTP 400"
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "failed",
+      "item_count": 0,
+      "error": "Reddit failed: r/LocalLLaMA: HTTP 403"
+    }
+  ],
+  "events": [
+    {
+      "id": "php-core-memory-flaws",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "PHP 核心曝出可远程执行代码的漏洞，补丁已经发布",
+      "kicker": "安全 · PHP",
+      "facts": [
+        "Wiz Research 的文章 datePublished 是 2026-10-21T09:59:59-04:00。文章写，PHP 核心有多处内存安全问题，归在两个 CVE 下，严重程度最高到 CVSS 9.2。",
+        "Wiz 写，近十年发布的 PHP 版本至少会撞上其中一个问题，最早到 PHP 5.4。不登录的攻击者可以在受影响的服务器上执行代码，或者读出进程内存。内存里可能有其他请求或服务器自己的口令、令牌、API 密钥和证书。",
+        "Wiz 写，问题在 PHP 本身，不依赖上面的应用有没有漏洞。他们在当时最新的 WordPress、Drupal 和 Joomla 容器镜像上演示了不登录的远程代码执行，并写即使是简单的 Hello World 应用也可能受影响。",
+        "Wiz 写，PHP 团队给出的补丁从核心修掉这些问题，并消掉已打补丁版本里的变体。文章感谢 PHP 团队、Calif 和 OpenAI 参与发现、协调和补丁核验，也感谢 Automattic、Akamai、AWS、Imperva、Microsoft、Vercel 等准备暂时打不了补丁时的缓解。",
+        "Wiz 写，这些缺陷存在了十多年，人工把利用链做出来曾经非常困难。前沿模型把这件事变成了几小时内可以完成的工作。文章没有写已经出现野外利用。",
+        "TechCrunch 写，NSA 建议如果网站不能马上打补丁，就先从网上撤下来。TechCrunch 把当前 PHP 版本写成 8.5.12，并写 PHP 8.1 及更旧版本已不再受支持。TechCrunch 还写，Calif 在 OpenAI 的 Patch the Planet 里用 GPT-5.6 Sol 找到其中一个问题，Wiz 则用了 Wiz Atlas、Gemini 4 Argon 和 GPT-5.6 Sol。",
+        "Wiz 称 PHP 支撑了全世界 70% 的网站。这是 Wiz 的说法。"
+      ],
+      "conditions": [
+        "两个 CVE 和 CVSS 9.2 都是 Wiz 文章里的数字，文章没有写出 CVE 编号。",
+        "8.5.12、不再支持的旧版本，以及 NSA 建议先下线，只出现在 TechCrunch，没有打开 NSA 或 PHP 发布页核对。",
+        "Wiz 没有写已经出现野外利用。"
+      ],
+      "background": [
+        "OpenAI 的 Patch the Planet 页面本次没有打开。模型名称只按 TechCrunch 的转述写入。"
+      ],
+      "sources": [
+        {
+          "label": "Wiz",
+          "url": "https://www.wiz.io/blog/php2shell-php-rce",
+          "kind": "primary",
+          "published_at": "2026-10-21T09:59:59-04:00",
+          "verified": true,
+          "note": "核验说明（Wiz）：两个 CVE、最高 CVSS 9.2、从 PHP 5.4 起、不登录即可执行代码或读内存，以及补丁从核心修复，取自这篇。datePublished 是 2026-10-21T09:59:59-04:00。未复现漏洞。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/php-armageddon-openai-googles-wiz-find-ancient-holes-panicking-the-internet/",
+          "kind": "secondary",
+          "published_at": "2026-10-21T17:59:12+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：NSA 建议不能马上修补就先下线、当前版本写成 8.5.12，以及 Calif 用 GPT-5.6 Sol、Wiz 用 Atlas、Gemini 4 Argon 和 GPT-5.6 Sol，取自这篇。datePublished 是 2026-10-21T17:59:12+00:00。未打开 NSA 原文。"
+        }
+      ],
+      "lede": "Wiz 公布 PHP 核心的两组高危漏洞，严重程度最高到 CVSS 9.2。不登录就可能执行代码，或读出内存里的口令和令牌。公司称从 PHP 5.4 起的近十年版本都会碰到，补丁已经发布。",
+      "caveat": "70% 网站和 CVSS 是 Wiz 的口径。8.5.12 只见于 TechCrunch。"
+    },
+    {
+      "id": "litellm-pypi-1-107-0",
+      "placement": "story",
+      "window": "in_window",
+      "title": "LiteLLM 1.107.0 在 PyPI 上被植入窃取凭据的代码",
+      "kicker": "安全 · 开源",
+      "facts": [
+        "SafeDep 文章的作者署期是 Oct 21, 2026，datePublished 是 2026-10-21T00:00:00.000Z。文章写，PyPI 上的 LiteLLM 1.107.0 带有窃取凭据的代码和远程代码执行后门。七个平台的 wheel 都会装上。上游 GitHub 源码里没有这些文件。PyPI 已经撤下这个版本。",
+        "SafeDep 写，这些代码在任意 Python 进程启动时就会运行，即使用户的程序从未导入 litellm。",
+        "SafeDep 写，1.106.2、1.107.0rc1 和 1.107.0rc2 是干净的。1.107.0 钉住的 litellm-proxy-extras 0.4.110 和 litellm-enterprise 0.1.78 也是干净的。",
+        "Wiz 在同一天的 PHP 文章里另写，10 月 21 日有一个恶意的 LiteLLM 1.107.0 被上传到 PyPI 和 Docker，针对浏览器、云和 AI 密钥，并带有休眠的远控能力。"
+      ],
+      "conditions": [
+        "干净版本和两个伴随包的版本号只来自 SafeDep。",
+        "Docker 上的同一版本只来自 Wiz 的一句话，没有打开 Docker Hub。"
+      ],
+      "background": [
+        "Hacker News 条目指向这篇 SafeDep 文章，因此进入本期来源结果。"
+      ],
+      "sources": [
+        {
+          "label": "SafeDep",
+          "url": "https://safedep.io/litellm-pypi-compromise-credential-stealer-backdoor/",
+          "kind": "primary",
+          "published_at": "2026-10-21T00:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（SafeDep）：1.107.0、七个 wheel、进程启动即运行、PyPI 已撤下，以及 1.106.2 和两个候选版干净，取自这篇。datePublished 是 2026-10-21T00:00:00.000Z。未安装该包。"
+        },
+        {
+          "label": "Wiz",
+          "url": "https://www.wiz.io/blog/php2shell-php-rce",
+          "kind": "secondary",
+          "published_at": "2026-10-21T09:59:59-04:00",
+          "verified": true,
+          "note": "核验说明（Wiz）：PyPI 和 Docker 上都出现恶意 1.107.0 的那一句，取自 PHP 文章中的相关段落。没有另开 Docker 页面。"
+        }
+      ],
+      "lede": "SafeDep 写，PyPI 上的 LiteLLM 1.107.0 带了窃取凭据的代码和后门。Python 一启动就会跑，即使用户没有导入这个包。PyPI 已撤下该版本，1.106.2 是干净的。",
+      "caveat": "上游仓库没有这些文件。Wiz 还提到 Docker，这里没有另开 Docker 页面。"
+    },
+    {
+      "id": "claude-duet-research-preview",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 开放 Claude Duet 研究预览",
+      "kicker": "产品 · Anthropic",
+      "facts": [
+        "Anthropic 文章的可见日期是 October 21, 2026。article:published_time 和 datePublished 都是不带时区的 2026-10-21。文章写，即日起开放 Claude Duet 研究预览。它是一个会主动来找用户的应用，能完成交代的任务，人离开后继续做，并在代表用户行动前先确认。",
+        "文章写，Duet 有 iOS、Android 独立应用，也在 claude.ai 上。研究预览包含在 Pro 和 Max 里，占用和 Claude 其余功能相同的用量额度。今天起从美国的 Pro 和 Max 用户开始，需要加入候补名单。",
+        "文章写，Duet 围绕 Claude Opus 5.5 设计。每天早上发一份短简报，白天隔几小时查看已连接的应用，只有需要人处理时才发消息。它带一台自己的虚拟机和浏览器，不要求用户的电脑或手机开着。",
+        "文章写，它会自己读、起草和准备。发出消息、付款、签署文件或删除任何东西之前，会把将要做的事显示出来并等待批准。即使得到批准，也不能交易证券，也不能在账户之间转钱。用户可以断开任何一个它能访问的应用。",
+        "文章写，凭据处理沿用 Claude Managed Agents 的设计，Duet 不会直接看到密码或登录令牌。另外有一个新的分类器和安全系统提示，用来拒绝分享最严格的一类信息，包括信用卡号和政府身份证件。健康或个人财务信息只有在用户明确要求发送时才放行。",
+        "文章写，这是早期版本，仍可能看错一封邮件的意思，或把紧急程度判断错。核心功能围绕工作，订票这类个人杂事没有那么强，而且还不能把浏览器画面显示给用户。它目前住在自己的应用里，和主 Claude 应用分开。后台检查和较大的任务都会占用套餐额度。",
+        "产品页写，它可以配合超过 6000 个连接器和插件。The Verge 的 datePublished 是 2026-10-21T19:53:20+00:00，转述了研究预览、Opus 5.5、独立应用和网页，以及新的分类器会拒绝信用卡号。"
+      ],
+      "conditions": [
+        "只向美国的 Pro 和 Max 候补名单开放，不是全球即开即用。",
+        "证券交易和账户间转账不在可批准动作里。",
+        "早期版本可能看错紧急程度，个人杂事弱于工作任务，也不能把浏览器画面显示给用户。"
+      ],
+      "background": [
+        "The Verge 把它和 Meta 的 Muse、OpenAI 的 Dots 放在一起比较。那是报道的定位，不是 Anthropic 原文的说法。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://claude.com/resources/articles/claude-duet",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Anthropic）：研究预览、美国 Pro 和 Max 候补、Opus 5.5、虚拟机、批准后才能付款或删除，以及不能转账和交易证券，取自这篇。页面日期是 2026-10-21，没有时区。未加入候补。"
+        },
+        {
+          "label": "Anthropic",
+          "url": "https://claude.com/product/claude-duet",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Anthropic）：超过 6000 个连接器和插件，取自产品页。页面没有带时区的发布时间。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1015843/anthropic-claude-duet-ai-agent",
+          "kind": "secondary",
+          "published_at": "2026-10-21T19:53:20+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：独立应用、网页，以及分类器拒绝信用卡号，取自这篇转述。datePublished 是 2026-10-21T19:53:20+00:00。"
+        }
+      ],
+      "lede": "Anthropic 开放 Claude Duet 的研究预览。它用 Opus 5.5，早上发简报，人离开后继续做，付款、发信和删除前先等人确认。现在只向美国的 Pro 和 Max 用户开放候补。",
+      "caveat": "研究预览。即使点了同意，也不能代为转账或交易证券。"
+    },
+    {
+      "id": "recursive-flint",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Recursive 放出可本地运行的编程模型 Flint",
+      "kicker": "开源 · Recursive",
+      "facts": [
+        "Recursive 的发布页写，Flint 是面向本地硬件的混合专家编程模型，总参数 400 亿，每个 token 激活 25 亿。一个由人和智能体组成的小团队从零做完用了不到四个月。",
+        "发布页写，在总参数少于 500 亿的混合专家模型里，Flint 在 SWE-Bench Pro v2、Terminal-Bench 2.1 和 SWE-Bench Verified 上领先，并用超过五倍的速度接近 250 亿到 400 亿参数稠密模型的编程成绩。",
+        "发布页写，用他们优化过的推理引擎，短上下文下 M4 Pro MacBook Pro 每秒超过 125 个 token，64GB 的 NVIDIA RTX Spark 每秒超过 150 个 token。复杂任务需要拆小，并比闭源大编程模型更多指导。上下文最多 512k token，建议停在 256k 以内。",
+        "发布页写，Eureka Machine 参与了从数据、训练配方到推理优化的几乎每一段。权重按 Apache 2.0 提供。页面没有带时区的发布时间。",
+        "Hugging Face 模型卡写，总参数是 398 亿，每次启用约 25 亿且包含输出层，不含输出层的主体约 22 亿。文档中的上下文配置是 262144 token。BF16 检查点大约 80GB，写明的服务例子是一块 B300 或 H200。量化版本另行提供给 NVIDIA 和 Apple Silicon。Transformers 的建模代码还没有放进来。",
+        "模型卡写，发布评测里 Terminal-Bench 2.1 是 54.9%，SWE-bench Pro v2 是 89.7%，SWE-bench Verified 是 74.2%。采样是 temperature 1.0、top-p 0.95、top-k 20。卡上注明部分分数由 Recursive 测量，对照分数来自各家自报，评测设置并不统一。",
+        "TechCrunch 的 datePublished 是 2026-10-21T20:27:41+00:00。它写 Flint 于周三发布，并写公司在 M4 Pro 上测得大约每秒 131 个 token。这个速度和公司页面的“超过 125”不是同一个写法。"
+      ],
+      "conditions": [
+        "公司页面写 400 亿参数和最多 512k 上下文。模型卡写 398 亿，文档上下文是 262144 token。两处没有统一。",
+        "笔记本上的速度是公司对量化推理引擎的数字。模型卡上的 BF16 大约 80GB，示例服务用一块 B300 或 H200。",
+        "54.9%、89.7% 和 74.2% 是模型卡上的发布评测，不是独立复测。"
+      ],
+      "background": [
+        "TechCrunch 写公司去年从隐身状态出来，融资 6.5 亿美元、估值 46.5 亿美元。那不是本期的新发布。"
+      ],
+      "sources": [
+        {
+          "label": "Recursive",
+          "url": "https://recursive.com/updates/introducing-recursive-flint",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Recursive）：400 亿和 25 亿、不到四个月、M4 Pro 每秒超过 125 个 token、RTX Spark 每秒超过 150 个 token，以及 Apache 2.0，取自这篇。页面没有带时区的发布时间。未在本机运行。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/RecursiveSI/flint",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Hugging Face）：398 亿、含输出层约 25 亿、262144 token、BF16 约 80GB、B300 或 H200，以及三项基准分数，取自模型卡。未下载权重。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/recursive-launches-flint-a-laptop-coding-model-it-says-was-largely-built-by-ai/",
+          "kind": "secondary",
+          "published_at": "2026-10-21T20:27:41+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：周三发布，以及大约每秒 131 个 token 的写法，取自这篇。datePublished 是 2026-10-21T20:27:41+00:00。"
+        }
+      ],
+      "lede": "Recursive 放出编程模型 Flint。模型卡写总参数 398 亿，每次启用约 25 亿，按 Apache 2.0 放在 Hugging Face。公司称量化版在 M4 Pro 上每秒超过 125 个 token。",
+      "caveat": "BF16 约 80GB，示例要一块 B300 或 H200。笔记本速度是量化版。"
+    },
+    {
+      "id": "railway-env-access",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Railway 称环境变量可能被外人读到明文",
+      "kicker": "安全 · Railway",
+      "facts": [
+        "Railway 安全披露页的 datePublished 是 2026-10-21T20:44:02.118Z。公司写，当天早上发现存放客户环境变量的系统有异常。截至目前的调查认为，未经授权的第三方可能访问了加密的环境变量，并且其中一部分拿到了解密后的内容。环境变量里可能有 API 密钥或数据库和镜像仓库凭据。",
+        "公司写，他们认为这是最近针对平台公司、目的是牵连 AI 推理服务商的一系列攻击的一部分，并已通知上游服务商主动撤销密钥。",
+        "公司写，初步分析认为影响可能限于一部分用户，但仍建议所有用户立刻轮换存在 Railway 上的全部环境变量，包括 API 密钥和私有镜像仓库凭据，并检查这些服务的日志。所有部署已暂停，在构建恢复前不能发布新版本。确认受影响账户后会用邮件单独通知。"
+      ],
+      "conditions": [
+        "明文被读到，是公司截至发文时的调查判断，用的是“可能”。",
+        "部署暂停期间不能发布新版本。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Railway",
+          "url": "https://blog.railway.com/p/security-disclosure-wednesday-october-21st",
+          "kind": "primary",
+          "published_at": "2026-10-21T20:44:02.118Z",
+          "verified": true,
+          "note": "核验说明（Railway）：可能读到部分环境变量明文、已通知上游撤钥、建议全体轮换，以及部署暂停，取自这篇。datePublished 是 2026-10-21T20:44:02.118Z。未登录账户核对。"
+        }
+      ],
+      "lede": "Railway 称，未经授权的人可能读到了部分客户环境变量的明文，里面会有 API 密钥和数据库凭据。公司已暂停全部部署，并建议所有用户立刻轮换存在 Railway 上的密钥。",
+      "caveat": "公司写影响可能只是一部分账户，但轮换建议发给了所有用户。"
+    },
+    {
+      "id": "openai-models-google-cloud",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 模型将进入 Google Cloud",
+      "kicker": "产品 · OpenAI",
+      "facts": [
+        "OpenAI 页面可见日期是 October 21, 2026。OpenAI 和 Google Cloud 合作，把 OpenAI 的前沿模型和 Codex 的智能体工作流放进 Model Garden。客户可以在里面直接调用，并用 Google Cloud 的数据治理和基础设施。",
+        "页面写，客户将能通过 Model Garden 购买这些模型，交易走 Google Cloud Marketplace。已有 Google Cloud 消费承诺的企业可以用承诺额度抵扣。",
+        "页面写，正式可用计划在未来几周。现在可以申请访问。OpenAI 模型不久后也会进入 Google Antigravity 和 Gemini Agent。微软仍是 OpenAI 的主要云伙伴。",
+        "Greg Brockman 的引语写，这是把最强模型和 Codex 放到客户已经在用的地方。Thomas Kurian 的引语写，客户可以按任务选模型。页面没有写出具体模型名和价格。"
+      ],
+      "conditions": [
+        "正式可用是未来几周，不是今天就能在 Model Garden 里调用。",
+        "微软仍是主要云伙伴。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/openai-models-google-cloud/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（OpenAI）：Model Garden、承诺额度抵扣、未来几周正式可用，以及微软仍是主要云伙伴，取自这篇。页面可见日期是 2026-10-21，没有带时区的发布时间。未提交申请。"
+        }
+      ],
+      "lede": "OpenAI 宣布把前沿模型和 Codex 放进 Google Cloud 的 Model Garden，企业可以用承诺额度购买。正式可用写的是未来几周，现在只能申请。微软仍是主要云伙伴。",
+      "caveat": "页面没有写出具体模型名字和价格。"
+    },
+    {
+      "id": "openai-brain-cell-agents",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 用数千个智能体读完一批小鼠脑细胞数据",
+      "kicker": "研究 · OpenAI",
+      "facts": [
+        "OpenAI 页面可见日期是 October 21, 2026。OpenAI、PerturbAI 和 Scripps Research 用数千个 GPT-Rosalind 智能体，分析已有的小鼠全脑实验数据。页面写，数据来自数百万个小鼠脑细胞，这一轮分析用了 32 分钟。",
+        "页面写，如果由人一次看一个扰动并核对文献，团队估计要几个月到一年。智能体复现了人类分析里的发现，并额外指出一些线索。盲评中，人类专家在 75% 的时候更偏向分布式智能体的报告，而不是单个智能体的报告。",
+        "页面写，工作量最大时，分布式智能体引用了 700 多篇文献，单个智能体只引用 11 篇。",
+        "页面举出的线索包括 Tsc1 和 Tsc2 在小脑的影响不同，以及 Dctn1 扰动后与胆固醇合成有关的基因上升。页面把这些写成值得继续做实验的问题，不是已经完成的治疗或人体结果。",
+        "页面写，推理图谱已经公开，研究者现在可以查看。"
+      ],
+      "conditions": [
+        "32 分钟、75% 和文献篇数都是 OpenAI 页面的数字，没有独立复算。",
+        "基因差异和胆固醇线索是待验证的问题，不是治疗结果。"
+      ],
+      "background": [
+        "页面引用了 Sarah Teichmann 和 Tomasz Nowakowski 的话，两人都在谈如何用这些线索提出新问题。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/scaling-ai-research-for-complex-biological-data/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（OpenAI）：32 分钟、数百万小鼠脑细胞、75% 的盲评偏好、700 多篇对 11 篇文献，以及图谱已公开，取自这篇。页面可见日期是 2026-10-21，没有带时区的发布时间。未下载图谱。"
+        }
+      ],
+      "lede": "OpenAI、PerturbAI 和 Scripps 用数千个 GPT-Rosalind 智能体，32 分钟读完数百万小鼠脑细胞的已有数据，并公开了推理图谱。盲评里专家更常选这批分布式报告。",
+      "caveat": "这是模型整理的线索，不是新的人体试验，也没有证明某种治疗有效。"
+    },
+    {
+      "id": "meta-q3-shares-muse",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Meta 拟发无投票权新股，并称 Muse 用户超过 1000 万",
+      "kicker": "行业 · Meta",
+      "facts": [
+        "The Verge 的 datePublished 是 2026-10-21T21:30:02+00:00。文章写，Meta 在周三发布的三季报里说，将发行一类无投票权股票，用于人工智能投入、可能的收购和员工报酬，2027 年开始交易。",
+        "The Verge 写，Meta 称今年资本开支预计为 1350 亿到 1450 亿美元，高于先前 1300 亿到 1450 亿美元的区间。首席财务官 Susan Li 在电话会上说，新股用来扩大融资工具。",
+        "The Verge 另写，Muse 本周在美国的下载量达到 1000 万。这和用户数不是同一个口径。",
+        "TechCrunch 的 datePublished 是 2026-10-21T21:14:19+00:00。文章写，周三的三季报电话会上公司确认 Muse 已被超过 1000 万用户使用。扎克伯格说，完成设置的人里大约 25% 现在每天使用。",
+        "TechCrunch 写，扎克伯格说，在有购物行为的活跃用户里，超过四分之一的人平均购买额超过 200 美元。他转述 Plaid 的话，称其连接器在其他服务上没见过这种活动。",
+        "TechCrunch 写，扎克伯格说 Muse 已经达到产品市场契合，接下来要扩大规模、增加收入并优化算力成本。他预计算力效率未来一年提高 10 倍以上，并称正在建设未来几年服务超过 10 亿人的容量。他还说，Muse 最终的每用户收入会高于今天的全家桶应用，而全家桶目前大约是每年几百美元。"
+      ],
+      "conditions": [
+        "新股 2027 年才开始交易，不是现在就能买。",
+        "1000 万用户来自 TechCrunch 对电话会的转述。The Verge 写的是美国下载量 1000 万。两个数字不要当成同一个。",
+        "每用户收入和 10 倍算力效率是扎克伯格的预计，不是已经实现的账。"
+      ],
+      "background": [
+        "Meta 投资者关系稿这次没有打开。资本开支和用户数都来自两家媒体对三季报和电话会的转述。"
+      ],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/tech/1015799/meta-shares-class-ai-q3-2026-earnings",
+          "kind": "primary",
+          "published_at": "2026-10-21T21:30:02+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：无投票权新股、2027 年开始交易、资本开支 1350 亿到 1450 亿美元，以及美国下载量 1000 万，取自这篇。datePublished 是 2026-10-21T21:30:02+00:00。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/21/meta-says-muse-has-over-10m-users-with-shopping-a-top-activity/",
+          "kind": "primary",
+          "published_at": "2026-10-21T21:14:19+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：用户超过 1000 万、约 25% 每天使用、购物用户里超过四分之一平均购买超过 200 美元，以及未来一年算力效率提高 10 倍以上，取自这篇对电话会的转述。datePublished 是 2026-10-21T21:14:19+00:00。"
+        }
+      ],
+      "lede": "Meta 在三季报里说要发行一类无投票权新股，用于人工智能投入、收购和员工报酬，2027 年开始交易。今年资本开支上调到 1350 亿至 1450 亿美元。电话会上公司称 Muse 用户已超过 1000 万。",
+      "caveat": "投资者关系稿没有打开。美国下载量 1000 万是 The Verge 的另一口径。"
+    },
+    {
+      "id": "walmart-agent-profiles",
+      "placement": "story",
+      "window": "in_window",
+      "title": "沃尔玛为代客下单的智能体单设档案",
+      "kicker": "产品 · 沃尔玛",
+      "facts": [
+        "沃尔玛企业新闻页写，公司推出 Agent Profiles、Walmart Agent Gateway，以及给智能体的条款。顾客可以通过自己选的应用和智能体在沃尔玛和山姆会员店购物。页面没有带时区的发布时间。The Verge 同题报道的 datePublished 是 2026-10-21T19:30:00+00:00。",
+        "页面写，Agent Profiles 将于下个月上线。每个智能体在顾客账户里有单独档案，购买记录和顾客自己的分开。顾客可以要求每笔都批准，也可以设消费上限，例子是 50、100 或 200 美元，并可以随时关掉。",
+        "页面写，默认必须由顾客批准购买。即使在额度内，沃尔玛仍可能再要求批准。智能体拿不到支付卡信息，也不能添加或更改支付方式。智能体不得做顾客意图之外的事，只能访问完成任务所需、且顾客允许的信息。不遵守条款的智能体会被拦住。退货规则仍然适用。",
+        "页面写，Agent Gateway 用 MCP，先向公司和开发者开放 beta。页面把 MCP 括注成 model text protocol。好处是可以帮智能体找到顾客常买的东西，而不把更完整的购物历史交给智能体。智能体看到的价格和 walmart.com 上人看到的一样。"
+      ],
+      "conditions": [
+        "顾客档案下个月上线，不是今天就能用。",
+        "Gateway 的 beta 面向公司和开发者。",
+        "默认仍要逐笔批准。额度内也可能被再要求批准。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Walmart",
+          "url": "https://corporate.walmart.com/news/2026/10/Making-It-Possible-for-Agents-to-Shop-on-Behalf-of-Customers",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Walmart）：下个月上线的档案、默认批准、50 到 200 美元只是例子、拿不到卡号，以及 Gateway 的公司和开发者 beta，取自这篇。页面没有带时区的发布时间。未登录账户。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1015715/walmart-ai-shopping-agents",
+          "kind": "secondary",
+          "published_at": "2026-10-21T19:30:00+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：同日报道了档案和下个月上线。datePublished 是 2026-10-21T19:30:00+00:00。条款以沃尔玛页面为准。"
+        }
+      ],
+      "lede": "沃尔玛今天宣布为代客购物的智能体单设档案，下个月上线，沃尔玛和山姆会员店都能用。默认每笔都要顾客确认，也可以设消费上限。智能体拿不到支付卡号，不守规则会被拦住。",
+      "caveat": "档案下个月才上线。Gateway 现在只对公司和开发者开 beta。"
+    },
+    {
+      "id": "chatgpt-ads-26-countries",
+      "placement": "story",
+      "window": "in_window",
+      "title": "ChatGPT 广告再扩 26 国，累计 89 国",
+      "kicker": "产品 · OpenAI",
+      "facts": [
+        "OpenAI 页面可见日期是 October 21, 2026。页面写，ChatGPT 广告扩展到新增的 26 个国家，累计 89 个国家。上线八个多月以来，已有超过 10 万广告主投放过。",
+        "页面写，每周有超过 12 亿人使用 ChatGPT。广告只出现在 Free 和 Go。Plus、Pro 和 Enterprise 仍然没有广告。",
+        "页面写，这次在墨西哥和巴西之后，再进入 14 个拉美国家，包括阿根廷、智利、哥伦比亚和秘鲁，并进入尼日利亚、南非、塞尔维亚、乌克兰、柬埔寨、孟加拉和巴基斯坦等地。广告主可以通过技术合作方或 Ads Manager 自助投放。",
+        "页面写，对话内容不对广告主公开，不出售客户数据。广告有标注，和回答分开，也不影响回答。下一步是更多格式、目标和衡量，没有写新的上线日。"
+      ],
+      "conditions": [
+        "广告只在 Free 和 Go。Plus、Pro 和 Enterprise 没有广告。",
+        "12 亿周活和 10 万广告主都是 OpenAI 的数字。"
+      ],
+      "background": [
+        "10 月 6 日期次写过美国图片广告测试。这一篇是国家范围和广告主数量的新数字。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/chatgpt-ads-expands-26-new-countries",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（OpenAI）：新增 26 国、累计 89 国、超过 10 万广告主、每周超过 12 亿人，以及只在 Free 和 Go 出现，取自这篇。页面可见日期是 2026-10-21，没有带时区的发布时间。"
+        }
+      ],
+      "lede": "OpenAI 把 ChatGPT 广告扩到新增的 26 个国家，累计达到 89 个国家。公司称八个多月来已有超过 10 万广告主投放，每周有超过 12 亿人使用。广告只出现在 Free 和 Go。",
+      "caveat": "Plus、Pro 和企业版仍然没有广告。12 亿是公司自己的周活口径。"
+    },
+    {
+      "id": "nvidia-kumo-relational",
+      "placement": "story",
+      "window": "in_window",
+      "title": "英伟达放出关系数据模型 Kumo Relational",
+      "kicker": "研究 · 英伟达",
+      "facts": [
+        "Hugging Face 上英伟达博客的 datePublished 是 2026-10-21T18:26:30.284Z。文章写，Kumo Relational 是预训练的关系基础模型，对预测问题收集最多 1 万条历史例子作为上下文，一次前向就能预测流失、需求或欺诈，不需要按任务再训练，也不需要把多张表压成一张。",
+        "文章写，在 15 个数据库的 41 项任务上，它超过了要监督训练的关系深度学习模型和专家做特征的梯度提升树。在 SAP SALT 企业基准上，平均倒数排名比 AutoGluon 集成高 8%。在 RelBench V1 分类任务上，比专家特征的梯度提升树平均高将近 4 个 AUROC。相对带特征工程的 XGBoost，SAP SALT 上开箱高 7 个 MRR，微调后高 13 个 MRR。",
+        "文章写，它可以处理 5000 亿行以上的数据库，通过英伟达开源的 GPU 结构化数据模型库或 NVIDIA NIM 使用。这些数字都是这篇博客的测试结果。",
+        "Hugging Face 模型卡写，权重按 OpenMDW 1.1 发布，基于 KumoRFM-2，并微调了按 BSD-3-Clause 授权的 TabICLv2 权重。模型卡写，目前没有任何推理服务商部署它。"
+      ],
+      "conditions": [
+        "基准数字没有在这里重跑。",
+        "模型卡写目前没有推理服务商部署。"
+      ],
+      "background": [
+        "10 月 1 日期次已经报道 Kumo Tabular。这一篇是关系表模型，不是同一则发布。"
+      ],
+      "sources": [
+        {
+          "label": "NVIDIA",
+          "url": "https://huggingface.co/blog/nvidia/kumo-relational",
+          "kind": "primary",
+          "published_at": "2026-10-21T18:26:30.284Z",
+          "verified": true,
+          "note": "核验说明（NVIDIA）：最多 1 万条上下文、15 个库 41 项任务、SAP SALT 高 8% MRR，以及可通过开源库或 NIM 使用，取自这篇。datePublished 是 2026-10-21T18:26:30.284Z。未重跑基准。"
+        },
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/nvidia/Kumo-Relational",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Hugging Face）：权重协议 OpenMDW 1.1，基于 KumoRFM-2，并微调 TabICLv2。模型卡写没有推理服务商部署。未下载权重。"
+        }
+      ],
+      "lede": "英伟达放出关系数据模型 Kumo Relational，权重按 OpenMDW 1.1 发布。博客称它不用按任务再训练，拿最多 1 万条历史作上下文，在 15 个库的 41 项任务上超过了要单独训练的模型。",
+      "caveat": "对照成绩都是英伟达这篇博客的数字，没有在这里重跑。"
+    },
+    {
+      "id": "deepmind-staff-resignations",
+      "placement": "story",
+      "window": "in_window",
+      "title": "DeepMind 有员工因军方合同辞职",
+      "kicker": "政策 · Google",
+      "facts": [
+        "BBC 文章的 datePublished 是 2026-10-21T15:41:25.512Z。BBC 写，伦敦的研究工程师 Sofia Liguori 本周从 Google DeepMind 辞职，并接受 BBC 采访。她说，公司把越来越多的人工智能系统推向军事行动，让她觉得在 Google 工作很羞耻。她工作了三年，辞职原因包括公司与美国和以色列军方的合作增加。",
+        "BBC 写，人工智能研究员 Andreas Kirsch 本月早些时候也因此从 DeepMind 辞职。他对 BBC 说，Google 的治理和监督不足以在军事和保密环境里安全部署人工智能，Google 似乎无权否决五角大楼如何使用其人工智能，对部署情况的可见性也有限。",
+        "BBC 写，Google 发言人说，公司与各地公共部门合作，签合同前会按可接受使用政策和人工智能原则审查，员工有渠道提出担忧，并有禁止报复的工作场所政策。",
+        "BBC 写，今年多家公司与美国军方签约，把人工智能部署到保密军事环境。文中提到的合同允许模型用于任何合法政府目的，并写不应在没有适当人工监督的情况下用于国内大规模监控或自主武器，包括目标选择。这是合同里已有的句子，不是这次辞职新写的条款。"
+      ],
+      "conditions": [
+        "BBC 点名的新辞职是 Liguori 本周这一位。Kirsch 是本月早些时候。文章说还和另外几名员工谈过，没有给出总人数。",
+        "军方合同本身不是今天新签的。新事实是这两人的辞职和他们的说法，以及 Google 的回应。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "BBC",
+          "url": "https://www.bbc.com/news/articles/cmreyvepnv0po",
+          "kind": "primary",
+          "published_at": "2026-10-21T15:41:25.512Z",
+          "verified": true,
+          "note": "核验说明（BBC）：Liguori 本周辞职、Kirsch 本月早些时候辞职，以及 Google 发言人关于政策和禁止报复的回应，取自这篇。datePublished 是 2026-10-21T15:41:25.512Z。"
+        }
+      ],
+      "lede": "BBC 写，DeepMind 研究工程师 Sofia Liguori 本周辞职，因为她反对公司把人工智能更多地用于军事。Google 说合同会按使用政策和人工智能原则审查。",
+      "caveat": "公开点名的是两名员工，不是一批人数统计。Kirsch 的辞职早于这篇报道。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:0918e96d06cf5b3c82472be16775c2f6cebcbe5d6feb5309a92628e47f189f09"
+}
