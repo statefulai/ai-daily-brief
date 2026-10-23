@@ -1,0 +1,416 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-23",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-23T08:00:00+08:00",
+  "generated_at": "2026-10-23T08:13:02.027306+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 19,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "failed",
+      "item_count": 0,
+      "error": "HuggingFace failed: trending_models: HTTP 400"
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "failed",
+      "item_count": 0,
+      "error": "Reddit failed: r/LocalLLaMA: HTTP 403"
+    }
+  ],
+  "events": [
+    {
+      "id": "openai-decisions-ga",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "OpenAI 把 Decisions API 改为正式版，仍只用 gpt-6-luna",
+      "kicker": "产品 · 接口",
+      "facts": [
+        "OpenAI 的 Decisions 指南现在写，The Decisions API is now generally available。端点仍是 POST /v1/decisions，目前唯一支持的模型仍是 gpt-6-luna。指南仍称返回速度大约比 Responses API 快 10 倍。这是文档里的说法。",
+        "指南列出公开测试之后新增的能力：共享输入可以走提示缓存并获得缓存折扣；每个问题可以自带图片；可以用 input_json 直接传入 JSON；单次问题上限从公开测试的 200 提到 400；图片除了内联 base64，也可以用公开的 HTTP 或 HTTPS 地址；可以按顺序评估消息、函数调用和工具输出；可以查看组织用量；GPT-Live 可以直接调用 Decisions，或在输入、输出转写到达时触发。文件、音频和条目引用不能作为这个端点的输入。",
+        "指南写，gpt-6-luna 未命中缓存的输入是每 100 万 token 0.10 美元。缓存读取有折扣，缓存写入要收费，费率与 gpt-6-luna 的标准提示缓存相同。不对输出 token 收费。",
+        "TechCrunch 的 datePublished 是 2026-10-22T19:00:00+00:00。产品负责人 Nikunj Handa 对 TechCrunch 说，速度从一两秒到三秒缩到 100、120、180 毫秒。Speak 的 CTO Andrew Hsu 说，动作间隔从 1.4 秒降到 0.13 秒。稿件写周四向全部客户开放，并点名 Box、Datadog、Ramp 和 Speak 的试用。这些数字和客户名只来自这篇采访。"
+      ],
+      "conditions": [
+        "正式版仍只有 gpt-6-luna。文件、音频和条目引用不能当输入。",
+        "快 10 倍是指南相对 Responses API 的说法。100 到 180 毫秒和 0.13 秒来自 TechCrunch 的采访，没有在本机计时。"
+      ],
+      "background": [
+        "10 月 7 日的日报已经写过公开测试，以及当时图片只接受 base64。TechCrunch 把首发写成 9 月 29 日开发者日。本期以指南现在写的正式版和新增能力为准。",
+        "openai.com 上的公告页返回 HTTP 403，没有打开。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI API",
+          "url": "https://developers.openai.com/api/docs/guides/decisions",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "正式版、仍只有 gpt-6-luna、单次 400 问、input_json、公开图片地址、提示缓存，以及未命中缓存时每 100 万输入 token 0.10 美元，取自这篇指南。指南没有带时区的发布时间。没有调用接口。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/22/openai-makes-its-jev-competitor-widely-available-as-decision-model-competition-heats-up/",
+          "kind": "secondary",
+          "published_at": "2026-10-22T19:00:00+00:00",
+          "verified": true,
+          "note": "Handa 所说的 100、120、180 毫秒，Speak 从 1.4 秒到 0.13 秒，以及 Box、Datadog、Ramp、Speak，取自这篇。datePublished 是 2026-10-22T19:00:00+00:00。"
+        }
+      ],
+      "lede": "OpenAI 把 Decisions API 从公开测试改成正式版，模型仍只有 gpt-6-luna。单次最多 400 个问题，可以传入 JSON 和公开图片地址。未命中缓存的输入仍是每百万 token 0.10 美元。",
+      "caveat": "快 10 倍写在文档里。毫秒级速度来自 TechCrunch，没有实测。"
+    },
+    {
+      "id": "canva-craft",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Canva 发布自研图像模型 Canva Craft",
+      "kicker": "产品 · Canva",
+      "facts": [
+        "The Verge 的 datePublished 是 2026-10-22T21:51:25+00:00。它写 Canva 发布自研图像模型 Canva Craft，分两阶段，先做设计方案再生成图像。最高 2K，超过 30 种纵横比。训练材料是平台内容库里数百万个人工模板，包括社交帖、演示文稿、信息图和菜单。",
+        "The Verge 写，Canva Craft 现在向全球所有用户开放，入口是左侧三点菜单里的 Dream Lab。公司还准备更快的 Craft-fast 和 Craft-ultrafast，目前没有发布。The Verge 写它在 Design Arena 排第四，前面是 OpenAI 的 GPT-Image-2.5 Sunburst、GPT-Image-2.5 Flare 和另一个 GPT-Image 型号。这是对排行榜的转述。",
+        "TechCrunch 的 datePublished 是 2026-10-22T19:00:00+00:00。它写第一阶段处理空间关系、相对比例、视觉层级和文字信息。它写的是可能有 30 种纵横比，不是超过 30 种。它写训练用的是设计而不是照片，生成结果可以通过 Canva Magic 转成图层。模型也可通过 Canva API 使用，并计划经 Canva 的 MCP 接到 ChatGPT 和 Gemini。Leonardo.ai 的研究人员参与了这个模型。"
+      ],
+      "conditions": [
+        "纵横比有两说。The Verge 写超过 30 种，TechCrunch 写 30 种。",
+        "Craft-fast 和 Craft-ultrafast 还没发布。Design Arena 的名次只见于 The Verge。"
+      ],
+      "background": [
+        "Canva 新闻室页面返回 HTTP 403，没有打开。没有在 Dream Lab 里生成图片。"
+      ],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1017151/canva-craft-in-house-ai-model",
+          "kind": "primary",
+          "published_at": "2026-10-22T21:51:25+00:00",
+          "verified": true,
+          "note": "两阶段、最高 2K、超过 30 种纵横比、全球用户经 Dream Lab 使用，以及 Craft-fast 和 Craft-ultrafast 尚未发布，取自这篇。datePublished 是 2026-10-22T21:51:25+00:00。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/22/canva-releases-its-first-image-generation-model/",
+          "kind": "secondary",
+          "published_at": "2026-10-22T19:00:00+00:00",
+          "verified": true,
+          "note": "30 种纵横比、用设计而不是照片训练、Canva Magic 图层、Canva API，以及计划中的 MCP，取自这篇。datePublished 是 2026-10-22T19:00:00+00:00。"
+        }
+      ],
+      "lede": "Canva 发布自研图像模型 Canva Craft。它先安排画面再出图，最高 2K。The Verge 写超过 30 种画幅，全球用户现在可以在 Dream Lab 里用，也可以走 Canva API。",
+      "caveat": "新闻室页面没有打开。更快的两个版本还没发布。"
+    },
+    {
+      "id": "1password-for-agents",
+      "placement": "story",
+      "window": "in_window",
+      "title": "1Password 让代理登录前先由本人确认",
+      "kicker": "产品 · 安全",
+      "facts": [
+        "1Password 新闻稿的可见时间是 Thursday, October 22, 2026 9:00am EDT。公司宣布 1Password for Agents。代理碰到登录页时，用一把单独的数字钥匙向 1Password 证明身份。用户在自己的设备上看到需要哪条凭据、为什么需要，然后决定是否同意。1Password 把密码填进登录表，不把密码发给代理。代理看不到，也存不下密码、密钥或凭据。",
+        "新闻稿写正在合作的代理包括 Meta 的 Muse、Anthropic 的 Claude、OpenAI 的 ChatGPT Work 和 dots、SpaceXSI 的 Grok Bot，以及 Town 的 Townie。另外列出正在推进的伙伴：Browserbase、Browser Use、Dana、Instinct、KERNEL、Perplexity、Ramp、Tomo 和 Wajo。",
+        "Anthropic 的 Ami Vora 在新闻稿里说，Claude Duet 在任何地方登录前会先询问，soon 1Password will complete the sign-in。这句是即将完成，不是写明今天已经对所有 Claude 用户开放。"
+      ],
+      "conditions": [
+        "同意发生在用户自己的设备上。不同意就不会代填。",
+        "Claude 的接入按 Ami Vora 的话是即将完成。其余名字是正在合作或正在推进，不是逐个写明已经上线。"
+      ],
+      "background": [
+        "TechCrunch 同一篇还提到银行发现账户里的代理活动。那是另一件事，不在这个产品的行为里。"
+      ],
+      "sources": [
+        {
+          "label": "1Password",
+          "url": "https://1password.com/press/2026/october/1password-for-agents-trust-layer-personal-ai-agents",
+          "kind": "primary",
+          "published_at": "2026-10-22T09:00:00-04:00",
+          "verified": true,
+          "note": "数字钥匙、本人设备上确认、密码不发给代理，以及 Muse、Claude、ChatGPT Work、dots、Grok Bot、Town 和 Ami Vora 的 soon，取自这篇。稿头时间是 2026-10-22 9:00am EDT。没有完成一次登录。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/22/1password-launches-a-way-for-ai-agents-to-log-in-on-your-behalf-without-seeing-your-password/",
+          "kind": "secondary",
+          "published_at": "2026-10-22T19:07:09+00:00",
+          "verified": true,
+          "note": "周四发布、数字钥匙、用户确认和代填，取自这篇。datePublished 是 2026-10-22T19:07:09+00:00。"
+        }
+      ],
+      "lede": "1Password 推出 for Agents。代理要登录时先用数字钥匙证明身份，你在自己的设备上确认，密码由 1Password 填进网页，不交给模型。Claude 的接入被写成即将完成。",
+      "caveat": "没有实际登录过。名单里的代理不是都已开通。"
+    },
+    {
+      "id": "microsoft-mai-dxo",
+      "placement": "story",
+      "window": "in_window",
+      "title": "微软发表 MAI-DxO 模拟诊断，普通科对照约 36%",
+      "kicker": "研究 · 微软",
+      "facts": [
+        "TechCrunch 的 datePublished 是 2026-10-22T18:43:53+00:00。它写微软诊断系统 MAI-DxO 的研究周四发表在 Science。系统协调多个代理，询问、开检查并讨论诊断。在取自《新英格兰医学杂志》复杂病例的模拟里，正确率是 83%。单独工作、可以查资料的全科和普通内科医生是 36%。稿件写，这种复杂度通常由专科医生或医生团队处理，对照里没有他们。",
+        "TechCrunch 写，最好的结果来自 OpenAI 的 GPT-5 和 GPT-5.5，也测了 Google、Anthropic、Meta 和 DeepSeek 的模型。不加预算限制时，GPT-5 只用短提示在复杂病例上是 78.9%，大约每例 8400 美元。DxO 把费用大约降了 3000 美元，正确率大约只提高 4 个百分点。急诊病例上，GPT-5 单独使用和加上 DxO 几乎没有差别。GPT-5.5 在复杂病例上从 72% 提高到将近 87%，费用略低。急诊两边都大约 85%，费用接近。Gemini 2.5 Flash 单独是 46.4%，加上 DxO 将近 69%。",
+        "Mustafa Suleyman 对 TechCrunch 说，公司在和梅奥诊所训练一个医疗基础模型，计划明年发布。通过与波士顿 Beth Israel Deaconess 医疗中心的合作，微软将在不同医院场景评估 DxO。这是评估安排，不是已经上线的临床系统。",
+        "The Verge 的 datePublished 是 2026-10-22T18:00:00+00:00。它把系统称为 Diagnostic Orchestrator，写《新英格兰医学杂志》病例上大约 83%，有参考资料的普通科医生大约 36%，并写微软准备开源自建基准 SDBench。它另写公司称可以比人类医生准确最多四倍。83% 对 36% 不是四倍。"
+      ],
+      "conditions": [
+        "83% 和 36% 是模拟，对照的是普通科医生，不是专科团队。",
+        "梅奥模型计划明年发布。Beth Israel 的合作是评估，不是已经用于诊疗。",
+        "Science 页面返回 HTTP 403，论文正文没有打开。数字来自 TechCrunch 和 The Verge 的转述。"
+      ],
+      "background": [
+        "The Verge 的“最多四倍”没有写成研究表格里的数字。正文采用两家都写到的大约 83% 和大约 36%。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/22/microsofts-mustafa-suleyman-says-its-ai-outperforms-doctors-on-hard-cases-as-he-chases-medical-superintelligence/",
+          "kind": "primary",
+          "published_at": "2026-10-22T18:43:53+00:00",
+          "verified": true,
+          "note": "83% 与 36%、专科医生不在对照里、GPT-5 的 78.9% 和大约 8400 美元、GPT-5.5 从 72% 到将近 87%，以及梅奥和 Beth Israel 的安排，取自这篇。datePublished 是 2026-10-22T18:43:53+00:00。未打开论文。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1016690/suleyman-microsoft-diagnostic-orchestrator-science-medical-superintelligence",
+          "kind": "secondary",
+          "published_at": "2026-10-22T18:00:00+00:00",
+          "verified": true,
+          "note": "Diagnostic Orchestrator、大约 83% 与大约 36%、准备开源 SDBench，以及“最多四倍”，取自这篇。datePublished 是 2026-10-22T18:00:00+00:00。"
+        },
+        {
+          "label": "Science",
+          "url": "https://www.science.org/doi/10.1126/science.aeh7930",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": false,
+          "note": "页面返回 HTTP 403，正文没有打开。DOI 来自 The Verge 的链接。"
+        }
+      ],
+      "lede": "微软的 MAI-DxO 周四发表在《科学》。模拟的复杂病例里它约 83%，对照的普通科医生约 36%。专科医生不在对照里。GPT-5.5 加上编排后从 72% 到将近 87%。",
+      "caveat": "论文页没有打开。四倍这个说法和 83% 对 36% 对不上。"
+    },
+    {
+      "id": "storm-0940-connectwise",
+      "placement": "story",
+      "window": "in_window",
+      "title": "微软称 Storm-0940 用 ARTEX 加速 ConnectWise 入侵",
+      "kicker": "安全 · 微软",
+      "facts": [
+        "微软安全博客的 datePublished 是 2026-10-21T18:23:55+00:00。博客写，最早在 2026 年 9 月，与中国国家有关的 Storm-0940 用智能体渗透测试框架 ARTEX 自动攻击全球数百个组织。若干次从开始针对到拿到云上特权不到 3 小时。微软评估，最近披露的 ConnectWise 多租户应用供应链入侵也是 Storm-0940。",
+        "同一篇写，未经授权的访问之后，Storm-0940 用 ARTEX 对超过 2250 个租户尝试登录，速度是每分钟 2900 次。博客写，这样的速度让防守方几乎没有时间发现和响应。它借已经获授权的应用去认证客户的 Microsoft 365 环境，不需要用户交互登录。",
+        "TechCrunch 的 datePublished 是 2026-10-22T16:47:17+00:00。它写黑客侵入 ConnectWise 的云备份并偷走用于连接客户的应用凭据，并写 ConnectWise 已暂停云备份的访问，截至周四仍在恢复。ConnectWise 自己的说明没有打开。标题里的“监视了数千家公司”比微软正文的“尝试登录超过 2250 个租户”更满。"
+      ],
+      "conditions": [
+        "2250 和每分钟 2900 次是微软写的尝试登录，不是证实每个租户都被读走了数据。",
+        "ConnectWise 暂停云备份只见于 TechCrunch。公司自己的说明没有打开。",
+        "微软博客的发布时间早于本期窗口起点。进入本期是因为 TechCrunch 在窗口内报道，且上一期没有这条。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "微软安全博客",
+          "url": "https://www.microsoft.com/en-us/security/blog/2026/10/21/storm-0940-uses-artex-agentic-ai-connectwise-supply-chain-compromise/",
+          "kind": "primary",
+          "published_at": "2026-10-21T18:23:55+00:00",
+          "verified": true,
+          "note": "Storm-0940、ARTEX、数百个组织、不到 3 小时拿到特权，以及对超过 2250 个租户每分钟 2900 次尝试登录，取自这篇。datePublished 是 2026-10-21T18:23:55+00:00。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/22/chinese-hackers-spied-on-thousands-of-companies-after-breaching-it-giant-connectwise/",
+          "kind": "secondary",
+          "published_at": "2026-10-22T16:47:17+00:00",
+          "verified": true,
+          "note": "云备份凭据、暂停访问和截至周四仍在恢复，取自这篇。datePublished 是 2026-10-22T16:47:17+00:00。未打开 ConnectWise 说明。"
+        }
+      ],
+      "lede": "微软写，Storm-0940 用 ARTEX 对超过 2250 个租户尝试登录，大约每分钟 2900 次。若干次不到 3 小时就拿到云上特权。它认为 ConnectWise 的多租户应用被用在其中。",
+      "caveat": "这是尝试登录，不是已经读完这些租户的数据。"
+    },
+    {
+      "id": "olmoearth-v1-3",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Ai2 发布 OlmoEarth v1.3 和全球卫星嵌入",
+      "kicker": "开源 · Ai2",
+      "facts": [
+        "Hugging Face 上的 Ai2 文章可见日期是 October 22, 2026，没有钟点。文章发布 OlmoEarth v1.3。它读取一年的 Sentinel-1 雷达，以及 Sentinel-2 和 Landsat 多光谱时间序列，为地球上每 10 米像素生成一个 128 维向量。前 64 维可以单独使用。同时放出全星球的年度预计算嵌入，以及不需要账号的 OlmoEarth Embeddings Explorer。",
+        "文章写，128 维嵌入在对 AlphaEarth Foundations 和 Tessera v2 的 27 项评测里有 20 项最高，总排名也最高。64 维在 27 项里领先 18 项。权重、预训练数据和预训练代码公开。许可证是 OlmoEarth Artifact License，与 v1 和 v1.2 相同。",
+        "文章写，v1.3 的训练计算时间是 v1.2 的 53%、第一版的 18%，碳排放分别是 50% 和 22%。若重跑最终训练，OlmoEarth v1.3 Base 大约要 2720 美元的 H100 租用时间。Explorer 背后的档案大约每年 150 TB。发布时 2025、2024 和 2023 年是全球覆盖，2017 到 2022 年只覆盖部分国家。"
+      ],
+      "conditions": [
+        "20/27 和 18/27 是 Ai2 对自己评测的说法，没有复跑。",
+        "2720 美元是文章对最终一次 H100 租用的估算，不是已支付账单。"
+      ],
+      "background": [
+        "没有下载权重，也没有在 Explorer 里训练分类器。"
+      ],
+      "sources": [
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/blog/allenai/olmoearth-v1-3",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "128 维、10 米、27 项里 20 项、OlmoEarth Artifact License、53% 的计算时间和大约 2720 美元，取自这篇。页面日期是 October 22, 2026，没有钟点。未下载权重。"
+        }
+      ],
+      "lede": "Ai2 发布 OlmoEarth v1.3，为每 10 米像素提供 128 维卫星嵌入，并放出全球预计算版本。27 项评测里 20 项领先，64 维版本领先 18 项。权重按 OlmoEarth 许可证公开。",
+      "caveat": "2017 到 2022 年只覆盖部分国家。没有下载权重。"
+    },
+    {
+      "id": "uber-chatgpt-work",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Uber 把 ChatGPT Work 扩到约 3 万名员工",
+      "kicker": "行业 · Uber",
+      "facts": [
+        "TechCrunch 的 datePublished 是 2026-10-22T16:00:00+00:00。它写 Uber 和 OpenAI 周四宣布扩大合作。Uber 告诉 TechCrunch，全球员工约 3 万人现在都会使用 ChatGPT Work。",
+        "Uber 工程副总裁 Sumanth Sukumar 对 TechCrunch 说，早先试点是 1000 人，来自财务、运营和产品等部门，约 80% 不是工程师。用途包括分析运营数据、为不同市场本地化培训材料，以及做个人仪表盘。公司没有公布这次扩容的花费。",
+        "OpenAI 博客 RSS 把《Uber brings ChatGPT Work to all employees with OpenAI》标在 2026-10-22T00:00:00+00:00。摘要写正在向超过 3 万名员工推出。对应网页返回 HTTP 403，没有打开正文。"
+      ],
+      "conditions": [
+        "TechCrunch 写约 3 万人。OpenAI 的 RSS 摘要写超过 3 万。两处没有统一成同一个整数。",
+        "花费没有公布。没有看到 Uber 内部的部署清单。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/22/uber-puts-all-30000-employees-on-chatgpt-work/",
+          "kind": "primary",
+          "published_at": "2026-10-22T16:00:00+00:00",
+          "verified": true,
+          "note": "约 3 万名员工、1000 人试点和约 80% 不是工程师，取自这篇。datePublished 是 2026-10-22T16:00:00+00:00。花费没有写。"
+        },
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/uber-chatgpt-work-rollout",
+          "kind": "secondary",
+          "published_at": "2026-10-22T00:00:00+00:00",
+          "verified": false,
+          "note": "RSS 摘要写超过 3 万名员工，条目标在 2026-10-22T00:00:00+00:00。网页返回 HTTP 403，正文没有打开。"
+        }
+      ],
+      "lede": "Uber 告诉 TechCrunch，ChatGPT Work 现在给全球约 3 万名员工使用。早先试点是 1000 人，约八成不是工程师。OpenAI 的摘要写超过 3 万。花费没有公布。",
+      "caveat": "OpenAI 公告页没有打开。3 万是约数。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:b587bd2dcfcbdb50f8bbe66c8fa71ec304333af90db7242f35ea5208bcd55344"
+}
