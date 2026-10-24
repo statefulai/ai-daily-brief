@@ -15,6 +15,8 @@ from sources import (
     fetch_feed,
     fetch_html_listing,
     fetch_html_pages,
+    fetch_huggingface,
+    fetch_reddit,
     parse_deepseek_links,
     parse_html_listing,
 )
@@ -280,6 +282,28 @@ DEEPSEEK_UPDATES = """<html><body>
 </body></html>
 """
 
+REDDIT_ATOM = """<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>LocalLlama</title>
+  <entry>
+    <title>[Bi-Weekly Megathread] Project Showcase</title>
+    <link href="https://www.reddit.com/r/LocalLLaMA/comments/1x9yg86/biweekly_megathread_project_showcase/"/>
+    <published>2026-10-19T14:30:51+00:00</published>
+    <content type="html">&lt;p&gt;Share projects.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Vibecoding your own inference engine</title>
+    <link href="https://www.reddit.com/r/LocalLLaMA/comments/1xdh57e/vibecoding/"/>
+    <published>2026-10-23T15:26:47+00:00</published>
+    <content type="html">&lt;p&gt;It was not easy.&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <title>Undated post</title>
+    <link href="https://www.reddit.com/r/LocalLLaMA/comments/undated/"/>
+  </entry>
+</feed>
+"""
+
 
 class FetcherTest(unittest.IsolatedAsyncioTestCase):
     async def test_feed_sends_project_user_agent(self):
@@ -441,6 +465,149 @@ class FetcherTest(unittest.IsolatedAsyncioTestCase):
                     "https://api-docs.deepseek.com/news/news260424/",
                     "DeepSeek",
                     datetime(2026, 4, 24, 20, 0, tzinfo=BEIJING),
+                ),
+            ],
+        )
+
+    def test_current_anthropic_pages_keep_dated_articles(self):
+        fixtures = Path(__file__).resolve().parent / "fixtures"
+        news = parse_html_listing(
+            (fixtures / "anthropic-news-2026-10-24.html").read_text(encoding="utf-8"),
+            "https://www.anthropic.com/news",
+            "Anthropic",
+        )
+        engineering = parse_html_listing(
+            (fixtures / "anthropic-engineering-2026-10-24.html").read_text(encoding="utf-8"),
+            "https://www.anthropic.com/engineering",
+            "Anthropic Engineering",
+        )
+        news_rows = {(item.title, item.url, item.published) for item in news}
+        engineering_rows = {(item.title, item.url, item.published) for item in engineering}
+        self.assertGreaterEqual(len(news), 20)
+        self.assertGreaterEqual(len(engineering), 20)
+        self.assertTrue(all(item.published.tzinfo is not None for item in news + engineering))
+        for row in (
+            (
+                "Investing in the public benefit",
+                "https://www.anthropic.com/news/public-benefit-fund",
+                datetime(2026, 10, 18, 20, 0, tzinfo=BEIJING),
+            ),
+            (
+                "2026 Usage Policy update",
+                "https://www.anthropic.com/news/2026-usage-policy-update",
+                datetime(2026, 10, 8, 20, 0, tzinfo=BEIJING),
+            ),
+            (
+                "The Situation Report",
+                "https://www.anthropic.com/features/ebola-response",
+                datetime(2026, 9, 21, 20, 0, tzinfo=BEIJING),
+            ),
+            (
+                "Scenarios for our economic future",
+                "https://www.anthropic.com/institute/econ-scenarios",
+                datetime(2026, 9, 9, 20, 0, tzinfo=BEIJING),
+            ),
+        ):
+            self.assertIn(row, news_rows)
+        for row in (
+            (
+                "How we contain Claude across products",
+                "https://www.anthropic.com/research/how-we-contain-claude",
+                datetime(2026, 5, 25, 20, 0, tzinfo=BEIJING),
+            ),
+            (
+                "Redesigning source control at Anthropic",
+                "https://www.anthropic.com/research/redesigning-source-control",
+                datetime(2026, 10, 13, 20, 0, tzinfo=BEIJING),
+            ),
+        ):
+            self.assertIn(row, engineering_rows)
+        urls = {item.url for item in news + engineering}
+        self.assertNotIn("https://www.anthropic.com/news/announcements", urls)
+        self.assertNotIn("https://www.anthropic.com/news/product", urls)
+        self.assertNotIn("https://www.anthropic.com/research/team", urls)
+
+    async def test_huggingface_trending_models_use_trending_score(self):
+        requested = []
+
+        def handler(request):
+            requested.append(dict(request.url.params))
+            if (
+                request.url.params.get("sort") == "trendingScore"
+                and request.url.params.get("full") == "true"
+            ):
+                return httpx.Response(200, json=[
+                    {
+                        "modelId": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+                        "likes": 2582,
+                        "lastModified": "2026-10-17T05:46:55.000Z",
+                        "tags": ["text-generation", "safetensors", "region:us"],
+                    },
+                    {
+                        "modelId": "example/missing-date",
+                        "likes": 10,
+                        "tags": ["text-generation"],
+                    },
+                ])
+            return httpx.Response(
+                400,
+                json={"error": "Invalid sort parameter: trending"},
+                headers={"x-error-message": "Invalid sort parameter: trending"},
+            )
+
+        with mock_http(handler):
+            items = await fetch_huggingface({
+                "daily_papers": False,
+                "trending_models": True,
+                "top_n": 10,
+            })
+
+        self.assertEqual(requested, [{"sort": "trendingScore", "limit": "10", "full": "true"}])
+        self.assertEqual(
+            [(item.title, item.url, item.source, item.score, item.published, item.tags) for item in items],
+            [(
+                "🤗 deepseek-ai/DeepSeek-V4.1-Flash-1017",
+                "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+                "HuggingFace Models",
+                2582,
+                datetime(2026, 10, 17, 5, 46, 55, tzinfo=timezone.utc),
+                ["huggingface", "model", "text-generation", "safetensors", "region:us"],
+            )],
+        )
+
+    async def test_reddit_reads_public_atom_feed(self):
+        requested = []
+
+        def handler(request):
+            requested.append(str(request.url))
+            if request.url.path == "/r/LocalLLaMA/.rss":
+                return httpx.Response(200, text=REDDIT_ATOM)
+            return httpx.Response(403)
+
+        with mock_http(handler):
+            items = await fetch_reddit({
+                "subreddits": ["LocalLLaMA"],
+                "top_n": 15,
+                "min_score": 10000,
+            })
+
+        self.assertEqual(requested, ["https://www.reddit.com/r/LocalLLaMA/.rss"])
+        self.assertEqual(
+            [(item.title, item.url, item.source, item.summary, item.published) for item in items],
+            [
+                (
+                    "[Bi-Weekly Megathread] Project Showcase",
+                    "https://www.reddit.com/r/LocalLLaMA/comments/1x9yg86/biweekly_megathread_project_showcase/",
+                    "Reddit r/LocalLLaMA",
+                    "Share projects.",
+                    datetime(2026, 10, 19, 14, 30, 51, tzinfo=timezone.utc),
+                ),
+                (
+                    "Vibecoding your own inference engine",
+                    "https://www.reddit.com/r/LocalLLaMA/comments/1xdh57e/vibecoding/",
+                    "Reddit r/LocalLLaMA",
+                    "It was not easy.",
+                    datetime(2026, 10, 23, 15, 26, 47, tzinfo=timezone.utc),
                 ),
             ],
         )
