@@ -1,0 +1,237 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-25",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-25T08:00:00+08:00",
+  "generated_at": "2026-10-25T08:08:21.198469+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 19,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "failed",
+      "item_count": 0,
+      "error": "HuggingFace failed: trending_models: HTTP 400"
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "anthropic_news",
+      "status": "failed",
+      "item_count": 0,
+      "error": "www.anthropic.com: HTTP 200 but no dated article links"
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "failed",
+      "item_count": 0,
+      "error": "Reddit failed: r/LocalLLaMA: HTTP 403"
+    }
+  ],
+  "events": [
+    {
+      "id": "pa-ai-ad-act",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "宾夕法尼亚要求部分人工智能广告标明合成内容",
+      "kicker": "政策 · 宾夕法尼亚",
+      "facts": [
+        "The Verge 的 datePublished 是 2026-10-24T18:32:21+00:00。它写宾夕法尼亚州长 Josh Shapiro 周四签署 Artificial Intelligence Deceptive Advertising Act。WPXI 的 article:published_time 是 2026-10-22T21:48:15.626Z，也写周四签署。这篇发布时间落在 10 月 22 日，所以文中的周四是这一天。州长签署稿没有打开。",
+        "参议院 SB 806 印本 1808 的短标题就是这部法律。2025 年 6 月 3 日由 Pisciottano 等人提出，2026 年 6 月 10 日三读修正。第 4 条禁止明知、轻率或故意传播这样的广告：使用合成内容，并造成消费者对商品或服务的性质、来源或真实性产生错误认识，却没有清楚显著的披露。披露必须写明广告含有经人工智能修改或生成的内容，在合成内容第一次呈现时出现，使用同一媒介，并在技术上可行时永久或极难移除。",
+        "合成内容的定义包括经人工智能显著修改或生成的图像、视频、音频或文字。第 4 条例外是明显虚构，戏仿、讽刺、评论或批评，以及仅有文字的内容。The Verge 把文字广告也写成需要标注，和这条例外不一致。",
+        "第 5 条由总检察长或地区检察官申请禁令。民事罚款不超过 3000 美元，法院还可以判实际律师费和诉讼费。第 6 条写 60 天后生效。"
+      ],
+      "conditions": [
+        "披露义务只在合成内容造成上述错误认识时触发。",
+        "明显虚构、戏仿、讽刺、评论、批评，以及仅有文字的内容除外。",
+        "生效写的是 60 天，法案没有把日历日写死。"
+      ],
+      "background": [
+        "WPXI 在本期窗口开始前已经写过签署。本期新的公开报道是 The Verge，法定文本以印本 1808 为准。"
+      ],
+      "sources": [
+        {
+          "label": "宾夕法尼亚参议院",
+          "url": "https://www.palegis.us/legislation/bills/text/PDF/2025/0/SB0806/PN1808",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "印本 1808 写明错误认识才触发披露，披露须在首次呈现时出现、与合成内容同一媒介，并在技术上可行时极难移除。例外包括明显虚构、戏仿讽刺评论批评，以及仅有文字。民事罚款不超过 3000 美元，60 天后生效。法案没有写签署日期。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1018187/pennsylvania-ai-deceptive-advertising-act",
+          "kind": "secondary",
+          "published_at": "2026-10-24T18:32:21+00:00",
+          "verified": true,
+          "note": "Shapiro 周四签署，以及广告不限制作地，取自这篇。datePublished 是 2026-10-24T18:32:21+00:00。这篇把文字广告也写成需要标注。法案第 4 条把仅有文字的内容排除在外。"
+        },
+        {
+          "label": "WPXI",
+          "url": "https://www.wpxi.com/news/local/law-requiring-advertisers-disclose-when-they-are-using-ai-passes-pennsylvania/BYUPMQRUHFB27GXBLVHFXPZEKE/",
+          "kind": "secondary",
+          "published_at": "2026-10-22T21:48:15.626Z",
+          "verified": true,
+          "note": "同样写 Shapiro 周四签署，并引了披露必须写明内容经人工智能修改或生成。article:published_time 是 2026-10-22T21:48:15.626Z，早于本期窗口。州长签署稿没有打开。"
+        }
+      ],
+      "lede": "宾夕法尼亚州长 Josh Shapiro 周四签署《人工智能欺骗性广告法》。广告用合成内容造成对商品性质、来源或真伪的错误认识时，必须标明内容经人工智能修改或生成。罚款不超过 3000 美元，60 天后生效。纯文字广告除外。",
+      "caveat": "签署日来自周四的报道。纯文字广告在法案里除外。"
+    },
+    {
+      "id": "model-ballot-2026",
+      "placement": "story",
+      "window": "in_window",
+      "title": "强迫点名时，GPT-6.1 Sol 和 Grok 4.7 几乎各投一边",
+      "kicker": "研究 · 选举",
+      "facts": [
+        "研究页写明：每场一个问题、一轮、无系统提示、打开网页搜索。提示词要求为这场选举点名一位候选人，不要回避。GPT-6.1 Sol 和 Grok 4.7 各自走厂家接口和厂家搜索，默认设置，2026-10-21 从纽约运行。页面写这些是模型，不是会拒绝回答的聊天应用。xAI 给每次 Grok 调用加上约 1240 个看不到也去不掉的隐藏 token。页面还写每场回答三次，全部回答都在 2026-10-21。",
+        "该页加载的数据有 506 场，其中众议院 435、州长 36、参议院 35。回答计数里，GPT-6.1 Sol 的 all 是 1437，民主党 1082，共和党 29，拒答 313。Grok 4.7 的 all 是 1437，民主党 86，共和党 952，拒答 375。只算点了民主党或共和党的回答，GPT 是 1082 比 29，Grok 是 952 比 86。TechCrunch 写成 97% 和 92%。页面说的每场三次乘以 506 是 1518，和文件里的 1437 对不上。",
+        "按数据文件里的逐场标签，两套标签相同的是 48/506。TechCrunch 的 datePublished 是 2026-10-24T15:00:00+00:00，写近 500 场里一致不到一成。没有重跑这些调用，也没有打开聊天应用。"
+      ],
+      "conditions": [
+        "97% 和 92% 只覆盖点了民主党或共和党的回答，不含拒答。",
+        "测试的是厂家接口。研究页写聊天应用会拒绝，这次没有重跑聊天应用。",
+        "页面写每场三次，数据文件的回答总数是 1437，两者不一致。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Model ballot",
+          "url": "https://tap2k.github.io/modelun/suggestibility/ballot.html",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "提示词、厂家接口、2026-10-21 从纽约运行、聊天应用会拒绝，以及约 1240 个隐藏 token，取自这页的说明。506 场和 1082 比 29、952 比 86 取自这页加载的数据。逐场标签相同的是 48/506。没有重跑调用。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/24/forced-to-pick-groks-ai-model-chooses-republicans-openais-picks-democrats/",
+          "kind": "secondary",
+          "published_at": "2026-10-24T15:00:00+00:00",
+          "verified": true,
+          "note": "97%、92%，以及近 500 场里一致不到一成，取自这篇。datePublished 是 2026-10-24T15:00:00+00:00。百分比和场次与研究页数据相符。OpenAI 发言人的话没有另开聊天应用核对。"
+        },
+        {
+          "label": "Convovo",
+          "url": "https://convovo.ai/ballot/",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "这页只复述了提示词、两个模型，以及打开搜索、覆盖 2026 年国会和州长选举。百分比不在这页正文里。"
+        }
+      ],
+      "lede": "Convovo 在 10 月 21 日用各家接口问 GPT-6.1 Sol 和 Grok 4.7，2026 年 506 场国会和州长选举该投给谁。点了民主党或共和党的回答里，GPT 是 1082 比 29，Grok 是 952 比 86。506 场里标签相同的只有 48 场。",
+      "caveat": "聊天应用没有重跑。1437 条对不上每场三次。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:fa6981bd9f7e7f03eab38e11f974de61a7f31b451cb96b06d0e1fcc63887f15a"
+}
