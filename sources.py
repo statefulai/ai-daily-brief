@@ -209,7 +209,11 @@ async def fetch_huggingface(config: dict) -> list[NewsItem]:
             try:
                 resp = await client.get(
                     "https://huggingface.co/api/models",
-                    params={"sort": "trending", "limit": config.get("top_n", 10)},
+                    params={
+                        "sort": "trendingScore",
+                        "limit": config.get("top_n", 10),
+                        "full": "true",
+                    },
                 )
                 if resp.status_code != 200:
                     errors.append(f"trending_models: HTTP {resp.status_code}")
@@ -269,12 +273,21 @@ async def fetch_feed(config: dict) -> list[NewsItem]:
 
 
 @dataclass
+class _Card:
+    time_attr: str = ""
+    time_text: str = ""
+
+
+@dataclass
 class _Anchor:
     href: str
     time_attr: str = ""
     time_text: str = ""
     heading: list[str] = field(default_factory=list)
     texts: list[str] = field(default_factory=list)
+    card: int | None = None
+    loose_attr: str = ""
+    loose_text: str = ""
 
 
 class _ListingParser(HTMLParser):
@@ -283,39 +296,98 @@ class _ListingParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.anchors: list[_Anchor] = []
+        self.cards: list[_Card] = []
         self._anchor: _Anchor | None = None
         self._capture: str | None = None
+        self._stack: list[tuple[str, int | None]] = []
+        self._heading = 0
+        self._time_card: _Card | None = None
+        self._loose_attr = ""
+        self._loose_text = ""
+        self._loose_used = False
+
+    def _card_index(self) -> int | None:
+        for _tag, index in reversed(self._stack):
+            if index is not None:
+                return index
+        return None
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
+        if tag in ("article", "li"):
+            index = None
+            if attributes.get("data-listing-row"):
+                self.cards.append(_Card())
+                index = len(self.cards) - 1
+            self._stack.append((tag, index))
+        if tag in self.HEADINGS:
+            self._heading += 1
+            if self._anchor is not None:
+                self._capture = "heading"
         if tag == "a":
             href = attributes.get("href")
-            self._anchor = _Anchor(href) if href else None
-            if self._anchor:
+            self._anchor = _Anchor(href, card=self._card_index()) if href else None
+            if self._anchor is not None:
+                if self._heading:
+                    self._capture = "heading"
                 self.anchors.append(self._anchor)
-        elif self._anchor is None:
             return
-        elif tag == "time":
+        if tag != "time":
+            return
+        if self._anchor is not None:
             self._anchor.time_attr = attributes.get("datetime") or ""
             self._capture = "time"
-        elif tag in self.HEADINGS and not self._anchor.heading:
-            self._capture = "heading"
+            return
+        index = self._card_index()
+        if index is not None:
+            card = self.cards[index]
+            if not card.time_attr and not card.time_text:
+                card.time_attr = attributes.get("datetime") or ""
+                self._time_card = card
+                self._capture = "card-time"
+            return
+        self._loose_attr = attributes.get("datetime") or ""
+        self._loose_text = ""
+        self._loose_used = False
+        self._capture = "loose-time"
 
     def handle_endtag(self, tag):
-        if tag == "a":
+        if tag == "a" and self._anchor is not None:
+            anchor = self._anchor
+            if (
+                anchor.card is None
+                and anchor.heading
+                and not anchor.time_attr
+                and not anchor.time_text
+                and not self._loose_used
+                and (self._loose_attr or self._loose_text)
+            ):
+                anchor.loose_attr = self._loose_attr
+                anchor.loose_text = self._loose_text
+                self._loose_used = True
             self._anchor = None
+            if self._heading == 0:
+                self._capture = None
+        elif tag in self.HEADINGS:
+            self._heading = max(0, self._heading - 1)
+            if self._capture == "heading" and self._heading == 0:
+                self._capture = None
+        elif tag == "time" and self._capture in ("time", "card-time", "loose-time"):
             self._capture = None
-        elif tag == "time" or tag in self.HEADINGS:
-            self._capture = None
+            self._time_card = None
+        elif tag in ("article", "li") and self._stack and self._stack[-1][0] == tag:
+            self._stack.pop()
 
     def handle_data(self, data):
-        if self._anchor is None:
-            return
-        if self._capture == "time":
+        if self._capture == "time" and self._anchor is not None:
             self._anchor.time_text += data.strip()
-        elif self._capture == "heading":
+        elif self._capture == "card-time" and self._time_card is not None:
+            self._time_card.time_text += data.strip()
+        elif self._capture == "loose-time":
+            self._loose_text += data.strip()
+        elif self._capture == "heading" and self._anchor is not None:
             self._anchor.heading.append(data)
-        elif data.strip():
+        elif self._anchor is not None and data.strip():
             self._anchor.texts.append(data.strip())
 
 
@@ -330,33 +402,62 @@ def _listing_date(time_attr: str, time_text: str) -> datetime | None:
     return _published_on(day)
 
 
+def _listing_title(anchor: _Anchor, own_date: datetime | None) -> str:
+    heading = " ".join("".join(anchor.heading).split())
+    if heading:
+        return heading
+    if own_date is not None and anchor.texts:
+        return anchor.texts[-1]
+    return ""
+
+
 def parse_html_listing(html: str, listing_url: str, source: str) -> list[NewsItem]:
     parser = _ListingParser()
     parser.feed(html)
     host = _host(listing_url)
-    prefix = urlparse(listing_url).path.rstrip("/") + "/"
-    items: list[NewsItem] = []
-    seen: set[str] = set()
+    found: dict[str, NewsItem] = {}
+    card_urls: set[str] = set()
+    order: list[str] = []
     for anchor in parser.anchors:
+        if not anchor.href:
+            continue
         url = urljoin(listing_url, anchor.href)
-        path = urlparse(url).path
-        slug = path[len(prefix):].rstrip("/") if path.startswith(prefix) else ""
-        if _host(url) != host or not slug or "/" in slug or url in seen:
+        segments = [part for part in urlparse(url).path.split("/") if part]
+        if _host(url) != host or len(segments) != 2:
             continue
-        published = _listing_date(anchor.time_attr, anchor.time_text)
-        heading = " ".join("".join(anchor.heading).split())
-        title = heading or (anchor.texts[-1] if anchor.texts else "")
-        if published is None or not title:
+        own = _listing_date(anchor.time_attr, anchor.time_text)
+        card_date = None
+        if anchor.card is not None:
+            card = parser.cards[anchor.card]
+            card_date = _listing_date(card.time_attr, card.time_text)
+        loose = _listing_date(anchor.loose_attr, anchor.loose_text)
+        title = _listing_title(anchor, own)
+        from_card = False
+        if anchor.card is not None and card_date is not None and anchor.heading and title:
+            published = card_date
+            from_card = True
+        elif own is not None and title:
+            published = own
+        elif loose is not None and anchor.heading and title:
+            published = loose
+        else:
             continue
-        seen.add(url)
-        items.append(NewsItem(
+        item = NewsItem(
             title=title,
             url=url,
             source=source,
             published=published,
             tags=["web", _tag(source)],
-        ))
-    return items
+        )
+        if url not in found:
+            found[url] = item
+            order.append(url)
+            if from_card:
+                card_urls.add(url)
+        elif from_card and url not in card_urls:
+            found[url] = item
+            card_urls.add(url)
+    return [found[url] for url in order]
 
 
 async def fetch_html_listing(config: dict) -> list[NewsItem]:
@@ -583,56 +684,50 @@ def _parse_ruanyf_markdown(
 
 
 async def fetch_reddit(config: dict) -> list[NewsItem]:
-    """Fetch hot posts from configured subreddits (default: r/LocalLLaMA)."""
+    """Read hot posts from each subreddit's public Atom feed.
+
+    /r/{sub}/hot.json returns HTTP 403 to this client. /r/{sub}/.rss returns
+    titles, permalinks, and publish dates. Those entries have no score, so
+    min_score is not applied, and the feed does not mark stickied posts.
+    """
     subreddits = config.get("subreddits", ["LocalLLaMA"])
     top_n = config.get("top_n", 15)
-    min_score = config.get("min_score", 50)
     items = []
     errors: list[str] = []
 
     async with _client() as client:
         for sub in subreddits:
+            url = f"https://www.reddit.com/r/{sub}/.rss"
             try:
-                resp = await client.get(
-                    f"https://www.reddit.com/r/{sub}/hot.json",
-                    params={"limit": top_n * 2},
-                )
+                resp = await client.get(url)
                 if resp.status_code != 200:
                     logger.warning(f"Reddit r/{sub} returned {resp.status_code}")
                     errors.append(f"r/{sub}: HTTP {resp.status_code}")
                     continue
-
-                posts = resp.json().get("data", {}).get("children", [])
+                parsed = feedparser.parse(resp.content)
+                if not parsed.version and not parsed.entries:
+                    errors.append(f"r/{sub}: HTTP 200 but not a feed")
+                    continue
                 count = 0
-                for post in posts:
-                    data = post.get("data", {})
-                    if data.get("stickied"):
+                for entry in parsed.entries:
+                    timestamp = entry.get("published_parsed") or entry.get("updated_parsed")
+                    if not timestamp:
                         continue
-                    score = data.get("score", 0)
-                    if score < min_score:
+                    link = entry.get("link") or ""
+                    title = entry.get("title") or ""
+                    if not link or not title:
                         continue
-
-                    created_utc = data.get("created_utc", 0)
-                    published = datetime.fromtimestamp(created_utc, tz=timezone.utc)
-
-                    # Use external URL if it's a link post, otherwise reddit permalink
-                    url = data.get("url", "")
-                    if not url or "reddit.com" in url:
-                        url = f"https://www.reddit.com{data.get('permalink', '')}"
-
                     items.append(NewsItem(
-                        title=data.get("title", ""),
-                        url=url,
+                        title=title,
+                        url=link,
                         source=f"Reddit r/{sub}",
-                        summary=data.get("selftext", "")[:200],
-                        score=score,
-                        published=published,
+                        summary=re.sub(r"<[^>]+>", "", entry.get("summary", ""))[:200],
+                        published=datetime.fromtimestamp(timegm(timestamp), tz=timezone.utc),
                         tags=["reddit", sub.lower()],
                     ))
                     count += 1
                     if count >= top_n:
                         break
-
             except Exception as e:
                 logger.warning(f"Failed to fetch Reddit r/{sub}: {e}")
                 errors.append(f"r/{sub}: {e}")
