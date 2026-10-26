@@ -207,7 +207,7 @@
     {
       "id": "reddit-opensource-ai-ban",
       "placement": "story",
-      "window": "in_window",
+      "window": "recent",
       "title": "r/opensource 拒绝人工智能项目，并限制新人和非英语投稿",
       "kicker": "社区 · Reddit",
       "facts": [
@@ -245,5 +245,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:9d2952bc92e568008dc62239250b13c9e147bd848b92fbe771f1084b1496c176"
+  "content_hash": "sha256:0bb8051b860302a40284ecfd925d861bd93337ecb62ece602624cbe94d63b3d0"
 }
