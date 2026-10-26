@@ -1,0 +1,249 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-26",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-26T08:00:00+08:00",
+  "generated_at": "2026-10-26T08:06:45.927195+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 16,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "nanbeige-4-3-33b",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Nanbeige 放出 33B 开源模型，自报 Terminal-Bench 2.1 为 80.9",
+      "kicker": "模型 · 开源",
+      "facts": [
+        "Hugging Face 模型 Nanbeige/Nanbeige4.3-33B 的 createdAt 是 2026-10-24T02:49:18.000Z，lastModified 是 2026-10-25T11:11:17.000Z。main 在 2026-10-24T11:57:14.000Z 有一次 Upload folder。2026-10-25T10:19:01.000Z 到 2026-10-25T11:11:17.000Z 的提交是配图和 README。核验时 downloads 为 0，likes 为 362，private 与 gated 均为 false。许可证为 apache-2.0。base_model 为 Nanbeige/Nanbeige4.3-33B-Base。联系邮箱为 nanbeige@kanzhun.com。卡上团队名为 Nanbeige Team，没有写公司全称。",
+        "README 称 Nanbeige4.3-33B 是该系列的教师模型，上下文最长 524288 token，可用 Transformers、SGLang 或 vLLM。enable_thinking 默认开启。Nanbeige4.3-3B 写成后续蒸馏，这次没有放出。",
+        "对照表在最高思考档、同一套推理超参和 harness 下比较 Qwen3.8-27B、Muse-Glimmer-30B 和 Gemma4-31B。Terminal-Bench 2.1 用 Terminus 2，四者依次为 80.9、73.0、61.8、47.2。Terminal-Bench 4.0 用 mini-swe-agent v2.4.6，依次为 23.8、6.3、1.6、0.0。SWE-Bench Pro 为 60.3，Qwen3.8-27B 为 61.7。这些数字没有复跑。"
+      ],
+      "conditions": [
+        "分数是模型卡自报，这次没有复跑。",
+        "权重上传在 10 月 24 日。本期窗口内的提交是 README 和配图。",
+        "Nanbeige4.3-3B 还没放出。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Hugging Face",
+          "url": "https://huggingface.co/Nanbeige/Nanbeige4.3-33B",
+          "kind": "primary",
+          "published_at": "2026-10-25T11:11:17.000Z",
+          "verified": true,
+          "note": "许可证、512K 上下文、可用 Transformers，以及 Terminal-Bench 2.1 的 80.9 和 SWE-Bench Pro 的 60.3，取自 README。createdAt 是 2026-10-24T02:49:18.000Z，lastModified 是 2026-10-25T11:11:17.000Z。权重上传提交是 2026-10-24T11:57:14.000Z。核验时 downloads 为 0。没有复跑基准。"
+        }
+      ],
+      "lede": "Nanbeige 放出 Apache-2.0 权重 Nanbeige4.3-33B，上下文 512K。自报 Terminal-Bench 2.1 为 80.9，同表 Qwen3.8-27B 为 73.0。SWE-Bench Pro 为 60.3，低于 Qwen 的 61.7。",
+      "caveat": "分数是模型卡自报，没有复跑。权重 10 月 24 日已上传。"
+    },
+    {
+      "id": "lynch-cnn-skin-cancer",
+      "placement": "story",
+      "window": "in_window",
+      "title": "十年前的 CNN 在 200 个皮肤病灶上胜过两个前沿模型",
+      "kicker": "研究 · 皮肤科",
+      "facts": [
+        "Lynch Lab 页面署期 25 October 2026，没有单独钟点。作者写明自己是 Guy's Hospital 顾问皮肤科医生、King's College London 名誉 Reader Magnus Lynch。Hacker News 条目 50233779 的 created_at 是 2026-10-25T17:15:38Z。",
+        "测试用 MILK10k 随机抽取的 200 个病理证实病灶。其中 100 个不应放过：黑色素瘤 30、基底细胞癌 25、鳞状细胞癌含 Bowen 病 25、光化性角化病 20。另 100 个可放过：痣 50、脂溢性角化病 50。每个大模型只跑一次，默认设置，同时给临床照片和皮肤镜照片，六选一。",
+        "CNN 是 Inception v3，在单张 H100 上用 ISIC 档案 68011 张图微调，测试病灶及其同患者照片已从训练和验证集去掉。首诊正确数：GPT-6 Astra 84，Claude Fable 5.1 85，CNN 125，分母都是 200。30 个黑色素瘤的首诊正确数依次为 8、11、13。第一或第二选择正确数依次为 134、138、173。",
+        "页面写微调大约二十分钟，CNN 可在手机浏览器里用 WebGPU 运行，不上传图像。只用临床照片问要不要看医生时，两个大模型对另外 100 个黑色素瘤分别建议就医 99 次和 98 次。分析和初稿用了 Claude Code。作者声明这不是最新的皮肤癌模型，也不是获批产品。图像来自 MILK10k，许可为 CC BY-NC。"
+      ],
+      "conditions": [
+        "每个大模型只调用了一次。",
+        "200 个病灶都做过活检，比日常门诊图像更难。",
+        "作者声明 Inception v3 不是当前最好的皮肤癌模型。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Lynch Lab",
+          "url": "https://lynchlab.net/llm-skin-cancer",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "200 例的构成、84、85、125 的首诊数，以及黑色素瘤 8、11、13，取自这页。页面署期 25 October 2026，没有钟点。分析和初稿用了 Claude Code。没有复跑这些调用。"
+        },
+        {
+          "label": "Hacker News",
+          "url": "https://news.ycombinator.com/item?id=50233779",
+          "kind": "secondary",
+          "published_at": "2026-10-25T17:15:38Z",
+          "verified": true,
+          "note": "条目 50233779 的 created_at 是 2026-10-25T17:15:38Z。讨论本身没有当作诊断结果。"
+        }
+      ],
+      "lede": "Guy's 医院皮肤科医生 Magnus Lynch 用 200 个已活检病灶做对照。微调过的 Inception v3 首诊对 125 个，GPT-6 Astra 对 84 个，Claude Fable 5.1 对 85 个。30 个黑色素瘤里，按这个顺序认对 13、8 和 11 个。",
+      "caveat": "每个大模型只跑了一次。病灶都做过活检。"
+    },
+    {
+      "id": "reddit-opensource-ai-ban",
+      "placement": "story",
+      "window": "recent",
+      "title": "r/opensource 拒绝人工智能项目，并限制新人和非英语投稿",
+      "kicker": "社区 · Reddit",
+      "facts": [
+        "r/opensource 帖 t3_1xelcuf 由 /u/Wolvereness 发表。该帖 atom 的 published 是 2026-10-24T22:10:56+00:00，早于本期窗口起点 2026-10-25T08:00:00+08:00。The Verge 文章 datePublished 是 2026-10-25T13:25:32+00:00，落在窗口内。版规正文取自该帖 atom。评论区没有逐条打开。",
+        "帖子写：项目若使用人工智能、由人工智能做成，或打算给人工智能用（文中举了 MCP），就不受欢迎。投稿项目须同时满足满一年且仍在维护、多名贡献者（主观上 3 人以上）、不是常见课程作业、已有社区，并使用 OSI 许可证。账号至少一年且有实质 Reddit 贡献。不懂英语的人被要求另找社区，理由是无法区分人工智能撰写和人工智能翻译。",
+        "美国 501(c) 以及帖中列出的 (d)(e)(f)(k)、521(a)，或作者所在国的同等组织，可先经 modmail 批准，再免去项目和账号年限。编辑补充了 r/OpenSourceAIAllowed、r/TrueOpenSource、r/OpenSourceWare、r/ActuallyOpenSource，并写了 r/opensourceeai。",
+        "The Verge 写新规则引起反对，并称有人指出 Linux 内核已含人工智能生成代码，使用内核的项目可能被波及。版主关于无障碍功能可以选择性执行的说法来自这篇报道，评论原帖没有打开。"
+      ],
+      "conditions": [
+        "版规帖的发布时间早于本期窗口。窗口内的新报道是 The Verge。",
+        "评论区没有逐条打开，选择性执行只见于 The Verge 的转述。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "r/opensource",
+          "url": "https://www.reddit.com/r/opensource/comments/1xelcuf/your_tokens_arent_valuable_no_more_ai/",
+          "kind": "primary",
+          "published_at": "2026-10-24T22:10:56+00:00",
+          "verified": true,
+          "note": "项目范围、一年维护、主观上至少 3 名贡献者、英语要求，以及 501(c) 例外，取自该帖的订阅源。published 是 2026-10-24T22:10:56+00:00。网页本身没有打开。评论没有逐条核对。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1018217/reddit-opensource-ai-ban",
+          "kind": "secondary",
+          "published_at": "2026-10-25T13:25:32+00:00",
+          "verified": true,
+          "note": "反对意见、Linux 内核，以及无障碍功能可以选择性执行，取自这篇。datePublished 是 2026-10-25T13:25:32+00:00。"
+        }
+      ],
+      "lede": "r/opensource 版主写明，使用、做成或面向人工智能的项目不受欢迎。投稿还须满一年、仍在维护、主观上至少 3 名贡献者，并已有社区。不懂英语的人被要求另找社区。The Verge 报道了反对意见。",
+      "caveat": "版规帖早于本期窗口。评论区没有逐条打开。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:0bb8051b860302a40284ecfd925d861bd93337ecb62ece602624cbe94d63b3d0"
+}
