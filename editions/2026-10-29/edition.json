@@ -1,0 +1,363 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-10-29",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-10-29T08:00:00+08:00",
+  "generated_at": "2026-10-29T08:10:13.768243+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "gemini-4-carbon",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "谷歌发布 Gemini 4 Carbon，介绍价与 Argon 相同",
+      "kicker": "模型 · 谷歌",
+      "facts": [
+        "Google 博客 JSON-LD 的 datePublished 是 2026-10-28T17:00:00+00:00，dateModified 是 2026-10-28T18:02:36.657805+00:00。作者是 Koray Kavukcuoglu。页面称当天发布 Gemini 4 Carbon，并称它是目前最强模型。它建立在两周前发布的 Gemini 4 Argon 之上。",
+        "页面称本周起先向一部分网络防守方开放，再通过 Fairwind Program 逐步给更多受信任伙伴。公司称正在参与美国政府发布前模型测试的自愿流程，并会先收集反馈、迭代护栏，之后才尽快放到面向开发者、企业和消费者的产品。",
+        "介绍价与 Argon 相同：每百万输入 token 2 美元，每百万输出 token 10 美元，缓存输入比输入价低 95%。脚注写介绍期结束后适用每百万输入 4 美元、输出 20 美元。",
+        "页面称 Artificial Analysis Intelligence Index v5.0 排名第一，分数 59。SEC-bench Pro 88.2%，ExploitGym 54.8%，Collinear 的 CWE-bench 71.0%。这三项网络安全基准写明在没有护栏的情况下评估。WebDev Arena 为 1768 分、第 4 名，比先前高 89 elo。",
+        "页面称 Terminal-Bench 4.0 上成功作弊降到 0.0%，作弊尝试降到 0.4%。Gray Swan 间接提示注入基准的攻击成功率为 0.0%，并称 Argon 先前是 0.7%。内部对比称，生成安全代码的成功率比 Argon 高一倍以上，高严重度错位警报下降近 80%，无依据陈述大约降到 Argon 的一半，越界减少 26%，服务不足减少 29%。Chrome 团队称高质量补丁比另一家实验室的大前沿模型好 10 倍以上，页面没有点名。这些数字没有复跑。"
+      ],
+      "conditions": [
+        "介绍价在介绍期结束后变为每百万输入 4 美元、输出 20 美元。",
+        "网络安全三项基准按页面所说是在没有护栏时测的。分数没有复跑。",
+        "现在不能在面向开发者、企业和消费者的产品里调用。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+          "kind": "primary",
+          "published_at": "2026-10-28T17:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（Google）：开放范围、Fairwind Program、2 美元和 10 美元的介绍价，以及 59 分、88.2%、54.8% 和 71.0%，取自这篇。JSON-LD 的 datePublished 是 2026-10-28T17:00:00+00:00。没有复跑基准。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/tech/1021339/google-gemini-4-carbon-cybersecurity-frontier",
+          "kind": "secondary",
+          "published_at": "2026-10-28T20:03:00+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：article:published_time 是 2026-10-28T20:03:00+00:00。这篇写只向一部分网络安全公司开放，并复述了 2 美元和 10 美元。它还写 Claude Opus 5.5 和 GPT-6 Astra 排在 Artificial Analysis 指数后面。谷歌原文只给了 59 分和第一名，没有点名，这一点不写入事实。"
+        }
+      ],
+      "lede": "谷歌发布 Gemini 4 Carbon，本周先向一部分网络防守方开放，开发者和消费者还要等。介绍价与 Argon 相同，输入每百万 token 2 美元，输出 10 美元。公司称 Artificial Analysis 指数 v5.0 得分 59，排第一。",
+      "caveat": "本周只给部分防守方。介绍期后输入 4 美元、输出 20 美元。"
+    },
+    {
+      "id": "microsoft-fy2027-q1",
+      "placement": "story",
+      "window": "in_window",
+      "title": "微软上季 Azure 收入 331.65 亿美元，来自 OpenAI 的收入 100 亿美元",
+      "kicker": "行业 · 财报",
+      "facts": [
+        "微软 Form 10-Q 覆盖截至 2026 年 9 月 30 日的季度。德勤函署期是 October 28, 2026，没有钟点。产品和服务收入表中 Azure 为 33,165 百万美元，上年同期 22,384。合计收入 92,279 对 77,673，增 19%。正文写 Azure 收入增加 108 亿美元，增幅 48%。",
+        "利润表净利润为 36,629 百万美元，上年同期 27,747。Microsoft Cloud 收入为 639 亿美元，上年同期 491 亿美元，增 30%。Agents and Infra 分部收入 76,795 百万美元，对 61,672，增 25%。Devices and Consumer 收入 15,484 对 16,001，降 3%。Windows OEM 和设备收入降 22%。",
+        "同一份 10-Q 写，截至 2026 年 9 月 30 日的三个月，来自与 OpenAI 商业安排的收入，含收入分成，为 100 亿美元。对 OpenAI 的应收账款在 2026 年 9 月 30 日为 72 亿美元，2026 年 6 月 30 日为 60 亿美元。投资资金承诺总额 130 亿美元，截至 9 月 30 日已出资 120 亿美元。",
+        "商业剩余履约义务增 73%，为 6770 亿美元。现金流量表里财产和设备增加额为 39,367 百万美元，上年同期 19,394。文件没有把 OpenAI 的 100 亿美元拆成云服务和收入分成。"
+      ],
+      "conditions": [
+        "331.65 亿美元对应表内 33,165 百万美元。100 亿美元是文件里的 10.0 billion 美元，含收入分成。",
+        "财产和设备增加额是 393.67 亿美元。TechCrunch 另写的 452 亿美元资本开支没有在这份 10-Q 里对上，不采用。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "SEC",
+          "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436133/msft-20260930.htm",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（SEC）：Azure 的 33,165 百万美元、合计收入 92,279、净利润 36,629、OpenAI 的 100 亿美元和 72 亿美元应收账款，以及财产和设备增加 39,367 百万美元，取自这份 10-Q。德勤函署期是 October 28, 2026，没有钟点。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/28/microsoft-recorded-10-billion-in-revenue-from-openai/",
+          "kind": "secondary",
+          "published_at": "2026-10-28T21:34:30+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：article:published_time 是 2026-10-28T21:34:30+00:00。这篇指向上述 10-Q。全文财年 241 亿美元和 24% 持股没有在 10-Q 正文里对上，不写入事实。"
+        }
+      ],
+      "lede": "微软公布截至 9 月 30 日的季度业绩。营收 922.79 亿美元，同比增长 19%，净利润 366.29 亿美元。Azure 收入 331.65 亿美元，增 48%。来自 OpenAI 商业安排的收入为 100 亿美元，含收入分成。",
+      "caveat": "100 亿美元含收入分成，文件没有拆开两项。"
+    },
+    {
+      "id": "github-octoverse-2026",
+      "placement": "story",
+      "window": "in_window",
+      "title": "GitHub 称过去 12 个月代码推送 179 亿次",
+      "kicker": "开发者 · GitHub",
+      "facts": [
+        "GitHub 博客 article:published_time 是 2026-10-28T16:07:40+00:00。Octoverse 写过去 12 个月开发者向 GitHub 推送代码 179 亿次，多于 2024 和 2025 两年之和。全部仓库的提交为 343 亿次，是两年前的三倍以上。合并的拉取请求为 13 亿次，平均每天 350 万次。",
+        "页面写到 9 月，超过 40% 的拉取请求由智能体先起稿，3 月是 17%。9 月单月约 1.1 亿次，大约是 3 月的 6 倍。9 月有 61% 的 GitHub Copilot 用户使用了不止一个模型。今年新建且带智能体配置文件的仓库，平均提交量是没有该文件的新仓库的 8 倍。",
+        "GitHub Actions 今年每秒运行 1440 个作业，等于每天 1.24 亿次，超过去年总量的三倍。开发者合并了超过 3000 万个 Dependabot 拉取请求，大约是 2025 年的两倍。公开贡献 25 亿次，去年是 11.2 亿次。GitHub 称服务的开发者超过 2.25 亿。美国 3830 万，印度 3200 万，两国今年各增加超过 1000 万。"
+      ],
+      "conditions": [
+        "这些是 GitHub 自己的统计，这次没有对照原始遥测。",
+        "40% 指的是 9 月的拉取请求，不是过去 12 个月的全部推送。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "GitHub Blog",
+          "url": "https://github.blog/news-insights/octoverse/octoverse-commits-pushes-reach-new-highs-in-2026-as-developers-build-with-agents/",
+          "kind": "primary",
+          "published_at": "2026-10-28T16:07:40+00:00",
+          "verified": true,
+          "note": "核验说明（GitHub Blog）：179 亿次推送、343 亿次提交、9 月超过 40% 的拉取请求由智能体起稿，以及 2.25 亿开发者，取自这篇。article:published_time 是 2026-10-28T16:07:40+00:00。"
+        }
+      ],
+      "lede": "GitHub 的 Octoverse 称，过去 12 个月开发者推送代码 179 亿次，多于 2024 和 2025 两年之和。全部提交 343 亿次。到 9 月，超过 40% 的拉取请求由智能体先起稿，3 月这一比例是 17%。",
+      "caveat": "40% 是 9 月的拉取请求，不是全年。"
+    },
+    {
+      "id": "google-ai-mode-ads",
+      "placement": "story",
+      "window": "in_window",
+      "title": "谷歌把 AI 模式里的广告扩到海外",
+      "kicker": "产品 · 广告",
+      "facts": [
+        "TechCrunch 的 article:published_time 是 2026-10-28T21:48:37+00:00。文章称声明出现在 Alphabet 周三的三季报电话上。Alphabet 营收 1276 亿美元，同比增长 25%。搜索广告收入同比增长 12%，二季度是 17%，一季度是 19%。文章称财报后股价下跌 8%。",
+        "文章引首席商务官 Philipp Schindler 说，正在把 AI 概览和 AI 模式里的广告扩到更多用户和查询，并首次把变现足迹扩到全球。当天宣布 AI 模式广告进入国际市场，同时在美国提供多轮广告。他称 AI 模式里赞助商品列表的点击率已经与自然结果相当。",
+        "文章引 Sundar Pichai 说，搜索查询的同比增速是五年来最快，但没有给出具体比率。AI 模式查询平均长度是传统搜索的三倍。全球五分之一的 AI 模式搜索使用语音、图片或文档。视觉搜索每月超过 500 亿次。财报电话原文没有另开。"
+      ],
+      "conditions": [
+        "点击率、12% 和查询长度都是 TechCrunch 对财报电话的转述。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/28/google-expands-ai-search-ads-globally-as-core-ad-growth-slows/",
+          "kind": "primary",
+          "published_at": "2026-10-28T21:48:37+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：海外广告、美国多轮广告、赞助商品点击率接近自然结果，以及搜索广告增速 12%，取自这篇。article:published_time 是 2026-10-28T21:48:37+00:00。财报电话原文没有另开。"
+        }
+      ],
+      "lede": "谷歌说 AI 模式里的广告开始扩到海外市场，美国同时加入多轮广告。Philipp Schindler 称，AI 模式中赞助商品的点击率已接近自然结果。搜索广告收入同比增长 12%，上一季是 17%。",
+      "caveat": "点击率和增速来自财报电话转述，原文没另开。"
+    },
+    {
+      "id": "anthropic-spend-reports",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 上线团队花费报告，并设共享预算",
+      "kicker": "产品 · Anthropic",
+      "facts": [
+        "TechCrunch 的 article:published_time 是 2026-10-28T19:19:58+00:00。文章称 Anthropic 周三宣布一套报告工具。管理者可以用内部分析和员工调查，查看一个团队在给定日期范围内做了什么、产出是什么、花了多少，以及流程在哪里中断。Anthropic 称这些数据默认不用于模型训练。报告也会给出改进建议。公司同时增加小组共享预算，用来管理 token 花费。",
+        "文章称 Anthropic 本周向投资者展示的财务材料显示，二季度录得营业利润，净收入留存为 900%，并解释为同一批客户在 2025 年三季度的支出到 2026 年三季度变为九倍。文章没有写二季度是自然年还是财年。投资者材料本身没有打开。本期 Anthropic 新闻列表里没有对应的官方稿。"
+      ],
+      "conditions": [
+        "花费报告的功能以 TechCrunch 的转述为准，没有打开产品页。",
+        "营业利润和 900% 来自文章所说的投资者材料，材料本身没有公开页。"
+      ],
+      "background": [
+        "同一篇文章引 Jellyfish 首席科学家 Nicholas Arcolano 说，其客户中 27.6 万人使用智能体编程工具，基于 Anthropic 模型的工具约占待审代码变更的三分之一，相关支出年初至今增长 10 倍，大约相当于工程总成本的 2%。这份 Jellyfish 报告没有打开。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/28/anthropic-just-launched-tools-to-show-companies-what-their-ai-spending-is-buying/",
+          "kind": "primary",
+          "published_at": "2026-10-28T19:19:58+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：花费报告能看产出和成本、默认不用于训练、小组共享预算，以及 900% 净收入留存，取自这篇。article:published_time 是 2026-10-28T19:19:58+00:00。投资者材料没有打开。"
+        }
+      ],
+      "lede": "Anthropic 推出团队花费报告，管理者能看一段时间内做了什么、花了多少、卡在哪里。公司称这些数据默认不用于训练，并加上小组共享预算。TechCrunch 称投资者材料写有二季度营业利润和 900% 净收入留存。",
+      "caveat": "营业利润和 900% 是转述，投资者材料没打开。"
+    },
+    {
+      "id": "meta-terms-consultation",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Meta 说咨询若超过 11 月 20 日就再推迟新条款",
+      "kicker": "平台 · 条款",
+      "facts": [
+        "The Verge 的 article:published_time 是 2026-10-28T16:15:30+00:00。文章称 Meta 传播负责人 Andy Stone 在 X 上说，公司不打算在与行业团体和负责人充分咨询之前改变政策。",
+        "文章引用 Stone 的话：已经听到出版商对新广告和商业条款更新的反馈。预计咨询可能延长到 11 月 20 日之后，若如此就会推迟更新条款的实施。在此之前现有条款继续有效。",
+        "文章自己的概括是执行可能被无限期推迟。Stone 的引语是条件句，不是已经宣布一个新的生效日。X 帖原文没有打开。2026-10-24 期已经写过生效日推迟到 11 月 20 日。本期新的是咨询可能超过这一天，以及超过才会再推迟。"
+      ],
+      "conditions": [
+        "新信息是可能再推迟，不是已经确定一个新日期。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/tech/1020769/meta-updated-business-terms-delay-indefinitely",
+          "kind": "primary",
+          "published_at": "2026-10-28T16:15:30+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：Stone 关于咨询可能超过 11 月 20 日、超过才会推迟实施的引语，取自这篇。article:published_time 是 2026-10-28T16:15:30+00:00。X 帖没有打开。"
+        }
+      ],
+      "lede": "Meta 传播负责人 Andy Stone 说，和行业的咨询可能超过 11 月 20 日，若如此就推迟新商业条款，此前仍用现有条款。他并说，不会在充分咨询行业团体和负责人之前改政策。",
+      "caveat": "这是可能推迟，不是已经改期。X 帖没打开。"
+    },
+    {
+      "id": "xai-southaven-buyouts",
+      "placement": "story",
+      "window": "in_window",
+      "title": "xAI 子公司提出买房，条件是放弃数据中心诉讼索赔",
+      "kicker": "行业 · 数据中心",
+      "facts": [
+        "The Verge 的 article:published_time 是 2026-10-28T14:44:00+00:00。文章称《卫报》报道，xAI 子公司向密西西比州 Southaven 的住户提出买房，条件是不加入针对附近数据中心和电厂的诉讼。一名上门中介告诉一名居民，计划购买 418 套，已有 18 户打算出售。租户称房东同意出售后，他们收到 60 天搬离通知。",
+        "文章引《密西西比自由新闻报》登出的信：MZX 否认全部指控，但因业务需要房产，通过经纪提出购买 Southaven 房地产，条件包括签署与诉讼相关的全部索赔弃权。信写接受后还要另签弃权协议，弃权后不能从 Haley 诉讼获得赔偿，也不能自行起诉。信的原件和《卫报》原文没有打开。"
+      ],
+      "conditions": [
+        "418 套和 18 户是中介对一名居民的说法，经《卫报》再由 The Verge 转述。",
+        "弃权范围以 The Verge 引用的信件段落为准，原信没有打开。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1020596/xai-mississippi-neighborhood-data-center-lawsuit",
+          "kind": "primary",
+          "published_at": "2026-10-28T14:44:00+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：买房换弃权、418 套和 Haley 诉讼，取自这篇对《卫报》和《密西西比自由新闻报》的转述。article:published_time 是 2026-10-28T14:44:00+00:00。两篇原文和信件原件没有打开。"
+        }
+      ],
+      "lede": "The Verge 引述一封信：xAI 子公司 MZX 提出购买 Southaven 的房子，换取放弃与电厂和 Haley 诉讼有关的索赔。一名中介告诉居民，计划购买 418 套，已有 18 户准备出售。",
+      "caveat": "418 套是中介说法，经《卫报》转述。信的原件没打开。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:833cb940b7bc3765786587734e65524878824fbbdb640e91267a799c607ef50e"
+}
