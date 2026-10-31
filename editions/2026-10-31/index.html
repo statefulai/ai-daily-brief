@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 10 月 31 日 AI 日报，含 7 条已策展内容。">
+  <title>AI 日报 · 2026 年 10 月 31 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-10-31">2026 年 10 月 31 日</time> · 星期六</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 10 月 31 日 08:00（北京时间）。本期收录 7 条窗口内动态。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">产品 · 苹果</span></div><h2 id="event-1-title">苹果宣布首批 Apple 智能将在中国上线</h2><div class="lead-copy"><p>苹果宣布首批 Apple 智能将在中国上线。11 月 4 日起给开发者测试，12 月随 iOS 27.3 正式推出。支持 iPhone 16 及后续、15 Pro 和 Pro Max、Air 与 iPhone Duo。Siri、写作工具和视觉智能可接阿里巴巴千问。</p><p class="caveat">限定：语言须同时为英文和简体中文，且不含新版 Siri AI。</p><div class="source"><a href="https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/" target="_blank" rel="noopener noreferrer">原文 · Apple 新闻稿</a></div><details><summary>详细与核验</summary><p>Apple 中国新闻稿可见署期是 2026 年 10 月 31 日。页面 datePublished 只有日期 2026-10-31Z，dateModified 是 2026-10-30T23:48:40Z。稿称今日宣布，首批 Apple 智能功能即将在中国推出。开发者测试自 11 月 4 日起随最新 iOS 开发者 Beta，正式版在 12 月随 iOS 27.3 面向中国用户。其他平台要等必要审批。</p><p>支持设备写明为 iPhone 16 及后续机型、iPhone Duo、iPhone 15 Pro、iPhone 15 Pro Max 和 iPhone Air。Siri 与设备语言均需设置为英文和中文（简体）。</p><p>稿称与阿里巴巴合作，在 Siri、写作工具和视觉智能中加入千问，包括文本与图像理解。用户需登录千问账户，或使用通过 Apple 登录。本次更新不包含 Siri AI，以及 Apple 在 WWDC 2026 上宣布的其他下一代 Apple 智能功能。</p><p>稿中列出的首批功能还包括实时翻译、照片消除、智绘表情、照片自然语言搜索、回忆影片、优先邮件、邮件摘要、智能回复、通知摘要、首要通知、减少干扰和音频转录摘要。通过 AirPods 的面对面实时翻译另有机型清单。</p><div class="condition"><strong>适用范围：</strong><ul><li>其他平台要等必要审批后才支持。</li><li>通过 AirPods 做面对面翻译另有机型要求。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>新闻稿没有把更早的获批或单独训练模型写成这次的新发布。</li></ul></details><div class="source"><a href="https://www.apple.com.cn/newsroom/2026/10/apple-intelligence-features-are-coming-to-users-in-china/" target="_blank" rel="noopener noreferrer">Apple 新闻稿 · 一手来源 · 已核对</a><a href="https://www.theverge.com/tech/1023974/apple-intelligence-china-ios-27-3" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Apple 新闻稿）：核验说明（Apple 新闻稿）：可见署期是 2026 年 10 月 31 日。datePublished 只有日期 2026-10-31Z，dateModified 是 2026-10-30T23:48:40Z，都不是单独的发布钟点，因此这里不填时间。机型、语言、千问和排除项都取自这篇新闻稿。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：datePublished 是 2026-10-30T22:32:53+00:00。日程和机型以新闻稿为准，这篇只作窗口内的报道。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">安全 · 扩展</span></div><h3 id="event-2-title">Phorion 称 Claude Code 扩展 2.1.313 带有 SSH 后门</h3><div><p>Phorion 称 Cursor 商店里的 Claude Code 扩展 2.1.313 带有 SSH 后门，覆盖 Mac、Linux 和 Windows。通报说该版本已从商店、npm 和 VS Code 下架。没有管理员权限的 Mac 上，打开远程登录会失败，但密钥仍会写入。</p><p class="caveat">限定：仅有这份通报，Cursor 和 Anthropic 没有另作说明。</p><div class="source"><a href="https://phorion.io/blog/offical-claude-code-vsx-compromise/" target="_blank" rel="noopener noreferrer">原文 · Phorion</a></div><details><summary>详细与核验</summary><p>Phorion 文章 datePublished 是 2026-10-30T00:00:00Z，作者 Calum Hall，可见署期 October 30, 2026。文章称 Cursor Marketplace 上的官方 Claude Code for VS Code 扩展 2.1.313 被植入，会投放持久的 SSH 后门，覆盖 macOS、Linux 和 Windows。扩展一加载就会执行，不需要用户再操作一次。</p><p>文章称 Cursor 已从商店撤下该发布，并从 npm 与 VS Code 相关仓库撤下 2.1.313。文中给出的后门扩展包 SHA-256 是 ecb58cb29078d9646ad1dcdbe51526f2d9cfea06be5fb2ab183e8ecc3ab6bf15。</p><p>文章称 macOS 上有一处实现错误。没有管理员权限时，检查远程登录的命令不会返回 Off，脚本因此跳过打开 SSH。已经开着远程登录的 Mac 仍可能留下可用后门。密钥和持久化仍会写入。Cursor 和 Anthropic 的说明没有打开。</p><p class="condition"><strong>适用范围：</strong>已经打开远程登录的 Mac 不在“打开失败”这条例外里。</p><div class="source"><a href="https://phorion.io/blog/offical-claude-code-vsx-compromise/" target="_blank" rel="noopener noreferrer">Phorion · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Phorion）：核验说明（Phorion）：可见日期是 October 30, 2026。页面 datetime 写成 2026-10-30T00:00:00Z，只对应这一天，没有单独钟点，因此这里不填时间。版本号、下架说法和 Mac 上的失败步骤都取自这篇通报。没有打开 Cursor 或 Anthropic 的页面。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">研究 · 谷歌</span><time datetime="2026-10-31T01:00:00+08:00">10.31 01:00 北京时间</time></div><h3 id="event-3-title">谷歌的在轨 TPU 传回第一段模型回答</h3><div><p>谷歌称 Project Suncatcher 的在轨 TPU 传回了第一段回答。卫星过境挪威斯瓦尔巴时，星上 Gemma 4 按提示下行了一首三行俳句。接下来测的是热应力和辐射，不是再发一颗卫星。</p><p class="caveat">限定：2027 年的双星互连是原计划，这次没有新的发射日。</p><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/google-research/project-suncatcher-satellite-response/" target="_blank" rel="noopener noreferrer">原文 · Google Research</a></div><details><summary>详细与核验</summary><p>Google Research 博客 datePublished 是 2026-10-30T17:00:00+00:00。文章称本周达到 Hello World，数据中心级 TPU 在轨第一次传回 AI 回答。地面站过境时，向星上 Gemma 4 上传第一则提示，要求写一首关于太空的俳句。卫星过境挪威斯瓦尔巴时下行的诗确认成功。三行是 Blue marble below、Data streams in silent grace、Starlight feeds my core。</p><p>随后还测试了太空主题的打油诗，以及报告载荷技术状态的遥测提示。下一步是一系列测试，评估 TPU 在轨的热应力和辐射。文章把 2027 年两颗互连卫星写成下一里程碑，不是这次宣布的新发射。</p><p>2026-09-24 期写过原型卫星计划，2026-10-01 期写过入轨并取得联络、实验还没有结果。本期新增的是第一次在轨模型输出。</p><p class="condition"><strong>适用范围：</strong>热应力和辐射测试还没有结果。</p><details><summary>展开：背景与补充</summary><ul><li>9 月 24 日和 10 月 1 日两期已经写过发射计划和入轨联络。</li></ul></details><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/google-research/project-suncatcher-satellite-response/" target="_blank" rel="noopener noreferrer">Google Research · 一手来源 · 已核对</a><a href="https://www.theverge.com/tech/1023528/google-project-suncatcher-ai-satellite-transmission" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Google Research）：核验说明（Google Research）：datePublished 是 2026-10-30T17:00:00+00:00。俳句、Gemma 4 和下一步测试取自这篇博客。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：datePublished 是 2026-10-30T18:21:38+00:00。事实以谷歌博客为准。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">政策 · 标准</span></div><h3 id="event-4-title">一份草案用 robots.txt 令牌表示拒绝 AI 训练</h3><div><p>Anthropic 的 Kevin Kelley 向 IETF 交了草案，用 robots.txt 令牌 __usage_ai-training 表示拒绝训练。The Verge 称 Anthropic 已采用，谷歌和微软计划明年支持，OpenAI 说还要几个月。</p><p class="caveat">限定：这仍是草案，不是已通过的标准。落地时间只见于 The Verge。</p><div class="source"><a href="https://datatracker.ietf.org/doc/draft-kelley-aipref-training-preference-signal/" target="_blank" rel="noopener noreferrer">原文 · IETF</a></div><details><summary>详细与核验</summary><p>IETF 草案 draft-kelley-aipref-training-preference-signal-00，作者 K. Kelley，单位 Anthropic，文件日期 30 October 2026，过期日 3 May 2027。状态是 Internet-Draft，不是 RFC。摘要写，网站用 robots.txt 分组表达使用偏好，在 User-Agent 行放按用途区分的策略令牌，不新增指令名。示例令牌是 __usage_ai-training。</p><p>The Verge 的 datePublished 是 2026-10-30T20:26:10+00:00。文章称 OpenAI、Google、Microsoft 和 Anthropic 说会采用这个信号。Anthropic 已经采用。Google 和 Microsoft 计划明年支持。OpenAI 说在未来几个月实现。Microsoft 称网站可以分别退出训练或 grounding，而且仍会出现在 Bing 搜索结果里。</p><p>同一篇文章引用 Meta 传播负责人 Andy Stone。他说，一次把偏好传达给多家是重要的一步，并期待一起做标准和落地。文章写，他没有说 Meta 会不会遵守这个信号。文末注记 10 月 30 日补上了这条评论。OpenAI 自己的博文没有打开。</p><div class="condition"><strong>适用范围：</strong><ul><li>Meta 没有承诺会遵守这个信号。</li><li>Microsoft 称退出训练或 grounding 不影响出现在 Bing 搜索里。</li></ul></div><div class="source"><a href="https://datatracker.ietf.org/doc/draft-kelley-aipref-training-preference-signal/" target="_blank" rel="noopener noreferrer">IETF · 一手来源 · 已核对</a><a href="https://www.theverge.com/tech/1023763/openai-google-microsoft-ai-scraping-standard-opt-out" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（IETF）：核验说明（IETF）：草案页没有单独的 datePublished。文件自署 30 October 2026，过期日 3 May 2027，编号 draft-kelley-aipref-training-preference-signal-00。令牌示例取自草案正文。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：datePublished 是 2026-10-30T20:26:10+00:00。哪家已经采用、哪家给了时间，都取自这篇文章。OpenAI 博文没有打开。</p></details></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">政策 · 版权</span><time datetime="2026-10-30T17:00:00+08:00">10.30 17:00 北京时间</time></div><h3 id="event-5-title">维基媒体就人工智能版权案提交法庭之友意见</h3><div><p>维基媒体基金会周五提交法庭之友意见，介入《纽约时报》诉 OpenAI 和微软等版权案，两边都不站。它担心出版商大胜会挡住转化性用法，人工智能公司大胜则会被当成可以无视许可。</p><p class="caveat">限定：意见书原文没有打开，上述说法来自 The Verge。</p><div class="source"><a href="https://www.theverge.com/policy/1022880/wikipedia-openai-new-york-times-copyright" target="_blank" rel="noopener noreferrer">原文 · The Verge</a></div><details><summary>详细与核验</summary><p>The Verge 的 datePublished 是 2026-10-30T09:00:00+00:00。文章称维基媒体基金会周五提交法庭之友意见，介入包括《纽约时报》诉 OpenAI 和 Microsoft 在内的一组版权案，不站任何一方。</p><p>文章引意见书称，双方都把合理使用用得过宽、过简。出版商若大胜，权利人可能挡住仍有转化性的用法。人工智能公司若大胜，可能被当成可以无视许可条款。基金会还称，ChatGPT 一类服务复现了知识共享许可下的文字，但没有遵守许可条款。</p><p>意见书原文没有打开。此前关于 OpenAI 代理在维基媒体站点上编辑和爬取的报道，不是这份法庭之友意见。</p><details><summary>展开：背景与补充</summary><ul><li>10 月上旬关于 OpenAI 代理在维基媒体站点上活动的报道，不是这份意见。</li></ul></details><div class="source"><a href="https://www.theverge.com/policy/1022880/wikipedia-openai-new-york-times-copyright" target="_blank" rel="noopener noreferrer">The Verge · 一手来源 · 已核对</a></div><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：datePublished 是 2026-10-30T09:00:00+00:00。立场和引语取自这篇文章。意见书原文没有打开。</p></details></div></article><article class="story" id="event-6" aria-labelledby="event-6-title"><div class="kicker"><span class="tag">行业 · 评级</span><time datetime="2026-10-31T05:52:03+08:00">10.31 05:52 北京时间</time></div><h3 id="event-6-title">Blackstone 预计 Anthropic 上市后信用评级为双 B</h3><div><p>TechCrunch 引《金融时报》称，Blackstone 预计 Anthropic 上市后的信用评级为双 B，属于垃圾级里较高一档。该公司先前说 2027 年前会是投资级。双方都拒绝置评。</p><p class="caveat">限定：这是出资方的预期，评级机构尚未公布。</p><div class="source"><a href="https://techcrunch.com/2026/10/30/anthropic-expected-to-receive-high-junk-rating-from-credit-agencies-following-ipo-report-says/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 的 datePublished 是 2026-10-30T21:52:03+00:00，dateModified 是 2026-10-30T22:33:21+00:00。文章称《金融时报》报道，Blackstone 告诉一笔 Anthropic 芯片融资的投资者，预计该公司 IPO 后会得到偏高的垃圾级评级，具体是双 B，也就是投机级里较高的一档。</p><p>文章称 Blackstone 先前的说法相反，即 2027 年前会是投资级。TechCrunch 联系了 Anthropic 和 Blackstone，双方都拒绝置评。文章把 630 亿美元芯片融资称为近期交易，并链到《华尔街日报》，该文没有打开。《金融时报》原文也没有打开。</p><p>2026-10-27 期已经写过 Anthropic 提交 S-1。本期新增的是信用评级预期，不是招股书本身。</p><details><summary>展开：背景与补充</summary><ul><li>10 月 27 日已经写过 S-1。630 亿美元融资的原文没有打开，不作为本期的新事实。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/10/30/anthropic-expected-to-receive-high-junk-rating-from-credit-agencies-following-ipo-report-says/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：datePublished 是 2026-10-30T21:52:03+00:00。双 B、先前的投资级说法和拒绝置评都取自这篇。金融时报和华尔街日报的原文没有打开。</p></details></div></article><article class="story" id="event-7" aria-labelledby="event-7-title"><div class="kicker"><span class="tag">行业 · 外卖</span><time datetime="2026-10-30T21:54:25+08:00">10.30 21:54 北京时间</time></div><h3 id="event-7-title">DoorDash 称第三方智能体订单一共只有几百单</h3><div><p>DoorDash 首席执行官 Tony Xu 在财报电话上说，Muse、Instinct、Fo 等第三方智能体的订单一共只有几百单。对照数字是公司 2025 年报告里的日均 300 万单。</p><p class="caveat">限定：几百单是电话转述。300 万单不是本季数字。</p><div class="source"><a href="https://techcrunch.com/2026/10/30/doordash-said-its-only-received-several-hundred-orders-from-ai-agents/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 的 datePublished 是 2026-10-30T13:54:25+00:00。文章称在三季报电话会上，DoorDash 说第三方智能体的订单只有几百单，点名 Muse、Instinct 和 Fo。首席执行官 Tony Xu 说，来自这些第三方智能体的订单一共大约几百单。用户目前主要仍在 DoorDash 自己的应用里下单。</p><p>文章用来对照的数字来自公司 2025 年报告，日均完成约 300 万单配送，不是本季数字。电话记录原文没有打开。文章提到的文本下单、CLI、Ask DoorDash 和 MCP 是更早的功能，没有写成这一天的新发布。</p><details><summary>展开：背景与补充</summary><ul><li>文本下单、命令行工具、Ask DoorDash 和 MCP 不是这次的新发布。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/10/30/doordash-said-its-only-received-several-hundred-orders-from-ai-agents/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：datePublished 是 2026-10-30T13:54:25+00:00。几百单和 300 万单的对照取自这篇。财报电话原文没有打开。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
