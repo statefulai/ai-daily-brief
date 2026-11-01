@@ -1,0 +1,282 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-01",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-01T08:00:00+08:00",
+  "generated_at": "2026-11-01T08:08:59.330566+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 19,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "volta-victim-ranking",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "窃密木马 VOLTA 用大模型给受害者的资产标价",
+      "kicker": "安全 · 恶意软件",
+      "facts": [
+        "Cisco Talos 博客 datePublished 是 2026-10-31T12:00:00.000Z，作者 Ryan Fetterman。文章称 VOLTA 在窃取凭据、会话和加密货币钱包之后，把一份结构化证据包交给大模型，按变现价值给受害者资产分级。模型若拒绝，就转到最多三个模型的链条。文章写它会自删除，而且没有攻击者自己的基础设施。",
+        "文中默认模型是 anthropic/claude-opus-4.6。回退链是 moonshotai/kimi-k2，然后 google/gemini-2.5-flash。温度是 0.2。请求发往 OpenRouter 的 chat completions。系统提示要求模型充当法医情报分析员，并写出一节 WHAT THEY'RE WORTH。",
+        "本地汇编文件叫 Identity_Report.txt，模型返回写入 AI_Analysis.txt，两者打进 volta_dox.zip 再外传。推理往返走受害者自己的网络。文章还称它会用偷来的 Gmail 令牌查询 Amazon、DoorDash、Uber Eats、Grubhub、Walmart 和 PayPal 的收据，用来确认家庭住址。"
+      ],
+      "conditions": [],
+      "background": [],
+      "sources": [
+        {
+          "label": "Cisco Talos",
+          "url": "https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/",
+          "kind": "primary",
+          "published_at": "2026-10-31T12:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（Cisco Talos）：datePublished 是 2026-10-31T12:00:00.000Z。模型标识、温度、文件名和收据来源都取自这篇拆解。"
+        }
+      ],
+      "lede": "Cisco Talos 称，窃密木马 VOLTA 会把偷来的凭据和购物收据交给大模型，按能变现的价值给受害者分级。默认叫 Claude Opus 4.6，一旦拒绝就改用 Kimi K2，再改 Gemini 2.5 Flash。整段分析在受害者自己的电脑上跑完。",
+      "caveat": "模型名单和温度来自 Talos 对样本的拆解。"
+    },
+    {
+      "id": "openai-funding-target",
+      "placement": "story",
+      "window": "in_window",
+      "title": "报道称 OpenAI 把新一轮融资目标降到 200 亿美元",
+      "kicker": "行业 · 融资",
+      "facts": [
+        "TechCrunch 的 datePublished 是 2026-10-31T16:12:55+00:00，作者 Anthony Ha。文章称多家报道显示这轮融资低于预期。先前的报道是以 1.4 万亿美元估值募资 300 亿美元，后来改成 1.25 万亿美元估值，都排在计划中的 IPO 之前。",
+        "文章称《金融时报》周五报道，公司随后把融资目标降到 200 亿美元，预计首次交割还会更低。这轮由阿联酋的一组投资者领投。随后《华尔街日报》称目前已落实 110 亿美元，部分大型投资者反应冷淡。",
+        "TechCrunch 已联系 OpenAI 求评。文章没有写出 OpenAI 的回复。《金融时报》和《华尔街日报》的原文没有打开。"
+      ],
+      "conditions": [],
+      "background": [
+        "1.4 万亿和 1.25 万亿美元估值是文章转述的更早报道，不是这轮已经宣布的数字。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/31/openai-reportedly-lowers-funding-target-for-new-round/",
+          "kind": "primary",
+          "published_at": "2026-10-31T16:12:55+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：datePublished 是 2026-10-31T16:12:55+00:00。200 亿、110 亿和阿联酋领投都取自这篇。《金融时报》和《华尔街日报》没有打开。"
+        }
+      ],
+      "lede": "TechCrunch 引《金融时报》称，OpenAI 把新一轮融资目标降到 200 亿美元，低于先前报道的 300 亿美元。《华尔街日报》称眼下落实了 110 亿美元，部分大投资人反应冷淡。OpenAI 还没有回复 TechCrunch。",
+      "caveat": "《金融时报》和《华尔街日报》原文没有打开。"
+    },
+    {
+      "id": "xai-colossus-naacp",
+      "placement": "story",
+      "window": "in_window",
+      "title": "法官驳回 xAI 动议，Colossus 空气许可案继续",
+      "kicker": "政策 · 诉讼",
+      "facts": [
+        "TechCrunch 的 datePublished 是 2026-10-31T21:17:03+00:00，作者 Anthony Ha。联邦法官 Debra M. Brown 驳回了 xAI 要求撤案的动议。南方环境法律中心代表 NAACP 起诉，称这家 SpaceX 旗下公司在孟菲斯郊外的 Colossus 数据中心安装并运行至少 35 台燃气轮机和其他空气污染源，从未取得必要的预施工或运行空气许可证，并指控其违反清洁空气法。",
+        "xAI 称这些轮机是移动源，因此免于许可，并称原告没有起诉资格。法官写道，原告依清洁空气法有法定起诉资格，轮机不是密西西比州实施计划下的移动源，公民诉讼条款也不违反宪法第二条或私人非授权原则，因此索赔继续。",
+        "NAACP 环境与气候正义主管 Abre' Connor 称，这是追究 xAI 责任的又一次胜利，并说本月早些时候司法部一份类似的撤案动议也被否决。TechCrunch 联系了 SpaceX 求评。法院文书原文没有打开。"
+      ],
+      "conditions": [],
+      "background": [
+        "司法部更早被驳回的动议不是这次的新裁定。文章另提纽约的数据中心禁令，但没有日期和法案名，所以不写成事实。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/31/judge-allows-naacp-lawsuit-over-xai-data-center-pollution-to-move-forward/",
+          "kind": "primary",
+          "published_at": "2026-10-31T21:17:03+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：datePublished 是 2026-10-31T21:17:03+00:00。35 台轮机、法官引语和 Connor 的话都取自这篇。法院文书没有打开。"
+        }
+      ],
+      "lede": "联邦法官 Debra M. Brown 驳回了 xAI 想撤掉 NAACP 起诉的请求。诉状称孟菲斯郊外的 Colossus 数据中心有至少 35 台燃气轮机没有空气许可证。法官认为轮机不算移动源，案子继续审。",
+      "caveat": "法院文书没有打开，上述引述来自 TechCrunch。"
+    },
+    {
+      "id": "nvidia-nscale-guarantee",
+      "placement": "story",
+      "window": "in_window",
+      "title": "英伟达被报在谈为 Nscale 数据中心的建设债务担保",
+      "kicker": "行业 · 算力",
+      "facts": [
+        "TechCrunch 的 datePublished 是 2026-10-31T01:20:05+00:00，作者 Aditya Mehta。文章称《The Information》周四报道，英伟达正在谈判，为 Nscale 在西弗吉尼亚州、服务 Anthropic 的数据中心提供数十亿美元债务融资担保。彭博后来证实了这篇报道。文章没有写英伟达已经签署担保。",
+        "文章称这种安排是剩余价值担保。若 Nscale 拖欠建设款项，英伟达会暂时接管设施，并帮忙找买家和新租户，出处是 The Information。文章称按 Nscale 的 IPO 文件，Anthropic 已经签下仅第一栋楼就达 446 亿美元的合同。该楼是园区第一栋 460 兆瓦建筑，预计使用英伟达下一代 Vera Rubin 芯片。双方还在谈大约 450 亿美元的第二栋。",
+        "文章称本月微软退出了英格兰一处计划中的 Nscale 站点，因为电网供电被推到 2030 年代，没有写出具体日期。Nscale 寻求以最高 350 亿美元估值上市。The Information、彭博和 IPO 文件的原文都没有打开。"
+      ],
+      "conditions": [
+        "英伟达的担保还在谈判，文章没有写已经签署。"
+      ],
+      "background": [
+        "8 月约 2.5 万块芯片、9 月 10 亿美元可转债，以及已经写过的 S-1 和双 B 评级预期，都不是这次的新协议。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/10/30/nvidia-weighs-playing-the-cosigner-for-nscales-ai-data-center-in-west-virginia/",
+          "kind": "primary",
+          "published_at": "2026-10-31T01:20:05+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：datePublished 是 2026-10-31T01:20:05+00:00。担保结构、446 亿美元和 460 兆瓦取自这篇。The Information、彭博和 IPO 文件没有打开。"
+        }
+      ],
+      "lede": "TechCrunch 引《The Information》和彭博称，英伟达正在谈一笔担保，给 Nscale 在西弗吉尼亚的数据中心建设贷款托底，协议还没签。报道称 Anthropic 第一栋 460 兆瓦的楼已经签了 446 亿美元合同。",
+      "caveat": "担保还在谈。446 亿这个数字出自被引用的 IPO 文件。"
+    },
+    {
+      "id": "gpt56-factorio-peaceful",
+      "placement": "story",
+      "window": "in_window",
+      "title": "个人测试称 GPT-5.6 Sol 打完一局和平模式 Factorio",
+      "kicker": "研究 · 演示",
+      "facts": [
+        "Ryan Madden 的博客 datePublished 写成 2026-10-31T00:00:00Z，可见署期是 Oct 31, 2026。他称让 GPT-5.6 Sol 在 Codex 里以 low thinking 跑完一局和平模式 Factorio，游戏时间 13.5 小时。和平模式指没有虫子。",
+        "交互通过一个 Python 库，限制与人类使用图形界面相同，包括玩家的伸手范围和战争迷雾。他原计划在蓝瓶科研后停止，后来继续。火箭发射靠模型反复在厂区之间搬运物资，补上后期没有接好的产线。",
+        "他用自己先前的 GPT-5.5 尝试作对照，称那次模型根本不会用传送带。YouTube 上有全程延时。这不是 OpenAI 公布的测试，OpenAI 没有在这篇里被引到声明。"
+      ],
+      "conditions": [
+        "和平模式没有敌人。火箭发射靠搬运物资补上断掉的产线。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "Ryan Madden",
+          "url": "https://ryanmadden.net/gpt-56-beats-factorio/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Ryan Madden）：可见署期是 Oct 31, 2026。datePublished 写成 2026-10-31T00:00:00Z，只有这一天的零点，没有单独钟点，因此这里不填时间。13.5 小时、低思考档和搬运补线都取自这篇。OpenAI 没有另作说明。"
+        }
+      ],
+      "lede": "Ryan Madden 写道，GPT-5.6 Sol 在 Codex 的低思考档用 13.5 小时游戏时间打完一局没有虫子的 Factorio。最后的火箭是靠在厂区之间来回搬材料、补上断掉的产线才送出去的。",
+      "caveat": "这是一个人的和平模式测试，不是 OpenAI 的成绩。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:dc5a35506e8b0063d172afdb01d6abb7abbb7ef53ffd4fbdc0cf855aa1a57604"
+}

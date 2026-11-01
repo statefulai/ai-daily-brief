@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 11 月 1 日 AI 日报，含 5 条已策展内容。">
+  <title>AI 日报 · 2026 年 11 月 1 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-11-01">2026 年 11 月 1 日</time> · 星期日</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 11 月 1 日 08:00（北京时间）。本期收录 5 条窗口内动态。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">安全 · 恶意软件</span><time datetime="2026-10-31T20:00:00+08:00">10.31 20:00 北京时间</time></div><h2 id="event-1-title">窃密木马 VOLTA 用大模型给受害者的资产标价</h2><div class="lead-copy"><p>Cisco Talos 称，窃密木马 VOLTA 会把偷来的凭据和购物收据交给大模型，按能变现的价值给受害者分级。默认叫 Claude Opus 4.6，一旦拒绝就改用 Kimi K2，再改 Gemini 2.5 Flash。整段分析在受害者自己的电脑上跑完。</p><p class="caveat">限定：模型名单和温度来自 Talos 对样本的拆解。</p><div class="source"><a href="https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/" target="_blank" rel="noopener noreferrer">原文 · Cisco Talos</a></div><details><summary>详细与核验</summary><p>Cisco Talos 博客 datePublished 是 2026-10-31T12:00:00.000Z，作者 Ryan Fetterman。文章称 VOLTA 在窃取凭据、会话和加密货币钱包之后，把一份结构化证据包交给大模型，按变现价值给受害者资产分级。模型若拒绝，就转到最多三个模型的链条。文章写它会自删除，而且没有攻击者自己的基础设施。</p><p>文中默认模型是 anthropic/claude-opus-4.6。回退链是 moonshotai/kimi-k2，然后 google/gemini-2.5-flash。温度是 0.2。请求发往 OpenRouter 的 chat completions。系统提示要求模型充当法医情报分析员，并写出一节 WHAT THEY&#x27;RE WORTH。</p><p>本地汇编文件叫 Identity_Report.txt，模型返回写入 AI_Analysis.txt，两者打进 volta_dox.zip 再外传。推理往返走受害者自己的网络。文章还称它会用偷来的 Gmail 令牌查询 Amazon、DoorDash、Uber Eats、Grubhub、Walmart 和 PayPal 的收据，用来确认家庭住址。</p><div class="source"><a href="https://blog.talosintelligence.com/appraisal-by-ai-model-driven-victim-prioritization-in-the-volta-infostealer/" target="_blank" rel="noopener noreferrer">Cisco Talos · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Cisco Talos）：核验说明（Cisco Talos）：datePublished 是 2026-10-31T12:00:00.000Z。模型标识、温度、文件名和收据来源都取自这篇拆解。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">行业 · 融资</span><time datetime="2026-11-01T00:12:55+08:00">11.01 00:12 北京时间</time></div><h3 id="event-2-title">报道称 OpenAI 把新一轮融资目标降到 200 亿美元</h3><div><p>TechCrunch 引《金融时报》称，OpenAI 把新一轮融资目标降到 200 亿美元，低于先前报道的 300 亿美元。《华尔街日报》称眼下落实了 110 亿美元，部分大投资人反应冷淡。OpenAI 还没有回复 TechCrunch。</p><p class="caveat">限定：《金融时报》和《华尔街日报》原文没有打开。</p><div class="source"><a href="https://techcrunch.com/2026/10/31/openai-reportedly-lowers-funding-target-for-new-round/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 的 datePublished 是 2026-10-31T16:12:55+00:00，作者 Anthony Ha。文章称多家报道显示这轮融资低于预期。先前的报道是以 1.4 万亿美元估值募资 300 亿美元，后来改成 1.25 万亿美元估值，都排在计划中的 IPO 之前。</p><p>文章称《金融时报》周五报道，公司随后把融资目标降到 200 亿美元，预计首次交割还会更低。这轮由阿联酋的一组投资者领投。随后《华尔街日报》称目前已落实 110 亿美元，部分大型投资者反应冷淡。</p><p>TechCrunch 已联系 OpenAI 求评。文章没有写出 OpenAI 的回复。《金融时报》和《华尔街日报》的原文没有打开。</p><details><summary>展开：背景与补充</summary><ul><li>1.4 万亿和 1.25 万亿美元估值是文章转述的更早报道，不是这轮已经宣布的数字。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/10/31/openai-reportedly-lowers-funding-target-for-new-round/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：datePublished 是 2026-10-31T16:12:55+00:00。200 亿、110 亿和阿联酋领投都取自这篇。《金融时报》和《华尔街日报》没有打开。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">政策 · 诉讼</span><time datetime="2026-11-01T05:17:03+08:00">11.01 05:17 北京时间</time></div><h3 id="event-3-title">法官驳回 xAI 动议，Colossus 空气许可案继续</h3><div><p>联邦法官 Debra M. Brown 驳回了 xAI 想撤掉 NAACP 起诉的请求。诉状称孟菲斯郊外的 Colossus 数据中心有至少 35 台燃气轮机没有空气许可证。法官认为轮机不算移动源，案子继续审。</p><p class="caveat">限定：法院文书没有打开，上述引述来自 TechCrunch。</p><div class="source"><a href="https://techcrunch.com/2026/10/31/judge-allows-naacp-lawsuit-over-xai-data-center-pollution-to-move-forward/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 的 datePublished 是 2026-10-31T21:17:03+00:00，作者 Anthony Ha。联邦法官 Debra M. Brown 驳回了 xAI 要求撤案的动议。南方环境法律中心代表 NAACP 起诉，称这家 SpaceX 旗下公司在孟菲斯郊外的 Colossus 数据中心安装并运行至少 35 台燃气轮机和其他空气污染源，从未取得必要的预施工或运行空气许可证，并指控其违反清洁空气法。</p><p>xAI 称这些轮机是移动源，因此免于许可，并称原告没有起诉资格。法官写道，原告依清洁空气法有法定起诉资格，轮机不是密西西比州实施计划下的移动源，公民诉讼条款也不违反宪法第二条或私人非授权原则，因此索赔继续。</p><p>NAACP 环境与气候正义主管 Abre&#x27; Connor 称，这是追究 xAI 责任的又一次胜利，并说本月早些时候司法部一份类似的撤案动议也被否决。TechCrunch 联系了 SpaceX 求评。法院文书原文没有打开。</p><details><summary>展开：背景与补充</summary><ul><li>司法部更早被驳回的动议不是这次的新裁定。文章另提纽约的数据中心禁令，但没有日期和法案名，所以不写成事实。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/10/31/judge-allows-naacp-lawsuit-over-xai-data-center-pollution-to-move-forward/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：datePublished 是 2026-10-31T21:17:03+00:00。35 台轮机、法官引语和 Connor 的话都取自这篇。法院文书没有打开。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">行业 · 算力</span><time datetime="2026-10-31T09:20:05+08:00">10.31 09:20 北京时间</time></div><h3 id="event-4-title">英伟达被报在谈为 Nscale 数据中心的建设债务担保</h3><div><p>TechCrunch 引《The Information》和彭博称，英伟达正在谈一笔担保，给 Nscale 在西弗吉尼亚的数据中心建设贷款托底，协议还没签。报道称 Anthropic 第一栋 460 兆瓦的楼已经签了 446 亿美元合同。</p><p class="caveat">限定：担保还在谈。446 亿这个数字出自被引用的 IPO 文件。</p><div class="source"><a href="https://techcrunch.com/2026/10/30/nvidia-weighs-playing-the-cosigner-for-nscales-ai-data-center-in-west-virginia/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 的 datePublished 是 2026-10-31T01:20:05+00:00，作者 Aditya Mehta。文章称《The Information》周四报道，英伟达正在谈判，为 Nscale 在西弗吉尼亚州、服务 Anthropic 的数据中心提供数十亿美元债务融资担保。彭博后来证实了这篇报道。文章没有写英伟达已经签署担保。</p><p>文章称这种安排是剩余价值担保。若 Nscale 拖欠建设款项，英伟达会暂时接管设施，并帮忙找买家和新租户，出处是 The Information。文章称按 Nscale 的 IPO 文件，Anthropic 已经签下仅第一栋楼就达 446 亿美元的合同。该楼是园区第一栋 460 兆瓦建筑，预计使用英伟达下一代 Vera Rubin 芯片。双方还在谈大约 450 亿美元的第二栋。</p><p>文章称本月微软退出了英格兰一处计划中的 Nscale 站点，因为电网供电被推到 2030 年代，没有写出具体日期。Nscale 寻求以最高 350 亿美元估值上市。The Information、彭博和 IPO 文件的原文都没有打开。</p><p class="condition"><strong>适用范围：</strong>英伟达的担保还在谈判，文章没有写已经签署。</p><details><summary>展开：背景与补充</summary><ul><li>8 月约 2.5 万块芯片、9 月 10 亿美元可转债，以及已经写过的 S-1 和双 B 评级预期，都不是这次的新协议。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/10/30/nvidia-weighs-playing-the-cosigner-for-nscales-ai-data-center-in-west-virginia/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：datePublished 是 2026-10-31T01:20:05+00:00。担保结构、446 亿美元和 460 兆瓦取自这篇。The Information、彭博和 IPO 文件没有打开。</p></details></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">研究 · 演示</span></div><h3 id="event-5-title">个人测试称 GPT-5.6 Sol 打完一局和平模式 Factorio</h3><div><p>Ryan Madden 写道，GPT-5.6 Sol 在 Codex 的低思考档用 13.5 小时游戏时间打完一局没有虫子的 Factorio。最后的火箭是靠在厂区之间来回搬材料、补上断掉的产线才送出去的。</p><p class="caveat">限定：这是一个人的和平模式测试，不是 OpenAI 的成绩。</p><div class="source"><a href="https://ryanmadden.net/gpt-56-beats-factorio/" target="_blank" rel="noopener noreferrer">原文 · Ryan Madden</a></div><details><summary>详细与核验</summary><p>Ryan Madden 的博客 datePublished 写成 2026-10-31T00:00:00Z，可见署期是 Oct 31, 2026。他称让 GPT-5.6 Sol 在 Codex 里以 low thinking 跑完一局和平模式 Factorio，游戏时间 13.5 小时。和平模式指没有虫子。</p><p>交互通过一个 Python 库，限制与人类使用图形界面相同，包括玩家的伸手范围和战争迷雾。他原计划在蓝瓶科研后停止，后来继续。火箭发射靠模型反复在厂区之间搬运物资，补上后期没有接好的产线。</p><p>他用自己先前的 GPT-5.5 尝试作对照，称那次模型根本不会用传送带。YouTube 上有全程延时。这不是 OpenAI 公布的测试，OpenAI 没有在这篇里被引到声明。</p><p class="condition"><strong>适用范围：</strong>和平模式没有敌人。火箭发射靠搬运物资补上断掉的产线。</p><div class="source"><a href="https://ryanmadden.net/gpt-56-beats-factorio/" target="_blank" rel="noopener noreferrer">Ryan Madden · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Ryan Madden）：核验说明（Ryan Madden）：可见署期是 Oct 31, 2026。datePublished 写成 2026-10-31T00:00:00Z，只有这一天的零点，没有单独钟点，因此这里不填时间。13.5 小时、低思考档和搬运补线都取自这篇。OpenAI 没有另作说明。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
