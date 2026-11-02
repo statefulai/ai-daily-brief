@@ -1,0 +1,242 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-02",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-02T08:00:00+08:00",
+  "generated_at": "2026-11-02T08:07:57.444021+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "heretic-2-0",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Heretic 2.0 默认改用 ARA，1.x 配置不能接着用",
+      "kicker": "开源 · 模型工具",
+      "facts": [
+        "GitHub 仓库 p-e-w/heretic 的 release v2.0.0 发布时间是 2026-11-01T13:03:19Z。接口显示星标 37551。仓库说明是不经训练地修改语言模型。",
+        "发布说明写明 2.0 不兼容 1.x。给 1.x 写的配置文件不能用于 2.0。研究功能已删除，说明里给出的替代是 Lophius。",
+        "README 写默认修改器是 Arbitrary-Rank Ablation（ARA），为 Heretic 开发。方向消融仍保留。脚注写解释 ARA 的预印本（Weidmann 2026）即将提供，目前还没有这篇预印本。",
+        "发布说明包含通用插件系统，以及无头运行和端到端测试。modifier plugins 与 ARA 记在 p-e-w 的 pull request 446。"
+      ],
+      "conditions": [
+        "给 Heretic 1.x 写的配置文件不能用于 2.0。"
+      ],
+      "background": [
+        "方向消融仍是可选修改器。Lophius 只在发布说明里被写成研究功能的替代，本期没有打开 lophius.org。"
+      ],
+      "sources": [
+        {
+          "label": "GitHub Releases",
+          "url": "https://github.com/p-e-w/heretic/releases/tag/v2.0.0",
+          "kind": "primary",
+          "published_at": "2026-11-01T13:03:19Z",
+          "verified": true,
+          "note": "核验说明（GitHub Releases）：v2.0.0 的发布时间是 2026-11-01T13:03:19Z。星标 37551 取自仓库接口。1.x 配置不兼容、研究功能删除和 Lophius 来自这篇发布说明。"
+        },
+        {
+          "label": "GitHub README",
+          "url": "https://github.com/p-e-w/heretic/blob/master/README.md",
+          "kind": "secondary",
+          "published_at": "2026-11-01T13:03:19Z",
+          "verified": true,
+          "note": "核验说明（GitHub README）：默认修改器 Arbitrary-Rank Ablation、方向消融仍保留，以及 Weidmann 2026 预印本尚未提供，来自 master 分支 README。"
+        }
+      ],
+      "lede": "p-e-w 发布 Heretic 2.0。默认改模型的方法换成 Arbitrary-Rank Ablation，1.x 的配置文件不能继续用，研究功能也删了。仓库现有 37551 颗星，装上就能跑，不用重新训练。",
+      "caveat": "解释 ARA 的预印本还没公开。"
+    },
+    {
+      "id": "openai-compute-campuses",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Lehane 提议把数据中心改叫 AI compute campuses",
+      "kicker": "行业 · 公共事务",
+      "facts": [
+        "TechCrunch 文章作者 Anthony Ha，datePublished 是 2026-11-01T21:55:23+00:00。文章称 Axios 报道，OpenAI 正在准备一场公关行动，放在周二美国中期选举之后。",
+        "文章称 OpenAI 首席全球事务官 Chris Lehane 对 Axios 说，中期选举会像 2028 年的电影预告片，他预计人工智能会成为那场总统选举的议题。",
+        "文章称 Lehane 讨论了几项提议：让人感到人工智能在日常生活里帮得上忙、推动美国参与制定全球标准，以及把数据中心改称为 AI compute campuses。文章没有说改名已经发生。"
+      ],
+      "conditions": [
+        "改名仍是选举后公关方案里的提议，文章没有说已经启用。"
+      ],
+      "background": [
+        "同一句里的速度限制链接指向 2026-09-12 一篇关于 Anthropic CEO 的旧闻，不计入本期事实。数据中心 NDA 的链接指向 2026-10-03 的 Amazon 旧闻。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/01/openai-might-rebrand-its-data-centers-as-ai-compute-campuses/",
+          "kind": "primary",
+          "published_at": "2026-11-01T21:55:23+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：datePublished 是 2026-11-01T21:55:23+00:00。Lehane 的话和改名提议都是 Anthony Ha 对 Axios 的转述。Axios 页面被 Cloudflare 拦住，没有打开。"
+        }
+      ],
+      "lede": "TechCrunch 引述 Axios 称，OpenAI 首席全球事务官 Chris Lehane 准备在美国中期选举后做公关，提议把数据中心改叫 AI compute campuses。他说 2028 年总统选举里人工智能会成为议题。改名还没发生。",
+      "caveat": "Axios 原文没有打开，改名仍是提议。"
+    },
+    {
+      "id": "tandem-cpp",
+      "placement": "story",
+      "window": "in_window",
+      "title": "tandem.cpp 把放不下的 MoE 专家留在内存里",
+      "kicker": "开源 · 本地推理",
+      "facts": [
+        "GitHub 仓库 ewhacc/tandem.cpp 创建于 2026-11-01T10:04:25Z，最近推送 2026-11-01T19:53:06Z。接口显示 3 个星。README 称它是 llama.cpp 的补丁集，与 ggml-org 无关，基线提交是 f5222f25c，README 写该提交日期为 2026-10-28。",
+        "README 称它把最常用的 MoE 专家留在 GPU，其余交给 CPU 计算，适用于 llama.cpp 能跑的 MoE 模型。目标是单用户解码。",
+        "README 的表写，一台电脑（i5-12400F、64 GB DDR4、RTX 4090）上跑 GSM8K，Qwen3.8-Flash-Next IQ3_S 加 MTP，贪心解码结果是 llama.cpp 29.8 tok/s，tandem.cpp 97.3 tok/s（3.3 倍），Strata 精确模式 103.6 tok/s。gpt-oss-120b 贪心解码：llama.cpp 27.8 tok/s，tandem.cpp 51.5 tok/s（1.85 倍）。",
+        "README 写调优只针对 Qwen3.8。显存放不下的其他 MoE（gpt-oss-120b、GLM-4.5-Air、Qwen3.6-35B-A3B、DeepSeek-V4.1）通常是 1.4 到 2.1 倍。64k token 提示的预填充是 1.4 到 1.8 倍。Strata 默认会跳过低排名专家，更快但是近似，同一 Qwen 设置下 README 写 127.1 tok/s。这些数字都是仓库作者给出的，不是第三方复测。"
+      ],
+      "conditions": [
+        "速度表只覆盖作者写下的那台 4090 电脑和 GSM8K 解码，调优只针对 Qwen3.8。"
+      ],
+      "background": [
+        "Strata 在同一张表的精确模式是 103.6 tok/s。README 写它的默认近似模式是 127.1 tok/s，那一档会跳过部分专家。"
+      ],
+      "sources": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/ewhacc/tandem.cpp",
+          "kind": "primary",
+          "published_at": "2026-11-01T10:04:25Z",
+          "verified": true,
+          "note": "核验说明（GitHub）：仓库创建时间是 2026-11-01T10:04:25Z，星标 3。97.3、29.8、51.5、103.6 和 3.3 倍都抄自 README 的表，是作者自测，没有第三方复现。"
+        }
+      ],
+      "lede": "ewhacc 放出独立于官方的 llama.cpp 补丁 tandem.cpp。放不进显存的 MoE 专家留在内存，常用的留在显卡。作者用一台 4090 测 Qwen3.8-Flash-Next，贪心解码从 29.8 提到 97.3 token 每秒。",
+      "caveat": "速度来自作者在一台 4090 上的自测。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:65902bd19d20ba05b469bde3c23ddc6455f2876904eb57794d156e27952142b3"
+}

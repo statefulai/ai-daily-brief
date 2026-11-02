@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 11 月 2 日 AI 日报，含 3 条已策展内容。">
+  <title>AI 日报 · 2026 年 11 月 2 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-11-02">2026 年 11 月 2 日</time> · 星期一</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 11 月 2 日 08:00（北京时间）。本期收录 3 条窗口内动态。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">开源 · 模型工具</span><time datetime="2026-11-01T21:03:19+08:00">11.01 21:03 北京时间</time></div><h2 id="event-1-title">Heretic 2.0 默认改用 ARA，1.x 配置不能接着用</h2><div class="lead-copy"><p>p-e-w 发布 Heretic 2.0。默认改模型的方法换成 Arbitrary-Rank Ablation，1.x 的配置文件不能继续用，研究功能也删了。仓库现有 37551 颗星，装上就能跑，不用重新训练。</p><p class="caveat">限定：解释 ARA 的预印本还没公开。</p><div class="source"><a href="https://github.com/p-e-w/heretic/releases/tag/v2.0.0" target="_blank" rel="noopener noreferrer">原文 · GitHub Releases</a></div><details><summary>详细与核验</summary><p>GitHub 仓库 p-e-w/heretic 的 release v2.0.0 发布时间是 2026-11-01T13:03:19Z。接口显示星标 37551。仓库说明是不经训练地修改语言模型。</p><p>发布说明写明 2.0 不兼容 1.x。给 1.x 写的配置文件不能用于 2.0。研究功能已删除，说明里给出的替代是 Lophius。</p><p>README 写默认修改器是 Arbitrary-Rank Ablation（ARA），为 Heretic 开发。方向消融仍保留。脚注写解释 ARA 的预印本（Weidmann 2026）即将提供，目前还没有这篇预印本。</p><p>发布说明包含通用插件系统，以及无头运行和端到端测试。modifier plugins 与 ARA 记在 p-e-w 的 pull request 446。</p><p class="condition"><strong>适用范围：</strong>给 Heretic 1.x 写的配置文件不能用于 2.0。</p><details><summary>展开：背景与补充</summary><ul><li>方向消融仍是可选修改器。Lophius 只在发布说明里被写成研究功能的替代，本期没有打开 lophius.org。</li></ul></details><div class="source"><a href="https://github.com/p-e-w/heretic/releases/tag/v2.0.0" target="_blank" rel="noopener noreferrer">GitHub Releases · 一手来源 · 已核对</a><a href="https://github.com/p-e-w/heretic/blob/master/README.md" target="_blank" rel="noopener noreferrer">GitHub README · 补充来源 · 已核对</a></div><p class="source-note">核验说明（GitHub Releases）：核验说明（GitHub Releases）：v2.0.0 的发布时间是 2026-11-01T13:03:19Z。星标 37551 取自仓库接口。1.x 配置不兼容、研究功能删除和 Lophius 来自这篇发布说明。</p><p class="source-note">核验说明（GitHub README）：核验说明（GitHub README）：默认修改器 Arbitrary-Rank Ablation、方向消融仍保留，以及 Weidmann 2026 预印本尚未提供，来自 master 分支 README。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">行业 · 公共事务</span><time datetime="2026-11-02T05:55:23+08:00">11.02 05:55 北京时间</time></div><h3 id="event-2-title">Lehane 提议把数据中心改叫 AI compute campuses</h3><div><p>TechCrunch 引述 Axios 称，OpenAI 首席全球事务官 Chris Lehane 准备在美国中期选举后做公关，提议把数据中心改叫 AI compute campuses。他说 2028 年总统选举里人工智能会成为议题。改名还没发生。</p><p class="caveat">限定：Axios 原文没有打开，改名仍是提议。</p><div class="source"><a href="https://techcrunch.com/2026/11/01/openai-might-rebrand-its-data-centers-as-ai-compute-campuses/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 文章作者 Anthony Ha，datePublished 是 2026-11-01T21:55:23+00:00。文章称 Axios 报道，OpenAI 正在准备一场公关行动，放在周二美国中期选举之后。</p><p>文章称 OpenAI 首席全球事务官 Chris Lehane 对 Axios 说，中期选举会像 2028 年的电影预告片，他预计人工智能会成为那场总统选举的议题。</p><p>文章称 Lehane 讨论了几项提议：让人感到人工智能在日常生活里帮得上忙、推动美国参与制定全球标准，以及把数据中心改称为 AI compute campuses。文章没有说改名已经发生。</p><p class="condition"><strong>适用范围：</strong>改名仍是选举后公关方案里的提议，文章没有说已经启用。</p><details><summary>展开：背景与补充</summary><ul><li>同一句里的速度限制链接指向 2026-09-12 一篇关于 Anthropic CEO 的旧闻，不计入本期事实。数据中心 NDA 的链接指向 2026-10-03 的 Amazon 旧闻。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/11/01/openai-might-rebrand-its-data-centers-as-ai-compute-campuses/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：datePublished 是 2026-11-01T21:55:23+00:00。Lehane 的话和改名提议都是 Anthony Ha 对 Axios 的转述。Axios 页面被 Cloudflare 拦住，没有打开。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">开源 · 本地推理</span><time datetime="2026-11-01T18:04:25+08:00">11.01 18:04 北京时间</time></div><h3 id="event-3-title">tandem.cpp 把放不下的 MoE 专家留在内存里</h3><div><p>ewhacc 放出独立于官方的 llama.cpp 补丁 tandem.cpp。放不进显存的 MoE 专家留在内存，常用的留在显卡。作者用一台 4090 测 Qwen3.8-Flash-Next，贪心解码从 29.8 提到 97.3 token 每秒。</p><p class="caveat">限定：速度来自作者在一台 4090 上的自测。</p><div class="source"><a href="https://github.com/ewhacc/tandem.cpp" target="_blank" rel="noopener noreferrer">原文 · GitHub</a></div><details><summary>详细与核验</summary><p>GitHub 仓库 ewhacc/tandem.cpp 创建于 2026-11-01T10:04:25Z，最近推送 2026-11-01T19:53:06Z。接口显示 3 个星。README 称它是 llama.cpp 的补丁集，与 ggml-org 无关，基线提交是 f5222f25c，README 写该提交日期为 2026-10-28。</p><p>README 称它把最常用的 MoE 专家留在 GPU，其余交给 CPU 计算，适用于 llama.cpp 能跑的 MoE 模型。目标是单用户解码。</p><p>README 的表写，一台电脑（i5-12400F、64 GB DDR4、RTX 4090）上跑 GSM8K，Qwen3.8-Flash-Next IQ3_S 加 MTP，贪心解码结果是 llama.cpp 29.8 tok/s，tandem.cpp 97.3 tok/s（3.3 倍），Strata 精确模式 103.6 tok/s。gpt-oss-120b 贪心解码：llama.cpp 27.8 tok/s，tandem.cpp 51.5 tok/s（1.85 倍）。</p><p>README 写调优只针对 Qwen3.8。显存放不下的其他 MoE（gpt-oss-120b、GLM-4.5-Air、Qwen3.6-35B-A3B、DeepSeek-V4.1）通常是 1.4 到 2.1 倍。64k token 提示的预填充是 1.4 到 1.8 倍。Strata 默认会跳过低排名专家，更快但是近似，同一 Qwen 设置下 README 写 127.1 tok/s。这些数字都是仓库作者给出的，不是第三方复测。</p><p class="condition"><strong>适用范围：</strong>速度表只覆盖作者写下的那台 4090 电脑和 GSM8K 解码，调优只针对 Qwen3.8。</p><details><summary>展开：背景与补充</summary><ul><li>Strata 在同一张表的精确模式是 103.6 tok/s。README 写它的默认近似模式是 127.1 tok/s，那一档会跳过部分专家。</li></ul></details><div class="source"><a href="https://github.com/ewhacc/tandem.cpp" target="_blank" rel="noopener noreferrer">GitHub · 一手来源 · 已核对</a></div><p class="source-note">核验说明（GitHub）：核验说明（GitHub）：仓库创建时间是 2026-11-01T10:04:25Z，星标 3。97.3、29.8、51.5、103.6 和 3.3 倍都抄自 README 的表，是作者自测，没有第三方复现。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
