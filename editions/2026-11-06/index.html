@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 11 月 6 日 AI 日报，含 6 条已策展内容。">
+  <title>AI 日报 · 2026 年 11 月 6 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-11-06">2026 年 11 月 6 日</time> · 星期五</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 11 月 6 日 08:00（北京时间）。本期收录 6 条窗口内动态。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">模型 · 安全</span><time datetime="2026-11-05T17:00:00+08:00">11.05 17:00 北京时间</time></div><h2 id="event-1-title">GPT-6 Cyber 发布，ExploitGym 升到 48.5%</h2><div class="lead-copy"><p>OpenAI 发布 GPT-6 Cyber，先向部分 Daybreak Red 客户开放。ExploitGym 从 32.1% 升到 48.5%。不加部署提示时，99.93% 的测试没有越出指定范围。网络安全定为 Critical。</p><p class="caveat">限定：分数和漏洞数量都是 OpenAI 自己的统计。</p><div class="source"><a href="https://openai.com/index/introducing-gpt-6-cyber" target="_blank" rel="noopener noreferrer">原文 · OpenAI</a></div><details><summary>详细与核验</summary><p>OpenAI 新闻 RSS 的 pubDate 是 Thu, 05 Nov 2026 09:00:00 GMT。条目标题是 GPT-6 Cyber: Advancing the frontier of aligned cybersecurity agents。链接是 https://openai.com/index/introducing-gpt-6-cyber。发布页日期行是 November 5, 2026。页面写，这是用来发现并验证可利用漏洞、并留在研究者设定范围内的网络安全模型。</p><p>页面写 ExploitGym 上 GPT-6 Cyber 为 48.5%，GPT-5.6 Cyber 为 32.1%，并称相对提升约 51%。新的网页渗透测试里，模型看不到源代码，GPT-6 Cyber 的漏洞召回是 40.3%，GPT-6 Astra 是 32.0%。页面写它在多数网络安全任务上超过 GPT-6 Astra，即便 Astra 没有拒绝请求。准备度框架把 GPT-6 Cyber 的网络安全定为 Critical，GPT-5.6 Cyber 此前是 High。</p><p>ExploitGym Honeypot 在没有部署安全提示时，GPT-6 Cyber 有 99.93% 的测试没有去利用范围外服务，GPT-5.6 Cyber 是 94.49%。加上这些提示后，GPT-6 Cyber 是 100%。RemoteExploitBench 初评里，带 Daybreak Blue 的 GPT-6 Astra 拒绝了全部任务，GPT-6 Cyber 完成了 95%，唯一失败是一个没能在远程跑通的利用。</p><p>页面写研究者用 GPT-6 Cyber 在 Linux 上做出 948 个提权利用，并复现 1724 个漏洞。同一套研究工具下 GPT-5.6 Sol 做出 166 个利用。已向维护者披露 304 项关键发现，并附上候选补丁。Firefox 方面，它为 81 个被 Mozilla 定为高严重性的新漏洞提供了证据和可复现测试，并显示另外 30 个已知问题比原先报告的更严重。Mozilla 已经开始合入修复。</p><p>GPT-6 Cyber 先通过 API 和 Codex 向部分已获批的 Daybreak Red 客户提供。页面写随后会扩到全部 Daybreak Red 客户，并把 GPT-5.6 Cyber 开放给全部 Daybreak Red 客户。新设的组别叫 Daybreak Red for Critical Infrastructure，给获批的关键基础设施防御方保留授权测试的权限。</p><div class="condition"><strong>适用范围：</strong><ul><li>目前只向部分已获批的 Daybreak Red 客户开放，入口是 API 和 Codex。</li><li>48.5%、99.93%、948 和 81 都是 OpenAI 的自测或自己的研究统计，本期没有复跑。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>10 亿美元的 Daybreak for Frontline Defenders 补贴是更早的项目。这次新写的是关键基础设施组别，不是一笔新的 10 亿美元。</li><li>The Verge 把蜜罐结果写成不到 1% 和大约 5% 越界，并引用 Astra 在 ExploitGym 上的 42.4%。发布页写的是 99.93% 与 94.49% 没有越界，ExploitGym 段落没有重述 42.4%。</li><li>TechCrunch 把型号写成 ChatGPT Cyber，并把 Linux 扫描说成前一天的事。发布页把 948 个利用算在 GPT-6 Cyber 上。</li></ul></details><div class="source"><a href="https://openai.com/index/introducing-gpt-6-cyber" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a><a href="https://www.theverge.com/ai-artificial-intelligence/1027599/openai-gpt-6-cyber-launch" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI）：核验说明（OpenAI）：48.5% 与 32.1%、约 51% 的相对提升、40.3% 与 32.0%、Critical、99.93% 与 94.49%、100%、RemoteExploitBench 的 95%、Linux 的 1724 与 948 和 166、304 项披露、Firefox 的 81 与 30，以及 Daybreak Red 的开放范围，取自这篇发布页。RSS 的 pubDate 是 Thu, 05 Nov 2026 09:00:00 GMT。页面日期行是 November 5, 2026。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：datePublished 是 2026-11-05T17:00:00+00:00。稿件把蜜罐越界写成不到 1% 和大约 5%，并写 Astra 的 ExploitGym 为 42.4%。这些数字以发布页为准。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">开源 · 模型</span></div><h3 id="event-2-title">百度放出 ERNIE 5.5 Flash Base 预训练权重</h3><div><p>百度公开 ERNIE 5.5 Flash Base 的预训练权重。总参数 2800 亿，每 token 激活 140 亿，预训练用了 33.5 万亿 token。权重在 Hugging Face，后训练版本还没发布。</p><p class="caveat">限定：权重分片主要在公告前几天上传，不是当天新建。</p><div class="source"><a href="https://ernie.baidu.com/release/ernie-5-5-flash-base/" target="_blank" rel="noopener noreferrer">原文 · 百度</a></div><details><summary>详细与核验</summary><p>发布页日期行是 November 5, 2026，time 标签是 2026-11-05，没有钟点。页面写今天放出 ERNIE-5.5-Flash-Base，是稀疏 MoE，总参数 280B，每 token 激活 14B，从零预训练 33.5T token，训练上下文逐步加到 128K，微调和推理支持 100 万 token。放出的是预训练结束时的检查点，没有经过中期训练或后训练。</p><p>页面写模型有 43 层 Transformer，隐藏维度 4096，64 个注意力头。大约七层里有一层用 MLA 看每个远处 token，其余层用 HCA，把每 128 个 token 压成一条缓存。词表大约 20 万，数字按从右到左、最多三位一组切分。优化器是 Muon，训练用 FP8 混合精度。</p><p>页面写权重在 Hugging Face，有 FP8 和 BF16 两套 safetensors，BF16 仓库名是 ERNIE-5.5-Flash-Base-BF16。许可证是 ERNIE 5.5 Flash Base Model License Agreement v1.0。后训练的 ERNIE 5.5 Flash 还没到。</p><p>Hugging Face 接口显示 baidu/ERNIE-5.5-Flash-Base 的 createdAt 是 2026-10-21T08:40:58.000Z。最近 50 条提交里，权重分片的上传日期分布在 2026-11-02、2026-11-03 和 2026-11-04。2026-11-05 的提交主要是 README 和图片，最新一条 README 是 2026-11-05T06:33:30.000Z。对照表的具体分数在图片里，正文没有逐项列出。</p><div class="condition"><strong>适用范围：</strong><ul><li>这是预训练检查点，不是已经对话微调的模型。</li><li>许可证是 ERNIE 5.5 Flash Base Model License Agreement v1.0，不是 Apache 2.0。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>仓库 10 月 21 日已经创建。权重分片在 11 月 2 日到 4 日上传，11 月 5 日更新的是模型卡。公告页和模型卡更新落在这个窗口，分片上传日不是 11 月 5 日。</li></ul></details><div class="source"><a href="https://ernie.baidu.com/release/ernie-5-5-flash-base/" target="_blank" rel="noopener noreferrer">百度 · 一手来源 · 已核对</a><a href="https://huggingface.co/baidu/ERNIE-5.5-Flash-Base" target="_blank" rel="noopener noreferrer">Hugging Face · 补充来源 · 已核对</a></div><p class="source-note">核验说明（百度）：核验说明（百度）：280B、14B、33.5T、128K、100 万上下文、43 层、4096、64 头、约 20 万词表、Muon、FP8，以及预训练检查点和许可证名称，取自这篇发布页。页面日期是 November 5, 2026，没有钟点。</p><p class="source-note">核验说明（Hugging Face）：核验说明（Hugging Face）：createdAt 是 2026-10-21T08:40:58.000Z。权重分片提交落在 11 月 2 日至 4 日。最新 README 提交是 2026-11-05T06:33:30.000Z。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">产品 · 视频</span><time datetime="2026-11-06T01:00:00+08:00">11.06 01:00 北京时间</time></div><h3 id="event-3-title">Gemini Omni 1.2 Flash 支持 15 秒视频</h3><div><p>谷歌放出 Gemini Omni 1.2 Flash。原生视频最长从 10 秒增到 15 秒，720p 降到每秒 0.07 美元，比上一版低 30%。Gemini API 和企业版今天可以调用。</p><p class="caveat">限定：0.07 美元和降幅 30% 是谷歌标价。</p><div class="source"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/" target="_blank" rel="noopener noreferrer">原文 · Google</a></div><details><summary>详细与核验</summary><p>blog.google 文章的 datePublished 是 2026-11-05T17:00:00+00:00，日期行是 Nov 05, 2026。页面写 Gemini Omni 1.2 Flash 今天推出，并在 Gemini API 和 Gemini for business 正式可用。原生视频最长 15 秒，上一版 Omni 1.1 是 10 秒。时长可以按 1 秒一档从 3 秒指定到 15 秒。</p><p>页面写 720p 价格降到每秒 0.07 美元，比 Gemini Omni 1.1 低 30%。可以先用 360p 或 720p 起草，再用对话改一处，然后把选定结果放大到 1080p 或 4K。多轮对话编辑覆盖整段 15 秒。</p><p>页面写输出带听不见的 SynthID 水印，并提供 Provisioned Throughput。Google Vids 里用 Google 账号或 Workspace 订阅生成 15 秒视频不加价。Gemini 应用里的 15 秒视频正在向 Google AI Ultra 订阅用户推出。页面写快速运动、急促台词和复杂物理仍在改进。</p><div class="condition"><strong>适用范围：</strong><ul><li>0.07 美元和 30% 是谷歌写的标价，本期没有下单核对。</li><li>Gemini 应用里的 15 秒视频还在向 Ultra 用户推出，不是所有人当天都能用。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>页面另写开发者可以在 Google AI Studio 试，企业可以在 Google Cloud 控制台调用。正式可用的说法同时指向 Gemini API 和 Gemini for business。</li></ul></details><div class="source"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：核验说明（Google）：15 秒、上一版 10 秒、每秒 0.07 美元、比 1.1 低 30%、SynthID、Vids 不加价，以及 Ultra 仍在推出，取自这篇博文。datePublished 是 2026-11-05T17:00:00+00:00。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">产品 · 金融</span><time datetime="2026-11-06T02:00:00+08:00">11.06 02:00 北京时间</time></div><h3 id="event-4-title">Claude 用 Plaid 只读查看银行卡流水</h3><div><p>Anthropic 给 Claude 加上 Personal Finance。美国的 Pro、Max 和 Ultra 用户本周开始试用，经 Plaid 只读连接银行卡，最多看两年流水。它不能转账，也不能给投资建议。</p><p class="caveat">限定：只读，不能转账或给投资建议，先在美国付费档。</p><div class="source"><a href="https://www.theverge.com/ai-artificial-intelligence/1027652/anthropic-claude-plaid-personal-finance" target="_blank" rel="noopener noreferrer">原文 · The Verge</a></div><details><summary>详细与核验</summary><p>The Verge 的 datePublished 是 2026-11-05T18:00:00+00:00。文章写 Anthropic 推出 Personal Finance，经 Plaid 连接银行和信用卡账户。可以问这个月钱花到哪，并按房租水电、购物、餐饮等分类汇总。也可以问发薪前还剩哪些账单、大额开支是否付得起、每个月能存下多少。</p><p>The Verge 写访问是只读的。Claude 看不到银行密码。按 Anthropic 的说法，它不能转账、管理资金或投资，也不是用来给投资建议的。它能看到银行名称、账户名、账户类型、卡号后四位、余额、信用额度和最多两年的交易。本周起以 beta 向美国的 Claude Pro、Max 和 Ultra 用户推出。</p><p>TechCrunch 的 datePublished 也是 2026-11-05T18:00:00+00:00。稿件引用 Anthropic 的话，称回答用日常语言，没有广告或赞助推荐，也不提供自己的信用卡、贷款或储蓄账户。稿件还写，在 Personal Finance 这个入口里的对话不用于训练模型。两篇都写 ChatGPT 在 5 月已经有类似的 Plaid 连接。</p><div class="condition"><strong>适用范围：</strong><ul><li>本周起只在美国的 Pro、Max 和 Ultra 做 beta。</li><li>不能转账，也不能代客投资。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>ChatGPT 在 5 月经 Plaid 连接账户，是更早的产品。Anthropic 新闻列表在这个窗口里没有对应的公司原文链接。范围以 The Verge 与 TechCrunch 对 Anthropic 说法的引述为准。</li></ul></details><div class="source"><a href="https://www.theverge.com/ai-artificial-intelligence/1027652/anthropic-claude-plaid-personal-finance" target="_blank" rel="noopener noreferrer">The Verge · 一手来源 · 已核对</a><a href="https://techcrunch.com/2026/11/05/claude-can-now-analyze-your-spending-with-its-new-personal-finance-tool/" target="_blank" rel="noopener noreferrer">TechCrunch · 补充来源 · 已核对</a></div><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：Plaid、只读、不能转账或投资、后四位、最多两年交易，以及美国 Pro、Max、Ultra 的 beta，取自这篇稿。datePublished 是 2026-11-05T18:00:00+00:00。</p><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：无广告、不卖自有金融产品，以及该入口的对话不用于训练，取自这篇稿对 Anthropic 的引述。datePublished 是 2026-11-05T18:00:00+00:00。</p></details></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">产品 · 语音</span><time datetime="2026-11-06T02:30:58+08:00">11.06 02:30 北京时间</time></div><h3 id="event-5-title">Muse 在美国应用里开放实时语音</h3><div><p>Meta 开始在美国的 Muse 应用里推出实时语音和会做表情的头像。手机、网页和 Mac 点一下电话图标就能说，可选声音有几百种。眼镜和 Muse Charm 上的语音还没有。</p><p class="caveat">限定：官方写正在美国应用里推出，眼镜还没有。</p><div class="source"><a href="https://about.fb.com/news/2026/11/introducing-muse-ai-voice-expressive-avatars/" target="_blank" rel="noopener noreferrer">原文 · Meta</a></div><details><summary>详细与核验</summary><p>Meta 新闻室文章 datePublished 是 2026-11-05T18:30:58+00:00，dateModified 是 2026-11-05T21:56:56+00:00。文章写 Connect 2026 预告过和 Muse 实时对话，现在开始在手机、网页和 Mac 上的 Muse 应用推出。点右上角电话图标即可说话。说话时头像会用和语气相配的表情与动作。可以只要声音、让头像留在对话旁边，或全屏面对面。</p><p>文章写可选声音有几百种，底层是 Muse Realtime Avatar 和 Muse Realtime Voice。语音和表情头像先在美国的 Muse 应用推出。AI 眼镜和 Muse Charm 上的语音还没到，文章写即将到来。</p><p>The Verge 的 datePublished 是 2026-11-05T19:03:04+00:00。记者写自己的 iOS 应用已经能用，并转述 Meta 说美国的应用正在推出，眼镜是 soon。TechCrunch 写美国所有人现在可以视频通话。这个说法比 Meta 新闻室的“正在推出”更满，开放范围以新闻室原文为准。</p><div class="condition"><strong>适用范围：</strong><ul><li>先在美国的手机、网页和 Mac 应用推出，不是全球同时开放。</li><li>眼镜和 Muse Charm 的语音还没有上线。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>实时对话在 Connect 2026 已经预告。新事实是应用里开始推出，以及声音数量和还没覆盖的设备。</li></ul></details><div class="source"><a href="https://about.fb.com/news/2026/11/introducing-muse-ai-voice-expressive-avatars/" target="_blank" rel="noopener noreferrer">Meta · 一手来源 · 已核对</a><a href="https://www.theverge.com/tech/1028015/meta-muse-ai-voice-mode-expressive-avatar" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Meta）：核验说明（Meta）：手机、网页和 Mac，右上角电话图标，几百种声音，Muse Realtime Avatar 与 Muse Realtime Voice，以及美国应用先推出、眼镜和 Muse Charm 还没有，取自这篇新闻室文章。datePublished 是 2026-11-05T18:30:58+00:00。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：记者写自己的 iOS 客户端已经出现该功能。datePublished 是 2026-11-05T19:03:04+00:00。开放范围以 Meta 新闻室的“正在推出”为准。</p></details></div></article><article class="story" id="event-6" aria-labelledby="event-6-title"><div class="kicker"><span class="tag">行业 · 收购</span><time datetime="2026-11-05T23:19:05+08:00">11.05 23:19 北京时间</time></div><h3 id="event-6-title">Dropbox 以 3.5 亿美元收购 Tigris</h3><div><p>Dropbox 以 3.5 亿美元收购 Tigris Data，预计 2026 年第四季度交割。公司要用它做 DBX Agent Cloud，先提供兼容 S3 的对象存储。这笔交易不计划裁员。</p><p class="caveat">限定：金额和交割时间是公司告诉 TechCrunch 的。</p><div class="source"><a href="https://techcrunch.com/2026/11/05/dropbox-acquires-tigris-data-for-350m-to-bolster-its-ai-iinfrastructure/" target="_blank" rel="noopener noreferrer">原文 · TechCrunch</a></div><details><summary>详细与核验</summary><p>TechCrunch 的 datePublished 是 2026-11-05T15:19:05+00:00。文章写 Dropbox 以 3.5 亿美元收购 Tigris Data，周四宣布。公司通过邮件告诉 TechCrunch，交易预计在 2026 年第四季度交割，并且这笔收购目前没有裁员计划。</p><p>文章写收购用来支持 DBX Agent Cloud，一个面向企业和开发者、用来训练模型和运行智能体的存储平台。第一项单独售卖的是对象存储，兼容现有的 Amazon S3 工具。公司还计划以后加上文件系统，让智能体管理文件并在多次任务之间保持连续。</p><p>同一篇写，Dropbox 也在给现有产品加能力。可以对文件交代支持的任务、选择不同模型，并把内容接到 ChatGPT、Claude 和 Muse。文章称这看起来是公司迄今最大的收购。这是记者的判断，不是公司给出的排名。</p><div class="condition"><strong>适用范围：</strong><ul><li>交割还没完成，公司说的时间是 2026 年第四季度。</li><li>对象存储是第一项产品。文件系统仍是计划，不是已经交付的功能。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>稿件提到公司上个月裁员，并引用华尔街日报。那是更早的人事消息，而且稿件写的比例和日报标题不一致。裁员比例不计入这笔收购。</li></ul></details><div class="source"><a href="https://techcrunch.com/2026/11/05/dropbox-acquires-tigris-data-for-350m-to-bolster-its-ai-iinfrastructure/" target="_blank" rel="noopener noreferrer">TechCrunch · 一手来源 · 已核对</a></div><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：3.5 亿美元、2026 年第四季度交割、不因此裁员、DBX Agent Cloud 和兼容 S3 的对象存储，取自这篇稿对公司邮件的转述。datePublished 是 2026-11-05T15:19:05+00:00。金额不是从一份单独的公司新闻稿抄来的。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
