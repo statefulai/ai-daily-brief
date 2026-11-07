@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 11 月 7 日 AI 日报，含 4 条已策展内容。">
+  <title>AI 日报 · 2026 年 11 月 7 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-11-07">2026 年 11 月 7 日</time> · 星期六</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 11 月 7 日 08:00（北京时间）。本期收录 4 条窗口内动态。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">研究 · 评测</span><time datetime="2026-11-06T08:00:00+08:00">11.06 08:00 北京时间</time></div><h2 id="event-1-title">OpenAI 放出 BioBasicsBench，Astra 得到 66.7%</h2><div class="lead-copy"><p>OpenAI 和 Ligo 放出湿实验基准 BioBasicsBench，共 100 题。xhigh 档下 GPT-6 Astra 得到 66.7% 的分数，GPT-5.6 Sol 是 43.8%。页面写模型仍会把菌落多计大约 12%。</p><p class="caveat">限定：分数和 12% 的误差都是 OpenAI 自己的评测。</p><div class="source"><a href="https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science" target="_blank" rel="noopener noreferrer">原文 · OpenAI</a></div><details><summary>详细与核验</summary><p>OpenAI 新闻 RSS 的 pubDate 是 Fri, 06 Nov 2026 00:00:00 GMT。页面日期行是 November 6, 2026。页面介绍 BioBasicsBench，和生物技术公司 Ligo 一起做，用来测智能体能不能读懂日常湿实验的原始数据。一共 100 个任务，分五类：蛋白方法、成像和流式、定量和检测、核酸方法、分子克隆。</p><p>页面写 xhigh 设置下 GPT-6 Astra 平均拿到可用分数的 66.7%，95% 置信区间 60.3% 到 73.1%，每题平均输出 4704 token。GPT-5.6 Sol 是 43.8%，区间 37.6% 到 50.0%，每题 9099 token。同表还有 GPT-6.1 Sol 62.0%、GPT-6 Luna 38.3%、GPT-5.5 35.4%、GPT-5.4 33.2%、GPT-5.2 31.2%。评测覆盖 7 个模型、37 组模型和推理档、每题 5 次，共 18500 条结果。</p><p>页面写任务来自科学家自己的实验数据，每题有专家写的评分标准。审稿是一位没出题的 Ligo 科学家内审、一位在湿实验工作的博士外审，再加一次内审。输入包括凝胶、菌落平板、显微镜和仪器读数，也包含失败实验和互相冲突的观察。</p><p>页面写更高分数还不等于能在实验室做可靠判断。举例里 Astra 会把菌落数多计大约 12%，也会在克隆电泳里选错菌落。这些是 OpenAI 页面上的失败例子，本期没有复跑。</p><div class="condition"><strong>适用范围：</strong><ul><li>66.7%、43.8% 和大约 12% 都是 OpenAI 的自测，本期没有复跑。</li><li>这是一道基准，不是已经交给实验室使用的产品。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>OpenAI 新闻 RSS 里另有 2025 年 12 月 16 日的一篇湿实验测量，链接不同。这一篇的 pubDate 是 2026 年 11 月 6 日，介绍的是 BioBasicsBench。</li></ul></details><div class="source"><a href="https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI）：核验说明（OpenAI）：100 题、五类任务、66.7% 与 43.8%、4704 与 9099 token、18500 条结果，以及菌落多计大约 12%，取自这篇发布页。RSS 的 pubDate 是 Fri, 06 Nov 2026 00:00:00 GMT。页面日期行是 November 6, 2026。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">研究 · 记忆</span><time datetime="2026-11-06T08:00:00+08:00">11.06 08:00 北京时间</time></div><h3 id="event-2-title">Anthropic 用 wiki 把内部题从 13% 做到 48%</h3><div><p>Anthropic 写 Claude 怎样在两次会话之间留下记忆。约 35 万份文件做成 wiki 后，25 道题的成绩从 13% 升到 48%。只搜索是 53%，加上 wiki 升到 61%。</p><p class="caveat">限定：这些是内部评测，不是已经对所有人打开的开关。</p><div class="source"><a href="https://www.anthropic.com/research/components-of-agent-memory" target="_blank" rel="noopener noreferrer">原文 · Anthropic</a></div><details><summary>详细与核验</summary><p>Anthropic 研究页 article:published_time 是 2026-11-06T00:00:00.000Z，dateModified 是 2026-11-06T21:15:32.000Z。页面日期是 Nov 6, 2026。文章把智能体记忆定义成跨会话保留的经验，不含改权重、单次对话里的上下文学习，也不含把旧回合压成摘要。</p><p>页面写在 Continual Learning Bench 1.0 的一个查库任务上使用 Claude Managed Agents。每题开新会话，但可以读上一会话留下的记忆目录。提示模型先读记忆并检验自己的假设后，分数将近翻倍。Sonnet 5 不经提示也会在 10 次里有 9 次先读记忆，Sonnet 4.6 不到一半。</p><p>页面写用 Stainless 约 35 万份内部文件、大约 4.2 亿 token，做了 25 道题。Opus 5 用 dreaming 建 wiki，会话从 2 个加到 128 个，按评分标准计的成绩从 13% 升到 48%。只靠 wiki 的最好成绩是 48%。搜索加 wiki 从 54% 升到 61%，只搜索是 53%，每题大约少用 2 万 token。</p><p>页面写一组并购问题共 24 道。需要跨文件或做判断的那些题，查 wiki 是 87%，只搜索是 73%。另一份合同题里，多个智能体同时改一张共享表，简报只写进 57 条事实里的 41 条。改成每份合同单独一页并逐字引用后，评分标准从 72% 升到可以全部满足。</p><p>这些数字来自 Anthropic 自己的内部评测。页面指向 dreaming 和 knowledge wiki 的 cookbook，没有宣布一个面向所有用户的新开关。</p><div class="condition"><strong>适用范围：</strong><ul><li>13% 到 48%、87% 和 73% 都是 Anthropic 的内部评测，本期没有复跑。</li><li>材料来自收购来的 Stainless 内部文件，不是公开数据集。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>页面把 dreaming 写成会话之间整理日志和笔记的过程，并提到 Letta 与 UC Berkeley 更早提出的 sleep-time compute。那是方法来源，不是这次新测的数字。</li></ul></details><div class="source"><a href="https://www.anthropic.com/research/components-of-agent-memory" target="_blank" rel="noopener noreferrer">Anthropic · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Anthropic）：核验说明（Anthropic）：35 万份文件、约 4.2 亿 token、25 题从 13% 到 48%、搜索 53% 与搜索加 wiki 的 54% 到 61%、24 道并购题里跨文件题目的 87% 与 73%，以及 57 条里的 41 条，取自这篇研究页。article:published_time 是 2026-11-06T00:00:00.000Z。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">产品 · 助手</span><time datetime="2026-11-07T02:00:58+08:00">11.07 02:00 北京时间</time></div><h3 id="event-3-title">Muse 可以用一句话生成 spaces</h3><div><p>Meta 在 Muse 里推出 spaces。说一句话就能做成礼物清单或计划板，也可以放进侧栏或主标签。接上别的应用后，演出日期和价格会自己更新。已经开放 Muse 的地方，今天都能用。</p><p class="caveat">限定：分享给别人还在探索，不是已经上线的功能。</p><div class="source"><a href="https://about.fb.com/news/2026/11/introducing-spaces-customize-muse-app/" target="_blank" rel="noopener noreferrer">原文 · Meta</a></div><details><summary>详细与核验</summary><p>Meta 新闻室 datePublished 是 2026-11-06T18:00:58+00:00。页面日期行是 November 6, 2026。页面写今天推出 spaces，在 Muse 里用一句话描述想法，就能生成自定义界面，例如节日礼物清单、每日文字游戏或 DIY 计划板。</p><p>页面写可以把 space 放在侧栏或主标签，也可以先藏起来，并安排它什么时候出现。例子是工作日把周计划放在前面，周六换成周末安排。</p><p>页面写接上常用应用后，space 会在后台更新，例如新的演出日期、价格变化或储蓄进度。用户可以在 space 里打勾、加备注和修改。</p><p>页面写从今天起，spaces 在 Muse 已经开放的所有地方可用。公司还在探索把 space 分享给别人。同时把用 Muse Wonder 的经验训练出来的专用模型版本推向 Muse。</p><div class="condition"><strong>适用范围：</strong><ul><li>分享给其他用户还在探索，页面没有说已经可以协作。</li><li>可用范围写成 Muse 已经开放的地方，不是新的国家名单。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>11 月 5 日的正刊写过 Muse 在美国应用里开放实时语音。spaces 是 11 月 6 日新闻室的另一篇，日期行和 datePublished 都在这个窗口。</li></ul></details><div class="source"><a href="https://about.fb.com/news/2026/11/introducing-spaces-customize-muse-app/" target="_blank" rel="noopener noreferrer">Meta · 一手来源 · 已核对</a><a href="https://www.theverge.com/tech/1028871/meta-muse-ai-spaces" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Meta）：核验说明（Meta）：一句话生成 space、侧栏和主标签、后台更新演出日期和价格，以及 Muse 已开放地区今天可用，取自这篇新闻室文章。datePublished 是 2026-11-06T18:00:58+00:00。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：datePublished 是 2026-11-06T18:10:10+00:00。稿件写向所有 Muse 用户推出，并提到 Active Memory 与 Active Focus。开放范围和功能名称以 Meta 新闻室原文为准。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">安全 · 合作</span><time datetime="2026-11-06T16:00:00+08:00">11.06 16:00 北京时间</time></div><h3 id="event-4-title">OpenAI 让 Hacktron 检查自己的系统</h3><div><p>OpenAI 宣布和 Hacktron 一起查自己系统上的漏洞，两边共同选择要测的部分，重点是和第三方服务的衔接。Hacktron 可以通过 Daybreak Red 使用前沿模型。</p><p class="caveat">限定：公告没有公布新发现的漏洞数量。</p><div class="source"><a href="https://openai.com/index/partnering-with-hacktron" target="_blank" rel="noopener noreferrer">原文 · OpenAI</a></div><details><summary>详细与核验</summary><p>OpenAI 新闻 RSS 的 pubDate 是 Fri, 06 Nov 2026 08:00:00 GMT。页面日期行是 November 6, 2026。页面写今天宣布和 Hacktron 合作，在 OpenAI 自己的系统里找漏洞。两边一起选优先测试的部分，重点是系统和第三方服务怎么衔接。</p><p>页面写合作包括通过 Daybreak Red 扩大 Hacktron 对前沿模型的访问。OpenAI 称是通过自己的 Security Bug Bounty 认识 Hacktron 的。公告引用了 CEO Zayne Zhang，但没有给出这次合作新发现的漏洞数量。</p><p>页面另写本周早些时候 Cathedral 的研究人员会参加下一次安全冲刺，并且提高了漏洞赏金。这两句不是这次公告里的新数字。11 月 5 日已经报道过 Daybreak Red 这个组别。这次新写的是 Hacktron 进入这个访问范围。</p><div class="condition"><strong>适用范围：</strong><ul><li>公告没有公布新发现了多少漏洞，也没有公布赏金的新金额。</li><li>Daybreak Red 的组别本身不是这次才设立的。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>GPT-6 Cyber 和 Daybreak Red 的开放范围写在 11 月 6 日正刊。这篇是同一天窗口里的另一则公告，对象换成 Hacktron。</li></ul></details><div class="source"><a href="https://openai.com/index/partnering-with-hacktron" target="_blank" rel="noopener noreferrer">OpenAI · 一手来源 · 已核对</a></div><p class="source-note">核验说明（OpenAI）：核验说明（OpenAI）：合作范围、第三方服务衔接，以及通过 Daybreak Red 扩大模型访问，取自这篇发布页。RSS 的 pubDate 是 Fri, 06 Nov 2026 08:00:00 GMT。页面日期行是 November 6, 2026。页面没有给出新漏洞数量。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
