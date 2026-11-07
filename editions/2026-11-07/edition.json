@@ -241,46 +241,6 @@
       "caveat": "分享给别人还在探索，不是已经上线的功能。"
     },
     {
-      "id": "openai-funding-round",
-      "placement": "story",
-      "window": "in_window",
-      "title": "报道称 OpenAI 新一轮已到 110 亿美元",
-      "kicker": "行业 · 融资",
-      "facts": [
-        "TechCrunch 的 datePublished 是 2026-11-06T22:53:46+00:00。稿件写 Bloomberg 在周五报道，引述知情人士，OpenAI 新一轮目前已募到 110 亿美元，估值 1.25 万亿美元。这一轮还没结束，预计未来数周交割，总额可能大约 200 亿美元。",
-        "The Verge 的 datePublished 是 2026-11-06T23:46:18+00:00。稿件也写根据 Bloomberg，新一轮又募到 110 亿美元，估值 1.25 万亿美元，并写公司仍在追追加投资，金额可能增到 200 亿美元。稿件还写公司原先希望募到 300 亿美元、估值 1.4 万亿美元。",
-        "TechCrunch 写已经向 OpenAI 求证，如果对方回复会更新。两篇都没有 OpenAI 自己的确认稿。这一窗口里新写明的数字是目前 110 亿美元和 1.25 万亿美元估值，而且轮次未关。"
-      ],
-      "conditions": [
-        "110 亿美元和 1.25 万亿美元来自 Bloomberg 的知情人士，不是 OpenAI 公告。",
-        "这一轮还没交割。大约 200 亿美元是可能的总额，不是已经到账的数字。"
-      ],
-      "background": [
-        "11 月 1 日的正刊已经写过报道称新一轮目标降到 200 亿美元。这次多出来的是目前到账 110 亿美元，以及 1.25 万亿美元的估值说法。",
-        "The Verge 还把 3 月的 1220 亿美元、8520 亿美元估值写进来当对照。那是稿件里的旧数字，不是这一轮的新事实。"
-      ],
-      "sources": [
-        {
-          "label": "TechCrunch",
-          "url": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
-          "kind": "primary",
-          "published_at": "2026-11-06T22:53:46+00:00",
-          "verified": true,
-          "note": "核验说明（TechCrunch）：110 亿美元、1.25 万亿美元、轮次未关、未来数周可能大约 200 亿美元，以及已向 OpenAI 求证，取自这篇稿对 Bloomberg 知情人士的转述。datePublished 是 2026-11-06T22:53:46+00:00。"
-        },
-        {
-          "label": "The Verge",
-          "url": "https://www.theverge.com/ai-artificial-intelligence/1029380/openai-1-25-trillion-investment-valuation",
-          "kind": "secondary",
-          "published_at": "2026-11-06T23:46:18+00:00",
-          "verified": true,
-          "note": "核验说明（The Verge）：同样把 110 亿美元和 1.25 万亿美元归于 Bloomberg，并写原先希望 300 亿美元、估值 1.4 万亿美元。datePublished 是 2026-11-06T23:46:18+00:00。"
-        }
-      ],
-      "lede": "Bloomberg 称 OpenAI 新一轮目前募到 110 亿美元，估值 1.25 万亿美元。TechCrunch 写这一轮还没结束，总额可能到大约 200 亿美元。公司还没有公开确认。",
-      "caveat": "数字来自知情人士，轮次未关，OpenAI 未回应。"
-    },
-    {
       "id": "hacktron-partnership",
       "placement": "story",
       "window": "in_window",
@@ -314,5 +274,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:e93648b7cf62b7ca6a3a5ff5f4b85d2cab3f9f2aedacfd87408fdf5e28ef975c"
+  "content_hash": "sha256:534ade0d01cee1fc00a887b8e740b2bd200bd6882b5c9d65779a3b10cd3a69cd"
 }
