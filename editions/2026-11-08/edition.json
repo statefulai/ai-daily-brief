@@ -1,0 +1,173 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-08T08:00:00+08:00",
+  "generated_at": "2026-11-08T08:11:14.057326+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 19,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "llama-moe-cache-cpu",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "llama.cpp 让没进缓存的 MoE 专家改在 CPU 上算",
+      "kicker": "开源 · 推理",
+      "facts": [
+        "GitHub API 显示 ggml-org/llama.cpp 的 PR 30966 由 am17an 提交，2026-10-22T08:12:09Z 打开，2026-11-07T16:20:59Z 合入 master。merge commit 是 e95426f16982054c379ca7bdc8186996dd22f0fe。变更是 1169 行新增、183 行删除、18 个文件、14 个提交。",
+        "合入说明写，未命中缓存的专家会按 --moe-cache-cpu-share 在 CPU 上执行。--moe-cache-mib 和 --moe-cache-cpu-share 是两个参数。scripts/moe-cache-tune.py 会多次跑 llama-server，用来选一组参数。",
+        "PR 正文附了一台桌面电脑、模型 Qwen3.8-Flash-Next IQ4_NL 的记录。缓存 6464 MiB 时，share 0 是每秒 24.2 token，share 0.95 是每秒 47.6 token。这些是作者日志，不是 llama.cpp 发布的基准。作者建议的配置是 --moe-cache-mib 24000 --moe-cache-cpu-share 0，对应的每秒 83.0 token 是预测输出，不是这次实测。",
+        "作者在 AI usage disclosure 勾了 YES，并写 paired with Claude。"
+      ],
+      "conditions": [
+        "PR 在 10 月 22 日打开。窗口内的新事实是合入 master。"
+      ],
+      "background": [
+        "11 月 2 日正刊写过 tandem.cpp，那是另一个把放不下的 MoE 专家留在内存里的项目。这次合入的是 llama.cpp 自己的缓存参数。"
+      ],
+      "sources": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/ggml-org/llama.cpp/pull/30966",
+          "kind": "primary",
+          "published_at": "2026-11-07T16:20:59Z",
+          "verified": true,
+          "note": "核验说明（GitHub）：合入时间、merge commit e95426f16982054c379ca7bdc8186996dd22f0fe、1169 行新增、183 行删除、18 个文件、14 个提交，以及 --moe-cache-cpu-share、调参脚本和作者机器上的实测 24.2、47.6，取自 PR 30966 的 API。推荐配置的每秒 83.0 token 是预测输出，不是实测。打开时间是 2026-10-22T08:12:09Z。本期没有编译，也没有复跑。"
+        }
+      ],
+      "lede": "llama.cpp 把 PR 30966 合进 master。没进缓存的 MoE 专家可以按 --moe-cache-cpu-share 放到 CPU 上算，并带了一个调参脚本。作者在自己的机器上，share 为 0.95 时写到每秒 47.6 个 token。",
+      "caveat": "47.6 是作者单机日志，本期没有复跑。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:69245521433de098042ad17f8c3b65bb3a1b9fdf68c7220e3dfe117a6f848d70"
+}
