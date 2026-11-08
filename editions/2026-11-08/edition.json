@@ -1,0 +1,211 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-08T08:00:00+08:00",
+  "generated_at": "2026-11-08T08:11:14.057326+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 19,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "nvidia-h200-new-matrix",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "New Matrix 获准购买 H200，登记的办公室是空的",
+      "kicker": "政策 · 芯片",
+      "facts": [
+        "The Verge 的 article:published_time 是 2026-11-07T15:43:45+00:00。文章写，美国商务部和英伟达在审核获准经手 H200 的中国公司时被质疑没有做足尽职调查。文章称，据《纽约时报》，New Matrix 在获准名单上，办公室却是空的，原文是 a hollow gray shell with wires dangling from the ceiling where lights should be。文章还写，时报几乎找不到这家公司真实存在的证据。",
+        "The Verge 写 New Matrix 成立于 17 个月前。它登记的那栋楼的公司名录里没有它。附近产业园物业的一名接待和一名经理都说没有这家公司的记录。",
+        "The Verge 写 New Matrix 的业主和一家自 2024 年起被美国政府列入黑名单的中国私募有关联。文章称据《纽约时报》，这不是单次疏忽，而是一批与国家安全贸易限制对象有关联的公司获准购买英伟达芯片。"
+      ],
+      "conditions": [
+        "文章写的获准名单针对的是 H200。"
+      ],
+      "background": [
+        "The Verge 写拜登政府限制英伟达向中国卖芯片，后来在公司同意上缴销售额的 15% 之后放宽。"
+      ],
+      "sources": [
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1029483/nvidia-ai-chips-china-blacklist-government",
+          "kind": "primary",
+          "published_at": "2026-11-07T15:43:45+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：H200 获准名单、空办公室引语、17 个月、楼内名录、物业的接待和经理、2024 年黑名单私募，以及一批公司，取自这篇。article:published_time 是 2026-11-07T15:43:45+00:00。"
+        },
+        {
+          "label": "纽约时报",
+          "url": "https://www.nytimes.com/2026/11/07/business/economy/nvidia-chips-chinese-firms.html",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": false,
+          "note": "核验说明（纽约时报）：页面返回 HTTP 403，正文没有打开。日期只见于 URL 里的 2026/11/07。"
+        }
+      ],
+      "lede": "The Verge 转述《纽约时报》，获准购买英伟达 H200 的 New Matrix 成立 17 个月，登记地址却是空办公室，楼内名录没有这家公司。业主和 2024 年起被美国列入黑名单的一家私募有关。",
+      "caveat": "空办公室和黑名单关系只来自 Verge 对时报的转述。"
+    },
+    {
+      "id": "llama-moe-cache-cpu",
+      "placement": "story",
+      "window": "in_window",
+      "title": "llama.cpp 让没进缓存的 MoE 专家改在 CPU 上算",
+      "kicker": "开源 · 推理",
+      "facts": [
+        "GitHub API 显示 ggml-org/llama.cpp 的 PR 30966 由 am17an 提交，2026-10-22T08:12:09Z 打开，2026-11-07T16:20:59Z 合入 master。merge commit 是 e95426f16982054c379ca7bdc8186996dd22f0fe。变更是 1169 行新增、183 行删除、18 个文件、14 个提交。",
+        "合入说明写，未命中缓存的专家会按 --moe-cache-cpu-share 在 CPU 上执行。--moe-cache-mib 和 --moe-cache-cpu-share 是两个参数。scripts/moe-cache-tune.py 会多次跑 llama-server，用来选一组参数。",
+        "PR 正文附了一台桌面电脑、模型 Qwen3.8-Flash-Next IQ4_NL 的记录。缓存 6464 MiB 时，share 0 是每秒 24.2 token，share 0.95 是每秒 47.6 token。作者在这次记录里建议 --moe-cache-mib 24000 --moe-cache-cpu-share 0，并写每秒 83.0 token。这些是作者日志，不是 llama.cpp 发布的基准。",
+        "作者在 AI usage disclosure 勾了 YES，并写 paired with Claude。"
+      ],
+      "conditions": [
+        "PR 在 10 月 22 日打开。窗口内的新事实是合入 master。"
+      ],
+      "background": [
+        "11 月 2 日正刊写过 tandem.cpp，那是另一个把放不下的 MoE 专家留在内存里的项目。这次合入的是 llama.cpp 自己的缓存参数。"
+      ],
+      "sources": [
+        {
+          "label": "GitHub",
+          "url": "https://github.com/ggml-org/llama.cpp/pull/30966",
+          "kind": "primary",
+          "published_at": "2026-11-07T16:20:59Z",
+          "verified": true,
+          "note": "核验说明（GitHub）：合入时间、merge commit e95426f16982054c379ca7bdc8186996dd22f0fe、1169 行新增、183 行删除、18 个文件、14 个提交，以及 --moe-cache-cpu-share、调参脚本和作者机器上的 24.2、47.6、83.0，取自 PR 30966 的 API。打开时间是 2026-10-22T08:12:09Z。本期没有编译，也没有复跑。"
+        }
+      ],
+      "lede": "llama.cpp 把 PR 30966 合进 master。没进缓存的 MoE 专家可以按 --moe-cache-cpu-share 放到 CPU 上算，并带了一个调参脚本。作者在自己的机器上，share 为 0.95 时写到每秒 47.6 个 token。",
+      "caveat": "47.6 是作者单机日志，本期没有复跑。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:b1308d9237adf655e440bc6390cb7f7a929e5f0fc45bf005e05065a8b9970da2"
+}
