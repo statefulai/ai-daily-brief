@@ -1,0 +1,203 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-09T08:00:00+08:00",
+  "generated_at": "2026-11-09T08:10:00+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 18,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "no_candidates",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "nvidia-huang-board-review",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "英伟达董事会就黄仁勋启动独立调查",
+      "kicker": "行业 · 公司",
+      "facts": [
+        "英伟达新闻室页面 Statement from NVIDIA Board of Directors 的可见日期是 November 8, 2026，页面没有钟点。正文写，董事会启动独立调查，原因是最近的报道称创始人兼首席执行官黄仁勋成为外国情报活动的目标。调查由独立董事组成的委员会负责，并有外部独立律师协助。",
+        "该声明写，董事会目前没有理由认为国家安全或英伟达机密已被泄露，调查会检查所有能取得的信息。黄仁勋完全支持调查并承诺配合。董事会表示对黄仁勋及其领导团队有信心，并会在适当时进一步说明。",
+        "英伟达新闻室页面 A Message to Our Company 的可见日期也是 November 8, 2026。副标题写，这是黄仁勋当天早些时候发给员工的邮件。邮件写他对妻子不忠并为此道歉，会继续全心投入英伟达。针对新闻报道里的国家安全关切，他写董事会已启动独立调查，他支持并会完全配合。邮件没有写出另一方姓名。",
+        "The Verge 文章时间是 2026-11-08T20:22:00Z，TechCrunch 署期为 Pacific Time 2026-11-08 13:00。两篇把调查与黄仁勋和 Megaspeed 前高管 Alice Huang 的关系联系起来，并称有说法指她被中国国家安全部招募。这些姓名没有出现在上述两份英伟达新闻室文本里。",
+        "Axios 引英伟达公共政策沟通负责人 John Rizzo 的话：今天的消息不会拖慢英伟达，黄仁勋会不间断地继续担任首席执行官。这句话不在两份新闻室文本里。Axios 页面路径日期是 2026-11-08，页面没有给出绝对钟点。"
+      ],
+      "conditions": [],
+      "background": [],
+      "sources": [
+        {
+          "label": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/statement-from-nvidia-board-of-directors",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面可见日期是 November 8, 2026，没有钟点。独立调查、独立董事委员会、外部独立律师、目前没有理由认为国家安全或英伟达机密已被泄露、黄仁勋将配合，以及董事会对黄仁勋和领导团队仍有信心，均取自该页正文。The Verge 在 2026-11-08T20:22:00Z 引用了同一段声明，说明声明在本期窗口内已经公开。"
+        },
+        {
+          "label": "NVIDIA Newsroom",
+          "url": "https://nvidianews.nvidia.com/news/a-message-to-our-company",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "页面可见日期是 November 8, 2026，没有钟点。副标题写黄仁勋当天早些时候把这封信发给员工。对妻子不忠、道歉、继续投入英伟达，以及支持并配合董事会就新闻报道中的国家安全关切所启动的调查，取自该页正文。信里没有另一方姓名。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1029562/nvidia-investigating-jensen-huang-relationship-chinese-spy",
+          "kind": "secondary",
+          "published_at": "2026-11-08T20:22:00Z",
+          "verified": true,
+          "note": "Alice Huang、Megaspeed 和中国国家安全部这些说法来自这篇报道，不是英伟达新闻室正文。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/08/nvidia-says-its-investigating-ceo-jensen-huangs-relationship-with-possible-chinese-spy/",
+          "kind": "secondary",
+          "published_at": "2026-11-08T13:00:00-08:00",
+          "verified": true,
+          "note": "页面署期是 Pacific Time 2026-11-08 13:00。报道同样把调查与 Alice Huang、Megaspeed 联系起来，并写黄仁勋的信没有点名。"
+        },
+        {
+          "label": "Axios",
+          "url": "https://www.axios.com/2026/11/08/nvidia-ceo-jensen-huang-affair-email-to-company",
+          "kind": "secondary",
+          "published_at": null,
+          "verified": true,
+          "note": "John Rizzo 说今天的消息不会拖慢英伟达，黄仁勋会不间断地继续担任首席执行官。这句话不在新闻室两份文本里。页面路径日期是 2026-11-08，没有绝对钟点。"
+        }
+      ],
+      "lede": "英伟达董事会11月8日宣布独立调查，由独立董事和外部律师负责。原因是有报道称黄仁勋成为外国情报活动的目标。董事会写，没有理由认为国家安全或英伟达机密已被泄露。黄仁勋在员工信里承认对妻子不忠，并会配合调查。John Rizzo 说黄仁勋会继续担任首席执行官。",
+      "caveat": "新闻室没写另一方是谁，也没写机密已经外泄。",
+      "length_exception": "董事会声明、员工信和留任回应来自三处，少写一处就会漏掉配合调查或继续担任首席执行官。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:d30c6873331735cc03872b353d21c3a93da496f8e9845fb2678c6d56243a808e"
+}
