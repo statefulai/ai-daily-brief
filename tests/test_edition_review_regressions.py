@@ -668,6 +668,119 @@ class ReviewRegressionTest(unittest.TestCase):
         converted = validate_edition(converted)
         self.assertEqual(assess_new_candidate(converted)["retained"], ["n5c"])
 
+    def test_translation_equality_negation_and_chinese_names(self):
+        cookie = "Cookie policy. We use cookies to improve this website."
+        excerpt = "The lab measured 83.0 tokens per second on its public benchmark."
+        rejected_names = [
+            "阿里发布通义千问新版，面向开发者开放下载。",
+            "百度千帆平台更新，面向开发者开放下载。",
+            "阿里通义万相升级，面向开发者开放下载。",
+            "零一万物发布新模型，面向开发者开放下载。",
+            "这次更新十分重要，面向开发者开放下载。",
+            "官方提醒千万不要泄露密钥，面向开发者开放下载。",
+        ]
+        for lede in rejected_names:
+            retained, _rejected = _assess(
+                _event("u", [_source(URL, support=_support(excerpt="Source page says the model is 面向开发者开放下载 now."))], lede=lede, placement="lead")
+            )
+            self.assertEqual(retained, ["u"], lede)
+        for lede in (
+            "Meta 发布 Llama 3.1 70B，面向开发者开放下载。",
+            "支持百万上下文，面向开发者开放下载。",
+            "公司估值达三千亿美元，面向开发者开放下载。",
+            "推理成本下降百分之二十，面向开发者开放下载。",
+        ):
+            retained, rejected = _assess(
+                _event("u", [_source(URL, support=_support(excerpt="Source page says the model is 面向开发者开放下载 now."))], lede=lede, placement="lead")
+            )
+            self.assertEqual(retained, [])
+            self.assertIn("numeric_claim_without_kind", rejected[0]["reasons"])
+        negated = [
+            "每秒 83.0 token，官方未预测。",
+            "每秒 83.0 token，厂商尚未预计。",
+            "每秒 83.0 token 从未被预测。",
+            "这并不属于每秒 83.0 token 的预测。",
+            "83.0 tokens per second was never a forecast.",
+            "83.0 tokens/s isn't a forecast.",
+            "每秒 83.0 token，别当成预测。",
+            "每秒 83.0 token：不是预测。",
+            "每秒 83.0 token（不是预测）。",
+        ]
+        for lede in negated:
+            retained, rejected = _assess(
+                _event("v", [_source(URL, support=_support(excerpt=excerpt))], lede=lede, claims=[{"kind": "predicted", "value": "83.0"}], placement="lead")
+            )
+            self.assertEqual(retained, [])
+            self.assertIn("prediction_not_visible", rejected[0]["reasons"], lede)
+        retained, rejected = _assess(
+            _event(
+                "v",
+                [_source(URL, support=_support(excerpt=excerpt))],
+                lede="公司不仅预计每秒 83.0 token。",
+                claims=[{"kind": "predicted", "value": "83.0"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(rejected, [])
+        self.assertEqual(retained, ["v"])
+
+        def bridged(event_id, source_excerpt, lede, span, translated, pairs, claims=None):
+            event = _event(
+                event_id,
+                [_source(URL, support=_support("original", "read", source_excerpt))],
+                lede=lede,
+                claims=claims,
+                placement="lead",
+            )
+            document = _edition([event])
+            record = document["events"][0]["editorial_verifications"][0]
+            record["source_span"] = span
+            record["translated_claim"] = translated
+            if pairs is not None:
+                record["normalized_numbers"] = pairs
+            document.pop("content_hash", None)
+            return validate_edition(document)
+
+        mismatch = bridged(
+            "t3",
+            "The company expects to reach 1 million users by Q2.",
+            "公司预计第二季度用户达到 300 万。",
+            "expects to reach 1 million users",
+            "预计第二季度用户达到 300 万",
+            [{"source": "1 million", "claim": "300 万"}],
+            [{"kind": "predicted", "value": "300 万"}],
+        )
+        self.assertEqual(assess_new_candidate(mismatch)["retained"], [])
+        cookie_doc = bridged(
+            "t2",
+            cookie,
+            "公司估值达 3000 亿美元，较上轮翻倍。",
+            "We use cookies to improve",
+            "公司估值达 3000 亿美元",
+            [{"source": "anything", "claim": "3000 亿美元"}],
+            [{"kind": "attributed", "value": "3000 亿美元"}],
+        )
+        self.assertEqual(assess_new_candidate(cookie_doc)["retained"], [])
+        matched = bridged(
+            "t3b",
+            "The company expects to reach 1 million users by Q2.",
+            "公司预计第二季度用户达到 100 万。",
+            "expects to reach 1 million users",
+            "预计第二季度用户达到 100 万",
+            [{"source": "1 million", "claim": "100 万"}],
+            [{"kind": "predicted", "value": "100 万"}],
+        )
+        self.assertEqual(assess_new_candidate(matched)["retained"], ["t3b"])
+        plain = bridged(
+            "t6",
+            "Today we're bringing memory to Claude for Team and Enterprise users.",
+            "Anthropic 为 Claude 团队版和企业版用户上线记忆功能，可在设置中开启。",
+            "bringing memory to Claude for Team and Enterprise users",
+            "为 Claude 团队版和企业版用户上线记忆功能",
+            None,
+        )
+        self.assertEqual(assess_new_candidate(plain)["retained"], ["t6"])
+
 
 if __name__ == "__main__":
     unittest.main()

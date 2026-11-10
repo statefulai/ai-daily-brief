@@ -37,9 +37,40 @@ RELATIONSHIPS = frozenset({"original", "retelling", "supporting"})
 CLAIM_KINDS = frozenset({"measured", "predicted", "attributed"})
 PREDICTION_MARKERS = ("预测", "预计", "predicted", "forecast", "projected")
 _PREDICTION_WORD = re.compile(r"预测|预计|predicted|forecast|projected", re.IGNORECASE)
-_FALSE_NEGATION = ("非常", "无论", "不久", "不断", "无需", "非但", "不得不")
+_FALSE_NEGATION = (
+    "不得不",
+    "不仅",
+    "不但",
+    "不光",
+    "未来",
+    "非常",
+    "无论",
+    "不久",
+    "不断",
+    "无需",
+    "非但",
+)
 _CLAUSE_NEGATION = re.compile(
-    r"并不属于|不属于|并非|不是|并不|没有|没|不|非|无|\bnot\b|\bno\b",
+    r"尚未|从未|并不属于|不属于|并非|不是|并不|没有|isn't|is not|not yet|"
+    r"never|without|别|勿|未|没|不|非|无|n't|\bnot\b|\bno\b",
+    re.IGNORECASE,
+)
+_CLAUSE_BOUNDARY = "，。；、,!！？?\n"
+_CN_EXCLUDE = (
+    "零一万物",
+    "千万不要",
+    "百分比",
+    "通义千问",
+    "千问",
+    "千帆",
+    "万相",
+    "万物",
+    "十分",
+    "二分",
+    "一键",
+)
+_BOILERPLATE = re.compile(
+    r"cookie|cookies|all rights reserved|privacy policy|版权所有",
     re.IGNORECASE,
 )
 _FW_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
@@ -312,10 +343,19 @@ def _field_shows_prediction(text: str, value: str) -> bool:
     return False
 
 
+def _clause_boundary(text: str, index: int) -> bool:
+    char = text[index]
+    if char in ".．" and 0 < index < len(text) - 1:
+        if text[index - 1].isdigit() and text[index + 1].isdigit():
+            return False
+        return True
+    return char in _CLAUSE_BOUNDARY
+
+
 def _clause_negates(text: str, start: int) -> bool:
     left = 0
     for index, char in enumerate(text):
-        if char in "，。；、,.!！？?\n" and index < start:
+        if index < start and _clause_boundary(text, index):
             left = index + 1
     before = text[left:start]
     for word in _FALSE_NEGATION:
@@ -351,18 +391,39 @@ def _unit_numbers(text: str) -> set[str]:
         token = match.group()
         if token == "百" and normalized[match.end():match.end() + 2] == "分之":
             continue
+        if _inside_exclusion(normalized, match.start(), match.end()):
+            continue
         prefix = normalized[max(0, match.start() - 3):match.start()] == "百分之"
-        followed = _UNIT_AFTER.match(normalized[match.end():]) is not None
-        magnitude = bool(re.search(r"[十千万亿]", token)) or (token != "百" and "百" in token and followed)
-        if prefix:
-            found.add("百分之" + token)
-            continue
-        if not magnitude and not followed:
-            continue
-        if token == "百" and not followed:
-            continue
-        found.add(token)
+        if prefix or _is_cn_quantity(token, normalized[match.end():]):
+            found.add("百分之" + token if prefix else token)
     return found
+
+
+def _inside_exclusion(text: str, start: int, end: int) -> bool:
+    for phrase in _CN_EXCLUDE:
+        found = text.find(phrase)
+        while found >= 0:
+            if found <= start and end <= found + len(phrase):
+                return True
+            found = text.find(phrase, found + 1)
+    return False
+
+
+def _is_cn_quantity(token: str, following: str) -> bool:
+    """A Chinese numeral is a quantity only when digits and a magnitude combine, or a unit follows."""
+    digits = "零〇一二三四五六七八九两"
+    magnitudes = "十百千万亿"
+    has_digit = any(char in digits for char in token)
+    has_magnitude = any(char in magnitudes for char in token)
+    if has_digit and has_magnitude:
+        return True
+    if not has_digit and has_magnitude and len(token) >= 2:
+        return True
+    return _cn_unit_after(following) is not None and (has_digit or has_magnitude)
+
+
+def _cn_unit_after(following: str):
+    return re.match(r"\s*(?:美元|美金|元|秒钟|秒|分钟|小时|倍|个|位|次|款|家|名|人|年)", following)
 
 
 def _version_or_date(text: str, start: int, end: int) -> bool:
@@ -451,9 +512,10 @@ def _excerpt_copies_text(event: Mapping[str, Any], excerpt: str) -> bool:
 def _translation_bridge(event: Mapping[str, Any], excerpt: str) -> bool:
     """A named translation can stand in for token overlap. It does not prove the page.
 
-    The verification must carry the verbatim source span and the translated claim.
-    When either side has a unit number the other does not share, each side's number
-    must be listed in normalized_numbers. A false pair still passes this shape.
+    The verification must carry a verbatim source span and the translated claim.
+    A cookie notice or rights line cannot use this path. Paired quantities must be
+    equal after scaling, and each side must appear in its declared span. The pair
+    is still an attestation that the sentences correspond.
     """
     records = event.get("editorial_verifications") or []
     if not isinstance(records, list):
@@ -466,30 +528,156 @@ def _translation_bridge(event: Mapping[str, Any], excerpt: str) -> bool:
         translated = record.get("translated_claim")
         if not isinstance(span, str) or len(span) < MIN_EXCERPT_CHARS or span not in excerpt:
             continue
+        if _BOILERPLATE.search(excerpt) or _BOILERPLATE.search(span):
+            continue
         if not isinstance(translated, str) or translated not in text or not _substantive_claim(translated, text):
             continue
-        if not _numbers_are_normalized(excerpt, text, record.get("normalized_numbers")):
+        pairs = record.get("normalized_numbers")
+        if not _numbers_are_normalized(span, translated, text, pairs):
             continue
         return True
     return False
 
 
-def _numbers_are_normalized(excerpt: str, text: str, pairs: Any) -> bool:
-    excerpt_numbers = _unit_numbers(excerpt)
-    text_numbers = _unit_numbers(text)
-    if not excerpt_numbers and not text_numbers:
-        return True
-    if not isinstance(pairs, list):
+def _numbers_are_normalized(span: str, translated: str, text: str, pairs: Any) -> bool:
+    if _BOILERPLATE.search(span) or _BOILERPLATE.search(translated):
         return False
-    sources = {item.get("source") for item in pairs if isinstance(item, Mapping)}
-    claims = {item.get("claim") for item in pairs if isinstance(item, Mapping)}
-    for number in excerpt_numbers:
-        if not any(isinstance(source, str) and number in _norm_digits(source) and source in excerpt for source in sources):
+    pair_list = pairs if isinstance(pairs, list) else []
+    parsed: list[tuple[float, str, float]] = []
+    for item in pair_list:
+        if not isinstance(item, Mapping):
             return False
-    for number in text_numbers:
-        if not any(isinstance(claim, str) and number in claim and claim in text for claim in claims):
+        source = item.get("source")
+        claim = item.get("claim")
+        if not isinstance(source, str) or not isinstance(claim, str):
+            return False
+        if source not in span or claim not in translated:
+            return False
+        source_qty = _parse_quantity(source)
+        claim_qty = _parse_quantity(claim)
+        if source_qty is None or claim_qty is None:
+            return False
+        if source_qty[1] != claim_qty[1] or not _close(source_qty[0], claim_qty[0]):
+            return False
+        parsed.append((source_qty[0], source_qty[1], claim_qty[0]))
+    for quantity in _quantities_in(text):
+        if not any(_close(quantity[0], claim) and quantity[1] == kind for _, kind, claim in parsed):
+            return False
+    for quantity in _quantities_in(span):
+        if not any(_close(quantity[0], source) and quantity[1] == kind for source, kind, _ in parsed):
             return False
     return True
+
+
+_QUANTITY_SCALE = (
+    ("千亿", 10**11),
+    ("万亿", 10**12),
+    ("百万", 10**6),
+    ("billion", 10**9),
+    ("million", 10**6),
+    ("thousand", 10**3),
+    ("亿", 10**8),
+    ("万", 10**4),
+    ("千", 10**3),
+)
+
+
+def _close(left: float, right: float) -> bool:
+    return abs(left - right) <= max(0.01, abs(left) * 1e-6)
+
+
+def _parse_quantity(text: str) -> tuple[float, str] | None:
+    raw = _norm_digits(text)
+    lowered = raw.lower()
+    percent = bool(re.search(r"%|％|percent|个百分点|百分之", lowered))
+    body = raw.replace("百分之", "")
+    match = re.search(r"\d+(?:\.\d+)?", body)
+    if match:
+        value = float(match.group())
+        rest = body[match.end():]
+        if not percent:
+            value *= _scale_after(rest)
+        return value, "percent" if percent else "absolute"
+    cn = re.search(r"[零〇一二三四五六七八九十百千万亿两]+", body)
+    if cn is None:
+        return None
+    parsed = _cn_to_float(cn.group())
+    if parsed is None:
+        return None
+    return parsed, "percent" if percent else "absolute"
+
+
+def _scale_after(rest: str) -> float:
+    lowered = rest.lower()
+    for token, factor in _QUANTITY_SCALE:
+        if token.lower() in lowered:
+            return float(factor)
+    if re.search(r"(?<![a-z])b(?![a-z])", lowered):
+        return 1e9
+    if re.search(r"(?<![a-z])m(?![a-z])", lowered):
+        return 1e6
+    if re.search(r"(?<![a-z])k(?![a-z])", lowered):
+        return 1e3
+    return 1.0
+
+
+def _cn_to_float(token: str) -> float | None:
+    digits = {"零": 0, "〇": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+
+    def section(part: str) -> float | None:
+        if not part:
+            return 0.0
+        total = 0.0
+        number = 0.0
+        seen = False
+        units = {"千": 1000.0, "百": 100.0, "十": 10.0}
+        for char in part:
+            if char in digits:
+                number = digits[char]
+                seen = True
+                continue
+            if char in units:
+                total += (number or 1.0) * units[char]
+                number = 0.0
+                seen = True
+                continue
+            return None
+        return total + number if seen else None
+
+    if "亿" in token:
+        left, right = token.split("亿", 1)
+        left_value = _cn_to_float(left) if left else 1.0
+        right_value = _cn_to_float(right) if right else 0.0
+        if left_value is None or right_value is None:
+            return None
+        return left_value * 1e8 + right_value
+    if "万" in token:
+        left, right = token.split("万", 1)
+        left_value = section(left) if left else 1.0
+        right_value = section(right) if right else 0.0
+        if left_value is None or right_value is None:
+            return None
+        return (left_value or 1.0) * 1e4 + right_value
+    return section(token)
+
+
+def _quantities_in(text: str) -> list[tuple[float, str]]:
+    found: list[tuple[float, str]] = []
+    for number in _unit_numbers(text):
+        window = _context_around(text, number)
+        parsed = _parse_quantity(window) if window else _parse_quantity(number)
+        if parsed is not None:
+            found.append(parsed)
+    return found
+
+
+def _context_around(text: str, number: str) -> str:
+    normalized = _norm_digits(text)
+    target = _norm_digits(number)
+    index = normalized.find(target)
+    if index < 0:
+        return ""
+    return normalized[index:index + len(target) + 24]
 
 
 def _excerpt_shares_claim(event: Mapping[str, Any], excerpt: str) -> bool:

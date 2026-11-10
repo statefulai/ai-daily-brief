@@ -151,7 +151,7 @@ class ProbeRegressionTest(unittest.TestCase):
             numbers = sorted(_unit_numbers(text), key=len, reverse=True)
             span = next(iter(re.findall(r"[\u4e00-\u9fff]{6,}", event.get("lede") or "")), "来源页核对记录")
             if numbers:
-                excerpt = "来源页记录的数字是 " + "、".join(numbers) + " 。补充核对。"
+                excerpt = f"核对记录写到{span[:6]}，数字是 " + "、".join(numbers) + "。"
                 event["claims"] = [{"kind": "measured", "value": number} for number in numbers]
             else:
                 excerpt = f"核对记录写到{span[:6]}，这句话不是正文整段复制。"
