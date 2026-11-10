@@ -232,7 +232,7 @@ def validate_event_source(record: Mapping[str, Any]) -> dict[str, Any]:
     published_at = _require_optional_text(payload.get("published_at"), "event.source.published_at")
     if published_at is not None:
         _require_datetime(published_at, "event.source.published_at")
-    return {
+    source = {
         "label": _require_text(payload.get("label"), "event.source.label"),
         "url": _require_http_url(payload.get("url"), "event.source.url"),
         "kind": kind,
@@ -240,6 +240,11 @@ def validate_event_source(record: Mapping[str, Any]) -> dict[str, Any]:
         "verified": verified,
         "note": _require_optional_text(payload.get("note"), "event.source.note"),
     }
+    if payload.get("support") is not None:
+        from candidate_policy import parse_support
+
+        source["support"] = parse_support(payload["support"])
+    return source
 
 
 def validate_event(record: Mapping[str, Any]) -> dict[str, Any]:
@@ -289,6 +294,12 @@ def validate_event(record: Mapping[str, Any]) -> dict[str, Any]:
         event["caveat"] = caveat
     if length_exception is not None:
         event["length_exception"] = length_exception
+    if payload.get("claims") is not None:
+        from candidate_policy import parse_claim
+
+        event["claims"] = [
+            parse_claim(item) for item in _require_list(payload.get("claims"), "event.claims")
+        ]
     return event
 
 
