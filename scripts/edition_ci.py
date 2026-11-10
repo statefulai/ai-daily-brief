@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from candidate_policy import review_changed_edition  # noqa: E402
 from edition import (  # noqa: E402
     EDITION_ID_RE,
     EditionError,
@@ -137,6 +138,33 @@ def validate_changed_paths(
         raise EditionError("one pull request may change only one edition date")
     if names != PRODUCTION_FILES:
         raise EditionError("an edition change must include edition.json and index.html")
+
+
+def enforce_changed_candidates(base: str, head: str, paths: list[str]) -> None:
+    """Changed edition files use the new-candidate gate. Unchanged bytes do not."""
+    for path in paths:
+        if not path.endswith("/edition.json"):
+            continue
+        current = _git_file(head, path)
+        if current is None:
+            continue
+        baseline = _git_file(base, path)
+        try:
+            review_changed_edition(baseline, current)
+        except json.JSONDecodeError as exc:
+            raise EditionError(f"{path}: edition.json is not valid JSON") from exc
+
+
+def _git_file(rev: str, path: str) -> str | None:
+    result = subprocess.run(
+        ["git", "show", f"{rev}:{path}"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout
 
 
 def changed_paths(base: str, head: str) -> tuple[list[str], list[str]]:
@@ -416,6 +444,7 @@ def main() -> None:
     elif args.command == "scope":
         paths, deleted = changed_paths(args.base, args.head)
         validate_changed_paths(paths, deleted_paths=deleted)
+        enforce_changed_candidates(args.base, args.head, paths)
         print(f"validated change scope ({len(paths)} path(s))")
     else:
         editions = build_site(args.editions, args.output)

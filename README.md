@@ -34,8 +34,8 @@
 - 汇集候选：公开一手来源，并可并入已核验、标明可公开的供稿。窗口为北京时间 `[前一日 08:00, 当日 08:00)`。
 - Jev 辅助判断有没有新变化、值不值得读；分数不能单独入选、淘汰或裁定空刊。调用与关闭见 [`generation/CA-JEV-ASSIST.md`](generation/CA-JEV-ASSIST.md)。
 - Cloud Agent 回源核验并最终选稿，写成 `edition.json`，再用固定模板生成 HTML。公开期次不手写 HTML。
-- Pull request 上 CI 校验 schema、来源、内容 hash 和 HTML；合入 `main` 后发布到 [https://brief.sanze.dev/](https://brief.sanze.dev/)。
-- 投递同一期，契约在 [`delivery/`](delivery/)：邮件是完整 `email.html`，群是完整纯文本。
+- Pull request 上 CI 校验 schema、来源、内容 hash 和 HTML；合入 `main` 后发布到 [https://brief.sanze.dev/](https://brief.sanze.dev/)。新改或新写的 `edition.json` 还要有主张支持记录。抓到页面、读到带时区的时间，只说明这次访问，不说明主张成立。未改动的已发布期次仍走原来的校验。缺记录的旧稿不能原样当成新候选。
+- 投递同一期，契约在 [`delivery/`](delivery/)：邮件是完整 `email.html`，群是完整纯文本。任一正式渠道一旦 `sent`，该期冻结在当时的 `content_hash`。另一渠道只能补发这一版。新 hash 不会自动再发。`unknown` 先核对回执，不自动重试。
 - `published_candidate` 只表示期次已写成可发布稿，才会写入 `editions/YYYY-MM-DD/`；不等于网页已上线，也不等于邮件或群已发出。`no_new_value` 与 `failed` 都不创建公开期次，也不能互相冒充。
 
 ### 本地开发
