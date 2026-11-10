@@ -1,0 +1,265 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-10",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-10T08:00:00+08:00",
+  "generated_at": "2026-11-10T08:07:52.085251+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 17,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "claude-fable-mythos-5-2",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Anthropic 放出 Claude Fable 5.2，输入价 8 美元",
+      "kicker": "模型 · Anthropic",
+      "facts": [
+        "Anthropic 页面可见日期是 November 9, 2026，没有钟点。Claude Fable 5.2 和 Claude Mythos 5.2 是同一个底层模型。Fable 带网络安全和生物护栏，对用户开放。Mythos 留给申请了生命科学或网络安全验证计划的机构。",
+        "Fable 5.2 可以在 Claude Platform 用模型 ID claude-fable-5-2 调用。页面写它已在 Amazon Web Services、Google Cloud 和 Microsoft Azure 提供。",
+        "标准价格是每百万 token 输入 8 美元、输出 40 美元。页面写输出速度比 Fable 5.1 和 Mythos 5.1 最多快 30%。",
+        "可选快速模式最多再快 2.5 倍，价格是每百万 token 输入 16 美元、输出 80 美元。快速模式在 Claude Code、Claude Platform、Google Cloud 上的 Claude Models 和 Microsoft Foundry。Mythos 的快速模式只给验证计划中的机构。",
+        "FrontierCode 2.0 上，Fable 5.2 的 Xhigh 是 49.1%，Fable 5.1 的 Xhigh 是 32.4%，Opus 5.5 是 45.5%。页面写未另行注明时这些分数开着护栏，取各模型当时最高档。",
+        "页面写预发布测试里，该模型在 30 小时内把费马大定理的证明形式化。这是公司自己的测试记录。",
+        "Enterprise Frontier Safeguards 处于 private beta，页面点名 Bridgewater、Salesforce 和 Stripe。有资格的客户在接上监测之前，仍可用零数据保留使用 Fable 5.2 和 Mythos 5.2。其他客户的安全监测保留 30 天。"
+      ],
+      "conditions": [
+        "Mythos 5.2 需经 Cyber Verification Program 或 Life Sciences Verification Program 申请。",
+        "Mythos 的快速模式只提供给验证计划中的机构。"
+      ],
+      "background": [
+        "10 月 26 日的正刊在皮肤病灶对照里用过 Claude Fable 5.1。这次发布的是 5.2，模型 ID 和价格都是新的。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Anthropic）：可见日期是 November 9, 2026，页面没有钟点。同一模型、claude-fable-5-2、8 美元和 40 美元、最多快 30%、快速模式 16 美元和 80 美元、FrontierCode 2.0 的 49.1%、32.4% 和 45.5%，以及 AWS、Google Cloud、Azure，取自该页。费马大定理的 30 小时是页面里的预发布测试记录，没有复现。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1030005/anthropic-claude-fable-mythos-5-2",
+          "kind": "secondary",
+          "published_at": "2026-11-09T19:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：datePublished 是 2026-11-09T19:00:00+00:00。这篇确认发布发生在窗口内。价格和模型 ID 以 Anthropic 页面为准。"
+        }
+      ],
+      "lede": "Anthropic 放出 Fable 5.2 和 Mythos 5.2，二者是同一模型。Fable 的模型 ID 是 claude-fable-5-2，输入每百万 token 8 美元，输出 40 美元，已上亚马逊、谷歌云和微软 Azure。Mythos 需申请。",
+      "caveat": "8 美元和 40 美元不含快速模式。快速模式输入 16 美元、输出 80 美元。"
+    },
+    {
+      "id": "muse-ember",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Meta 放出 Muse Ember，输入价每百万 token 0.10 美元",
+      "kicker": "模型 · Meta",
+      "facts": [
+        "Meta 研究博客的 datePublished 是 2026-11-09T00:00:00.000Z，可见日期是 November 9, 2026。模型名 Muse Ember，API ID 是 muse-ember-1.0。",
+        "页面写它已在 Muse Code 和 Meta Model API 提供。价格是每百万 token 输入 0.10 美元、缓存输入 0.004 美元、输出 0.50 美元。上下文 100 万 token，单次输出最多 512K token。支持 Responses API。",
+        "提示超过 20 万 token 时，价格改为每百万 token 输入 0.30 美元、缓存输入 0.012 美元、输出 1.50 美元。",
+        "页面写它是第一个用 Muse Wonder Full 训练出的模型，用来做重复的工具调用、代码子任务、路由、抽取和长文档解析。公告没有给出可下载权重。",
+        "页面写 Artificial Analysis 上，max 档每任务约 0.14 美元。这个数字是公司按标价估算的，不是独立复测。"
+      ],
+      "conditions": [
+        "长提示的价格高于 20 万 token 以内的标价。",
+        "公告只写了 Muse Code 和 Meta Model API，没有写可下载权重。"
+      ],
+      "background": [
+        "11 月 6 日正刊写过 Muse 在美国应用里开放实时语音，11 月 7 日写过用一句话生成 spaces。这次是新的 API 模型，不是那两个应用功能。"
+      ],
+      "sources": [
+        {
+          "label": "Meta",
+          "url": "https://research.meta.ai/blog/muse-ember",
+          "kind": "primary",
+          "published_at": "2026-11-09T00:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（Meta）：datePublished 是 2026-11-09T00:00:00.000Z。muse-ember-1.0、0.10 美元、0.004 美元、0.50 美元、100 万上下文、512K 输出，以及超过 20 万 token 后的 0.30 美元、0.012 美元和 1.50 美元，取自这篇。每任务约 0.14 美元是页面上的标价估算。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/09/meta-releases-muse-ember-a-new-lightweight-model-for-agent-execution/",
+          "kind": "secondary",
+          "published_at": "2026-11-09T18:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：datePublished 是 2026-11-09T18:00:00+00:00。文章转述了用途和每百万 token 输入 0.10 美元。模型 ID 和完整价目以 Meta 博客为准。"
+        }
+      ],
+      "lede": "Meta 发布 Muse Ember，ID 为 muse-ember-1.0，已在 Muse Code 和 Meta Model API 提供。输入每百万 token 0.10 美元，输出 0.50 美元。上下文 100 万 token，用来跑重复的工具调用和代码子任务。",
+      "caveat": "超过 20 万 token 的提示，输入改为 0.30 美元、输出 1.50 美元。"
+    },
+    {
+      "id": "spacefast-public",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Spacefast 对所有人开放，个人方案免费",
+      "kicker": "工具 · Automattic",
+      "facts": [
+        "Automattic 公告的可见日期是 November 9, 2026，没有钟点。Spacefast 是 Automattic 的新公司，公告写当天对所有人开放。",
+        "它提供托管、自有域名和 SQL 数据库。终端命令是 npx spacefast publish。个人方案免费。内置应用登录写的是 coming soon。",
+        "公告写 9 月做过小范围上线，之后才独立成公司，创始人是 Batuhan İçöz。",
+        "公告写底层是 WordPress.com 和 Tumblr 的基础设施，每月页面浏览超过 150 亿次。这个数字不是 Spacefast 自己的流量。"
+      ],
+      "conditions": [
+        "内置应用登录尚未上线。"
+      ],
+      "background": [
+        "9 月的小范围上线不是这次的新事实。新事实是 11 月 9 日对所有人开放，并有免费个人方案。"
+      ],
+      "sources": [
+        {
+          "label": "Automattic",
+          "url": "https://automattic.com/2026/11/09/meet-spacefast/",
+          "kind": "primary",
+          "published_at": null,
+          "verified": true,
+          "note": "核验说明（Automattic）：可见日期是 November 9, 2026，页面没有钟点。公开开放、npx spacefast publish、免费个人方案、登录尚未上线、9 月小范围上线，以及每月超过 150 亿次页面浏览属于 WordPress.com 和 Tumblr，取自该文。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/09/automattic-debuts-a-platform-to-deploy-vibe-coding-apps-amid-a-changing-internet/",
+          "kind": "secondary",
+          "published_at": "2026-11-09T14:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：datePublished 是 2026-11-09T14:00:00+00:00。文章确认产品名为 Spacefast，并写可以接上现有助手。价目和登录进度以 Automattic 公告为准。"
+        }
+      ],
+      "lede": "Automattic 的新公司 Spacefast 在 11 月 9 日对所有人开放。它给现有助手接上托管、域名和 SQL 数据库，命令是 npx spacefast publish。个人方案免费，应用登录还没上线。",
+      "caveat": "9 月已经小范围上线过。这次是公开开放。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:1f718494fb6637ec0bcc17e420cda836872838fd0659adb4a4a57a0b50bd762d"
+}
