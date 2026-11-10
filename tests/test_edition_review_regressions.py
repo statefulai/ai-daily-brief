@@ -23,6 +23,12 @@ ROOT = Path(__file__).resolve().parents[1]
 URL = "https://lab.example/r"
 
 
+def _scope_env():
+    env = os.environ.copy()
+    env.pop("GITHUB_EVENT_PATH", None)
+    return env
+
+
 def _git(repo, *args):
     env = os.environ.copy()
     env["GIT_AUTHOR_NAME"] = "Edition Test"
@@ -279,6 +285,7 @@ class ReviewRegressionTest(unittest.TestCase):
                 cwd=ROOT,
                 capture_output=True,
                 text=True,
+                env=_scope_env(),
             )
             self.assertEqual(completed.returncode, 0, completed.stderr)
             self.assertIn("validated change scope", completed.stdout)
@@ -312,6 +319,7 @@ class ReviewRegressionTest(unittest.TestCase):
                 cwd=ROOT,
                 capture_output=True,
                 text=True,
+                env=_scope_env(),
             )
             self.assertNotEqual(rejected.returncode, 0)
             self.assertIn("revisions.json", rejected.stderr + rejected.stdout)
