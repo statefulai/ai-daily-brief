@@ -1,8 +1,19 @@
 """Apply one approved editorial revision to a single edition workspace.
 
-The helper removes rejected events and applies approved wording. It does not
-collect stories, bump attempt, or mint an execution id. Platform continuation
-stays blocked until a reliable execution id exists outside this repository.
+The helper removes events the policy rejected or the editor rejected, and it
+applies wording only for events on the editorial rejection list. It does not
+change ``source.kind``, collect stories, bump attempt, or mint an execution id.
+Demoting a primary to secondary is not implemented.
+
+A 40-digit head is a shape check. It does not prove the object exists in git
+or that a platform returned it. ``execution_id`` stays empty.
+
+The revision number is reserved only after this process holds ``revision.lock``.
+The lock holder writes the attempted row, then ``applied`` or ``blocked``.
+A caller that does not get the lock writes nothing. A closed number is not
+reused. A dispatcher outside this repository may reserve the same number in
+its own run record before calling ``apply``. This module does not read that
+record.
 """
 
 from __future__ import annotations
@@ -10,6 +21,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 import fcntl
 import json
+import re
 from pathlib import Path
 from typing import Any, Iterator, Mapping
 
@@ -17,13 +29,13 @@ from candidate_policy import (
     MAX_REVISION,
     assess_new_candidate,
     evidence_failure,
-    evidence_outcome,
     require_new_candidate,
 )
 from edition import EditionError, validate_edition
 from outputs import render_web_edition
 
 WORDING_FIELDS = {"title", "kicker", "lede", "caveat", "fact"}
+_GIT_HEAD = re.compile(r"^[0-9a-f]{40}$")
 
 
 class RevisionWorkspace:
@@ -63,69 +75,95 @@ class RevisionWorkspace:
             key = _completion_key(parsed)
             existing = state["completions"].get(key)
             if existing:
-                if _same_contract(existing["contract"], parsed):
+                if (
+                    existing.get("status") == "applied"
+                    and existing.get("result")
+                    and _same_contract(existing["contract"], parsed)
+                ):
                     return existing["result"]
-                raise EditionError("duplicate revision completion does not match")
-            if current_head != parsed["base_head"]:
-                raise EditionError("stale revision head")
-            document = json.loads(self.edition_path.read_text(encoding="utf-8"))
-            edition = validate_edition(document)
-            _check_identity(edition, parsed)
-            report = assess_new_candidate(edition)
-            rejected_ids = {item["id"] for item in report["rejected"]}
-            for event_id in parsed["approved_removals"]:
-                if event_id not in rejected_ids:
-                    raise EditionError(
-                        f"refusing to remove event that was not rejected: {event_id}"
-                    )
-            revised_events = []
-            original_ids = [event["id"] for event in edition["events"]]
-            for event in edition["events"]:
-                updated = _apply_wording(event, parsed["approved_wording"])
-                if updated["id"] in parsed["approved_removals"]:
-                    continue
-                revised_events.append(updated)
-            if [event["id"] for event in revised_events] != [
-                event_id
-                for event_id in original_ids
-                if event_id not in parsed["approved_removals"]
-            ]:
-                raise EditionError("revision changed the event order")
-            outcome = evidence_outcome(
-                edition["sources"],
-                retained=len(revised_events),
-                rejected=len(parsed["approved_removals"]),
-            )
-            block = execution_block(parsed.get("execution_evidence"))
-            if outcome == "failed":
-                failed = dict(edition)
-                failed.pop("content_hash", None)
-                failed["events"] = []
-                failed["status"] = "failed"
-                failed["failure"] = evidence_failure(
-                    [item for item in report["rejected"] if item["id"] in parsed["approved_removals"]]
-                    or report["rejected"]
-                )
-                failed_edition = validate_edition(failed)
-                self._write_edition(failed_edition)
-                if self.html_path.exists():
-                    self.html_path.unlink()
-                result = _result(failed_edition, block, html_written=False)
-            else:
-                published = dict(edition)
-                published.pop("content_hash", None)
-                published["events"] = revised_events
-                published["status"] = "published_candidate"
-                published["failure"] = None
-                published_edition = validate_edition(published)
-                require_new_candidate(published_edition)
-                html = render_web_edition(published_edition)
-                self._write_edition(published_edition)
-                self.html_path.write_text(html, encoding="utf-8")
-                result = _result(published_edition, block, html_written=True)
-            state["completions"][key] = {"contract": parsed, "result": result}
+                raise EditionError("revision number is already reserved")
+            state["completions"][key] = {
+                "contract": parsed,
+                "status": "attempted",
+                "reason": None,
+                "result": None,
+            }
+            self._write_state(state)
+            try:
+                result = self._perform(parsed, current_head)
+            except EditionError as exc:
+                state = self._read_state()
+                row = state["completions"][key]
+                row["status"] = "blocked"
+                row["reason"] = str(exc)
+                row["result"] = None
+                self._write_state(state)
+                raise
+            state = self._read_state()
+            state["completions"][key]["status"] = "applied"
+            state["completions"][key]["reason"] = None
+            state["completions"][key]["result"] = result
             self._write_state(state)
             return result
+
+    def _perform(self, parsed: Mapping[str, Any], current_head: str) -> dict[str, Any]:
+        if not 1 <= parsed["revision"] <= MAX_REVISION:
+            raise EditionError(f"revision is outside the bound of {MAX_REVISION}")
+        base_head = parse_git_head(parsed["base_head"], "revision.base_head")
+        current = parse_git_head(current_head, "revision.current_head")
+        if current != base_head:
+            raise EditionError("stale revision head")
+        editorial = _bind_editorial(parsed["editorial_rejections"], parsed, base_head)
+        document = json.loads(self.edition_path.read_text(encoding="utf-8"))
+        edition = validate_edition(document)
+        _check_identity(edition, parsed)
+        report = assess_new_candidate(edition)
+        policy_ids = {item["id"] for item in report["rejected"]}
+        editor_ids = {item["id"] for item in editorial}
+        allowed_removals = policy_ids | editor_ids
+        for event_id in parsed["approved_removals"]:
+            if event_id not in allowed_removals:
+                raise EditionError(
+                    f"refusing to remove event that was not rejected: {event_id}"
+                )
+        for change in parsed["approved_wording"]:
+            if change["event_id"] not in editor_ids:
+                raise EditionError("wording requires an editorial rejection for that event")
+        revised_events = []
+        original_ids = [event["id"] for event in edition["events"]]
+        removal_ids = set(parsed["approved_removals"])
+        for event in edition["events"]:
+            updated = _apply_wording(event, parsed["approved_wording"])
+            if updated["id"] in removal_ids:
+                continue
+            revised_events.append(updated)
+        if [event["id"] for event in revised_events] != [
+            event_id for event_id in original_ids if event_id not in removal_ids
+        ]:
+            raise EditionError("revision changed the event order")
+        block = execution_block(parsed.get("execution_evidence"))
+        if not revised_events:
+            failed = dict(edition)
+            failed.pop("content_hash", None)
+            failed["events"] = []
+            failed["status"] = "failed"
+            failed["failure"] = _empty_failure(report, parsed["approved_removals"], editorial)
+            failed_edition = validate_edition(failed)
+            self._write_edition(failed_edition)
+            if self.html_path.exists():
+                self.html_path.unlink()
+            return _result(failed_edition, block, html_written=False)
+        published = dict(edition)
+        published.pop("content_hash", None)
+        published["events"] = revised_events
+        published["status"] = "published_candidate"
+        published["failure"] = None
+        published_edition = validate_edition(published)
+        require_new_candidate(published_edition)
+        html = render_web_edition(published_edition)
+        self._write_edition(published_edition)
+        self.html_path.write_text(html, encoding="utf-8")
+        return _result(published_edition, block, html_written=True)
 
     def bind_reviewed_head(
         self,
@@ -136,21 +174,22 @@ class RevisionWorkspace:
         reviewed_head: str,
         content_hash: str,
     ) -> dict[str, Any]:
+        reviewed = parse_git_head(reviewed_head, "revision.reviewed_head")
         with self._lock():
             state = self._read_state()
             key = f"{edition_id}|{attempt}|{revision}"
             existing = state["completions"].get(key)
-            if not existing:
+            if not existing or existing.get("status") != "applied" or not existing.get("result"):
                 raise EditionError("revision completion is missing")
             result = existing["result"]
             if result["content_hash"] != content_hash:
                 raise EditionError("final review hash does not match the revision")
             bound = result.get("reviewed_head")
             if bound is None:
-                result["reviewed_head"] = reviewed_head
+                result["reviewed_head"] = reviewed
                 self._write_state(state)
                 return result
-            if bound != reviewed_head:
+            if bound != reviewed:
                 raise EditionError("reviewed head does not match the bound final head")
             return result
 
@@ -179,6 +218,14 @@ class RevisionWorkspace:
         temporary.replace(self.edition_path)
 
 
+def parse_git_head(value: Any, label: str) -> str:
+    """Accept a 40-digit hex head. This does not look the object up."""
+    text = _text(value, label).lower()
+    if not _GIT_HEAD.fullmatch(text):
+        raise EditionError(f"{label} must be a 40-digit hexadecimal git head")
+    return text
+
+
 def execution_block(evidence: str | None) -> dict[str, Any]:
     """No in-repo value is a platform execution id. bc- ids are not stored."""
     if evidence is None or not str(evidence).strip():
@@ -202,14 +249,17 @@ def _parse_contract(contract: Mapping[str, Any]) -> dict[str, Any]:
     revision = contract.get("revision")
     if type(attempt) is not int or attempt < 1:
         raise EditionError("revision.attempt must be an integer >= 1")
-    if type(revision) is not int or not 1 <= revision <= MAX_REVISION:
-        raise EditionError(f"revision is outside the bound of {MAX_REVISION}")
+    if type(revision) is not int or revision < 1:
+        raise EditionError("revision.revision must be an integer >= 1")
     removals = contract.get("approved_removals", [])
     wording = contract.get("approved_wording", [])
+    editorial = contract.get("editorial_rejections", [])
     if not isinstance(removals, list) or not all(isinstance(item, str) and item.strip() for item in removals):
         raise EditionError("revision.approved_removals must be a list of event ids")
     if not isinstance(wording, list):
         raise EditionError("revision.approved_wording must be a list")
+    if not isinstance(editorial, list):
+        raise EditionError("revision.editorial_rejections must be a list")
     return {
         "edition_id": edition_id,
         "attempt": attempt,
@@ -218,8 +268,56 @@ def _parse_contract(contract: Mapping[str, Any]) -> dict[str, Any]:
         "base_content_hash": base_hash,
         "approved_removals": [item.strip() for item in removals],
         "approved_wording": [_parse_wording(item) for item in wording],
+        "editorial_rejections": [_parse_editorial(item) for item in editorial],
         "execution_evidence": contract.get("execution_evidence"),
     }
+
+
+def _parse_editorial(value: Any) -> dict[str, Any]:
+    if not isinstance(value, Mapping):
+        raise EditionError("editorial rejection must be an object")
+    reasons = value.get("reasons")
+    if not isinstance(reasons, list) or not reasons or not all(
+        isinstance(item, str) and item.strip() for item in reasons
+    ):
+        raise EditionError("editorial rejection requires reasons")
+    return {
+        "id": _text(value.get("id"), "editorial.id"),
+        "reasons": [item.strip() for item in reasons],
+        "edition_id": _text(value.get("edition_id"), "editorial.edition_id"),
+        "attempt": value.get("attempt"),
+        "base_head": _text(value.get("base_head"), "editorial.base_head"),
+    }
+
+
+def _bind_editorial(
+    editorial: list[dict[str, Any]],
+    contract: Mapping[str, Any],
+    base_head: str,
+) -> list[dict[str, Any]]:
+    bound: list[dict[str, Any]] = []
+    for item in editorial:
+        head = parse_git_head(item["base_head"], "editorial.base_head")
+        if item["edition_id"] != contract["edition_id"] or item["attempt"] != contract["attempt"]:
+            raise EditionError("editorial rejection is not bound to this edition")
+        if head != base_head:
+            raise EditionError("editorial rejection is not bound to this head")
+        bound.append({**item, "base_head": head})
+    return bound
+
+
+def _empty_failure(
+    report: Mapping[str, Any],
+    removals: list[str],
+    editorial: list[dict[str, Any]],
+) -> dict[str, str]:
+    policy_ids = {item["id"] for item in report["rejected"]}
+    if any(event_id in policy_ids for event_id in removals):
+        return evidence_failure(
+            [item for item in report["rejected"] if item["id"] in removals] or report["rejected"]
+        )
+    ids = ", ".join(item["id"] for item in editorial if item["id"] in removals)
+    return {"stage": "editorial", "message": f"editor rejected every remaining event: {ids}"}
 
 
 def _parse_wording(value: Any) -> dict[str, Any]:

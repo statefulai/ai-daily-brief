@@ -221,6 +221,66 @@ class CandidatePolicyTest(unittest.TestCase):
             ["prediction_not_visible"],
         )
         self.assertEqual(assess_new_candidate(visible)["retained"], ["visible-prediction"])
+        split = _edition(
+            [
+                _event(
+                    "split",
+                    [_source("https://example.com/original", support=_support())],
+                    claims=[{"kind": "predicted", "value": "83.0"}],
+                    lede="这是预测。",
+                    placement="lead",
+                )
+            ]
+        )
+        split["events"][0]["facts"] = ["作者写到每秒 83.0 token。"]
+        self.assertIn(
+            "prediction_not_visible",
+            assess_new_candidate(split)["rejected"][0]["reasons"],
+        )
+
+    def test_self_reported_support_does_not_prove_the_claim(self):
+        unrelated = _edition(
+            [
+                _event(
+                    "unrelated",
+                    [
+                        _source(
+                            "https://example.com/original",
+                            support=_support("original", "read", "unrelated boilerplate"),
+                        )
+                    ],
+                    placement="lead",
+                )
+            ]
+        )
+        disguised = _edition(
+            [
+                _event(
+                    "disguised",
+                    [
+                        _source(
+                            "https://example.com/retelling",
+                            support=_support("original", "read", "A later article described the number."),
+                        )
+                    ],
+                    placement="lead",
+                )
+            ]
+        )
+        measured = _edition(
+            [
+                _event(
+                    "measured-label",
+                    [_source("https://example.com/original", support=_support())],
+                    claims=[{"kind": "measured", "value": "83.0"}],
+                    lede="每秒 83.0 token 是预测输出。",
+                    placement="lead",
+                )
+            ]
+        )
+        self.assertEqual(assess_new_candidate(unrelated)["retained"], ["unrelated"])
+        self.assertEqual(assess_new_candidate(disguised)["retained"], ["disguised"])
+        self.assertEqual(assess_new_candidate(measured)["retained"], ["measured-label"])
 
     def test_mixed_file_names_both_sides_and_still_rejects_the_file(self):
         document = _edition(

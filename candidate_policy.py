@@ -1,11 +1,15 @@
-"""Claim support for a new or changed edition.
+"""Structural checks for a new or changed edition.
 
-A stored ``verified`` flag and a page timestamp record access. They do not
-record that a page supports a claim. Whether the excerpt supports the
-sentence, whether the page is the original report, whether a number is a
-prediction, and whether the item is worth publishing stay with the editor.
-This module checks that the recorded relationship, reading result, and
-reader-visible prediction label are consistent. It does not fetch pages.
+``relationship``, ``reading``, and ``excerpt`` are values the caller recorded.
+A non-empty excerpt does not prove that the excerpt supports the claim, and
+``original`` does not prove that the page is the original report. Generation
+code may store one bounded read with ``record_reading``. Deciding that the
+excerpt supports the sentence is an editorial check. CI does neither. It
+checks the shape of the record.
+
+A claim marked ``predicted`` must show its value and a prediction word in the
+same reader field. A claim marked ``measured`` is not reclassified. That gap
+stays with the editor.
 """
 
 from __future__ import annotations
@@ -29,7 +33,6 @@ READINGS = frozenset(
 RELATIONSHIPS = frozenset({"original", "retelling", "supporting"})
 CLAIM_KINDS = frozenset({"measured", "predicted", "attributed"})
 PREDICTION_MARKERS = ("预测", "预计", "predicted", "forecast")
-READER_FIELDS = ("title", "kicker", "lede", "caveat", "facts", "conditions", "background")
 MAX_REVISION = 2
 
 
@@ -189,23 +192,26 @@ def _event_reasons(event: Mapping[str, Any]) -> list[str]:
     return list(dict.fromkeys(reasons))
 
 
-def _reader_text(event: Mapping[str, Any]) -> str:
-    parts: list[str] = []
-    for field in READER_FIELDS:
-        value = event.get(field)
-        if isinstance(value, str):
-            parts.append(value)
-        elif isinstance(value, list):
-            parts.extend(item for item in value if isinstance(item, str))
-    return "\n".join(parts)
+def _field_shows_prediction(text: str, value: str) -> bool:
+    return value in text and any(marker in text for marker in PREDICTION_MARKERS)
 
 
 def _prediction_visible(event: Mapping[str, Any], claim: Mapping[str, Any]) -> bool:
-    visible = _reader_text(event)
     value = claim.get("value")
-    if not isinstance(value, str) or value not in visible:
+    if not isinstance(value, str) or not value:
         return False
-    return any(marker in visible for marker in PREDICTION_MARKERS)
+    for field in ("title", "kicker", "lede", "caveat"):
+        text = event.get(field)
+        if isinstance(text, str) and _field_shows_prediction(text, value):
+            return True
+    for field in ("facts", "conditions", "background"):
+        items = event.get(field) or []
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            if isinstance(item, str) and _field_shows_prediction(item, value):
+                return True
+    return False
 
 
 def _rejection_message(report: Mapping[str, Any]) -> str:

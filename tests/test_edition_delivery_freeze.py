@@ -104,3 +104,74 @@ class DeliveryFreezeTest(unittest.TestCase):
             self.assertFalse(ledger.may_attempt(group))
             self.assertTrue(any(isinstance(item, EditionError) for item in failures))
             self.assertIn("not open", str(failures[0]))
+
+    def test_direct_record_cannot_freeze_a_new_hash_while_another_is_unknown(self):
+        edition = self._document()
+        revised = json.loads(json.dumps(edition))
+        revised["events"][0]["lede"] = "另一版导语。"
+        revised.pop("content_hash", None)
+        revised = validate_edition(revised)
+        unknown = _key(edition, "email")
+        sent = _key(revised, "group")
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "delivery.json"
+            ledger = DeliveryLedger(path)
+            ledger.record(unknown, "unknown", detail="timeout after submit")
+            with self.assertRaisesRegex(EditionError, "unknown for another content hash"):
+                ledger.record(sent, "sent")
+            saved = json.loads(path.read_text(encoding="utf-8"))
+            self.assertNotIn(revised["content_hash"], json.dumps(saved.get("frozen_editions", {})))
+            self.assertEqual(ledger.status(unknown), "unknown")
+            self.assertTrue(ledger.may_attempt(_key(edition, "group")))
+
+    def test_record_sent_waits_for_the_unknown_writer(self):
+        edition = self._document()
+        revised = json.loads(json.dumps(edition))
+        revised["events"][0]["lede"] = "竞争导语。"
+        revised.pop("content_hash", None)
+        revised = validate_edition(revised)
+        unknown = _key(edition, "email")
+        sent = _key(revised, "group")
+        entered = threading.Event()
+        release = threading.Event()
+        failures: list[BaseException] = []
+
+        class HoldingLedger(DeliveryLedger):
+            def _read(self):
+                payload = super()._read()
+                if threading.current_thread().name == "unknown-writer":
+                    entered.set()
+                    if not release.wait(2):
+                        raise RuntimeError("test did not release the unknown writer")
+                return payload
+
+        def write_unknown(ledger):
+            try:
+                ledger.record(unknown, "unknown", detail="timeout after submit")
+            except BaseException as exc:
+                failures.append(exc)
+
+        def write_sent(ledger):
+            try:
+                ledger.record(sent, "sent")
+            except BaseException as exc:
+                failures.append(exc)
+
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "delivery.json"
+            first = threading.Thread(
+                target=write_unknown, name="unknown-writer", args=(HoldingLedger(path),)
+            )
+            second = threading.Thread(
+                target=write_sent, name="sent-writer", args=(HoldingLedger(path),)
+            )
+            first.start()
+            self.assertTrue(entered.wait(1))
+            second.start()
+            release.set()
+            first.join(2)
+            second.join(2)
+            saved = json.loads(path.read_text(encoding="utf-8"))
+            self.assertTrue(any(isinstance(item, EditionError) for item in failures))
+            self.assertNotIn(revised["content_hash"], json.dumps(saved.get("frozen_editions", {})))
+            self.assertEqual(DeliveryLedger(path).status(unknown), "unknown")

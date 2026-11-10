@@ -100,9 +100,9 @@ class DeliveryLedger:
             raise EditionError("unsupported delivery status")
         with self._write_lock():
             payload = self._read()
-            frozen = self._frozen_hash(payload, key.edition_id)
-            if frozen and frozen != key.content_hash:
-                raise EditionError("edition delivery is frozen to a different content hash")
+            conflict = self._cross_hash_conflict(payload, key)
+            if conflict:
+                raise EditionError(conflict)
             current = payload["records"].get(key.token)
             if current and current.get("status") == "sent" and status != "sent":
                 raise EditionError("sent delivery status cannot be downgraded")
@@ -117,9 +117,16 @@ class DeliveryLedger:
             self._replace(payload)
 
     def _may_attempt(self, payload: dict, key: DeliveryKey) -> bool:
+        if self._cross_hash_conflict(payload, key):
+            return False
+        current = payload["records"].get(key.token)
+        status = current.get("status") if current else None
+        return status in {None, "failed"}
+
+    def _cross_hash_conflict(self, payload: dict, key: DeliveryKey) -> str | None:
         frozen = self._frozen_hash(payload, key.edition_id)
         if frozen and frozen != key.content_hash:
-            return False
+            return "edition delivery is frozen to a different content hash"
         for record in payload["records"].values():
             stored = record.get("key") or {}
             if stored.get("edition_id") != key.edition_id:
@@ -127,10 +134,8 @@ class DeliveryLedger:
             if record.get("status") != "unknown":
                 continue
             if stored.get("content_hash") != key.content_hash:
-                return False
-        current = payload["records"].get(key.token)
-        status = current.get("status") if current else None
-        return status in {None, "failed"}
+                return "delivery receipt is unknown for another content hash"
+        return None
 
     @staticmethod
     def _frozen_hash(payload: dict, edition_id: str) -> str | None:
