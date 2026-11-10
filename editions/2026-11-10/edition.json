@@ -220,74 +220,6 @@
       "caveat": "超过 20 万 token 的提示，输入改为 0.30 美元、输出 1.50 美元。"
     },
     {
-      "id": "apple-intelligence-usage-packs",
-      "placement": "story",
-      "window": "in_window",
-      "title": "苹果在 8 个国家出售 Creator Studio 的智能额度包",
-      "kicker": "产品 · 苹果",
-      "facts": [
-        "苹果支持文档 About the intelligence features in Apple Creator Studio 写明，巴西、加拿大、法国、德国、印度、墨西哥、英国和美国持有有效 Creator Studio 订阅的用户，在用完每月额度后可以购买 intelligence usage packs。",
-        "文档写这种包是一次性购买，不支持 Family Sharing，只能由购买时用于 iCloud 的那个 Apple 账户使用。未用完的追加额度逐月结转，购买后 12 个月失效。",
-        "Logic Pro for Mac 的路径是菜单 Logic Pro、Intelligence Features、Show Usage、Buy More Usage。该页没有写出售价。",
-        "同一页写，如果只用某一项，每月至少可以生成 50 张图、250 个形状、50 份演示文稿，或为 700 页幻灯片生成演讲者备注。这是包含在订阅里的下限，不是额度包的容量。"
-      ],
-      "conditions": [
-        "仅限巴西、加拿大、法国、德国、印度、墨西哥、英国和美国的有效 Creator Studio 订阅。",
-        "不支持 Family Sharing。"
-      ],
-      "background": [
-        "10 月 31 日正刊写过首批 Apple 智能将在中国上线。这份额度包文档列出的是另外 8 个国家，没有写中国。"
-      ],
-      "sources": [
-        {
-          "label": "Apple Support",
-          "url": "https://support.apple.com/en-us/127888",
-          "kind": "primary",
-          "published_at": null,
-          "verified": true,
-          "note": "核验说明（Apple Support）：8 个国家、一次性购买、不支持 Family Sharing、12 个月失效、Logic Pro 的购买路径，以及每月 50 张图、250 个形状、50 份演示文稿和 700 页备注的下限，取自该页。页面没有钟点，也没有售价。"
-        },
-        {
-          "label": "The Verge",
-          "url": "https://www.theverge.com/tech/1030084/apple-intelligence-usage-packs-ai-features-creator-studio-logic-pro",
-          "kind": "secondary",
-          "published_at": "2026-11-09T19:09:58+00:00",
-          "verified": true,
-          "note": "核验说明（The Verge）：datePublished 是 2026-11-09T19:09:58+00:00。文中 49.99 美元来自它对 9to5Mac 的转述。9to5Mac 没有打开，售价不写入事实。"
-        }
-      ],
-      "lede": "苹果写明，巴西、加拿大、法国、德国、印度、墨西哥、英国和美国的 Creator Studio 订阅用户，可一次性购买 intelligence usage packs。未用完的额度逐月结转，12 个月后失效。Logic Pro for Mac 已有入口。",
-      "caveat": "不支持家庭共享，只能由购买时的那个 Apple 账户使用。"
-    },
-    {
-      "id": "disney-adobe-firefly-foundry",
-      "placement": "story",
-      "window": "in_window",
-      "title": "迪士尼与 Adobe 合作训练专有生成模型",
-      "kicker": "行业 · 迪士尼",
-      "facts": [
-        "The Verge 的 datePublished 是 2026-11-09T15:38:56+00:00。文章写迪士尼与 Adobe 的多年合作在 Adobe MAX 上宣布。",
-        "文章引 Adobe 的新闻稿：双方用 Adobe Firefly Foundry 做针对迪士尼资产的生成模型，按角色、环境和视觉风格定制，目标是可商用、可进制作。",
-        "文章写 Adobe 向迪士尼的主题公园、邮轮和 ESPN 提供最新技术的早期访问，并参与华特迪士尼工作室的内部流程。"
-      ],
-      "conditions": [
-        "当前阶段是多年合作和早期技术访问，不是已经交付的成品模型。"
-      ],
-      "background": [],
-      "sources": [
-        {
-          "label": "The Verge",
-          "url": "https://www.theverge.com/tech/1029773/disney-adobe-generative-ai-partnership",
-          "kind": "primary",
-          "published_at": "2026-11-09T15:38:56+00:00",
-          "verified": true,
-          "note": "核验说明（The Verge）：datePublished 是 2026-11-09T15:38:56+00:00。多年合作、Adobe MAX、Firefly Foundry、主题公园、邮轮和 ESPN 的早期访问，取自这篇对 Adobe 新闻稿的引述。Business Wire 上的新闻稿没有打开。"
-        }
-      ],
-      "lede": "迪士尼和 Adobe 宣布多年合作，在 Adobe MAX 公布。双方将用 Firefly Foundry 按迪士尼的角色和画风做专有生成模型。主题公园、邮轮和 ESPN 先拿到早期使用权，成品模型还没交付。",
-      "caveat": "新闻稿页面没有打开，引文以 The Verge 刊出的为准。"
-    },
-    {
       "id": "spacefast-public",
       "placement": "story",
       "window": "in_window",
@@ -329,5 +261,5 @@
   ],
   "contribution_count": 0,
   "failure": null,
-  "content_hash": "sha256:6bfd96b3bfd308452af83a94709fd1e66697e282ce6670cfd4533f4884c01329"
+  "content_hash": "sha256:1f718494fb6637ec0bcc17e420cda836872838fd0659adb4a4a57a0b50bd762d"
 }
