@@ -31,6 +31,7 @@ from candidate_policy import (
     evidence_failure,
     require_new_candidate,
 )
+from delivery.state import DeliveryLedger
 from edition import EditionError, validate_edition
 from outputs import render_web_edition
 
@@ -68,7 +69,14 @@ class RevisionWorkspace:
             finally:
                 fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
-    def apply(self, contract: Mapping[str, Any], *, current_head: str) -> dict[str, Any]:
+    def apply(
+        self,
+        contract: Mapping[str, Any],
+        *,
+        current_head: str,
+        ledger: DeliveryLedger | None = None,
+        observed_head: str | None = None,
+    ) -> dict[str, Any]:
         parsed = _parse_contract(contract)
         with self._lock():
             state = self._read_state()
@@ -81,7 +89,18 @@ class RevisionWorkspace:
                     and _same_contract(existing["contract"], parsed)
                 ):
                     return existing["result"]
-                raise EditionError("revision number is already reserved")
+                if not (
+                    existing.get("status") == "attempted" and _same_contract(existing["contract"], parsed)
+                ):
+                    raise EditionError("revision number is already reserved")
+                self._remember_edition()
+                try:
+                    return self._finish(parsed, current_head, key, ledger, observed_head)
+                except Exception:
+                    self._restore_edition()
+                    raise
+            if self._revision_already_logged(parsed["revision"]):
+                raise EditionError("revision number is already used")
             state["completions"][key] = {
                 "contract": parsed,
                 "status": "attempted",
@@ -89,30 +108,56 @@ class RevisionWorkspace:
                 "result": None,
             }
             self._write_state(state)
+            self._note_revision(parsed, "attempted", None)
             try:
-                result = self._perform(parsed, current_head)
-            except EditionError as exc:
+                result = self._finish(parsed, current_head, key, ledger, observed_head)
+            except Exception as exc:
+                self._restore_edition()
                 state = self._read_state()
                 row = state["completions"][key]
                 row["status"] = "blocked"
                 row["reason"] = str(exc)
                 row["result"] = None
                 self._write_state(state)
+                self._note_revision(parsed, "blocked", str(exc))
                 raise
-            state = self._read_state()
-            state["completions"][key]["status"] = "applied"
-            state["completions"][key]["reason"] = None
-            state["completions"][key]["result"] = result
-            self._write_state(state)
             return result
 
-    def _perform(self, parsed: Mapping[str, Any], current_head: str) -> dict[str, Any]:
+    def _finish(
+        self,
+        parsed: Mapping[str, Any],
+        current_head: str,
+        key: str,
+        ledger: DeliveryLedger | None,
+        observed_head: str | None,
+    ) -> dict[str, Any]:
+        self._remember_edition()
+        result = self._perform(parsed, current_head, ledger, observed_head)
+        state = self._read_state()
+        state["completions"][key]["status"] = "applied"
+        state["completions"][key]["reason"] = None
+        state["completions"][key]["result"] = result
+        self._write_state(state)
+        self._note_revision(parsed, "applied", None)
+        return result
+
+    def _perform(
+        self,
+        parsed: Mapping[str, Any],
+        current_head: str,
+        ledger: DeliveryLedger | None,
+        observed_head: str | None,
+    ) -> dict[str, Any]:
         if not 1 <= parsed["revision"] <= MAX_REVISION:
             raise EditionError(f"revision is outside the bound of {MAX_REVISION}")
         base_head = parse_git_head(parsed["base_head"], "revision.base_head")
         current = parse_git_head(current_head, "revision.current_head")
+        if observed_head is not None:
+            require_head_agreement(current, observed_head)
         if current != base_head:
             raise EditionError("stale revision head")
+        if ledger is not None and _edition_delivery_frozen(ledger, parsed["edition_id"]):
+            raise EditionError("edition is frozen after delivery")
         editorial = _bind_editorial(parsed["editorial_rejections"], parsed, base_head)
         document = json.loads(self.edition_path.read_text(encoding="utf-8"))
         edition = validate_edition(document)
@@ -161,8 +206,7 @@ class RevisionWorkspace:
         published_edition = validate_edition(published)
         require_new_candidate(published_edition)
         html = render_web_edition(published_edition)
-        self._write_edition(published_edition)
-        self.html_path.write_text(html, encoding="utf-8")
+        self._publish_pair(published_edition, html)
         return _result(published_edition, block, html_written=True)
 
     def bind_reviewed_head(
@@ -193,6 +237,89 @@ class RevisionWorkspace:
                 raise EditionError("reviewed head does not match the bound final head")
             return result
 
+    def _remember_edition(self) -> None:
+        self._edition_backup = (
+            self.edition_path.read_bytes() if self.edition_path.exists() else None
+        )
+        self._html_backup = self.html_path.read_bytes() if self.html_path.exists() else None
+
+    def _restore_edition(self) -> None:
+        if not hasattr(self, "_edition_backup"):
+            return
+        if self._edition_backup is None:
+            self.edition_path.unlink(missing_ok=True)
+        else:
+            self.edition_path.write_bytes(self._edition_backup)
+        if self._html_backup is None:
+            self.html_path.unlink(missing_ok=True)
+        else:
+            self.html_path.write_bytes(self._html_backup)
+
+    def _publish_pair(self, edition: Mapping[str, Any], html: str) -> None:
+        edition_tmp = self.root / "edition.json.new"
+        html_tmp = self.root / "index.html.new"
+        edition_tmp.write_text(
+            json.dumps(edition, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        try:
+            self._write_html_text(html_tmp, html)
+        except Exception:
+            edition_tmp.unlink(missing_ok=True)
+            html_tmp.unlink(missing_ok=True)
+            raise
+        html_tmp.replace(self.html_path)
+        edition_tmp.replace(self.edition_path)
+
+    def _write_html_text(self, path: Path, html: str) -> None:
+        path.write_text(html, encoding="utf-8")
+
+    def _log_path(self) -> Path:
+        return self.root / "revisions.json"
+
+    def _read_log(self) -> dict[str, Any]:
+        path = self._log_path()
+        if not path.exists():
+            return {"version": 1, "records": []}
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if payload.get("version") != 1 or not isinstance(payload.get("records"), list):
+            raise EditionError("invalid revision log")
+        return payload
+
+    def _revision_already_logged(self, revision: int) -> bool:
+        return any(record.get("revision") == revision for record in self._read_log()["records"])
+
+    def _note_revision(self, parsed: Mapping[str, Any], status: str, reason: str | None) -> None:
+        log = self._read_log()
+        records = log["records"]
+        current = next(
+            (
+                record
+                for record in records
+                if record.get("revision") == parsed["revision"]
+                and record.get("attempt") == parsed["attempt"]
+            ),
+            None,
+        )
+        entry = {
+            "edition_id": parsed["edition_id"],
+            "attempt": parsed["attempt"],
+            "revision": parsed["revision"],
+            "base_head": parsed["base_head"],
+            "base_content_hash": parsed["base_content_hash"],
+            "status": status,
+            "reason": reason,
+        }
+        if current is None:
+            if records and parsed["revision"] <= max(record["revision"] for record in records):
+                raise EditionError("revision numbers must increase")
+            records.append(entry)
+        else:
+            current.update(entry)
+        temporary = self._log_path().with_suffix(".json.new")
+        temporary.write_text(json.dumps(log, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        temporary.replace(self._log_path())
+
     def _read_state(self) -> dict[str, Any]:
         if not self.state_path.exists():
             return {"version": 1, "completions": {}}
@@ -216,6 +343,44 @@ class RevisionWorkspace:
             encoding="utf-8",
         )
         temporary.replace(self.edition_path)
+
+
+def require_head_agreement(claimed: str, observed: str) -> None:
+    """Compare a caller head with the head observed from git. This does not call GitHub."""
+    if parse_git_head(claimed, "revision.current_head") != parse_git_head(
+        observed, "revision.observed_head"
+    ):
+        raise EditionError("current head does not match the observed head")
+
+
+def _edition_delivery_frozen(ledger: DeliveryLedger, edition_id: str) -> bool:
+    payload = ledger._read()
+    if DeliveryLedger._frozen_hash(payload, edition_id):
+        return True
+    for record in payload["records"].values():
+        stored = record.get("key") or {}
+        if stored.get("edition_id") == edition_id and record.get("status") == "sent":
+            return True
+    return False
+
+
+def revision_log_extends(baseline: str | None, current: str) -> None:
+    """A committed revision log may only grow by appending new numbers."""
+    current_records = json.loads(current).get("records")
+    if not isinstance(current_records, list):
+        raise EditionError("invalid revision log")
+    numbers = [record.get("revision") for record in current_records]
+    if numbers != sorted(numbers) or len(numbers) != len(set(numbers)):
+        raise EditionError("revision numbers must increase")
+    if baseline is None:
+        return
+    baseline_records = json.loads(baseline).get("records")
+    if not isinstance(baseline_records, list):
+        raise EditionError("invalid revision log")
+    if current_records[: len(baseline_records)] != baseline_records:
+        raise EditionError("revision history was rewritten")
+    if len(current_records) < len(baseline_records):
+        raise EditionError("revision history was rewritten")
 
 
 def parse_git_head(value: Any, label: str) -> str:

@@ -31,7 +31,7 @@ def _source(url, *, kind="primary", support=None, verified=True, note=None):
     return source
 
 
-def _support(relationship="original", reading="read", excerpt="The lab reported the result."):
+def _support(relationship="original", reading="read", excerpt="读者看到的导语与结果。"):
     return {"relationship": relationship, "reading": reading, "excerpt": excerpt}
 
 
@@ -54,6 +54,26 @@ def _event(event_id, sources, *, placement="story", claims=None, lede="读者看
 
 
 def _edition(events, edition_id="2026-11-12"):
+    for event in events:
+        for source in event["sources"]:
+            support = source.get("support") or {}
+            excerpt = support.get("excerpt") or ""
+            if (
+                support.get("relationship") == "original"
+                and support.get("reading") == "read"
+                and isinstance(excerpt, str)
+                and len(excerpt) >= 8
+            ):
+                event.setdefault("editorial_verifications", []).append(
+                    {
+                        "edition_id": edition_id,
+                        "attempt": 1,
+                        "source_url": source["url"],
+                        "excerpt": excerpt,
+                        "claim": event.get("lede") or event["title"],
+                        "verdict": "supports",
+                    }
+                )
     return validate_edition(
         {
             "schema_version": "1",
@@ -85,18 +105,11 @@ class CandidatePolicyTest(unittest.TestCase):
         first = assess_new_candidate(pr65)
         second = assess_new_candidate(pr66)
         self.assertEqual(first["retained"], [])
-        self.assertIn(
-            {"id": "openai-funding-round", "reasons": ["missing_support"]},
-            first["rejected"],
-        )
-        self.assertIn(
-            {"id": "nvidia-h200-new-matrix", "reasons": ["missing_support"]},
-            second["rejected"],
-        )
-        self.assertIn(
-            {"id": "llama-moe-cache-cpu", "reasons": ["missing_support"]},
-            second["rejected"],
-        )
+        funding = next(item for item in first["rejected"] if item["id"] == "openai-funding-round")
+        self.assertIn("missing_support", funding["reasons"])
+        for event_id in ("nvidia-h200-new-matrix", "llama-moe-cache-cpu"):
+            item = next(item for item in second["rejected"] if item["id"] == event_id)
+            self.assertIn("missing_support", item["reasons"])
         with self.assertRaisesRegex(EditionError, "openai-funding-round: missing_support"):
             require_new_candidate(pr65)
         with self.assertRaisesRegex(EditionError, "nvidia-h200-new-matrix: missing_support"):
@@ -195,7 +208,7 @@ class CandidatePolicyTest(unittest.TestCase):
                     [
                         _source(
                             "https://example.com/original",
-                            support=_support(),
+                            support=_support(excerpt="作者写到每秒 83.0 token。"),
                             note="83.0 是预测",
                         )
                     ],
@@ -209,7 +222,7 @@ class CandidatePolicyTest(unittest.TestCase):
             [
                 _event(
                     "visible-prediction",
-                    [_source("https://example.com/original", support=_support())],
+                    [_source("https://example.com/original", support=_support(excerpt="每秒 83.0 token 是预测输出。"))],
                     claims=[{"kind": "predicted", "value": "83.0"}],
                     lede="每秒 83.0 token 是预测输出，不是这次实测。",
                     placement="lead",
@@ -242,7 +255,7 @@ class CandidatePolicyTest(unittest.TestCase):
         unrelated = _edition(
             [
                 _event(
-                    "unrelated",
+                    "gap-a",
                     [
                         _source(
                             "https://example.com/original",
@@ -278,9 +291,32 @@ class CandidatePolicyTest(unittest.TestCase):
                 )
             ]
         )
-        self.assertEqual(assess_new_candidate(unrelated)["retained"], ["unrelated"])
-        self.assertEqual(assess_new_candidate(disguised)["retained"], ["disguised"])
-        self.assertEqual(assess_new_candidate(measured)["retained"], ["measured-label"])
+        self.assertIn("excerpt_unrelated", assess_new_candidate(unrelated)["rejected"][0]["reasons"])
+        self.assertEqual(assess_new_candidate(unrelated)["rejected"][0]["id"], "gap-a")
+        self.assertIn("excerpt_unrelated", assess_new_candidate(disguised)["rejected"][0]["reasons"])
+        self.assertIn(
+            "measured_describes_prediction",
+            assess_new_candidate(measured)["rejected"][0]["reasons"],
+        )
+        false_attestation = _edition(
+            [
+                _event(
+                    "false-attestation",
+                    [
+                        _source(
+                            "https://news.example/retell",
+                            support=_support("original", "read", "据外媒报道该公司宣布融资。"),
+                        )
+                    ],
+                    lede="据外媒报道该公司宣布融资。",
+                    placement="lead",
+                )
+            ]
+        )
+        self.assertEqual(
+            assess_new_candidate(false_attestation)["retained"],
+            ["false-attestation"],
+        )
 
     def test_mixed_file_names_both_sides_and_still_rejects_the_file(self):
         document = _edition(
@@ -331,7 +367,7 @@ class CandidatePolicyTest(unittest.TestCase):
         drafted = dict(historical)
         drafted["historical_exemption"] = True
         mutated = json.dumps(drafted, ensure_ascii=False)
-        with self.assertRaisesRegex(EditionError, "new candidate rejected"):
+        with self.assertRaisesRegex(EditionError, "published edition is frozen"):
             review_changed_edition(text, mutated)
         with self.assertRaisesRegex(EditionError, "missing_support"):
             require_new_candidate(historical)

@@ -18,6 +18,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from candidate_policy import review_changed_edition  # noqa: E402
+from revision import revision_log_extends  # noqa: E402
 from edition import (  # noqa: E402
     EDITION_ID_RE,
     EditionError,
@@ -136,7 +137,10 @@ def validate_changed_paths(
     names = {match.group("name") for match in matches if match}
     if len(edition_ids) != 1:
         raise EditionError("one pull request may change only one edition date")
-    if names != PRODUCTION_FILES:
+    allowed = PRODUCTION_FILES | {"revisions.json"}
+    if names == {"revisions.json"}:
+        return
+    if not PRODUCTION_FILES <= names or not names <= allowed:
         raise EditionError("an edition change must include edition.json and index.html")
 
 
@@ -153,6 +157,13 @@ def enforce_changed_candidates(base: str, head: str, paths: list[str]) -> None:
             review_changed_edition(baseline, current)
         except json.JSONDecodeError as exc:
             raise EditionError(f"{path}: edition.json is not valid JSON") from exc
+    for path in paths:
+        if not path.endswith("/revisions.json"):
+            continue
+        current = _git_file(head, path)
+        if current is None:
+            continue
+        revision_log_extends(_git_file(base, path), current)
 
 
 def _git_file(rev: str, path: str) -> str | None:

@@ -30,6 +30,7 @@ def _contract(document, **overrides):
         "base_content_hash": document["content_hash"],
         "approved_removals": [],
         "approved_wording": [],
+        "editorial_rejections": [],
         "execution_evidence": None,
     }
     contract.update(overrides)
@@ -180,13 +181,21 @@ class RevisionTest(unittest.TestCase):
             [
                 _event(
                     "numbers",
-                    [_source("https://example.com/original", support=_support())],
+                    [
+                        _source(
+                            "https://example.com/original",
+                            support=_support(excerpt="作者写到每秒 83.0 token。"),
+                        )
+                    ],
                     claims=[{"kind": "predicted", "value": "83.0"}],
                     lede="作者写到每秒 83.0 token。",
                     placement="lead",
                 )
             ]
         )
+        document["events"][0]["editorial_verifications"][0]["claim"] = "83.0"
+        document.pop("content_hash", None)
+        document = validate_edition(document)
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)

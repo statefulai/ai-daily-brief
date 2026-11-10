@@ -300,6 +300,15 @@ def validate_event(record: Mapping[str, Any]) -> dict[str, Any]:
         event["claims"] = [
             parse_claim(item) for item in _require_list(payload.get("claims"), "event.claims")
         ]
+    if payload.get("editorial_verifications") is not None:
+        from candidate_policy import parse_editorial_verification
+
+        event["editorial_verifications"] = [
+            parse_editorial_verification(item)
+            for item in _require_list(
+                payload.get("editorial_verifications"), "event.editorial_verifications"
+            )
+        ]
     return event
 
 

@@ -10,7 +10,7 @@
 4. 启动当期唯一 Cloud Agent 时，通过 `files` 上传该文件。
 5. Cloud Agent 按 [`delivery/STEPS.md`](../../delivery/STEPS.md) 采集公开来源，与上传的候选合并，并检查必填字段。
 6. 日报在最终选稿之前接入 Jev 辅助判断（有没有新变化、值不值得读）。调用、密钥、关闭（`JEV_ASSIST=0`）与额度交接见 [`generation/CA-JEV-ASSIST.md`](../../generation/CA-JEV-ASSIST.md)。Jev 不裁定入选或空刊；失败时继续原选稿。
-7. Cloud Agent 回源核验并做最终选稿，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。
+7. Cloud Agent 回源核验并做最终选稿，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。新期次按 [`docs/edition-candidate-contract.md`](../../docs/edition-candidate-contract.md) 写入 `support`、`claims` 和 `editorial_verifications`。`support` 只记录读取结果，不代替编辑对摘录和主张的核对。
 8. Cloud Agent 用仓库的固定渲染器生成 HTML，并执行校验：
 
    ```bash
