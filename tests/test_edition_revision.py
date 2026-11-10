@@ -4,6 +4,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from delivery.state import DeliveryLedger
 from edition import EditionError, validate_edition
 from revision import RevisionWorkspace
 from tests.test_edition_candidate_policy import _edition, _event, _source, _support
@@ -12,6 +13,22 @@ HEAD_A = "a" * 40
 HEAD_B = "b" * 40
 HEAD_C = "c" * 40
 HEAD_D = "d" * 40
+
+
+class Workspace(RevisionWorkspace):
+    """Supplies the ledger and observed head that a successful apply now requires."""
+
+    def apply(self, contract, *, current_head, ledger=None, observed_head=None):
+        if ledger is None:
+            ledger = DeliveryLedger(self.root / "test-ledger.json")
+        if observed_head is None:
+            observed_head = current_head
+        return super().apply(
+            contract,
+            current_head=current_head,
+            ledger=ledger,
+            observed_head=observed_head,
+        )
 
 
 def _write_workspace(root: Path, document: dict) -> None:
@@ -58,7 +75,7 @@ class RevisionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            result = RevisionWorkspace(root).apply(
+            result = Workspace(root).apply(
                 _contract(document, approved_removals=["dropped"]),
                 current_head=HEAD_A,
             )
@@ -81,7 +98,7 @@ class RevisionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            result = RevisionWorkspace(root).apply(
+            result = Workspace(root).apply(
                 _contract(
                     document,
                     approved_removals=["dropped"],
@@ -91,7 +108,7 @@ class RevisionTest(unittest.TestCase):
             )
             _write_workspace(root, document)
             (root / "revision-state.json").unlink()
-            local = RevisionWorkspace(root).apply(
+            local = Workspace(root).apply(
                 _contract(
                     document,
                     revision=2,
@@ -114,7 +131,7 @@ class RevisionTest(unittest.TestCase):
             _write_workspace(root, document)
             before = (root / "edition.json").read_text(encoding="utf-8")
             with self.assertRaisesRegex(EditionError, "stale revision head"):
-                RevisionWorkspace(root).apply(
+                Workspace(root).apply(
                     _contract(document, approved_removals=["dropped"]),
                     current_head=HEAD_B,
                 )
@@ -125,7 +142,7 @@ class RevisionTest(unittest.TestCase):
             self.assertEqual(state["completions"][key]["status"], "blocked")
             self.assertEqual(state["completions"][key]["contract"]["attempt"], document["attempt"])
             with self.assertRaisesRegex(EditionError, "already reserved"):
-                RevisionWorkspace(root).apply(
+                Workspace(root).apply(
                     _contract(document, approved_removals=["dropped"]),
                     current_head=HEAD_A,
                 )
@@ -136,7 +153,7 @@ class RevisionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            workspace = RevisionWorkspace(root)
+            workspace = Workspace(root)
             contract = _contract(document, approved_removals=["dropped"])
             first = workspace.apply(contract, current_head=HEAD_A)
             second = workspace.apply(contract, current_head=HEAD_A)
@@ -153,14 +170,14 @@ class RevisionTest(unittest.TestCase):
             with lock_path.open("a+", encoding="utf-8") as held:
                 fcntl.flock(held.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
                 with self.assertRaisesRegex(EditionError, "revision writer is already running"):
-                    RevisionWorkspace(root).apply(
+                    Workspace(root).apply(
                         _contract(document, approved_removals=["dropped"]),
                         current_head=HEAD_A,
                     )
                 self.assertFalse((root / "revision-state.json").exists())
                 fcntl.flock(held.fileno(), fcntl.LOCK_UN)
             with self.assertRaisesRegex(EditionError, "outside the bound of 2"):
-                RevisionWorkspace(root).apply(
+                Workspace(root).apply(
                     _contract(document, revision=3, approved_removals=["dropped"]),
                     current_head=HEAD_A,
                 )
@@ -171,7 +188,7 @@ class RevisionTest(unittest.TestCase):
             root = Path(directory)
             _write_workspace(root, document)
             with self.assertRaisesRegex(EditionError, "refusing to remove"):
-                RevisionWorkspace(root).apply(
+                Workspace(root).apply(
                     _contract(document, approved_removals=["kept"]),
                     current_head=HEAD_A,
                 )
@@ -199,7 +216,7 @@ class RevisionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            result = RevisionWorkspace(root).apply(
+            result = Workspace(root).apply(
                 _contract(
                     document,
                     approved_wording=[
@@ -245,7 +262,7 @@ class RevisionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            result = RevisionWorkspace(root).apply(
+            result = Workspace(root).apply(
                 _contract(document, approved_removals=["one", "two"]),
                 current_head=HEAD_A,
             )
@@ -262,7 +279,7 @@ class RevisionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            workspace = RevisionWorkspace(root)
+            workspace = Workspace(root)
             result = workspace.apply(
                 _contract(document, approved_removals=["dropped"]),
                 current_head=HEAD_A,
@@ -311,13 +328,13 @@ class RevisionTest(unittest.TestCase):
             _write_workspace(root, document)
             before = (root / "edition.json").read_text(encoding="utf-8")
             with self.assertRaisesRegex(EditionError, "40-digit hexadecimal git head"):
-                RevisionWorkspace(root).apply(
+                Workspace(root).apply(
                     _contract(document, base_head="head-a", approved_removals=["dropped"]),
                     current_head="head-a",
                 )
             for label in ("main", "a" * 12):
                 with self.assertRaisesRegex(EditionError, "already reserved"):
-                    RevisionWorkspace(root).apply(
+                    Workspace(root).apply(
                         _contract(document, base_head=label, approved_removals=["dropped"]),
                         current_head=label,
                     )
@@ -328,7 +345,7 @@ class RevisionTest(unittest.TestCase):
                 "blocked",
             )
             with self.assertRaisesRegex(EditionError, "40-digit hexadecimal git head"):
-                RevisionWorkspace(root).apply(
+                Workspace(root).apply(
                     _contract(
                         document,
                         revision=2,
@@ -353,7 +370,7 @@ class RevisionTest(unittest.TestCase):
             _write_workspace(root, document)
             before = (root / "edition.json").read_text(encoding="utf-8")
             with self.assertRaisesRegex(EditionError, "editorial rejection"):
-                RevisionWorkspace(root).apply(
+                Workspace(root).apply(
                     _contract(
                         document,
                         approved_wording=[
@@ -379,7 +396,7 @@ class RevisionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            result = RevisionWorkspace(root).apply(
+            result = Workspace(root).apply(
                 _contract(
                     document,
                     approved_removals=["kept"],

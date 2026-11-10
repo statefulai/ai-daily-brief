@@ -7,9 +7,11 @@ code may store one bounded read with ``record_reading``. Deciding that the
 excerpt supports the sentence is an editorial check. CI does neither. It
 checks the shape of the record.
 
-A claim marked ``predicted`` must show its value and a prediction word in the
-same reader field. A claim marked ``measured`` is not reclassified. That gap
-stays with the editor.
+A claim marked ``predicted`` must show its value and an unnegated prediction
+word in the same reader field. Negation is the eight characters before the
+word, not a fixed phrase list. A measured claim is rejected when that same
+field uses a prediction word. An excerpt that says projected while the reader
+text says the number was measured still passes. That gap stays with the editor.
 """
 
 from __future__ import annotations
@@ -34,16 +36,21 @@ READINGS = frozenset(
 RELATIONSHIPS = frozenset({"original", "retelling", "supporting"})
 CLAIM_KINDS = frozenset({"measured", "predicted", "attributed"})
 PREDICTION_MARKERS = ("预测", "预计", "predicted", "forecast", "projected")
-_NEGATED_PREDICTION = re.compile(
-    r"不是预测|并非预测|不是预计|并非预计|不是projected|并非projected|not a prediction|not predicted",
+_PREDICTION_WORD = re.compile(r"预测|预计|predicted|forecast|projected", re.IGNORECASE)
+_NEGATION_IN_WINDOW = re.compile(r"不|非|没|无|\bnot\b|\bno\b", re.IGNORECASE)
+_UNIT_NUMBER = re.compile(
+    r"\$(\d+(?:\.\d+)?)[BMK]?"
+    r"|(\d+(?:\.\d+)?)\s*(?:billion|million|tokens|token|ms|GB|TB|MB|%|％)"
+    r"|(\d+(?:\.\d+)?)\s*(?:亿美元|万美元|亿元|万元|美元|元|亿|万|倍|个百分点|分|名|家|人)"
+    r"|(\d+(?:\.\d+)?)(?:ms|GB|TB|MB|[xX])",
     re.IGNORECASE,
 )
-_NUMERIC_UNIT = re.compile(
-    r"\d+(?:\.\d+)?\s*(?:%|％|亿美元|万美元|亿元|万元|美元|元|亿|万|token|tokens|倍|个百分点)"
-)
 _NUMBER = re.compile(r"\d+(?:\.\d+)?")
-_LATIN = re.compile(r"[A-Za-z]{4,}")
-MIN_EXCERPT_CHARS = 8
+_YEAR = re.compile(r"(?:19|20)\d{2}")
+_CJK_RUN = re.compile(r"[\u4e00-\u9fff]+")
+_LATIN_WORD = re.compile(r"[A-Za-z]{5,}")
+MIN_EXCERPT_CHARS = 12
+MIN_SHARED_CJK = 6
 MAX_REVISION = 2
 
 
@@ -223,6 +230,8 @@ def _event_reasons(event: Mapping[str, Any], edition_id: str, attempt: int | Non
             if reading == "read" and isinstance(excerpt, str) and excerpt.strip():
                 if len(excerpt.strip()) < MIN_EXCERPT_CHARS:
                     reasons.append("excerpt_too_short")
+                elif _excerpt_copies_text(event, excerpt):
+                    reasons.append("excerpt_copies_text")
                 elif not _excerpt_shares_claim(event, excerpt):
                     reasons.append("excerpt_unrelated")
                 else:
@@ -237,11 +246,14 @@ def _event_reasons(event: Mapping[str, Any], edition_id: str, attempt: int | Non
         elif blocked:
             for reading in blocked:
                 reasons.append(f"original_not_read:{reading}")
-        elif "excerpt_too_short" not in reasons and "excerpt_unrelated" not in reasons:
+        elif (
+            "excerpt_too_short" not in reasons
+            and "excerpt_unrelated" not in reasons
+            and "excerpt_copies_text" not in reasons
+        ):
             reasons.append("no_read_original")
     claims = event.get("claims") or []
-    if _has_numeric_claim(event) and not claims:
-        reasons.append("numeric_claim_without_kind")
+    reasons.extend(_claim_coverage_reasons(event, claims))
     if isinstance(claims, list):
         for claim in claims:
             if not isinstance(claim, Mapping):
@@ -259,13 +271,25 @@ def _event_reasons(event: Mapping[str, Any], edition_id: str, attempt: int | Non
 
 
 def _field_shows_prediction(text: str, value: str) -> bool:
+    """A prediction word counts only when no negation sits in the preceding window."""
     if value not in text:
         return False
-    return any(marker in _NEGATED_PREDICTION.sub("", text) for marker in PREDICTION_MARKERS)
+    for match in _PREDICTION_WORD.finditer(text):
+        window = text[max(0, match.start() - 8):match.start()]
+        if _NEGATION_IN_WINDOW.search(window):
+            continue
+        return True
+    return False
 
 
-def _has_numeric_claim(event: Mapping[str, Any]) -> bool:
-    return bool(_NUMERIC_UNIT.search(_claim_text(event)))
+def _unit_numbers(text: str) -> set[str]:
+    found: set[str] = set()
+    for match in _UNIT_NUMBER.finditer(text):
+        number = next(group for group in match.groups() if group)
+        if _YEAR.fullmatch(number) and re.search(rf"{re.escape(number)}\s*年", text):
+            continue
+        found.add(number)
+    return found
 
 
 def _claim_text(event: Mapping[str, Any]) -> str:
@@ -281,20 +305,79 @@ def _claim_text(event: Mapping[str, Any]) -> str:
     return "\n".join(parts)
 
 
+def _claim_coverage_reasons(event: Mapping[str, Any], claims: Any) -> list[str]:
+    reasons: list[str] = []
+    text = _claim_text(event)
+    needed = _unit_numbers(text)
+    values = []
+    if isinstance(claims, list):
+        values = [
+            item.get("value")
+            for item in claims
+            if isinstance(item, Mapping) and isinstance(item.get("value"), str)
+        ]
+    if needed and not values:
+        reasons.append("numeric_claim_without_kind")
+    for number in sorted(needed):
+        if values and not any(number in value for value in values):
+            reasons.append("numeric_claim_uncovered")
+            break
+    for value in values:
+        if value not in text:
+            reasons.append("claim_value_not_in_text")
+            break
+    return reasons
+
+
+def _excerpt_copies_text(event: Mapping[str, Any], excerpt: str) -> bool:
+    copied = excerpt.strip()
+    if len(copied) < MIN_EXCERPT_CHARS:
+        return False
+    for field in _reader_fields(event):
+        text = field.strip()
+        if not text:
+            continue
+        if copied == text:
+            return True
+        if len(text) >= MIN_EXCERPT_CHARS and (copied in text or text in copied):
+            return True
+    return False
+
+
 def _excerpt_shares_claim(event: Mapping[str, Any], excerpt: str) -> bool:
     claim = _claim_text(event)
-    if set(_NUMBER.findall(claim)) & set(_NUMBER.findall(excerpt)):
+    claim_numbers = {number for number in _NUMBER.findall(claim) if not _YEAR.fullmatch(number)}
+    excerpt_numbers = {number for number in _NUMBER.findall(excerpt) if not _YEAR.fullmatch(number)}
+    if claim_numbers & excerpt_numbers:
         return True
-    latin_claim = {word.lower() for word in _LATIN.findall(claim)}
-    latin_excerpt = {word.lower() for word in _LATIN.findall(excerpt)}
-    if latin_claim & latin_excerpt:
+    if _shared_cjk_length(claim, excerpt) >= MIN_SHARED_CJK:
         return True
-    return bool(_cjk_bigrams(claim) & _cjk_bigrams(excerpt))
+    latin_claim = {word.lower() for word in _LATIN_WORD.findall(claim)}
+    latin_excerpt = {word.lower() for word in _LATIN_WORD.findall(excerpt)}
+    return len(latin_claim & latin_excerpt) >= 2
 
 
-def _cjk_bigrams(text: str) -> set[str]:
-    chars = [char for char in text if "\u4e00" <= char <= "\u9fff"]
-    return {"".join(chars[index:index + 2]) for index in range(len(chars) - 1)}
+def _shared_cjk_length(left: str, right: str) -> int:
+    best = 0
+    for run in _CJK_RUN.findall(left):
+        for other in _CJK_RUN.findall(right):
+            best = max(best, _common_run(run, other))
+    return best
+
+
+def _common_run(left: str, right: str) -> int:
+    best = 0
+    for start in range(len(left)):
+        for offset in range(len(right)):
+            length = 0
+            while (
+                start + length < len(left)
+                and offset + length < len(right)
+                and left[start + length] == right[offset + length]
+            ):
+                length += 1
+            best = max(best, length)
+    return best
 
 
 def _measured_uses_prediction_word(event: Mapping[str, Any], claim: Mapping[str, Any]) -> bool:
@@ -343,8 +426,20 @@ def _verification_supports(
         named = record.get("claim")
         if not isinstance(named, str) or named not in claim:
             continue
+        if not _substantive_claim(named, claim):
+            continue
         return True
     return False
+
+
+def _substantive_claim(named: str, text: str) -> bool:
+    token = named.strip()
+    if len(token) < 4 or token in {"焦点", "。", "，"}:
+        return False
+    numbers = {number for number in _NUMBER.findall(text) if not _YEAR.fullmatch(number)}
+    if any(number in token for number in numbers):
+        return True
+    return len(token) >= 6 and _shared_cjk_length(token, text) >= 4
 
 
 def _prediction_visible(event: Mapping[str, Any], claim: Mapping[str, Any]) -> bool:

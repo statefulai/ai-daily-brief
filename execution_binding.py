@@ -1,16 +1,22 @@
 """Reference contract for binding one dispatch to one run.
 
 This module does not call a platform API and does not read secrets. A bot
-outside the repository can mirror these checks. A 40-digit head recorded here
-is the head the completion evidence names. It is not fetched from GitHub.
+outside the repository can mirror these checks. ``source`` is a string the
+caller reports. Nothing here checks that a wake payload or a run query
+actually produced it. A head is a 40-digit hex string on the evidence. It is
+not fetched from GitHub. When the dispatch stored ``expected_head``, completion
+must repeat that string.
 """
 
 from __future__ import annotations
 
+import re
 from typing import Any, Mapping
 
 ACCEPTED_SOURCES = frozenset({"wake_payload", "run_query"})
 TERMINAL_STATES = frozenset({"finished", "failed"})
+_HEAD = re.compile(r"^[0-9a-f]{40}$")
+_HASH = re.compile(r"^sha256:[0-9a-f]{64}$")
 
 
 class BindingError(ValueError):
@@ -28,6 +34,8 @@ class RunLog:
             raise BindingError("dispatch run id is already stored")
         record = {
             "run_id": run_id,
+            "edition_id": receipt.get("edition_id"),
+            "expected_head": receipt.get("expected_head"),
             "status": "dispatched",
             "head": None,
             "content_hash": None,
@@ -53,7 +61,7 @@ class RunLog:
         known = [item for item in self.dispatches if item["run_id"] == run_id]
         if not known:
             return {"status": "rejected", "reason": "completion run was not dispatched", "execution_id": None}
-        if self.dispatches[-1]["run_id"] != run_id:
+        if not _is_latest_in_lane(self.dispatches, known[0]):
             return {"status": "rejected", "reason": "late wake from an older run", "execution_id": None}
         if run_id in self.completions:
             return {"status": "rejected", "reason": "duplicate wake", "execution_id": None}
@@ -62,13 +70,19 @@ class RunLog:
             return {"status": "blocked", "missing": ["terminal_state"], "execution_id": None}
         head = evidence.get("head")
         content_hash = evidence.get("content_hash")
-        if not isinstance(head, str) or not isinstance(content_hash, str):
-            return {"status": "blocked", "missing": ["head", "content_hash"], "execution_id": None}
+        if not isinstance(head, str) or not _HEAD.fullmatch(head):
+            return {"status": "rejected", "reason": "head must be 40 hexadecimal digits", "execution_id": None}
+        if not isinstance(content_hash, str) or not _HASH.fullmatch(content_hash):
+            return {"status": "rejected", "reason": "content_hash must be sha256 and 64 hexadecimal digits", "execution_id": None}
+        expected = known[0].get("expected_head")
+        if isinstance(expected, str) and expected != head:
+            return {"status": "rejected", "reason": "head does not match the dispatch", "execution_id": None}
         record = {
             "status": "accepted",
             "run_id": run_id,
             "terminal_state": terminal,
             "source": source,
+            "source_is_self_reported": True,
             "head": head,
             "content_hash": content_hash,
             "execution_id": run_id,
@@ -97,9 +111,19 @@ def _own_run_id(receipt: Mapping[str, Any]) -> str:
 def _prefix_problem(run_id: str) -> str | None:
     if run_id.startswith("bc-"):
         return "agent id is not a run id"
+    if run_id == "run-":
+        return "run id has an empty suffix"
     if not run_id.startswith("run-"):
         return "run id prefix is unknown"
     return None
+
+
+def _is_latest_in_lane(dispatches: list[dict[str, Any]], record: Mapping[str, Any]) -> bool:
+    edition_id = record.get("edition_id")
+    if not edition_id:
+        return True
+    lane = [item for item in dispatches if item.get("edition_id") == edition_id]
+    return bool(lane) and lane[-1]["run_id"] == record["run_id"]
 
 
 def _missing_completion_fields(evidence: Mapping[str, Any]) -> list[str]:

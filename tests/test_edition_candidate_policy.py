@@ -31,7 +31,7 @@ def _source(url, *, kind="primary", support=None, verified=True, note=None):
     return source
 
 
-def _support(relationship="original", reading="read", excerpt="读者看到的导语与结果。"):
+def _support(relationship="original", reading="read", excerpt="读者看到的导语来自实验室原文。"):
     return {"relationship": relationship, "reading": reading, "excerpt": excerpt}
 
 
@@ -62,7 +62,7 @@ def _edition(events, edition_id="2026-11-12"):
                 support.get("relationship") == "original"
                 and support.get("reading") == "read"
                 and isinstance(excerpt, str)
-                and len(excerpt) >= 8
+                and len(excerpt) >= 12
             ):
                 event.setdefault("editorial_verifications", []).append(
                     {
@@ -208,7 +208,7 @@ class CandidatePolicyTest(unittest.TestCase):
                     [
                         _source(
                             "https://example.com/original",
-                            support=_support(excerpt="作者写到每秒 83.0 token。"),
+                            support=_support(excerpt="实验室记录每秒 83.0 token 的结果。"),
                             note="83.0 是预测",
                         )
                     ],
@@ -222,7 +222,7 @@ class CandidatePolicyTest(unittest.TestCase):
             [
                 _event(
                     "visible-prediction",
-                    [_source("https://example.com/original", support=_support(excerpt="每秒 83.0 token 是预测输出。"))],
+                    [_source("https://example.com/original", support=_support(excerpt="记录写明每秒 83.0 token 是预测输出，供读者看到。"))],
                     claims=[{"kind": "predicted", "value": "83.0"}],
                     lede="每秒 83.0 token 是预测输出，不是这次实测。",
                     placement="lead",
@@ -305,10 +305,10 @@ class CandidatePolicyTest(unittest.TestCase):
                     [
                         _source(
                             "https://news.example/retell",
-                            support=_support("original", "read", "据外媒报道该公司宣布融资。"),
+                            support=_support("original", "read", "外媒称该公司宣布了新模型，尚未核对原文。"),
                         )
                     ],
-                    lede="据外媒报道该公司宣布融资。",
+                    lede="该公司宣布了新模型。",
                     placement="lead",
                 )
             ]

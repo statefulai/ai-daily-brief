@@ -15,6 +15,17 @@ from tests.test_edition_revision import HEAD_A, HEAD_B, _contract, _write_worksp
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def _apply(root, contract, current_head=HEAD_A, ledger=None, observed_head=HEAD_A):
+    if ledger is None:
+        ledger = DeliveryLedger(root / "test-ledger.json")
+    return RevisionWorkspace(root).apply(
+        contract,
+        current_head=current_head,
+        ledger=ledger,
+        observed_head=observed_head,
+    )
+
+
 def _ids(report):
     return report["retained"], [(item["id"], item["reasons"]) for item in report["rejected"]]
 
@@ -133,7 +144,18 @@ class ProbeRegressionTest(unittest.TestCase):
                         "excerpt": event["lede"],
                     }
                 continue
-            excerpt = event["lede"]
+            import re
+            from candidate_policy import _claim_text, _unit_numbers
+
+            text = _claim_text(event)
+            numbers = sorted(_unit_numbers(text), key=len, reverse=True)
+            span = next(iter(re.findall(r"[\u4e00-\u9fff]{6,}", event.get("lede") or "")), "来源页核对记录")
+            if numbers:
+                excerpt = "来源页记录的数字是 " + "、".join(numbers) + " 。补充核对。"
+                event["claims"] = [{"kind": "measured", "value": number} for number in numbers]
+            else:
+                excerpt = f"核对记录写到{span[:6]}，这句话不是正文整段复制。"
+            named = next((number for number in numbers if len(number) >= 4), span[:6])
             event["sources"][0]["support"] = {
                 "relationship": "original",
                 "reading": "read",
@@ -145,12 +167,10 @@ class ProbeRegressionTest(unittest.TestCase):
                     "attempt": document["attempt"],
                     "source_url": event["sources"][0]["url"],
                     "excerpt": excerpt,
-                    "claim": excerpt,
+                    "claim": named,
                     "verdict": "supports",
                 }
             ]
-            if "66.7%" in event["lede"] or "%" in event["lede"]:
-                event["claims"] = [{"kind": "measured", "value": "66.7" if "66.7" in event["lede"] else "13"}]
         report = assess_new_candidate(document)
         self.assertEqual(
             [item["id"] for item in report["rejected"]],
@@ -202,9 +222,9 @@ class ProbeRegressionTest(unittest.TestCase):
             key = DeliveryKey(document["edition_id"], document["content_hash"], "email", "daily-list-v1")
             ledger.record(key, "sent")
             with self.assertRaisesRegex(EditionError, "frozen after delivery"):
-                RevisionWorkspace(workspace).apply(
+                _apply(
+                    workspace,
                     _contract(document, approved_removals=["drop"]),
-                    current_head=HEAD_A,
                     ledger=ledger,
                 )
 
@@ -226,7 +246,7 @@ class ProbeRegressionTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             _write_workspace(root, document)
-            RevisionWorkspace(root).apply(
+            _apply(root, 
                 _contract(document, approved_removals=["drop"]),
                 current_head=HEAD_A,
             )
@@ -234,7 +254,7 @@ class ProbeRegressionTest(unittest.TestCase):
             (root / "revision-state.json").unlink()
             _write_workspace(root, document)
             with self.assertRaisesRegex(EditionError, "already used"):
-                RevisionWorkspace(root).apply(
+                _apply(root, 
                     _contract(document, approved_removals=["drop"]),
                     current_head=HEAD_A,
                 )
@@ -256,7 +276,7 @@ class ProbeRegressionTest(unittest.TestCase):
             _write_workspace(root, document)
             before = (root / "edition.json").read_bytes()
             with self.assertRaisesRegex(EditionError, "not bound to this head"):
-                RevisionWorkspace(root).apply(
+                _apply(root, 
                     _contract(
                         document,
                         base_head=HEAD_B,
@@ -272,6 +292,7 @@ class ProbeRegressionTest(unittest.TestCase):
                         ],
                     ),
                     current_head=HEAD_B,
+                    observed_head=HEAD_B,
                 )
             self.assertEqual((root / "edition.json").read_bytes(), before)
 
@@ -285,7 +306,7 @@ class ProbeRegressionTest(unittest.TestCase):
 
             with patch.object(RevisionWorkspace, "_write_html_text", boom):
                 with self.assertRaises(OSError):
-                    RevisionWorkspace(root).apply(
+                    _apply(root, 
                         _contract(
                             document,
                             approved_wording=[
@@ -353,7 +374,7 @@ class ProbeRegressionTest(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            result = RevisionWorkspace(root).apply(contract, current_head=HEAD_A)
+            result = _apply(root, contract)
             self.assertEqual(result["status"], "failed")
             self.assertEqual((root / "edition.json").read_text(encoding="utf-8").count('"failed"') > 0, True)
 
@@ -387,8 +408,8 @@ class RunBindingTest(unittest.TestCase):
 
     def test_completion_binds_the_same_run_and_rejects_the_rest(self):
         log = RunLog()
-        log.dispatch({"run_id": "run-older"})
-        log.dispatch({"run_id": "run-current"})
+        log.dispatch({"run_id": "run-older", "edition_id": "2026-11-12"})
+        log.dispatch({"run_id": "run-current", "edition_id": "2026-11-12"})
         blocked = log.complete({"run_id": "run-current"})
         self.assertEqual(blocked["status"], "blocked")
         self.assertIn("source", blocked["missing"])

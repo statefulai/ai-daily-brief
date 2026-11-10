@@ -77,6 +77,13 @@ class RevisionWorkspace:
         ledger: DeliveryLedger | None = None,
         observed_head: str | None = None,
     ) -> dict[str, Any]:
+        """Apply one revision. ``ledger`` and ``observed_head`` are required.
+
+        ``observed_head`` must be the pull request head read before merge, for
+        example the ``head.sha`` in the GitHub event payload or ``git rev-parse``
+        of the fetched PR ref. This module does not call GitHub. A matching
+        string does not prove that the platform produced the commit.
+        """
         parsed = _parse_contract(contract)
         with self._lock():
             state = self._read_state()
@@ -152,12 +159,15 @@ class RevisionWorkspace:
             raise EditionError(f"revision is outside the bound of {MAX_REVISION}")
         base_head = parse_git_head(parsed["base_head"], "revision.base_head")
         current = parse_git_head(current_head, "revision.current_head")
-        if observed_head is not None:
-            require_head_agreement(current, observed_head)
         if current != base_head:
             raise EditionError("stale revision head")
-        if ledger is not None and _edition_delivery_frozen(ledger, parsed["edition_id"]):
+        if ledger is None:
+            raise EditionError("delivery ledger is required")
+        if _edition_delivery_frozen(ledger, parsed["edition_id"]):
             raise EditionError("edition is frozen after delivery")
+        if observed_head is None:
+            raise EditionError("observed head is required")
+        require_head_agreement(current, observed_head)
         editorial = _bind_editorial(parsed["editorial_rejections"], parsed, base_head)
         document = json.loads(self.edition_path.read_text(encoding="utf-8"))
         edition = validate_edition(document)
@@ -364,23 +374,60 @@ def _edition_delivery_frozen(ledger: DeliveryLedger, edition_id: str) -> bool:
     return False
 
 
-def revision_log_extends(baseline: str | None, current: str) -> None:
+def revision_log_extends(
+    baseline: str | None,
+    current: str,
+    *,
+    edition_id: str | None = None,
+) -> None:
     """A committed revision log may only grow by appending new numbers."""
-    current_records = json.loads(current).get("records")
+    try:
+        current_records = json.loads(current).get("records")
+    except json.JSONDecodeError as exc:
+        raise EditionError("invalid revision log") from exc
     if not isinstance(current_records, list):
         raise EditionError("invalid revision log")
-    numbers = [record.get("revision") for record in current_records]
-    if numbers != sorted(numbers) or len(numbers) != len(set(numbers)):
-        raise EditionError("revision numbers must increase")
+    _validate_revision_records(current_records, edition_id)
     if baseline is None:
         return
-    baseline_records = json.loads(baseline).get("records")
+    try:
+        baseline_records = json.loads(baseline).get("records")
+    except json.JSONDecodeError as exc:
+        raise EditionError("invalid revision log") from exc
     if not isinstance(baseline_records, list):
         raise EditionError("invalid revision log")
+    _validate_revision_records(baseline_records, edition_id)
     if current_records[: len(baseline_records)] != baseline_records:
         raise EditionError("revision history was rewritten")
     if len(current_records) < len(baseline_records):
         raise EditionError("revision history was rewritten")
+
+
+def _validate_revision_records(records: list[Any], edition_id: str | None) -> None:
+    previous: int | None = None
+    for record in records:
+        if not isinstance(record, Mapping):
+            raise EditionError("invalid revision record")
+        revision = record.get("revision")
+        if type(revision) is not int or not 1 <= revision <= MAX_REVISION:
+            raise EditionError("revision number is invalid")
+        if previous is not None and revision <= previous:
+            raise EditionError("revision numbers must increase")
+        previous = revision
+        status = record.get("status")
+        if status not in {"attempted", "applied", "blocked"}:
+            raise EditionError("revision status is invalid")
+        record_edition = record.get("edition_id")
+        if not isinstance(record_edition, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", record_edition):
+            raise EditionError("revision edition_id is invalid")
+        if edition_id is not None and record_edition != edition_id:
+            raise EditionError("revision edition_id does not match the directory")
+        attempt = record.get("attempt")
+        if type(attempt) is not int or attempt < 1:
+            raise EditionError("revision attempt is invalid")
+        head = record.get("base_head")
+        if not isinstance(head, str) or not _GIT_HEAD.fullmatch(head):
+            raise EditionError("revision base_head is invalid")
 
 
 def parse_git_head(value: Any, label: str) -> str:
