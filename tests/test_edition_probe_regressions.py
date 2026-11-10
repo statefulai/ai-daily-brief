@@ -397,7 +397,9 @@ class RunBindingTest(unittest.TestCase):
 
     def test_dispatch_stores_only_its_own_run_id(self):
         log = RunLog()
-        stored = log.dispatch({"run_id": "run-one", "agent_id": "bc-other"})
+        stored = log.dispatch(
+            {"run_id": "run-one", "agent_id": "bc-other", "edition_id": "2026-11-12", "expected_head": HEAD_A}
+        )
         self.assertEqual(stored["run_id"], "run-one")
         with self.assertRaises(BindingError):
             log.dispatch({"run_id": "bc-5968f500-228c-5e05-938e-0233cf57c6aa"})
@@ -408,8 +410,8 @@ class RunBindingTest(unittest.TestCase):
 
     def test_completion_binds_the_same_run_and_rejects_the_rest(self):
         log = RunLog()
-        log.dispatch({"run_id": "run-older", "edition_id": "2026-11-12"})
-        log.dispatch({"run_id": "run-current", "edition_id": "2026-11-12"})
+        log.dispatch({"run_id": "run-older", "edition_id": "2026-11-12", "expected_head": HEAD_A})
+        log.dispatch({"run_id": "run-current", "edition_id": "2026-11-12", "expected_head": HEAD_A})
         blocked = log.complete({"run_id": "run-current"})
         self.assertEqual(blocked["status"], "blocked")
         self.assertIn("source", blocked["missing"])

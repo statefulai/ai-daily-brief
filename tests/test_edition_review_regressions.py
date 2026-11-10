@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -23,7 +24,19 @@ URL = "https://lab.example/r"
 
 
 def _git(repo, *args):
-    subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True, text=True)
+    env = os.environ.copy()
+    env["GIT_AUTHOR_NAME"] = "Edition Test"
+    env["GIT_AUTHOR_EMAIL"] = "edition-test@example.com"
+    env["GIT_COMMITTER_NAME"] = "Edition Test"
+    env["GIT_COMMITTER_EMAIL"] = "edition-test@example.com"
+    subprocess.run(
+        ["git", "-c", "user.name=Edition Test", "-c", "user.email=edition-test@example.com", *args],
+        cwd=repo,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
 
 
 def _rev(repo):
@@ -377,7 +390,14 @@ class ReviewRegressionTest(unittest.TestCase):
 
     def test_completion_evidence_format_and_event_head(self):
         log = RunLog()
-        log.dispatch({"run_id": "run-AAA", "agent_id": "bc-1", "expected_head": HEAD_A})
+        log.dispatch(
+            {
+                "run_id": "run-AAA",
+                "agent_id": "bc-1",
+                "edition_id": "2026-11-12",
+                "expected_head": HEAD_A,
+            }
+        )
         rejected = log.complete(
             {
                 "run_id": "run-AAA",
@@ -403,7 +423,9 @@ class ReviewRegressionTest(unittest.TestCase):
         with self.assertRaisesRegex(BindingError, "empty suffix"):
             RunLog().dispatch({"run_id": "run-"})
         mismatched = RunLog()
-        mismatched.dispatch({"run_id": "run-BBB", "expected_head": HEAD_A})
+        mismatched.dispatch(
+            {"run_id": "run-BBB", "edition_id": "2026-11-12", "expected_head": HEAD_A}
+        )
         wrong_head = mismatched.complete(
             {
                 "run_id": "run-BBB",
@@ -416,8 +438,12 @@ class ReviewRegressionTest(unittest.TestCase):
         self.assertEqual(wrong_head["reason"], "head does not match the dispatch")
 
         interleaved = RunLog()
-        interleaved.dispatch({"run_id": "run-ED1", "edition_id": "2026-11-12"})
-        interleaved.dispatch({"run_id": "run-ED2", "edition_id": "2026-11-13"})
+        interleaved.dispatch(
+            {"run_id": "run-ED1", "edition_id": "2026-11-12", "expected_head": "c" * 40}
+        )
+        interleaved.dispatch(
+            {"run_id": "run-ED2", "edition_id": "2026-11-13", "expected_head": "c" * 40}
+        )
         first = interleaved.complete(
             {
                 "run_id": "run-ED1",
@@ -429,8 +455,8 @@ class ReviewRegressionTest(unittest.TestCase):
         )
         self.assertEqual(first["status"], "accepted")
         same = RunLog()
-        same.dispatch({"run_id": "run-old", "edition_id": "2026-11-12"})
-        same.dispatch({"run_id": "run-new", "edition_id": "2026-11-12"})
+        same.dispatch({"run_id": "run-old", "edition_id": "2026-11-12", "expected_head": "d" * 40})
+        same.dispatch({"run_id": "run-new", "edition_id": "2026-11-12", "expected_head": "d" * 40})
         late = same.complete(
             {
                 "run_id": "run-old",
@@ -455,6 +481,184 @@ class ReviewRegressionTest(unittest.TestCase):
             event.write_text(json.dumps({"pull_request": {"head": {"sha": "0" * 40}}}), encoding="utf-8")
             with self.assertRaisesRegex(EditionError, "does not match the pull request head"):
                 checkout_head_matches_event(repo, event)
+            event.write_text("{}", encoding="utf-8")
+            with self.assertRaisesRegex(EditionError, "no comparable head"):
+                checkout_head_matches_event(repo, event)
+            event.write_text(json.dumps({"after": head}), encoding="utf-8")
+            self.assertEqual(checkout_head_matches_event(repo, event), head)
+
+    def test_merge_commit_checkout_uses_the_second_parent(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repo = Path(directory)
+            _git(repo, "init", "-b", "main")
+            (repo / "README").write_text("base\n", encoding="utf-8")
+            _git(repo, "add", "README")
+            _git(repo, "commit", "-m", "base")
+            _git(repo, "checkout", "-b", "feature")
+            (repo / "README").write_text("feature\n", encoding="utf-8")
+            _git(repo, "add", "README")
+            _git(repo, "commit", "-m", "feature")
+            feature = _rev(repo)
+            _git(repo, "checkout", "main")
+            _git(repo, "merge", "--no-ff", "-m", "merge", "feature")
+            merge = _rev(repo)
+            self.assertNotEqual(merge, feature)
+            event = repo / "event.json"
+            event.write_text(
+                json.dumps({"pull_request": {"head": {"sha": feature}}}),
+                encoding="utf-8",
+            )
+            self.assertEqual(checkout_head_matches_event(repo, event), feature)
+            event.write_text(
+                json.dumps({"pull_request": {"head": {"sha": merge}}}),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(EditionError, "second parent"):
+                checkout_head_matches_event(repo, event)
+
+    def test_new_numeric_forms_negation_and_translation_bridge(self):
+        forms = [
+            "公司估值达三千亿美元，面向开发者开放下载。",
+            "推理成本下降百分之二十，面向开发者开放下载。",
+            "公司估值达３０００亿美元，面向开发者开放下载。",
+            "公司估值达 3 千亿美元，面向开发者开放下载。",
+            "新模型 70B 参数，面向开发者开放下载。",
+            "上下文扩展到 128K，面向开发者开放下载。",
+            "订阅价格每月 20 美金，面向开发者开放。",
+            "生成视频可达 60fps，面向开发者开放。",
+            "生成一张图只需 3 秒，面向开发者开放。",
+            "训练时长缩短到 2 小时，面向开发者开放。",
+            "市场规模达 1.5 万亿美元，面向开发者开放。",
+            "数据集 5TB，面向开发者开放下载。",
+            "用户数达 1000 万，面向开发者开放下载。",
+        ]
+        self.assertEqual(len(forms), 13)
+        for lede in forms:
+            retained, rejected = _assess(
+                _event(
+                    "n1",
+                    [_source(URL, support=_support(excerpt="Source page says the model is open for download now."))],
+                    lede=lede,
+                    placement="lead",
+                )
+            )
+            self.assertEqual(retained, [])
+            self.assertTrue(
+                "numeric_claim_without_kind" in rejected[0]["reasons"]
+                or "numeric_claim_uncovered" in rejected[0]["reasons"]
+            )
+        retained, rejected = _assess(
+            _event(
+                "n2b",
+                [_source(URL, support=_support(excerpt="Revenue was 300 and margin 20 percent this year at the lab."))],
+                lede="营收 300 亿美元，利润率 20%。",
+                claims=[{"kind": "measured", "value": "营收 300 亿美元，利润率 20%"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(retained, [])
+        self.assertIn("claim_value_not_a_span", rejected[0]["reasons"])
+        retained, rejected = _assess(
+            _event(
+                "n3",
+                [_source(URL, support=_support(excerpt="The lab reported 83.0 tokens per second on the public benchmark today."))],
+                lede="每秒 83.0 token，这个数并不属于厂商官方正式给出的预测。",
+                claims=[{"kind": "predicted", "value": "83.0"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(retained, [])
+        self.assertIn("prediction_not_visible", rejected[0]["reasons"])
+        for event_id, lede in (
+            ("n3b", "每秒 83.0 token，非常乐观的预测值。"),
+            ("n3c", "公司不久前预计每秒 83.0 token。"),
+        ):
+            retained, rejected = _assess(
+                _event(
+                    event_id,
+                    [_source(URL, support=_support(excerpt="Projected throughput is 83.0 tokens per second for the lab."))],
+                    lede=lede,
+                    claims=[{"kind": "predicted", "value": "83.0"}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(rejected, [], rejected)
+            self.assertEqual(retained, [event_id])
+        retained, rejected = _assess(
+            _event(
+                "n3d",
+                [_source(URL, support=_support(excerpt="Projected throughput is 83.0 tokens per second for the lab."))],
+                lede="实测每秒 83.0 token，非常接近预计。",
+                claims=[{"kind": "measured", "value": "83.0"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
+
+        with self.assertRaisesRegex(BindingError, "edition_id"):
+            RunLog().dispatch({"run_id": "run-OLD", "expected_head": HEAD_A})
+        with self.assertRaisesRegex(BindingError, "expected_head"):
+            RunLog().dispatch({"run_id": "run-A", "edition_id": "2026-11-12"})
+
+        bare = [
+            _event(
+                "n5",
+                [_source("https://www.anthropic.com/news/memory", support=_support("original", "read", "Today we're bringing memory to Claude for Team and Enterprise users."))],
+                lede="Anthropic 为 Claude 团队版和企业版用户上线记忆功能，可在设置中开启。",
+                placement="lead",
+            ),
+            _event(
+                "n5c",
+                [_source("https://lab.example/plan", support=_support("original", "read", "The company expects to reach 1 million users by Q2."))],
+                lede="公司预计第二季度用户达到 100 万。",
+                claims=[{"kind": "predicted", "value": "100 万"}],
+                placement="lead",
+            ),
+            _event(
+                "n5d",
+                [_source("https://lab.example/r2", support=_support("original", "read", "Our 2026 roadmap introduces agents for enterprise customers and developers."))],
+                lede="公司发布 2026 年路线图，面向企业客户推出智能体。",
+                placement="lead",
+            ),
+        ]
+        rejected_bare = sum(1 for event in bare if not assess_new_candidate(_edition([event]))["retained"])
+        self.assertEqual(rejected_bare, 3)
+        bridged = _edition(
+            [
+                _event(
+                    "n5",
+                    [_source("https://www.anthropic.com/news/memory", support=_support("original", "read", "Today we're bringing memory to Claude for Team and Enterprise users."))],
+                    lede="Anthropic 为 Claude 团队版和企业版用户上线记忆功能，可在设置中开启。",
+                    placement="lead",
+                )
+            ]
+        )
+        bridged["events"][0]["editorial_verifications"][0]["source_span"] = (
+            "Today we're bringing memory to Claude for Team and Enterprise users."
+        )
+        bridged["events"][0]["editorial_verifications"][0]["translated_claim"] = "团队版和企业版用户上线记忆功能"
+        bridged.pop("content_hash", None)
+        bridged = validate_edition(bridged)
+        self.assertEqual(assess_new_candidate(bridged)["retained"], ["n5"])
+        converted = _edition(
+            [
+                _event(
+                    "n5c",
+                    [_source("https://lab.example/plan", support=_support("original", "read", "The company expects to reach 1 million users by Q2."))],
+                    lede="公司预计第二季度用户达到 100 万。",
+                    claims=[{"kind": "predicted", "value": "100 万"}],
+                    placement="lead",
+                )
+            ]
+        )
+        record = converted["events"][0]["editorial_verifications"][0]
+        record["source_span"] = "The company expects to reach 1 million users by Q2."
+        record["translated_claim"] = "公司预计第二季度用户达到 100 万"
+        record["normalized_numbers"] = [{"source": "1 million", "claim": "100 万"}]
+        converted.pop("content_hash", None)
+        converted = validate_edition(converted)
+        self.assertEqual(assess_new_candidate(converted)["retained"], ["n5c"])
 
 
 if __name__ == "__main__":

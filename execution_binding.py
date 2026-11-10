@@ -30,12 +30,18 @@ class RunLog:
 
     def dispatch(self, receipt: Mapping[str, Any]) -> dict[str, Any]:
         run_id = _own_run_id(receipt)
+        edition_id = receipt.get("edition_id")
+        expected_head = receipt.get("expected_head")
+        if not isinstance(edition_id, str) or not edition_id.strip():
+            raise BindingError("dispatch requires edition_id")
+        if not isinstance(expected_head, str) or not _HEAD.fullmatch(expected_head):
+            raise BindingError("dispatch requires expected_head")
         if any(item["run_id"] == run_id for item in self.dispatches):
             raise BindingError("dispatch run id is already stored")
         record = {
             "run_id": run_id,
-            "edition_id": receipt.get("edition_id"),
-            "expected_head": receipt.get("expected_head"),
+            "edition_id": edition_id,
+            "expected_head": expected_head,
             "status": "dispatched",
             "head": None,
             "content_hash": None,
@@ -120,8 +126,8 @@ def _prefix_problem(run_id: str) -> str | None:
 
 def _is_latest_in_lane(dispatches: list[dict[str, Any]], record: Mapping[str, Any]) -> bool:
     edition_id = record.get("edition_id")
-    if not edition_id:
-        return True
+    if not isinstance(edition_id, str) or not edition_id:
+        return False
     lane = [item for item in dispatches if item.get("edition_id") == edition_id]
     return bool(lane) and lane[-1]["run_id"] == record["run_id"]
 

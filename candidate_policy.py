@@ -37,14 +37,18 @@ RELATIONSHIPS = frozenset({"original", "retelling", "supporting"})
 CLAIM_KINDS = frozenset({"measured", "predicted", "attributed"})
 PREDICTION_MARKERS = ("预测", "预计", "predicted", "forecast", "projected")
 _PREDICTION_WORD = re.compile(r"预测|预计|predicted|forecast|projected", re.IGNORECASE)
-_NEGATION_IN_WINDOW = re.compile(r"不|非|没|无|\bnot\b|\bno\b", re.IGNORECASE)
-_UNIT_NUMBER = re.compile(
-    r"\$(\d+(?:\.\d+)?)[BMK]?"
-    r"|(\d+(?:\.\d+)?)\s*(?:billion|million|tokens|token|ms|GB|TB|MB|%|％)"
-    r"|(\d+(?:\.\d+)?)\s*(?:亿美元|万美元|亿元|万元|美元|元|亿|万|倍|个百分点|分|名|家|人)"
-    r"|(\d+(?:\.\d+)?)(?:ms|GB|TB|MB|[xX])",
+_FALSE_NEGATION = ("非常", "无论", "不久", "不断", "无需", "非但", "不得不")
+_CLAUSE_NEGATION = re.compile(
+    r"并不属于|不属于|并非|不是|并不|没有|没|不|非|无|\bnot\b|\bno\b",
     re.IGNORECASE,
 )
+_FW_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
+_UNIT_AFTER = re.compile(
+    r"\s*(?:TB/s|GB/s|fps|tokens|token|billion|million|ms|TB|GB|MB|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
+    re.IGNORECASE,
+)
+_ARABIC = re.compile(r"\d+(?:\.\d+)?")
+_CN_NUMERAL = re.compile(r"[零〇一二三四五六七八九十百千万亿]+")
 _NUMBER = re.compile(r"\d+(?:\.\d+)?")
 _YEAR = re.compile(r"(?:19|20)\d{2}")
 _CJK_RUN = re.compile(r"[\u4e00-\u9fff]+")
@@ -124,13 +128,34 @@ def parse_editorial_verification(value: Any) -> dict[str, Any]:
     attempt = value.get("attempt")
     if type(attempt) is not int or attempt < 1:
         raise EditionError("event.editorial_verification.attempt must be an integer >= 1")
-    return {
+    parsed = {
         "edition_id": _nonempty(value.get("edition_id"), "editorial_verification.edition_id"),
         "attempt": attempt,
         "source_url": _nonempty(value.get("source_url"), "editorial_verification.source_url"),
         "excerpt": _nonempty(value.get("excerpt"), "editorial_verification.excerpt"),
         "claim": _nonempty(value.get("claim"), "editorial_verification.claim"),
         "verdict": verdict,
+    }
+    if "source_span" in value:
+        parsed["source_span"] = _nonempty(value.get("source_span"), "editorial_verification.source_span")
+    if "translated_claim" in value:
+        parsed["translated_claim"] = _nonempty(
+            value.get("translated_claim"), "editorial_verification.translated_claim"
+        )
+    if "normalized_numbers" in value:
+        pairs = value.get("normalized_numbers")
+        if not isinstance(pairs, list) or not pairs:
+            raise EditionError("editorial_verification.normalized_numbers must be a non-empty list")
+        parsed["normalized_numbers"] = [_normalized_pair(item) for item in pairs]
+    return parsed
+
+
+def _normalized_pair(value: Any) -> dict[str, str]:
+    if not isinstance(value, Mapping):
+        raise EditionError("editorial_verification.normalized_numbers item must be an object")
+    return {
+        "source": _nonempty(value.get("source"), "normalized_numbers.source"),
+        "claim": _nonempty(value.get("claim"), "normalized_numbers.claim"),
     }
 
 
@@ -232,7 +257,9 @@ def _event_reasons(event: Mapping[str, Any], edition_id: str, attempt: int | Non
                     reasons.append("excerpt_too_short")
                 elif _excerpt_copies_text(event, excerpt):
                     reasons.append("excerpt_copies_text")
-                elif not _excerpt_shares_claim(event, excerpt):
+                elif not _excerpt_shares_claim(event, excerpt) and not _translation_bridge(
+                    event, excerpt.strip()
+                ):
                     reasons.append("excerpt_unrelated")
                 else:
                     good_original = True
@@ -271,25 +298,83 @@ def _event_reasons(event: Mapping[str, Any], edition_id: str, attempt: int | Non
 
 
 def _field_shows_prediction(text: str, value: str) -> bool:
-    """A prediction word counts only when no negation sits in the preceding window."""
+    """A prediction word counts when its own clause does not negate it.
+
+    The clause runs to the nearest punctuation. Compounds such as 非常, 不久,
+    and 无论 are not negations. A negation anywhere earlier in that clause,
+    such as 并不属于…预测, does not count as visible.
+    """
     if value not in text:
         return False
     for match in _PREDICTION_WORD.finditer(text):
-        window = text[max(0, match.start() - 8):match.start()]
-        if _NEGATION_IN_WINDOW.search(window):
-            continue
-        return True
+        if not _clause_negates(text, match.start()):
+            return True
     return False
 
 
+def _clause_negates(text: str, start: int) -> bool:
+    left = 0
+    for index, char in enumerate(text):
+        if char in "，。；、,.!！？?\n" and index < start:
+            left = index + 1
+    before = text[left:start]
+    for word in _FALSE_NEGATION:
+        before = before.replace(word, " " * len(word))
+    return _CLAUSE_NEGATION.search(before) is not None
+
+
+def _norm_digits(text: str) -> str:
+    return text.translate(_FW_DIGITS)
+
+
 def _unit_numbers(text: str) -> set[str]:
+    """Numbers next to a unit or a magnitude. Dates, years, versions, and ids are not claims."""
+    normalized = _norm_digits(text)
     found: set[str] = set()
-    for match in _UNIT_NUMBER.finditer(text):
-        number = next(group for group in match.groups() if group)
-        if _YEAR.fullmatch(number) and re.search(rf"{re.escape(number)}\s*年", text):
+    consumed: list[tuple[int, int]] = []
+    for match in _ARABIC.finditer(normalized):
+        number = match.group()
+        if match.start() > 0 and normalized[match.start() - 1].isalpha():
+            continue
+        if _version_or_date(normalized, match.start(), match.end()):
+            continue
+        unit = _UNIT_AFTER.match(normalized[match.end():])
+        if unit is None:
+            continue
+        if _YEAR.fullmatch(number) and normalized[match.end():].lstrip().startswith("年"):
             continue
         found.add(number)
+        consumed.append((match.end(), match.end() + unit.end()))
+    for match in _CN_NUMERAL.finditer(normalized):
+        if any(start <= match.start() and match.end() <= stop for start, stop in consumed):
+            continue
+        token = match.group()
+        if token == "百" and normalized[match.end():match.end() + 2] == "分之":
+            continue
+        prefix = normalized[max(0, match.start() - 3):match.start()] == "百分之"
+        followed = _UNIT_AFTER.match(normalized[match.end():]) is not None
+        magnitude = bool(re.search(r"[十千万亿]", token)) or (token != "百" and "百" in token and followed)
+        if prefix:
+            found.add("百分之" + token)
+            continue
+        if not magnitude and not followed:
+            continue
+        if token == "百" and not followed:
+            continue
+        found.add(token)
     return found
+
+
+def _version_or_date(text: str, start: int, end: int) -> bool:
+    if start > 0 and text[start - 1] in "vV":
+        return True
+    if start > 0 and text[start - 1] == "." and end < len(text) and text[end] == ".":
+        return True
+    if end < len(text) and text[end] == "-" and re.match(r"\d{2}-\d{2}", text[end + 1:]):
+        return True
+    if start > 0 and text[start - 1] == "-" and re.match(r"\d{4}$", text[max(0, start - 5):start]):
+        return True
+    return False
 
 
 def _claim_text(event: Mapping[str, Any]) -> str:
@@ -316,17 +401,36 @@ def _claim_coverage_reasons(event: Mapping[str, Any], claims: Any) -> list[str]:
             for item in claims
             if isinstance(item, Mapping) and isinstance(item.get("value"), str)
         ]
-    if needed and not values:
-        reasons.append("numeric_claim_without_kind")
+    spans = [value for value in values if _is_numeric_span(value, needed, text)]
+    if needed and not spans:
+        reasons.append("numeric_claim_without_kind" if not values else "numeric_claim_uncovered")
     for number in sorted(needed):
-        if values and not any(number in value for value in values):
+        if spans and not any(_number_token(span, number) for span in spans):
             reasons.append("numeric_claim_uncovered")
             break
     for value in values:
-        if value not in text:
+        if _norm_digits(value) not in _norm_digits(text):
             reasons.append("claim_value_not_in_text")
             break
-    return reasons
+        if needed and not _is_numeric_span(value, needed, text):
+            reasons.append("claim_value_not_a_span")
+            break
+    return list(dict.fromkeys(reasons))
+
+
+def _is_numeric_span(value: str, needed: set[str], text: str) -> bool:
+    if not needed:
+        return True
+    if len(value) > 32 or re.search(r"[，。；;！？!?]", value):
+        return False
+    hits = [number for number in needed if _number_token(value, number)]
+    return len(hits) == 1 and _norm_digits(value) in _norm_digits(text)
+
+
+def _number_token(value: str, number: str) -> bool:
+    if re.fullmatch(r"\d+(?:\.\d+)?", number):
+        return re.search(rf"(?<![\d.]){re.escape(number)}(?![\d.])", _norm_digits(value)) is not None
+    return number in value
 
 
 def _excerpt_copies_text(event: Mapping[str, Any], excerpt: str) -> bool:
@@ -342,6 +446,50 @@ def _excerpt_copies_text(event: Mapping[str, Any], excerpt: str) -> bool:
         if len(text) >= MIN_EXCERPT_CHARS and (copied in text or text in copied):
             return True
     return False
+
+
+def _translation_bridge(event: Mapping[str, Any], excerpt: str) -> bool:
+    """A named translation can stand in for token overlap. It does not prove the page.
+
+    The verification must carry the verbatim source span and the translated claim.
+    When either side has a unit number the other does not share, each side's number
+    must be listed in normalized_numbers. A false pair still passes this shape.
+    """
+    records = event.get("editorial_verifications") or []
+    if not isinstance(records, list):
+        return False
+    text = _claim_text(event)
+    for record in records:
+        if not isinstance(record, Mapping) or record.get("verdict") != "supports":
+            continue
+        span = record.get("source_span")
+        translated = record.get("translated_claim")
+        if not isinstance(span, str) or len(span) < MIN_EXCERPT_CHARS or span not in excerpt:
+            continue
+        if not isinstance(translated, str) or translated not in text or not _substantive_claim(translated, text):
+            continue
+        if not _numbers_are_normalized(excerpt, text, record.get("normalized_numbers")):
+            continue
+        return True
+    return False
+
+
+def _numbers_are_normalized(excerpt: str, text: str, pairs: Any) -> bool:
+    excerpt_numbers = _unit_numbers(excerpt)
+    text_numbers = _unit_numbers(text)
+    if not excerpt_numbers and not text_numbers:
+        return True
+    if not isinstance(pairs, list):
+        return False
+    sources = {item.get("source") for item in pairs if isinstance(item, Mapping)}
+    claims = {item.get("claim") for item in pairs if isinstance(item, Mapping)}
+    for number in excerpt_numbers:
+        if not any(isinstance(source, str) and number in _norm_digits(source) and source in excerpt for source in sources):
+            return False
+    for number in text_numbers:
+        if not any(isinstance(claim, str) and number in claim and claim in text for claim in claims):
+            return False
+    return True
 
 
 def _excerpt_shares_claim(event: Mapping[str, Any], excerpt: str) -> bool:

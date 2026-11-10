@@ -51,14 +51,24 @@ An event may include `claims` and `editorial_verifications`. A source may includ
 
 The edition is kept only when one source is `original` and `read`, the excerpt is at least 12 characters, the excerpt is not a copy of the title, lede, or a fact, and the excerpt shares a non-year number or at least six Chinese characters or two English words of five letters. One shared two-character word, one English word, or a year is not enough. A `supports` verification must name that excerpt, the same `edition_id` and `attempt`, and a claim string that appears in the event and contains a number from the text or at least six Chinese characters. `。` and `焦点` do not count.
 
-A predicted value and an unnegated prediction word must share one reader field. The eight characters before the word are the negation window, so `非预测`, `不是 预测`, and `not a forecast` do not count. A measured claim whose own field says `预计`, `预测`, or `projected` is rejected. A measured lede that says `实测` while the excerpt says `Projected` still passes.
+A predicted value and an unnegated prediction word must share one reader field. Negation is the rest of the same clause, up to the nearest punctuation. `非常`, `不久`, `无论`, `不断`, and `无需` are not negations, so `非常乐观的预测值` and `公司不久前预计` stay visible. `并不属于…预测` in that clause is negated. A measured claim whose own field says `预计`, `预测`, or `projected` is rejected, including `非常接近预计`. A measured lede that says `实测` while the excerpt says `Projected` still passes.
+
+Each `claims[].value` is one numeric span: at most 32 characters, no clause punctuation, and exactly one unit-number from the text. A whole sentence that contains two numbers is not a span. A number next to a unit or a magnitude is a claim, including Chinese numerals (`三千亿`, `百分之二十`), full-width digits, `70B`, `128K`, `美金`, `fps`, `秒`, `小时`, and `TB/s`. A year written as `2026 年`, a date, a version, or an id is not.
+
+An English excerpt and a Chinese lede that share no number and no six-character span stay unrelated. A verification may add `source_span` (a verbatim piece of the excerpt) and `translated_claim` (text that appears in the event). If either side has a unit number, `normalized_numbers` must pair them, for example `{"source": "1 million", "claim": "100 万"}`. That pair is still an attestation. The fixtures that omit it stay rejected.
 
 A published edition directory on the base branch is frozen. Scope rejects a change to its `edition.json` unless a caller explicitly passes `allow_published_correction=True`. The workflow does not pass that flag. `revisions.json` is in scope only when the same pull request also changes that edition's `edition.json` and `index.html`. A `revisions.json`-only change is rejected. Records must use revision `1` or `2`, a matching `edition_id`, and status `attempted`, `applied`, or `blocked`.
 
 `RevisionWorkspace.apply` requires the delivery ledger and the observed pull request head. The observed head is the `pull_request.head.sha` in the GitHub event file, or `git rev-parse` of the fetched PR ref. `edition_ci.py check-head` compares that file with the checkout. It does not call the GitHub API.
 
-Before opening a pull request, run:
+`RunLog.dispatch` requires `edition_id` and `expected_head` (40 hexadecimal digits) from that dispatch's own receipt. A completion must repeat `expected_head`. An older run of the same `edition_id` is a late wake. Two editions can complete in either order. `source` is still a string the caller reports.
+
+Before opening a pull request, run preflight on the repository path, not on `output/`:
 
 ```bash
 python scripts/edition_ci.py preflight --edition editions/<date>/edition.json --base origin/main
 ```
+
+A file under `output/cloud-agent-check/` is not the published tree. Preflight there does not see that `editions/<date>/` is frozen.
+
+On a pull request, GitHub checks out the merge commit. `scope` compares `pull_request.head.sha` with `HEAD^2`. On a push, it compares `HEAD` with `after`. An event file that names neither fails. Local `scope` without an event file does not perform that comparison.

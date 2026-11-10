@@ -453,31 +453,56 @@ def preflight_candidate(edition_path: Path, base: str, root: Path = ROOT) -> Non
 
 
 def checkout_head_matches_event(root: Path = ROOT, event_path: Path | None = None) -> str:
-    """Compare the checkout HEAD with a GitHub event payload when one is present.
+    """Compare a checkout with the head named by a GitHub event file.
 
-    This reads a local event file or ``git rev-parse HEAD``. It does not call
-    the GitHub API. A match shows that this checkout is the sha in that file.
-    It does not show that the platform produced the commit or that no other
-    writer pushed afterward.
+    ``actions/checkout`` on ``pull_request`` checks out the synthetic merge
+    commit ``refs/pull/N/merge``. That commit's first parent is the base and
+    its second parent is the pull request head. This function compares
+    ``pull_request.head.sha`` with ``HEAD^2`` in that case, and with ``HEAD``
+    when the checkout is the branch itself. A push event compares ``HEAD``
+    with ``after``. An event file that names neither fails. It does not call
+    the GitHub API. A match does not prove the platform produced the commit.
+
+    Local ``scope`` without an event file does not perform this check. CI sets
+    ``GITHUB_EVENT_PATH``, so the check runs there.
     """
-    result = subprocess.run(
-        ["git", "rev-parse", "HEAD"],
-        cwd=root,
-        check=True,
-        capture_output=True,
-        text=True,
-    )
-    checkout = result.stdout.strip()
+    checkout = _rev_parse(root, "HEAD")
+    if checkout is None:
+        raise EditionError("checkout has no HEAD")
     if event_path is None:
         return checkout
     event = json.loads(event_path.read_text(encoding="utf-8"))
-    pull_request = event.get("pull_request") or {}
-    sha = (pull_request.get("head") or {}).get("sha") or event.get("after")
-    if not isinstance(sha, str) or not sha:
-        raise EditionError("pull request event has no head sha")
-    if sha != checkout:
-        raise EditionError("checkout head does not match the pull request head")
-    return checkout
+    pull_request = event.get("pull_request")
+    if isinstance(pull_request, dict) and pull_request:
+        expected = (pull_request.get("head") or {}).get("sha")
+        if not isinstance(expected, str) or not expected:
+            raise EditionError("pull request event has no head sha")
+        second = _rev_parse(root, "HEAD^2")
+        if second is not None and _rev_parse(root, "HEAD^1") is not None:
+            if second != expected:
+                raise EditionError("merge commit second parent does not match the pull request head")
+            return second
+        if checkout != expected:
+            raise EditionError("checkout head does not match the pull request head")
+        return checkout
+    after = event.get("after")
+    if isinstance(after, str) and after and set(after) != {"0"}:
+        if checkout != after:
+            raise EditionError("checkout head does not match the push event")
+        return checkout
+    raise EditionError("event has no comparable head")
+
+
+def _rev_parse(root: Path, spec: str) -> str | None:
+    result = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", spec],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout.strip() or None
 
 
 def _print_reader_warnings(edition: dict) -> None:
