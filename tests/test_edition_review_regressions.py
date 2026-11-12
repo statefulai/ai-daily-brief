@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import subprocess
 import tempfile
 import unittest
@@ -121,7 +122,7 @@ class ReviewRegressionTest(unittest.TestCase):
             self.assertEqual(retained, [])
             self.assertIn("prediction_not_visible", rejected[0]["reasons"])
 
-        retained, _rejected = _assess(
+        retained, rejected = _assess(
             _event(
                 "s4",
                 [_source(URL, support=_support(excerpt="Projected throughput is 83.0 tokens per second."))],
@@ -130,7 +131,8 @@ class ReviewRegressionTest(unittest.TestCase):
                 placement="lead",
             )
         )
-        self.assertEqual(retained, ["s4"])
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
 
         for event_id, excerpt, lede in (
             ("s5", "据外媒报道，该公司宣布完成融资。", "该公司宣布新模型上线。"),
@@ -434,16 +436,27 @@ class ReviewRegressionTest(unittest.TestCase):
         mismatched.dispatch(
             {"run_id": "run-BBB", "edition_id": "2026-11-12", "expected_head": HEAD_A}
         )
-        wrong_head = mismatched.complete(
+        produced = mismatched.complete(
             {
                 "run_id": "run-BBB",
                 "terminal_state": "finished",
                 "source": "wake_payload",
-                "head": "b" * 40,
+                "result_head": "b" * 40,
                 "content_hash": "sha256:" + "1" * 64,
             }
         )
-        self.assertEqual(wrong_head["reason"], "head does not match the dispatch")
+        self.assertEqual(produced["status"], "accepted")
+        self.assertEqual(produced["base_head"], HEAD_A)
+        self.assertEqual(produced["result_head"], "b" * 40)
+        self.assertEqual(
+            mismatched.require_result_head("run-BBB", HEAD_A)["reason"],
+            "result_head does not match headRefOid",
+        )
+        self.assertEqual(mismatched.require_result_head("run-BBB", "b" * 40)["status"], "accepted")
+        self.assertEqual(
+            mismatched.require_result_head("run-missing", "b" * 40)["reason"],
+            "result_head is missing",
+        )
 
         interleaved = RunLog()
         interleaved.dispatch(
@@ -919,6 +932,115 @@ class ReviewRegressionTest(unittest.TestCase):
         self.assertTrue(_same_stated_quantity("1.48 trillion", "1.5 万亿", 1.48e12, 1.5e12))
         self.assertTrue(_same_stated_quantity("1,000,000", "100 万", 1e6, 1e6))
         self.assertFalse(_same_stated_quantity("3 千万", "3 thousand", 3e7, 3000))
+        self.assertFalse(_same_stated_quantity("1.5 trillion", "2 万亿", 1.5e12, 2e12))
+        self.assertFalse(_same_stated_quantity("0.6 million", "1 百万", 6e5, 1e6))
+        self.assertEqual(_parse_quantity("1.5 个百分点")[1], "percentage_point")
+        self.assertEqual(_parse_quantity("1.5 percentage points")[1], "percentage_point")
+        self.assertEqual(_parse_quantity("1.5%")[1], "percent")
+        self.assertNotEqual(_parse_quantity("1.5 个百分点")[1], _parse_quantity("1.5%")[1])
+
+        bare_numbers = (
+            "推理延迟降到 40 毫秒。",
+            "训练只用了 30 天。",
+            "实测速度 83.0 tok/s。",
+            "整机功耗 700 W。",
+            "预计明年出货 500 台。",
+            "基准得分 91.2。",
+            "发布后 6 个月内开源。",
+            "数据集 1.2 PB。",
+            "模型共 96 层。",
+        )
+        for lede in bare_numbers:
+            number = re.search(r"\d+(?:\.\d+)?", lede).group()
+            self.assertIn(number, _unit_numbers(lede), lede)
+            retained, rejected = _assess(
+                _event(
+                    "bare",
+                    [_source(URL, support=_support(excerpt=f"The lab report states the figure {number} for this release today."))],
+                    lede=lede,
+                    placement="lead",
+                )
+            )
+            self.assertEqual(retained, [], lede)
+            self.assertIn("numeric_claim_without_kind", rejected[0]["reasons"], lede)
+        self.assertEqual(_unit_numbers("GPT-4"), set())
+        self.assertEqual(_unit_numbers("Claude Code 2.1.313 发布"), set())
+        self.assertEqual(_unit_numbers("Claude 3.5 Sonnet 更新"), set())
+        self.assertEqual(_unit_numbers("Meta 发布 Llama 3.1 70B"), {"70"})
+        self.assertEqual(_unit_numbers("数据集 1.2 PB。"), {"1.2"})
+        self.assertEqual(_unit_numbers("2026 年路线图"), set())
+        self.assertEqual(_unit_numbers("覆盖三个国家"), set())
+        self.assertEqual(_unit_numbers("六家公司参与"), {"六"})
+
+        synonym_excerpt = "The lab measured 83.0 tokens per second and 500 on its public benchmark."
+        for lede, value in (
+            ("预期每秒 83.0 token。", "83.0"),
+            ("有望达到每秒 83.0 token。", "83.0"),
+            ("估计每秒 83.0 token。", "83.0"),
+            ("expected 83.0 tokens per second。", "83.0"),
+            ("estimate 83.0 tokens per second。", "83.0"),
+        ):
+            retained, rejected = _assess(
+                _event(
+                    "syn",
+                    [_source(URL, support=_support(excerpt=synonym_excerpt))],
+                    lede=lede,
+                    claims=[{"kind": "measured", "value": value}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+            retained, rejected = _assess(
+                _event(
+                    "synp",
+                    [_source(URL, support=_support(excerpt=synonym_excerpt))],
+                    lede=lede,
+                    claims=[{"kind": "predicted", "value": value}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(rejected, [], (lede, rejected))
+            self.assertEqual(retained, ["synp"])
+
+        for lede in (
+            "公司否认每秒 83.0 token 的预测",
+            "83.0 tokens per second, measured rather than forecast",
+        ):
+            retained, rejected = _assess(
+                _event(
+                    "neg",
+                    [_source(URL, support=_support(excerpt="The lab measured 83.0 tokens per second on its public benchmark."))],
+                    lede=lede,
+                    claims=[{"kind": "predicted", "value": "83.0"}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(retained, [], lede)
+            self.assertIn("prediction_not_visible", rejected[0]["reasons"], lede)
+
+        retained, rejected = _assess(
+            _event(
+                "cookie",
+                [_source(URL, support=_support(excerpt="Cookie banner 3000 items in cart, privacy."))],
+                lede="公司估值达到 3000 亿美元。",
+                claims=[{"kind": "measured", "value": "3000 亿美元"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(retained, [])
+        self.assertIn("excerpt_unrelated", rejected[0]["reasons"])
+        retained, rejected = _assess(
+            _event(
+                "cart",
+                [_source(URL, support=_support(excerpt="The cart listed 3000 items in the warehouse report today."))],
+                lede="公司估值达到 3000 亿美元。",
+                claims=[{"kind": "measured", "value": "3000 亿美元"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(retained, [])
+        self.assertIn("excerpt_unrelated", rejected[0]["reasons"])
 
         def paired(event_id, excerpt, pairs):
             document = _edition(

@@ -8,10 +8,9 @@ excerpt supports the sentence is an editorial check. CI does neither. It
 checks the shape of the record.
 
 A claim marked ``predicted`` must show its value and an unnegated prediction
-word in the same reader field. Negation is the eight characters before the
-word, not a fixed phrase list. A measured claim is rejected when that same
-field uses a prediction word. An excerpt that says projected while the reader
-text says the number was measured still passes. That gap stays with the editor.
+word in the same reader field. Negation is the rest of that clause. A measured
+claim is rejected when its own field uses a prediction word, and also when the
+excerpt clause that contains the measured number uses one.
 """
 
 from __future__ import annotations
@@ -35,8 +34,37 @@ READINGS = frozenset(
 )
 RELATIONSHIPS = frozenset({"original", "retelling", "supporting"})
 CLAIM_KINDS = frozenset({"measured", "predicted", "attributed"})
-PREDICTION_MARKERS = ("预测", "预计", "predicted", "forecast", "projected")
-_PREDICTION_WORD = re.compile(r"预测|预计|predicted|forecast|projected", re.IGNORECASE)
+PREDICTION_MARKERS = (
+    "预测",
+    "预计",
+    "预期",
+    "预估",
+    "估计",
+    "有望",
+    "将达",
+    "计划",
+    "目标",
+    "predicted",
+    "forecast",
+    "forecasted",
+    "projected",
+    "expected",
+    "estimate",
+    "estimated",
+    "guidance",
+    "outlook",
+    "target",
+)
+_PREDICTION_WORD = re.compile(
+    r"预期|预估|预计|预测|估计|有望|将达|(?<![周月日年])计划(?![板书表性])|目标|"
+    r"\b(?:forecasted|forecasting|forecasts|forecast|"
+    r"projected|predictions|prediction|predicted|"
+    r"estimated|estimates|estimate|"
+    r"expected|expects|expect|"
+    r"guidance|outlooks|outlook|"
+    r"targets|targeted|targeting|target)\b",
+    re.IGNORECASE,
+)
 _FALSE_NEGATION = (
     "不得不",
     "不仅",
@@ -51,8 +79,8 @@ _FALSE_NEGATION = (
     "非但",
 )
 _CLAUSE_NEGATION = re.compile(
-    r"尚未|从未|并不属于|不属于|并非|不是|并不|没有|isn't|is not|not yet|"
-    r"never|without|别|勿|未|没|不|非|无|n't|\bnot\b|\bno\b",
+    r"rather than|否认|尚未|从未|并不属于|不属于|并非|不是|并不|没有|"
+    r"isn't|is not|not yet|never|without|别|勿|未|没|不|非|无|n't|\bnot\b|\bno\b",
     re.IGNORECASE,
 )
 _CLAUSE_BOUNDARY = "，。；、,!！？?\n"
@@ -374,25 +402,22 @@ def _norm_digits(text: str) -> str:
 
 
 def _unit_numbers(text: str) -> set[str]:
-    """Numbers next to a unit or a magnitude. Dates, years, versions, and ids are not claims."""
+    """Arabic numbers are claims. Years, dates, versions, model names, and ids are not.
+
+    Chinese numerals stay on the quantity rule, including the lone-digit
+    relaxation for 个, 位, 次, 款, 名, 人, 年, and 种.
+    """
     normalized = _norm_digits(text)
     found: set[str] = set()
     consumed: list[tuple[int, int]] = []
     for match in _ARABIC.finditer(normalized):
         number = match.group()
-        if match.start() > 0:
-            previous = normalized[match.start() - 1]
-            if previous.isascii() and previous.isalpha():
-                continue
-        if _version_or_date(normalized, match.start(), match.end()):
-            continue
-        unit = _UNIT_AFTER.match(normalized[match.end():])
-        if unit is None:
-            continue
-        if _YEAR.fullmatch(number) and normalized[match.end():].lstrip().startswith("年"):
+        if _arabic_is_exempt(normalized, match.start(), match.end(), number):
             continue
         found.add(number)
-        consumed.append((match.end(), match.end() + unit.end()))
+        unit = _UNIT_AFTER.match(normalized[match.end():])
+        if unit is not None:
+            consumed.append((match.end(), match.end() + unit.end()))
     for match in _CN_NUMERAL.finditer(normalized):
         if any(start <= match.start() and match.end() <= stop for start, stop in consumed):
             continue
@@ -470,6 +495,52 @@ def _is_cn_quantity(token: str, following: str, preceding: str = "") -> bool:
 
 def _cn_unit_after(following: str):
     return re.match(r"\s*(?:美元|美金|元|秒钟|秒|分钟|小时|倍|成)", following)
+
+
+_EN_MONTH = re.compile(
+    r"(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+$",
+    re.IGNORECASE,
+)
+
+
+def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
+    """Years, dates, clock times, versions, and model or id tokens are not claims."""
+    if _YEAR.fullmatch(number):
+        return True
+    if start > 0:
+        previous = text[start - 1]
+        if previous.isascii() and previous.isalpha():
+            return True
+        if previous in "T+:":
+            return True
+        if previous == "-" and (
+            len(number) == 2 or (start > 1 and text[start - 2].isascii() and text[start - 2].isalpha())
+        ):
+            return True
+    if end < len(text) and text[end] == ":" and text[end + 1:end + 3].isdigit():
+        return True
+    if end < len(text) and text[end] == "." and end + 1 < len(text) and text[end + 1].isdigit():
+        return True
+    if start > 1 and text[start - 1] == "." and text[start - 2].isdigit():
+        return True
+    if _version_or_date(text, start, end):
+        return True
+    rest = text[end:].lstrip()
+    if rest.startswith(("月", "日", "号")):
+        return True
+    if _EN_MONTH.search(text[max(0, start - 12):start]):
+        return True
+    if "." in number:
+        after = text[end:].lstrip()
+        if re.match(
+            r"(?:PB|TB|GB|MB|ms|tok(?:en)?s?|W|毫秒|秒钟|秒|分钟|小时|天|台|层|张|个月|trillion|billion|million|thousand)",
+            after,
+            re.IGNORECASE,
+        ):
+            return False
+        if re.match(r"[A-Z][A-Za-z]+", after) or re.match(r"\d+(?:\.\d+)?\s*[BMK]\b", after):
+            return True
+    return False
 
 
 def _version_or_date(text: str, start: int, end: int) -> bool:
@@ -685,30 +756,54 @@ def _written_scale(text: str, value: float) -> float:
     return value / float(match.group())
 
 
+def _significant_digits(text: str) -> int:
+    raw = _norm_digits(text).replace(",", "").replace("，", "")
+    match = re.search(r"\d+(?:\.\d+)?", raw)
+    if match is None:
+        return 0
+    token = match.group()
+    if "." in token:
+        digits = token.replace(".", "").lstrip("0")
+        return len(digits)
+    return len(token.lstrip("0") or "0")
+
+
 def _same_stated_quantity(left_text: str, right_text: str, left_val: float, right_val: float) -> bool:
     """Match a coarser written number only when it is the finer one rounded to that precision.
 
-    Two integers, such as 1 million and 102 万, must be the same value. A decimal
-    such as 1.48 may match 1.5 because 1.48 rounded to one decimal place is 1.5.
+    Two equal values match, including 1,000,000 and 100 万. A rounded match
+    requires the coarser side to keep at least two significant digits, so 1.48
+    matches 1.5 and 1.5 does not match 2. Two integers such as 1 million and
+    102 万 must be the same value.
     """
+    if _near(left_val, right_val):
+        return True
     left_places = _coeff_decimals(left_text)
     right_places = _coeff_decimals(right_text)
-    if left_places == 0 and right_places == 0:
-        return _near(left_val, right_val)
     if left_places == right_places:
-        return _near(left_val, right_val)
+        return False
     if left_places < right_places:
         coarse_text, coarse_val, fine_val, places = left_text, left_val, right_val, left_places
     else:
         coarse_text, coarse_val, fine_val, places = right_text, right_val, left_val, right_places
+    if _significant_digits(coarse_text) < 2:
+        return False
     scale = _written_scale(coarse_text, coarse_val)
     return _near(round(fine_val / scale, places), coarse_val / scale)
 
 
+def _quantity_kind(text: str) -> str:
+    lowered = _norm_digits(text).lower()
+    if re.search(r"个百分点|percentage\s+points?", lowered):
+        return "percentage_point"
+    if re.search(r"%|％|百分之|\bpercent\b", lowered):
+        return "percent"
+    return "absolute"
+
+
 def _parse_quantity(text: str) -> tuple[float, str] | None:
     raw = _norm_digits(text)
-    lowered = raw.lower()
-    percent = bool(re.search(r"%|％|percent|个百分点|百分之", lowered))
+    kind = _quantity_kind(raw)
     body = raw.replace(",", "").replace("，", "").replace("百分之", "")
     fraction = re.search(
         r"([零〇一二三四五六七八九十百千万亿两]+)分之([零〇一二三四五六七八九十百千万亿两]+)",
@@ -723,16 +818,16 @@ def _parse_quantity(text: str) -> tuple[float, str] | None:
     if match:
         value = float(match.group())
         rest = body[match.end():]
-        if not percent:
+        if kind == "absolute":
             value *= _scale_after(rest)
-        return value, "percent" if percent else "absolute"
+        return value, kind
     cn = re.search(r"[零〇一二三四五六七八九十百千万亿两]+", body)
     if cn is None:
         return None
     parsed = _cn_to_float(cn.group())
     if parsed is None:
         return None
-    return parsed, "percent" if percent else "absolute"
+    return parsed, kind
 
 
 def _scale_after(rest: str) -> float:
@@ -809,11 +904,53 @@ def _context_around(text: str, number: str) -> str:
     return normalized[index:index + len(target) + 24]
 
 
+def _shareable_numbers(text: str) -> set[str]:
+    found: set[str] = set()
+    for match in _NUMBER.finditer(text):
+        number = match.group()
+        if _arabic_is_exempt(text, match.start(), match.end(), number):
+            continue
+        found.add(number)
+    return found
+
+
+def _number_signatures(text: str, number: str) -> list[tuple[float, str]]:
+    normalized = _norm_digits(text)
+    target = _norm_digits(number)
+    found: list[tuple[float, str]] = []
+    start = 0
+    while True:
+        index = normalized.find(target, start)
+        if index < 0:
+            break
+        after = index + len(target)
+        before_ok = index == 0 or normalized[index - 1] not in "0123456789."
+        after_ok = after >= len(normalized) or normalized[after] not in "0123456789"
+        if before_ok and after_ok and not _arabic_is_exempt(normalized, index, after, target):
+            parsed = _parse_quantity(normalized[index:index + len(target) + 24])
+            if parsed is not None:
+                found.append(parsed)
+        start = after
+    return found
+
+
+def _same_number_quantity(left: str, right: str, number: str) -> bool:
+    for left_value, left_kind in _number_signatures(left, number):
+        for right_value, right_kind in _number_signatures(right, number):
+            if left_kind == right_kind and _near(left_value, right_value):
+                return True
+    return False
+
+
 def _excerpt_shares_claim(event: Mapping[str, Any], excerpt: str) -> bool:
+    if _BOILERPLATE.search(excerpt):
+        return False
     claim = _claim_text(event)
-    claim_numbers = {number for number in _NUMBER.findall(claim) if not _YEAR.fullmatch(number)}
-    excerpt_numbers = {number for number in _NUMBER.findall(excerpt) if not _YEAR.fullmatch(number)}
-    if claim_numbers & excerpt_numbers:
+    normalized_claim = _norm_digits(claim)
+    normalized_excerpt = _norm_digits(excerpt)
+    claim_numbers = _shareable_numbers(normalized_claim)
+    excerpt_numbers = _shareable_numbers(normalized_excerpt)
+    if any(_same_number_quantity(claim, excerpt, number) for number in claim_numbers & excerpt_numbers):
         return True
     if _shared_cjk_length(claim, excerpt) >= MIN_SHARED_CJK:
         return True
@@ -845,6 +982,49 @@ def _common_run(left: str, right: str) -> int:
     return best
 
 
+def _clause_bounds(text: str, index: int) -> tuple[int, int]:
+    left = 0
+    right = len(text)
+    for cursor, _char in enumerate(text):
+        if cursor < index and _clause_boundary(text, cursor):
+            left = cursor + 1
+        if cursor > index and _clause_boundary(text, cursor):
+            right = cursor
+            break
+    return left, right
+
+
+def _number_clause_predicts(text: str, number: str) -> bool:
+    normalized = _norm_digits(text)
+    target = _norm_digits(number)
+    index = normalized.find(target)
+    if index < 0:
+        return False
+    left, right = _clause_bounds(text, index)
+    clause = text[left:right]
+    for match in _PREDICTION_WORD.finditer(clause):
+        if not _clause_negates(text, left + match.start()):
+            return True
+    return False
+
+
+def _support_excerpts(event: Mapping[str, Any]) -> list[str]:
+    excerpts: list[str] = []
+    sources = event.get("sources") or []
+    if not isinstance(sources, list):
+        return excerpts
+    for source in sources:
+        if not isinstance(source, Mapping):
+            continue
+        support = source.get("support")
+        if not isinstance(support, Mapping):
+            continue
+        excerpt = support.get("excerpt")
+        if isinstance(excerpt, str) and excerpt.strip():
+            excerpts.append(excerpt)
+    return excerpts
+
+
 def _measured_uses_prediction_word(event: Mapping[str, Any], claim: Mapping[str, Any]) -> bool:
     value = claim.get("value")
     if not isinstance(value, str) or not value:
@@ -852,6 +1032,11 @@ def _measured_uses_prediction_word(event: Mapping[str, Any], claim: Mapping[str,
     for text in _reader_fields(event):
         if value in text and _field_shows_prediction(text, value):
             return True
+    numbers = _NUMBER.findall(_norm_digits(value)) or [value]
+    for excerpt in _support_excerpts(event):
+        for number in numbers:
+            if _number_clause_predicts(excerpt, number):
+                return True
     return False
 
 
