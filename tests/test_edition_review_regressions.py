@@ -1498,6 +1498,29 @@ class ReviewRegressionTest(unittest.TestCase):
         ):
             self.assertEqual(_unit_numbers(text), set(), text)
 
+    def test_capitalized_unit_words_require_claims(self):
+        from candidate_policy import _unit_numbers
+
+        for text, number in (
+            ("speed is 4.2 Tokens per second。", "4.2"),
+            ("价格 2.5 Dollars。", "2.5"),
+            ("功率 2.5 Gigawatts。", "2.5"),
+            ("算力 3.5 Petaflops。", "3.5"),
+            ("涨幅 2.5 Percentage points。", "2.5"),
+            ("规模 2.5 Bn。", "2.5"),
+        ):
+            self.assertIn(number, _unit_numbers(text), text)
+        for text in (
+            "Claude 3.5 Sonnet 更新。",
+            "Gemini 2.5 Pro 上线。",
+            "Qwen 2.5 Max 发布。",
+            "DeepSeek V3.2 发布。",
+            "GPT 4.5 Turbo 发布。",
+        ):
+            self.assertEqual(_unit_numbers(text), set(), text)
+        self.assertEqual(_unit_numbers("25:99 比分。"), {"25", "99"})
+        self.assertEqual(_unit_numbers("99:99 比分。"), {"99"})
+
 
 if __name__ == "__main__":
     unittest.main()
