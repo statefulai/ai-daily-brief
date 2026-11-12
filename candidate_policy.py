@@ -75,11 +75,15 @@ _BOILERPLATE = re.compile(
 )
 _FW_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
 _UNIT_AFTER = re.compile(
-    r"\s*(?:TB/s|GB/s|fps|tokens|token|billion|million|ms|TB|GB|MB|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
+    r"\s*(?:TB/s|GB/s|fps|tokens|token|trillion|billion|million|ms|TB|GB|MB|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
     re.IGNORECASE,
 )
 _ARABIC = re.compile(r"\d+(?:\.\d+)?")
-_CN_NUMERAL = re.compile(r"[零〇一二三四五六七八九十百千万亿]+")
+_CN_NUMERAL = re.compile(r"[零〇一二三四五六七八九十百千万亿两]+")
+_CN_FRACTION = re.compile(
+    r"[零〇一二三四五六七八九十百千万亿两]+分之[零〇一二三四五六七八九十百千万亿两]+"
+)
+_CN_SINGLE_DIGIT = "零〇一二三四五六七八九两"
 _NUMBER = re.compile(r"\d+(?:\.\d+)?")
 _YEAR = re.compile(r"(?:19|20)\d{2}")
 _CJK_RUN = re.compile(r"[\u4e00-\u9fff]+")
@@ -388,15 +392,27 @@ def _unit_numbers(text: str) -> set[str]:
     for match in _CN_NUMERAL.finditer(normalized):
         if any(start <= match.start() and match.end() <= stop for start, stop in consumed):
             continue
+        fraction = _covering_fraction(normalized, match.start(), match.end())
+        if fraction is not None:
+            found.add(fraction)
+            continue
         token = match.group()
         if token == "百" and normalized[match.end():match.end() + 2] == "分之":
             continue
         if _inside_exclusion(normalized, match.start(), match.end()):
             continue
         prefix = normalized[max(0, match.start() - 3):match.start()] == "百分之"
-        if prefix or _is_cn_quantity(token, normalized[match.end():]):
+        preceding = normalized[: match.start()]
+        if prefix or _is_cn_quantity(token, normalized[match.end():], preceding):
             found.add("百分之" + token if prefix else token)
     return found
+
+
+def _covering_fraction(text: str, start: int, end: int) -> str | None:
+    for match in _CN_FRACTION.finditer(text):
+        if match.start() <= start and end <= match.end():
+            return match.group()
+    return None
 
 
 def _inside_exclusion(text: str, start: int, end: int) -> bool:
@@ -409,9 +425,15 @@ def _inside_exclusion(text: str, start: int, end: int) -> bool:
     return False
 
 
-def _is_cn_quantity(token: str, following: str) -> bool:
-    """A Chinese numeral is a quantity only when digits and a magnitude combine, or a unit follows."""
-    digits = "零〇一二三四五六七八九两"
+def _is_cn_quantity(token: str, following: str, preceding: str = "") -> bool:
+    """Count a Chinese numeral when it is a magnitude or a measured unit.
+
+    A lone digit before 个, 位, 次, 款, 名, 人, 年, or 种 is grammatical
+    (一个, 一次, 第一, 另一家), not a claim. 家 counts only when the digit
+    is not 一, so 六家 stays and 一家 does not. 倍, 成, currency, and clock
+    units stay claims for every digit, including 两倍 and 三成.
+    """
+    digits = _CN_SINGLE_DIGIT
     magnitudes = "十百千万亿"
     has_digit = any(char in digits for char in token)
     has_magnitude = any(char in magnitudes for char in token)
@@ -419,11 +441,23 @@ def _is_cn_quantity(token: str, following: str) -> bool:
         return True
     if not has_digit and has_magnitude and len(token) >= 2:
         return True
+    if len(token) == 1 and token in digits:
+        if preceding.endswith("第"):
+            return False
+        if token == "一" and (
+            preceding.endswith(("另", "上", "下", "又", "同", "唯")) or preceding.endswith("任何")
+        ):
+            return False
+        if re.match(r"\s*(?:倍|成|美元|美金|元|秒钟|秒|分钟|小时)", following):
+            return True
+        if token != "一" and re.match(r"\s*家", following):
+            return True
+        return False
     return _cn_unit_after(following) is not None and (has_digit or has_magnitude)
 
 
 def _cn_unit_after(following: str):
-    return re.match(r"\s*(?:美元|美金|元|秒钟|秒|分钟|小时|倍|个|位|次|款|家|名|人|年)", following)
+    return re.match(r"\s*(?:美元|美金|元|秒钟|秒|分钟|小时|倍|成)", following)
 
 
 def _version_or_date(text: str, start: int, end: int) -> bool:
@@ -573,6 +607,7 @@ _QUANTITY_SCALE = (
     ("千亿", 10**11),
     ("万亿", 10**12),
     ("百万", 10**6),
+    ("trillion", 10**12),
     ("billion", 10**9),
     ("million", 10**6),
     ("thousand", 10**3),
@@ -583,7 +618,9 @@ _QUANTITY_SCALE = (
 
 
 def _close(left: float, right: float) -> bool:
-    return abs(left - right) <= max(0.01, abs(left) * 1e-6)
+    scale = max(abs(left), abs(right), 1.0)
+    # Two percent covers rounding such as 1.48 to 1.5, not a different magnitude.
+    return abs(left - right) / scale <= 0.02
 
 
 def _parse_quantity(text: str) -> tuple[float, str] | None:
@@ -608,15 +645,16 @@ def _parse_quantity(text: str) -> tuple[float, str] | None:
 
 
 def _scale_after(rest: str) -> float:
-    lowered = rest.lower()
+    """Use only the scale word that begins the text after the number."""
+    lowered = rest.lstrip().lower()
     for token, factor in _QUANTITY_SCALE:
-        if token.lower() in lowered:
+        if lowered.startswith(token.lower()):
             return float(factor)
-    if re.search(r"(?<![a-z])b(?![a-z])", lowered):
+    if re.match(r"b(?![a-z])", lowered):
         return 1e9
-    if re.search(r"(?<![a-z])m(?![a-z])", lowered):
+    if re.match(r"m(?![a-z])", lowered):
         return 1e6
-    if re.search(r"(?<![a-z])k(?![a-z])", lowered):
+    if re.match(r"k(?![a-z])", lowered):
         return 1e3
     return 1.0
 

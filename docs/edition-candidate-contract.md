@@ -57,9 +57,11 @@ Each `claims[].value` is one numeric span: at most 32 characters, no clause punc
 
 An English excerpt and a Chinese lede that share no number and no six-character span stay unrelated. A verification may add `source_span` (a verbatim piece of the excerpt) and `translated_claim` (text that appears in the event). A cookie notice or “all rights reserved” excerpt cannot use this path. Each `normalized_numbers` entry must place its source text inside `source_span` and its claim text inside `translated_claim`, and the two quantities must be equal after scaling (`1 million` equals `100 万`, `3 千亿` equals `300 billion`). That pair is still an attestation.
 
-Chinese numerals count as claims only when they are a quantity: a digit combined with 十/百/千/万/亿, a magnitude word such as 百万, 百分之, or a numeral followed by a unit. Names and adverbs in the exclusion list do not count: 千问, 千帆, 万相, 万物, 十分, 千万不要, 百分比, 二分, 一键.
+Chinese numerals count as claims only when they are a quantity: a digit combined with 十/百/千/万/亿, a magnitude such as 百万, a fraction such as 十分之一, or a measured unit such as 倍, 成, 家 when the digit is not 一, or a currency or clock unit. A lone 一 before 个, 次, 位, 款, 家, 名, 人, 年, or 种 is not a claim, and neither is 第 followed by a digit. Names and adverbs do not count: 千问, 千帆, 万相, 万物, 十分, 千万不要, 百分比, 二分, 一键. The fraction exclusion does not swallow 十分之一 or 二分之一.
 
-Negation is the rest of the clause. A decimal point inside a number is not a clause boundary. 未, 尚未, 从未, 别, 勿, never, isn't, is not, and not yet are negations. 不仅, 不但, and 不光 are not.
+A scale word counts only when it is the first word after the number. `trillion` is 10 to the 12th, the same as 万亿. A translated pair may differ by up to 2 percent, which allows 1.48 to match 1.5.
+
+Negation is the rest of the clause. A decimal point inside a number is not a clause boundary. 未, 尚未, 从未, 别, 勿, never, isn't, is not, and not yet are negations. 不仅, 不但, and 不光 are not. The word list does not treat 并非常规预测 or 否认…预测 as negations. Those stay visible until an editor marks them.
 
 A published edition directory on the base branch is frozen. Scope rejects a change to its `edition.json` unless a caller explicitly passes `allow_published_correction=True`. The workflow does not pass that flag. `revisions.json` is in scope only when the same pull request also changes that edition's `edition.json` and `index.html`. A `revisions.json`-only change is rejected. Records must use revision `1` or `2`, a matching `edition_id`, and status `attempted`, `applied`, or `blocked`.
 

@@ -781,6 +781,111 @@ class ReviewRegressionTest(unittest.TestCase):
         )
         self.assertEqual(assess_new_candidate(plain)["retained"], ["t6"])
 
+    def test_grammatical_yi_is_not_a_quantity_and_real_amounts_are(self):
+        excerpt = "Source page says the model is 面向开发者开放下载 now."
+        grammatical = [
+            "公司第一次公布这组数字，面向开发者开放下载。",
+            "那是另一家公司的方案，面向开发者开放下载。",
+            "审稿是一位没有出资的研究者，再加一次内审，面向开发者开放下载。",
+            "页面并带了一个调参实验，面向开发者开放下载。",
+            "他说这是第一款接入家庭的型号，面向开发者开放下载。",
+        ]
+        for lede in grammatical:
+            retained, rejected = _assess(
+                _event("gram", [_source(URL, support=_support(excerpt=excerpt))], lede=lede, placement="lead")
+            )
+            self.assertEqual(retained, ["gram"], (lede, rejected))
+        for lede in (
+            "推理速度升到原先的三倍，面向开发者开放下载。",
+            "公司公布与六家药物机构合作，面向开发者开放下载。",
+            "价格是每百万 token 两美元，面向开发者开放下载。",
+            "调用失败少于十万分之一，面向开发者开放下载。",
+            "性能提升两倍，面向开发者开放下载。",
+            "市场份额达三成，面向开发者开放下载。",
+            "成本降到十分之一，面向开发者开放下载。",
+            "延迟降到二分之一，面向开发者开放下载。",
+        ):
+            retained, rejected = _assess(
+                _event("qty", [_source(URL, support=_support(excerpt=excerpt))], lede=lede, placement="lead")
+            )
+            self.assertEqual(retained, [], lede)
+            self.assertIn("numeric_claim_without_kind", rejected[0]["reasons"])
+
+        from candidate_policy import _parse_quantity, _quantities_in, _unit_numbers
+
+        real = {
+            "2026-11-05": ("uber-agent-rides", ("第一次公布", "任何一家")),
+            "2026-11-07": ("biobasics-bench", ("一位", "一次内审")),
+            "2026-11-08": ("llama-moe-cache-cpu", ("一个调参",)),
+        }
+        for edition_id, (event_id, snippets) in real.items():
+            document = json.loads((ROOT / "editions" / edition_id / "edition.json").read_text(encoding="utf-8"))
+            event = next(item for item in document["events"] if item["id"] == event_id)
+            text = "\n".join(
+                [event.get("lede") or "", *[item for item in event["facts"] if isinstance(item, str)]]
+            )
+            for snippet in snippets:
+                self.assertIn(snippet, text)
+                self.assertEqual(_unit_numbers(snippet), set(), snippet)
+
+        def bridged(event_id, source_excerpt, lede, span, translated, pairs, claims):
+            document = _edition(
+                [
+                    _event(
+                        event_id,
+                        [_source(URL, support=_support("original", "read", source_excerpt))],
+                        lede=lede,
+                        claims=claims,
+                        placement="lead",
+                    )
+                ]
+            )
+            record = document["events"][0]["editorial_verifications"][0]
+            record["source_span"] = span
+            record["translated_claim"] = translated
+            record["normalized_numbers"] = pairs
+            document.pop("content_hash", None)
+            return validate_edition(document)
+
+        trillion = bridged(
+            "tri",
+            "The market could reach 1.5 trillion dollars by 2030 overall.",
+            "市场规模到 2030 年可达 1.5 万亿美元。",
+            "reach 1.5 trillion dollars",
+            "市场规模到 2030 年可达 1.5 万亿美元",
+            [{"source": "1.5 trillion", "claim": "1.5 万亿美元"}],
+            [{"kind": "attributed", "value": "1.5 万亿美元"}],
+        )
+        self.assertEqual(assess_new_candidate(trillion)["retained"], ["tri"])
+        rounded = bridged(
+            "rnd",
+            "The market reached 1.48 trillion dollars in total revenue.",
+            "市场规模约 1.5 万亿美元。",
+            "reached 1.48 trillion dollars",
+            "市场规模约 1.5 万亿美元",
+            [{"source": "1.48 trillion", "claim": "1.5 万亿美元"}],
+            [{"kind": "attributed", "value": "1.5 万亿美元"}],
+        )
+        self.assertEqual(assess_new_candidate(rounded)["retained"], ["rnd"])
+        mixed = bridged(
+            "mix",
+            "The startup has 300 employees and raised 100 million dollars last week.",
+            "这家公司有 300 人，融资 1 亿美元。",
+            "has 300 employees and raised 100 million dollars",
+            "这家公司有 300 人，融资 1 亿美元",
+            [
+                {"source": "300 employees", "claim": "300 人"},
+                {"source": "100 million", "claim": "1 亿美元"},
+            ],
+            [{"kind": "attributed", "value": "300 人"}, {"kind": "attributed", "value": "1 亿美元"}],
+        )
+        self.assertEqual(assess_new_candidate(mixed)["retained"], ["mix"])
+        self.assertEqual(_parse_quantity("1.5 trillion")[0], 1.5e12)
+        self.assertEqual(
+            set(_quantities_in("这家公司有 300 人，融资 1 亿美元。")),
+            {(300.0, "absolute"), (1e8, "absolute")},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
