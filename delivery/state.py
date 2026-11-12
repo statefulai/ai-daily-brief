@@ -72,7 +72,22 @@ class DeliveryLedger:
         return record.get("status") if record else None
 
     def may_attempt(self, key: DeliveryKey) -> bool:
-        return self.status(key) in {None, "failed"}
+        with self._write_lock():
+            return self._may_attempt(self._read(), key)
+
+    def begin_attempt(self, key: DeliveryKey) -> None:
+        """Reserve one send under the ledger lock. A second writer cannot pass."""
+        with self._write_lock():
+            payload = self._read()
+            if not self._may_attempt(payload, key):
+                raise EditionError("delivery attempt is not open")
+            payload["records"][key.token] = {
+                "key": asdict(key),
+                "status": "unknown",
+                "detail": "attempt reserved",
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            }
+            self._replace(payload)
 
     def record(
         self,
@@ -85,6 +100,9 @@ class DeliveryLedger:
             raise EditionError("unsupported delivery status")
         with self._write_lock():
             payload = self._read()
+            conflict = self._cross_hash_conflict(payload, key)
+            if conflict:
+                raise EditionError(conflict)
             current = payload["records"].get(key.token)
             if current and current.get("status") == "sent" and status != "sent":
                 raise EditionError("sent delivery status cannot be downgraded")
@@ -94,9 +112,41 @@ class DeliveryLedger:
                 "detail": detail,
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             }
-            temporary = self.path.with_suffix(self.path.suffix + ".tmp")
-            temporary.write_text(
-                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
-            )
-            temporary.replace(self.path)
+            if status == "sent":
+                payload.setdefault("frozen_editions", {})[key.edition_id] = key.content_hash
+            self._replace(payload)
+
+    def _may_attempt(self, payload: dict, key: DeliveryKey) -> bool:
+        if self._cross_hash_conflict(payload, key):
+            return False
+        current = payload["records"].get(key.token)
+        status = current.get("status") if current else None
+        return status in {None, "failed"}
+
+    def _cross_hash_conflict(self, payload: dict, key: DeliveryKey) -> str | None:
+        frozen = self._frozen_hash(payload, key.edition_id)
+        if frozen and frozen != key.content_hash:
+            return "edition delivery is frozen to a different content hash"
+        for record in payload["records"].values():
+            stored = record.get("key") or {}
+            if stored.get("edition_id") != key.edition_id:
+                continue
+            if record.get("status") != "unknown":
+                continue
+            if stored.get("content_hash") != key.content_hash:
+                return "delivery receipt is unknown for another content hash"
+        return None
+
+    @staticmethod
+    def _frozen_hash(payload: dict, edition_id: str) -> str | None:
+        frozen = payload.get("frozen_editions") or {}
+        value = frozen.get(edition_id)
+        return value if isinstance(value, str) else None
+
+    def _replace(self, payload: dict) -> None:
+        temporary = self.path.with_suffix(self.path.suffix + ".tmp")
+        temporary.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        temporary.replace(self.path)

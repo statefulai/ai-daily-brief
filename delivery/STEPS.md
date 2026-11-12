@@ -21,3 +21,7 @@ python main.py --sources-only --dry-run
 xAI 只使用 `config.yaml` 里 `xai.pages` 的单篇。不要请求列表页、RSS 或 X 账号页。
 
 Anthropic 与 Microsoft AI 只使用 `config.yaml` 里现有的 `anthropic`、`anthropic_news` 和 `ms_ai`。
+
+## 写入新期次
+
+采集命令不写期次。新期次的 `edition.json` 还要带 `support`、`claims` 和 `editorial_verifications`。字段和示例见 `docs/edition-candidate-contract.md`。CI 只对相对基线有改动的期次跑这道结构门。已发布期次的字节不变时仍走原来的校验。这道门不证明摘录支撑主张。

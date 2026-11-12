@@ -9,6 +9,11 @@ on:
       - "source_status.py"
       - "source_health.py"
       - "edition.py"
+      - "candidate_policy.py"
+      - "revision.py"
+      - "execution_binding.py"
+      - "docs/edition-candidate-contract.md"
+      - "delivery/state.py"
       - "contributions.py"
       - "config.yaml"
       - "integrations/**"
@@ -32,6 +37,11 @@ on:
       - "source_status.py"
       - "source_health.py"
       - "edition.py"
+      - "candidate_policy.py"
+      - "revision.py"
+      - "execution_binding.py"
+      - "docs/edition-candidate-contract.md"
+      - "delivery/state.py"
       - "contributions.py"
       - "config.yaml"
       - "integrations/**"
@@ -76,6 +86,7 @@ jobs:
 
       - name: Validate edition-only pull request scope
         if: github.event_name == 'pull_request'
+        # checkout is the merge commit. scope compares pull_request.head.sha to HEAD^2.
         run: >-
           python scripts/edition_ci.py scope
           --base "${{ github.event.pull_request.base.sha }}"

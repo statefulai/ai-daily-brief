@@ -10,13 +10,16 @@
 4. 启动当期唯一 Cloud Agent 时，通过 `files` 上传该文件。
 5. Cloud Agent 按 [`delivery/STEPS.md`](../../delivery/STEPS.md) 采集公开来源，与上传的候选合并，并检查必填字段。
 6. 日报在最终选稿之前接入 Jev 辅助判断（有没有新变化、值不值得读）。调用、密钥、关闭（`JEV_ASSIST=0`）与额度交接见 [`generation/CA-JEV-ASSIST.md`](../../generation/CA-JEV-ASSIST.md)。Jev 不裁定入选或空刊；失败时继续原选稿。
-7. Cloud Agent 回源核验并做最终选稿，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。
+7. Cloud Agent 回源核验并做最终选稿，然后写入 `output/cloud-agent-check/editions/<日期>/edition.json`。新期次按 [`docs/edition-candidate-contract.md`](../../docs/edition-candidate-contract.md) 写入 `support`、`claims` 和 `editorial_verifications`。`support` 只记录读取结果，不代替编辑对摘录和主张的核对。
 8. Cloud Agent 用仓库的固定渲染器生成 HTML，并执行校验：
 
    ```bash
    python scripts/edition_ci.py render --edition output/cloud-agent-check/editions/<日期>/edition.json
+   python scripts/edition_ci.py preflight --edition editions/<日期>/edition.json --base origin/main
    python scripts/edition_ci.py validate --editions output/cloud-agent-check/editions
    ```
+
+   `validate` accepts the published history and does not run the new-candidate gate. `preflight` runs that gate against `--base` only for a path inside `editions/<日期>/`. A file under `output/cloud-agent-check/` is not the published tree, so preflight there will not report that a published edition is frozen. Copy the candidate onto `editions/<日期>/edition.json` before preflight when the date already exists. A local check that only runs `validate` can pass while `scope` fails.
 
 临时供稿和验证产物不进入 Git、Pages 或正式期次目录。没有可用候选时不创建供稿文件。公开来源仍按 [`delivery/STEPS.md`](../../delivery/STEPS.md) 采集。Cloud Agent 不需要把自身模型作为 API 提供给 Python。
 

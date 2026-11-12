@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime
+import os
 from html import escape
 import json
 from pathlib import Path
@@ -17,6 +18,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from candidate_policy import review_changed_edition  # noqa: E402
+from revision import revision_log_extends  # noqa: E402
 from edition import (  # noqa: E402
     EDITION_ID_RE,
     EditionError,
@@ -31,7 +34,7 @@ _HOME_TOKENS = ("TITLE", "DESCRIPTION", "LATEST", "ARCHIVE")
 
 PRODUCTION_FILES = {"edition.json", "index.html"}
 EDITION_PATH_RE = re.compile(
-    r"^editions/(?P<edition_id>\d{4}-\d{2}-\d{2})/(?P<name>edition\.json|index\.html)$"
+    r"^editions/(?P<edition_id>\d{4}-\d{2}-\d{2})/(?P<name>edition\.json|index\.html|revisions\.json)$"
 )
 
 
@@ -50,9 +53,16 @@ def validate_edition_directory(directory: Path) -> dict:
     if not EDITION_ID_RE.fullmatch(directory.name):
         raise EditionError(f"invalid edition directory: {directory.name}")
     names = {path.name for path in directory.iterdir()}
-    if names != PRODUCTION_FILES:
+    allowed_names = PRODUCTION_FILES | {"revisions.json"}
+    if not PRODUCTION_FILES <= names <= allowed_names:
         raise EditionError(
-            f"{directory}: expected only {sorted(PRODUCTION_FILES)}, got {sorted(names)}"
+            f"{directory}: expected only {sorted(allowed_names)}, got {sorted(names)}"
+        )
+    if "revisions.json" in names:
+        revision_log_extends(
+            None,
+            (directory / "revisions.json").read_text(encoding="utf-8"),
+            edition_id=directory.name,
         )
 
     document = json.loads((directory / "edition.json").read_text(encoding="utf-8"))
@@ -135,17 +145,57 @@ def validate_changed_paths(
     names = {match.group("name") for match in matches if match}
     if len(edition_ids) != 1:
         raise EditionError("one pull request may change only one edition date")
-    if names != PRODUCTION_FILES:
+    allowed = PRODUCTION_FILES | {"revisions.json"}
+    if "revisions.json" in names and not PRODUCTION_FILES <= names:
+        raise EditionError(
+            "revisions.json is accepted only with edition.json and index.html in the same pull request"
+        )
+    if not PRODUCTION_FILES <= names or not names <= allowed:
         raise EditionError("an edition change must include edition.json and index.html")
 
 
-def changed_paths(base: str, head: str) -> tuple[list[str], list[str]]:
+def enforce_changed_candidates(base: str, head: str, paths: list[str], root: Path = ROOT) -> None:
+    """Changed edition files use the new-candidate gate. Unchanged bytes do not."""
+    for path in paths:
+        if not path.endswith("/edition.json"):
+            continue
+        current = _git_file(head, path, root)
+        if current is None:
+            continue
+        baseline = _git_file(base, path, root)
+        try:
+            review_changed_edition(baseline, current)
+        except json.JSONDecodeError as exc:
+            raise EditionError(f"{path}: edition.json is not valid JSON") from exc
+    for path in paths:
+        if not path.endswith("/revisions.json"):
+            continue
+        current = _git_file(head, path, root)
+        if current is None:
+            continue
+        edition_id = path.split("/")[1]
+        revision_log_extends(_git_file(base, path, root), current, edition_id=edition_id)
+
+
+def _git_file(rev: str, path: str, root: Path = ROOT) -> str | None:
+    result = subprocess.run(
+        ["git", "show", f"{rev}:{path}"],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout
+
+
+def changed_paths(base: str, head: str, root: Path = ROOT) -> tuple[list[str], list[str]]:
     result = subprocess.run(
         [
             "git", "diff", "--no-renames", "--name-status",
             "--diff-filter=ACMRD", f"{base}...{head}",
         ],
-        cwd=ROOT,
+        cwd=root,
         check=True,
         capture_output=True,
         text=True,
@@ -380,6 +430,81 @@ def build_site(editions_dir: Path, output_dir: Path) -> list[dict]:
     return editions
 
 
+def preflight_candidate(edition_path: Path, base: str, root: Path = ROOT) -> None:
+    """Run the new-candidate gate the way scope does, against a local file.
+
+    ``validate`` still accepts historical editions that omit support. This
+    command does not. A byte change to an edition that exists at ``base`` is
+    frozen. A new file must pass ``review_changed_edition``.
+    """
+    root = root.resolve()
+    path = edition_path.resolve()
+    relative = path.relative_to(root).as_posix()
+    current = path.read_text(encoding="utf-8")
+    review_changed_edition(_git_file(base, relative, root), current)
+    log_path = path.parent / "revisions.json"
+    if log_path.is_file():
+        log_relative = log_path.relative_to(root).as_posix()
+        revision_log_extends(
+            _git_file(base, log_relative, root),
+            log_path.read_text(encoding="utf-8"),
+            edition_id=path.parent.name,
+        )
+
+
+def checkout_head_matches_event(root: Path = ROOT, event_path: Path | None = None) -> str:
+    """Compare a checkout with the head named by a GitHub event file.
+
+    ``actions/checkout`` on ``pull_request`` checks out the synthetic merge
+    commit ``refs/pull/N/merge``. That commit's first parent is the base and
+    its second parent is the pull request head. This function compares
+    ``pull_request.head.sha`` with ``HEAD^2`` in that case, and with ``HEAD``
+    when the checkout is the branch itself. A push event compares ``HEAD``
+    with ``after``. An event file that names neither fails. It does not call
+    the GitHub API. A match does not prove the platform produced the commit.
+
+    Local ``scope`` without an event file does not perform this check. CI sets
+    ``GITHUB_EVENT_PATH``, so the check runs there.
+    """
+    checkout = _rev_parse(root, "HEAD")
+    if checkout is None:
+        raise EditionError("checkout has no HEAD")
+    if event_path is None:
+        return checkout
+    event = json.loads(event_path.read_text(encoding="utf-8"))
+    pull_request = event.get("pull_request")
+    if isinstance(pull_request, dict) and pull_request:
+        expected = (pull_request.get("head") or {}).get("sha")
+        if not isinstance(expected, str) or not expected:
+            raise EditionError("pull request event has no head sha")
+        second = _rev_parse(root, "HEAD^2")
+        if second is not None and _rev_parse(root, "HEAD^1") is not None:
+            if second != expected:
+                raise EditionError("merge commit second parent does not match the pull request head")
+            return second
+        if checkout != expected:
+            raise EditionError("checkout head does not match the pull request head")
+        return checkout
+    after = event.get("after")
+    if isinstance(after, str) and after and set(after) != {"0"}:
+        if checkout != after:
+            raise EditionError("checkout head does not match the push event")
+        return checkout
+    raise EditionError("event has no comparable head")
+
+
+def _rev_parse(root: Path, spec: str) -> str | None:
+    result = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", spec],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        return None
+    return result.stdout.strip() or None
+
+
 def _print_reader_warnings(edition: dict) -> None:
     for message in reader_contract_warnings(edition):
         print(f"warning: {edition['edition_id']}: {message}", file=sys.stderr)
@@ -398,6 +523,17 @@ def main() -> None:
     scope_parser = subparsers.add_parser("scope")
     scope_parser.add_argument("--base", required=True)
     scope_parser.add_argument("--head", required=True)
+    scope_parser.add_argument("--repo", type=Path, default=ROOT)
+    scope_parser.add_argument("--event", type=Path, default=None)
+
+    preflight_parser = subparsers.add_parser("preflight")
+    preflight_parser.add_argument("--edition", type=Path, required=True)
+    preflight_parser.add_argument("--base", required=True)
+    preflight_parser.add_argument("--repo", type=Path, default=ROOT)
+
+    head_parser = subparsers.add_parser("check-head")
+    head_parser.add_argument("--event", type=Path, default=None)
+    head_parser.add_argument("--repo", type=Path, default=ROOT)
 
     build_parser = subparsers.add_parser("build")
     build_parser.add_argument("--editions", type=Path, default=Path("editions"))
@@ -414,9 +550,21 @@ def main() -> None:
         _print_reader_warnings(edition)
         print(f"rendered edition {edition['edition_id']}")
     elif args.command == "scope":
-        paths, deleted = changed_paths(args.base, args.head)
+        event_path = args.event
+        if event_path is None and os.environ.get("GITHUB_EVENT_PATH"):
+            event_path = Path(os.environ["GITHUB_EVENT_PATH"])
+        if event_path is not None:
+            checkout_head_matches_event(args.repo, event_path)
+        paths, deleted = changed_paths(args.base, args.head, args.repo)
         validate_changed_paths(paths, deleted_paths=deleted)
+        enforce_changed_candidates(args.base, args.head, paths, args.repo)
         print(f"validated change scope ({len(paths)} path(s))")
+    elif args.command == "preflight":
+        preflight_candidate(args.edition, args.base, args.repo)
+        print(f"preflight passed for {args.edition}")
+    elif args.command == "check-head":
+        observed = checkout_head_matches_event(args.repo, args.event)
+        print(observed)
     else:
         editions = build_site(args.editions, args.output)
         print(f"built {len(editions)} edition(s) into {args.output}")
