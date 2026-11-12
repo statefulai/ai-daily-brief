@@ -1418,6 +1418,45 @@ class ReviewRegressionTest(unittest.TestCase):
         self.assertEqual(_unit_numbers("容量 1.5 PiB。"), {"1.5"})
         self.assertEqual(_unit_numbers("算力 2.5 TOPS。"), {"2.5"})
 
+    def test_period_words_are_future_markers(self):
+        from candidate_policy import _number_clause_predicts
+
+        qualcomm = "公司预计 2027 年第一季度收入约 6.5 亿美元，2027 年底到 50 亿美元，2029 年到 150 亿美元。"
+        self.assertTrue(_number_clause_predicts(qualcomm, "50"))
+        self.assertTrue(_number_clause_predicts(qualcomm, "150"))
+        for lede in (
+            "公司预计一季度收官，年底到 50 亿美元。",
+            "公司预计一季度收官，下季度到 50 亿美元。",
+            "公司计划扩产，2027 年达到 40 毫秒。",
+            "公司计划扩产，下季度达到 40 毫秒。",
+            "公司计划扩产，年内达到 40 毫秒。",
+            "公司计划扩产，Q3 达到 40 毫秒。",
+            "公司预计，实测下季度 40 毫秒。",
+        ):
+            retained, rejected = self._measured("period", lede)
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+        for lede in (
+            "公司预计明年更快，本次实测 40 毫秒。",
+            "公司计划明年扩产，本次实测 40 毫秒。",
+        ):
+            retained, rejected = self._measured("kept", lede)
+            self.assertEqual(rejected, [], (lede, rejected))
+            self.assertEqual(retained, ["kept"])
+
+    def test_latin_year_sees_units_and_plural_nouns(self):
+        from candidate_policy import _unit_numbers
+
+        for text, number in (
+            ("Max 2048 小时。", "2048"),
+            ("Pro 2000 倍。", "2000"),
+            ("with 2048 H100s。", "2048"),
+            ("hired 2000 engineers。", "2000"),
+        ):
+            self.assertIn(number, _unit_numbers(text), text)
+        for text in ("AIME 2025 成绩。", "FY 2027 指引。", "SWE-bench 2025 榜单。"):
+            self.assertEqual(_unit_numbers(text), set(), text)
+
 
 if __name__ == "__main__":
     unittest.main()
