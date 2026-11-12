@@ -1470,6 +1470,34 @@ class ReviewRegressionTest(unittest.TestCase):
         for text in ("AIME 2025 成绩。", "FY 2027 指引。", "SWE-bench 2025 榜单。"):
             self.assertEqual(_unit_numbers(text), set(), text)
 
+    def test_label_colon_requires_claims_and_clocks_do_not(self):
+        from candidate_policy import _unit_numbers
+
+        for text, number in (
+            ("准确率:91.2%", "91.2"),
+            ("成本:2000 美元", "2000"),
+            ("Latency:40ms", "40"),
+            ("准确率：91.2%", "91.2"),
+            ("Score: 91.2", "91.2"),
+        ):
+            self.assertIn(number, _unit_numbers(text), text)
+        for text in ("10:30 发布。", "08:00 发布。", "+08:00 发布。", "10:30:15 发布。"):
+            self.assertEqual(_unit_numbers(text), set(), text)
+
+    def test_capitalized_magnitudes_are_claims_and_model_names_are_not(self):
+        from candidate_policy import _unit_numbers
+
+        self.assertEqual(_unit_numbers("规模 1.5 Trillion。"), {"1.5"})
+        self.assertEqual(_unit_numbers("用户 2.5 Million。"), {"2.5"})
+        self.assertEqual(_unit_numbers("参数 3.5 Billion。"), {"3.5"})
+        for text in (
+            "Claude 3.5 Sonnet 更新。",
+            "Gemini 2.5 Pro 上线。",
+            "Qwen 2.5 Max 发布。",
+            "DeepSeek V3.2 发布。",
+        ):
+            self.assertEqual(_unit_numbers(text), set(), text)
+
 
 if __name__ == "__main__":
     unittest.main()
