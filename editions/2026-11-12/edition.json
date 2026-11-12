@@ -1,0 +1,293 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-12",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-12T08:00:00+08:00",
+  "generated_at": "2026-11-12T08:08:22.749698+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 2,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "gemini-decisions-api",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "Google 放出 Gemini Decisions API，输入价每百万 token 0.10 美元",
+      "kicker": "产品 · Google",
+      "facts": [
+        "Google 博客的发布时间是 2026-11-11T18:00:00+00:00。页面宣布 Gemini Decisions API，模型名 Gemini Decision 1，模型 ID 是 gemini-decision-1。",
+        "一次请求最多带 1000 个独立问题，题型包括是非、2 到 255 个选项的选择，以及从 0 起算的有序量表。输入可以是文本、图像、音频、视频和 PDF，上限 256K token。每个答案带 0 到 1 的置信度。",
+        "页面写价格是每百万输入 token 0.10 美元，输出 token 不计费。端到端延迟写成 150 到 250 毫秒，模型计算的中位延迟写成 50 到 100 毫秒。",
+        "页面写，在共享基准上，Gemini Decision 1 配 Decisions API 比 Gemini 3.5 Flash-Lite 配 Interactions API 便宜近 5 倍。",
+        "页面写开发者可以在 Google AI Studio 取 API 密钥，并有 Python、JavaScript 和 REST 文档。"
+      ],
+      "conditions": [
+        "延迟和近 5 倍价差是博客里的公司数字，本期没有复测。"
+      ],
+      "background": [
+        "OpenAI 的 Decisions API 已在 10 月 7 日和 10 月 23 日正刊写过。那是另一家公司的接口，当时只接 gpt-6-luna。这次是谷歌自己的模型和标价。"
+      ],
+      "sources": [
+        {
+          "label": "Google",
+          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+          "kind": "primary",
+          "published_at": "2026-11-11T18:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（Google 博客）：发布时间是 2026-11-11T18:00:00+00:00。模型 ID gemini-decision-1、一次最多 1000 题、输入上限 256K token、每百万输入 token 0.10 美元、输出不计费、端到端 150 到 250 毫秒、相对 Gemini 3.5 Flash-Lite 近 5 倍，以及 Google AI Studio 密钥，均取自这篇博客。本期没有调用接口。"
+        }
+      ],
+      "lede": "Google 放出 Gemini Decisions API，模型 ID 是 gemini-decision-1。一次最多评 1000 道封闭题，输入每百万 token 0.10 美元，输出不计费。开发者已可用 Google AI Studio 的密钥调用。",
+      "caveat": "150 到 250 毫秒和近 5 倍价差，是谷歌自己的对照。"
+    },
+    {
+      "id": "alphagenome-2",
+      "placement": "story",
+      "window": "in_window",
+      "title": "DeepMind 发布 AlphaGenome 2，免疫细胞因果变异检出 30%",
+      "kicker": "研究 · DeepMind",
+      "facts": [
+        "DeepMind 博客的发布时间是 2026-11-11T15:00:00+00:00。当天宣布 AlphaGenome 2，按具体细胞类型预测 DNA 变异对基因表达的影响。",
+        "页面写，相对上一代最好模型，AlphaGenome 2 识别出近两倍会改变细胞中基因表达的变异。训练用了超过 1 亿个单细胞图谱，覆盖 68 种组织。后文写训练数据包括人和小鼠、超过 1.07 亿个单细胞图谱。",
+        "在 TenK10K 的 28 种原代免疫细胞上，因果变异检出是 30% 对 16%，方向性基因效应是 43% 对 23%。对照是在单细胞数据上微调过的原版 AlphaGenome，以及其他专用工具。",
+        "非商业研究从当天起可通过 AlphaGenome API 使用。商业研究是私人预览。页面写两代模型只供研究，没有经过临床或诊断批准。",
+        "页面写 Google Antigravity 里的 AlphaGenome 2 Skills 会稍后放出，宣布当天还没有。"
+      ],
+      "conditions": [
+        "非商业研究可经由 AlphaGenome API。商业研究是私人预览。",
+        "未批准用于临床或诊断。"
+      ],
+      "background": [
+        "The Verge 引 Žiga Avsec 说，AlphaGenome 2 短期内不会换掉上一代，因为更细的预测更贵。9 月那份覆盖人类基因组每个单字母变化的图谱，仍是用上一代做的。"
+      ],
+      "sources": [
+        {
+          "label": "Google DeepMind",
+          "url": "https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/",
+          "kind": "primary",
+          "published_at": "2026-11-11T15:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（Google DeepMind）：发布时间是 2026-11-11T15:00:00+00:00。超过 1 亿个单细胞、68 种组织、TenK10K 上 30% 对 16% 和 43% 对 23%、非商业 API、商业私人预览，以及未做临床批准，取自这篇博客。本期没有跑模型。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1031524/google-deepmind-alphagenome-2-genetic-ai-model",
+          "kind": "secondary",
+          "published_at": "2026-11-11T15:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：发布时间是 2026-11-11T15:00:00+00:00。关于短期内不替换上一代、以及 9 月全基因组图谱仍用上一代，取自这篇对 Avsec 的采访。"
+        }
+      ],
+      "lede": "DeepMind 发布 AlphaGenome 2，用来预测 DNA 变异在具体细胞类型里如何改变基因表达。TenK10K 的 28 种免疫细胞上，因果变异检出是 30%，上一代微调后是 16%。非商业研究已可走 AlphaGenome API。",
+      "caveat": "30% 对 16% 是公司在 TenK10K 上的结果。商业用途仍是私人预览。"
+    },
+    {
+      "id": "united-blocks-ai-agents",
+      "placement": "story",
+      "window": "in_window",
+      "title": "美联航限制第三方 AI 助手代客订票",
+      "kicker": "行业 · 航空",
+      "facts": [
+        "CBS 写美联航于周三表示，禁止人工智能代理代表旅客预订航班。文章发布时间是 2026-11-11T14:37:38-05:00。",
+        "CBS 引美联航的话：把账号凭据交给个人的第三方 AI 助手，可能暴露敏感信息，这些工具的操作可能导致未打算的购买、账号变更，或使用 MileagePlus 里程。",
+        "CBS 引美联航：将在自己的数字平台上直接限制，并通过旅行社和聚合商间接限制，禁止未经授权的第三方个人 AI 代理或助手使用。公司正在更新订票和出票政策。",
+        "CBS 写，用 AI 代理值机可能违反联邦规定，包括旅客须当面确认行李不含违禁物。",
+        "The Verge 同题文章的发布时间是 2026-11-11T21:54:21+00:00。它写，代理仍可向用户展示美联航航班，但不能代为完成交易。"
+      ],
+      "conditions": [
+        "限制对象是未经授权的第三方个人 AI 助手。",
+        "美联航政策原文页没有打开，引语来自 CBS。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "CBS News",
+          "url": "https://www.cbsnews.com/news/united-airlines-bans-ai-agents-booking-flights/",
+          "kind": "primary",
+          "published_at": "2026-11-11T14:37:38-05:00",
+          "verified": true,
+          "note": "核验说明（CBS News）：发布时间是 2026-11-11T14:37:38-05:00。禁止代订、凭据与里程风险、值机与联邦行李规定、更新订票政策，取自 CBS 对美联航的引述。政策原文页没有打开。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1031623/united-unauthorized-ai-agents",
+          "kind": "secondary",
+          "published_at": "2026-11-11T21:54:21+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：发布时间是 2026-11-11T21:54:21+00:00。展示航班但不能完成交易，取自这篇。它还转述《华尔街日报》称公司还没看到很多此类订票，本期没有打开《华尔街日报》原文。"
+        }
+      ],
+      "lede": "美联航周三起限制未经授权的第三方个人 AI 助手代客订票。公司称，把账号交给这类助手可能泄露资料、买错票或动用里程。值机还可能违反联邦行李声明规定，公司会同时更新订票和出票政策。",
+      "caveat": "助手仍可展示航班，但不能代为完成交易。"
+    },
+    {
+      "id": "fractile-series-c",
+      "placement": "story",
+      "window": "in_window",
+      "title": "英国政府参与 Fractile 超过 5 亿英镑的 C 轮",
+      "kicker": "产业 · 英国",
+      "facts": [
+        "英国政府新闻稿的发布时间是 2026-11-11T13:00:03+00:00。稿件写这项投资于周三 11 月 11 日宣布。Sovereign AI Venture Fund 和 British Business Bank 参与 Fractile 的 Series C，这一轮价值超过 5 亿英镑，公司估值超过 50 亿英镑。",
+        "政府稿写，同一轮的投资方还包括 CapitalG、Lightspeed 和 Redpoint。公司位于 Bristol 和 London。",
+        "TechCrunch 的发布时间是 2026-11-11T19:34:55+00:00。它把同一轮写成 7.2 亿美元的 Series C，领投方写成 Thrive Capital、Founders Fund、Lightspeed Venture Partners 和 Redpoint。",
+        "TechCrunch 把超过 50 亿英镑的估值归于英国政府，并写很有可能是 70 亿美元，该数字来自《金融时报》和一名路透来源。本期没有打开这两处。",
+        "TechCrunch 写，首席执行官 Walter Goodwin 在 LinkedIn 说，新资金使公司能在明年交付第一批芯片和系统。本期没有打开那条 LinkedIn。公司主页没有写出这一轮金额。"
+      ],
+      "conditions": [
+        "金额以政府稿的超过 5 亿英镑为准。",
+        "芯片交付时间只见于 TechCrunch 对 LinkedIn 的转述。"
+      ],
+      "background": [],
+      "sources": [
+        {
+          "label": "英国政府",
+          "url": "https://www.gov.uk/government/news/sovereign-ai-and-british-business-bank-invest-in-british-firm-developing-the-next-generation-of-ai-hardware",
+          "kind": "primary",
+          "published_at": "2026-11-11T13:00:03+00:00",
+          "verified": true,
+          "note": "核验说明（英国政府）：发布时间是 2026-11-11T13:00:03+00:00。超过 5 亿英镑、估值超过 50 亿英镑、周三宣布，以及 Sovereign AI、British Business Bank、CapitalG、Lightspeed、Redpoint，取自这篇新闻稿。"
+        },
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/11/with-720m-round-britains-fractile-gets-a-leg-up-in-the-race-for-ai-chips/",
+          "kind": "secondary",
+          "published_at": "2026-11-11T19:34:55+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：发布时间是 2026-11-11T19:34:55+00:00。7.2 亿美元、Thrive Capital 与 Founders Fund 领投，以及 Goodwin 关于明年交付芯片的话，取自这篇。70 亿美元没有回源。《金融时报》和路透没有打开。"
+        }
+      ],
+      "lede": "英国政府周三宣布，Sovereign AI 和英国商业银行参与 Fractile 的 C 轮，金额超过 5 亿英镑，估值超过 50 亿英镑。政府稿点名的其他投资方还有 CapitalG、Lightspeed 和 Redpoint。",
+      "caveat": "TechCrunch 写成 7.2 亿美元，政府稿写超过 5 亿英镑。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:637e63f19bdaaa5ce8c58438d7b545be1438653377210925cc3209a61547c815"
+}
