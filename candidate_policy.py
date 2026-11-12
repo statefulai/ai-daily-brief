@@ -75,7 +75,7 @@ _BOILERPLATE = re.compile(
 )
 _FW_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
 _UNIT_AFTER = re.compile(
-    r"\s*(?:TB/s|GB/s|fps|tokens|token|trillion|billion|million|ms|TB|GB|MB|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
+    r"\s*(?:TB/s|GB/s|fps|tokens|token|trillion|billion|million|ms|TB|GB|MB|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|千万|百亿|十亿|百万|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
     re.IGNORECASE,
 )
 _ARABIC = re.compile(r"\d+(?:\.\d+)?")
@@ -329,6 +329,8 @@ def _event_reasons(event: Mapping[str, Any], edition_id: str, attempt: int | Non
         event, edition_id, attempt, good_url, good_excerpt
     ):
         reasons.append("missing_editorial_verification")
+    if _translation_pair_mismatch(event):
+        reasons.append("normalized_quantity_mismatch")
     return list(dict.fromkeys(reasons))
 
 
@@ -378,8 +380,10 @@ def _unit_numbers(text: str) -> set[str]:
     consumed: list[tuple[int, int]] = []
     for match in _ARABIC.finditer(normalized):
         number = match.group()
-        if match.start() > 0 and normalized[match.start() - 1].isalpha():
-            continue
+        if match.start() > 0:
+            previous = normalized[match.start() - 1]
+            if previous.isascii() and previous.isalpha():
+                continue
         if _version_or_date(normalized, match.start(), match.end()):
             continue
         unit = _UNIT_AFTER.match(normalized[match.end():])
@@ -441,18 +445,26 @@ def _is_cn_quantity(token: str, following: str, preceding: str = "") -> bool:
         return True
     if not has_digit and has_magnitude and len(token) >= 2:
         return True
+    measured = re.match(r"\s*(?:倍|成|美元|美金|元|秒钟|秒|分钟|小时)", following) is not None
+    counted = re.match(r"\s*(?:个|位|次|款|家|名|人|年|种)", following) is not None
+    if token and set(token) <= set("一"):
+        if preceding.endswith("第") or preceding.endswith(
+            ("另", "上", "下", "又", "同", "唯")
+        ) or preceding.endswith("任何"):
+            return False
+        if measured:
+            return True
+        return False
     if len(token) == 1 and token in digits:
         if preceding.endswith("第"):
             return False
-        if token == "一" and (
-            preceding.endswith(("另", "上", "下", "又", "同", "唯")) or preceding.endswith("任何")
-        ):
-            return False
-        if re.match(r"\s*(?:倍|成|美元|美金|元|秒钟|秒|分钟|小时)", following):
+        if measured:
             return True
         if token != "一" and re.match(r"\s*家", following):
             return True
         return False
+    if (has_magnitude or (len(token) >= 2 and has_digit)) and (measured or counted):
+        return True
     return _cn_unit_after(following) is not None and (has_digit or has_magnitude)
 
 
@@ -543,6 +555,38 @@ def _excerpt_copies_text(event: Mapping[str, Any], excerpt: str) -> bool:
     return False
 
 
+def _translation_pair_mismatch(event: Mapping[str, Any]) -> bool:
+    """A stated pair is checked even when the excerpt and the lede share a digit."""
+    records = event.get("editorial_verifications") or []
+    if not isinstance(records, list):
+        return False
+    for record in records:
+        if not isinstance(record, Mapping):
+            continue
+        pairs = record.get("normalized_numbers")
+        if not pairs:
+            continue
+        if not isinstance(pairs, list):
+            return True
+        for item in pairs:
+            if not isinstance(item, Mapping):
+                return True
+            source = item.get("source")
+            claim = item.get("claim")
+            if not isinstance(source, str) or not isinstance(claim, str):
+                return True
+            source_qty = _parse_quantity(source)
+            claim_qty = _parse_quantity(claim)
+            if (
+                source_qty is None
+                or claim_qty is None
+                or source_qty[1] != claim_qty[1]
+                or not _same_stated_quantity(source, claim, source_qty[0], claim_qty[0])
+            ):
+                return True
+    return False
+
+
 def _translation_bridge(event: Mapping[str, Any], excerpt: str) -> bool:
     """A named translation can stand in for token overlap. It does not prove the page.
 
@@ -591,14 +635,16 @@ def _numbers_are_normalized(span: str, translated: str, text: str, pairs: Any) -
         claim_qty = _parse_quantity(claim)
         if source_qty is None or claim_qty is None:
             return False
-        if source_qty[1] != claim_qty[1] or not _close(source_qty[0], claim_qty[0]):
+        if source_qty[1] != claim_qty[1] or not _same_stated_quantity(
+            source, claim, source_qty[0], claim_qty[0]
+        ):
             return False
         parsed.append((source_qty[0], source_qty[1], claim_qty[0]))
     for quantity in _quantities_in(text):
-        if not any(_close(quantity[0], claim) and quantity[1] == kind for _, kind, claim in parsed):
+        if not any(_near(quantity[0], claim) and quantity[1] == kind for _, kind, claim in parsed):
             return False
     for quantity in _quantities_in(span):
-        if not any(_close(quantity[0], source) and quantity[1] == kind for source, kind, _ in parsed):
+        if not any(_near(quantity[0], source) and quantity[1] == kind for source, kind, _ in parsed):
             return False
     return True
 
@@ -606,6 +652,9 @@ def _numbers_are_normalized(span: str, translated: str, text: str, pairs: Any) -
 _QUANTITY_SCALE = (
     ("千亿", 10**11),
     ("万亿", 10**12),
+    ("千万", 10**7),
+    ("百亿", 10**10),
+    ("十亿", 10**9),
     ("百万", 10**6),
     ("trillion", 10**12),
     ("billion", 10**9),
@@ -617,17 +666,59 @@ _QUANTITY_SCALE = (
 )
 
 
-def _close(left: float, right: float) -> bool:
+def _near(left: float, right: float) -> bool:
     scale = max(abs(left), abs(right), 1.0)
-    # Two percent covers rounding such as 1.48 to 1.5, not a different magnitude.
-    return abs(left - right) / scale <= 0.02
+    return abs(left - right) / scale <= 1e-9
+
+
+def _coeff_decimals(text: str) -> int:
+    raw = _norm_digits(text).replace(",", "").replace("，", "")
+    match = re.search(r"\d+\.(\d+)", raw)
+    return len(match.group(1)) if match else 0
+
+
+def _written_scale(text: str, value: float) -> float:
+    raw = _norm_digits(text).replace(",", "").replace("，", "")
+    match = re.search(r"\d+(?:\.\d+)?", raw)
+    if match is None or float(match.group()) == 0:
+        return 1.0
+    return value / float(match.group())
+
+
+def _same_stated_quantity(left_text: str, right_text: str, left_val: float, right_val: float) -> bool:
+    """Match a coarser written number only when it is the finer one rounded to that precision.
+
+    Two integers, such as 1 million and 102 万, must be the same value. A decimal
+    such as 1.48 may match 1.5 because 1.48 rounded to one decimal place is 1.5.
+    """
+    left_places = _coeff_decimals(left_text)
+    right_places = _coeff_decimals(right_text)
+    if left_places == 0 and right_places == 0:
+        return _near(left_val, right_val)
+    if left_places == right_places:
+        return _near(left_val, right_val)
+    if left_places < right_places:
+        coarse_text, coarse_val, fine_val, places = left_text, left_val, right_val, left_places
+    else:
+        coarse_text, coarse_val, fine_val, places = right_text, right_val, left_val, right_places
+    scale = _written_scale(coarse_text, coarse_val)
+    return _near(round(fine_val / scale, places), coarse_val / scale)
 
 
 def _parse_quantity(text: str) -> tuple[float, str] | None:
     raw = _norm_digits(text)
     lowered = raw.lower()
     percent = bool(re.search(r"%|％|percent|个百分点|百分之", lowered))
-    body = raw.replace("百分之", "")
+    body = raw.replace(",", "").replace("，", "").replace("百分之", "")
+    fraction = re.search(
+        r"([零〇一二三四五六七八九十百千万亿两]+)分之([零〇一二三四五六七八九十百千万亿两]+)",
+        body,
+    )
+    if fraction is not None:
+        denominator = _cn_to_float(fraction.group(1))
+        numerator = _cn_to_float(fraction.group(2))
+        if denominator not in (None, 0) and numerator is not None:
+            return numerator / denominator, "absolute"
     match = re.search(r"\d+(?:\.\d+)?", body)
     if match:
         value = float(match.group())

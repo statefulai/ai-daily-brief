@@ -886,6 +886,73 @@ class ReviewRegressionTest(unittest.TestCase):
             {(300.0, "absolute"), (1e8, "absolute")},
         )
 
+    def test_tight_numbers_classifiers_and_rounding(self):
+        from candidate_policy import _parse_quantity, _same_stated_quantity, _unit_numbers
+
+        self.assertEqual(_unit_numbers("提升30%"), {"30"})
+        self.assertEqual(_unit_numbers("用户达3000万"), {"3000"})
+        self.assertEqual(_unit_numbers("延迟降到5秒"), {"5"})
+        self.assertIn("120", _unit_numbers("营收达120亿美元"))
+        self.assertEqual(_unit_numbers("GPT4"), set())
+        self.assertEqual(_unit_numbers("北京10月9日电"), set())
+        self.assertEqual(_unit_numbers("收购十家公司"), {"十"})
+        self.assertEqual(_unit_numbers("招聘百人团队"), {"百"})
+        self.assertEqual(_unit_numbers("服务十个国家"), {"十"})
+        self.assertEqual(_unit_numbers("三四家公司"), {"三四"})
+        self.assertEqual(_unit_numbers("公布六家药物"), {"六"})
+        self.assertEqual(_unit_numbers("这是一个新模型"), set())
+        self.assertEqual(_unit_numbers("另一家公司"), set())
+        self.assertEqual(_unit_numbers("唯一一家"), set())
+        self.assertEqual(_unit_numbers("一年前发布"), set())
+        self.assertEqual(_unit_numbers("三位一组"), set())
+        self.assertEqual(_unit_numbers("两个参数"), set())
+        self.assertEqual(_parse_quantity("3 千万")[0], 3e7)
+        self.assertEqual(_parse_quantity("3 百亿")[0], 3e10)
+        self.assertEqual(_parse_quantity("3 十亿")[0], 3e9)
+        self.assertAlmostEqual(_parse_quantity("十分之一")[0], 0.1)
+        self.assertFalse(
+            _same_stated_quantity("1 million", "102 万", 1e6, 1.02e6)
+        )
+        self.assertFalse(_same_stated_quantity("49%", "50%", 49, 50))
+        self.assertFalse(_same_stated_quantity("98%", "100%", 98, 100))
+        self.assertFalse(_same_stated_quantity("49", "50", 49, 50))
+        self.assertTrue(_same_stated_quantity("1.48 trillion", "1.5 万亿", 1.48e12, 1.5e12))
+        self.assertTrue(_same_stated_quantity("1,000,000", "100 万", 1e6, 1e6))
+        self.assertFalse(_same_stated_quantity("3 千万", "3 thousand", 3e7, 3000))
+
+        def paired(event_id, excerpt, pairs):
+            document = _edition(
+                [
+                    _event(
+                        event_id,
+                        [_source(URL, support=_support("original", "read", excerpt))],
+                        lede="服务达到 3 千万用户。",
+                        claims=[{"kind": "attributed", "value": "3 千万用户"}],
+                        placement="lead",
+                    )
+                ]
+            )
+            record = document["events"][0]["editorial_verifications"][0]
+            record["source_span"] = excerpt
+            record["translated_claim"] = "服务达到 3 千万用户"
+            record["normalized_numbers"] = pairs
+            document.pop("content_hash", None)
+            return assess_new_candidate(validate_edition(document))
+
+        kept = paired(
+            "qianwan",
+            "The service reached 30 million users this quarter.",
+            [{"source": "30 million", "claim": "3 千万"}],
+        )
+        self.assertEqual(kept["retained"], ["qianwan"])
+        dropped = paired(
+            "thousand",
+            "The service reached 3 thousand users this quarter.",
+            [{"source": "3 thousand", "claim": "3 千万"}],
+        )
+        self.assertEqual(dropped["retained"], [])
+        self.assertIn("normalized_quantity_mismatch", dropped["rejected"][0]["reasons"])
+
 
 if __name__ == "__main__":
     unittest.main()
