@@ -1075,6 +1075,168 @@ class ReviewRegressionTest(unittest.TestCase):
         self.assertEqual(dropped["retained"], [])
         self.assertIn("normalized_quantity_mismatch", dropped["rejected"][0]["reasons"])
 
+    def test_year_counts_require_claims_and_labeled_years_do_not(self):
+        from candidate_policy import _unit_numbers
+
+        for text, number in (
+            ("售价 1999 美元起。", "1999"),
+            ("公司裁减 2000 名员工。", "2000"),
+            ("融资 2000 万美元。", "2000"),
+            ("用了 2048 张 H100 训练。", "2048"),
+            ("覆盖近 2000 个场景。", "2000"),
+            ("每秒 1950 tokens。", "1950"),
+        ):
+            self.assertIn(number, _unit_numbers(text), text)
+        for text in ("2026 年路线图。", "2027 财年预算。", "AIME 2025 成绩。", "FY 2027 指引。", "发布于 Oct 6 2026。"):
+            self.assertEqual(_unit_numbers(text), set(), text)
+
+    def test_signed_percents_require_claims_and_timezone_offsets_do_not(self):
+        from candidate_policy import _unit_numbers
+
+        self.assertIn("30", _unit_numbers("营收同比 +30%。"))
+        self.assertIn("15", _unit_numbers("利润同比 -15%。"))
+        self.assertEqual(_unit_numbers("UTC+8 发布。"), set())
+        self.assertEqual(_unit_numbers("时区 +08:00。"), set())
+        self.assertEqual(_unit_numbers("08:30 发布。"), set())
+
+    def test_decimal_capital_units_require_claims_and_model_names_do_not(self):
+        from candidate_policy import _unit_numbers
+
+        self.assertEqual(_unit_numbers("数据中心功率 1.5 GW。"), {"1.5"})
+        self.assertEqual(_unit_numbers("主频 2.5 GHz。"), {"2.5"})
+        self.assertEqual(_unit_numbers("算力 3.5 PFLOPS。"), {"3.5"})
+        self.assertEqual(_unit_numbers("Claude 3.5 Sonnet 更新。"), set())
+        self.assertEqual(_unit_numbers("Grok 4.7 发布。"), {"4.7"})
+
+    def test_measured_prediction_uses_the_numbers_clause(self):
+        excerpt = "The lab measured 40 ms in this release today."
+        retained, rejected = _assess(
+            _event(
+                "clause",
+                [_source(URL, support=_support(excerpt=excerpt))],
+                lede="公司计划明年扩产，本次实测 40 毫秒。",
+                claims=[{"kind": "measured", "value": "40 毫秒"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["clause"])
+        for lede in (
+            "目标检测速度实测每秒 83.0 帧。",
+            "按原计划，实测每秒 83.0 token。",
+            "On target hardware it measured 83.0 tokens per second.",
+        ):
+            retained, rejected = _assess(
+                _event(
+                    "ok",
+                    [_source(URL, support=_support(excerpt="The lab measured 83.0 tokens per second on its public benchmark."))],
+                    lede=lede,
+                    claims=[{"kind": "measured", "value": "83.0"}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(rejected, [], (lede, rejected))
+            self.assertEqual(retained, ["ok"])
+        retained, rejected = _assess(
+            _event(
+                "semi",
+                [_source(URL, support=_support(excerpt="Faster than expected overall; the lab measured 83.0 tokens per second."))],
+                lede="实测每秒 83.0 token。",
+                claims=[{"kind": "measured", "value": "83.0"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["semi"])
+
+    def test_prediction_words_plan_target_guidance_and_outlook(self):
+        excerpt = "The lab measured 83.0 tokens per second on its public benchmark."
+        for lede in (
+            "公司计划每秒达到 83.0 token。",
+            "今年目标是每秒 83.0 token。",
+            "guidance calls for 83.0 tokens per second.",
+            "The outlook is 83.0 tokens per second.",
+            "The target is 83.0 tokens per second.",
+        ):
+            retained, rejected = _assess(
+                _event(
+                    "word",
+                    [_source(URL, support=_support(excerpt=excerpt))],
+                    lede=lede,
+                    claims=[{"kind": "measured", "value": "83.0"}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+            retained, rejected = _assess(
+                _event(
+                    "pred",
+                    [_source(URL, support=_support(excerpt=excerpt))],
+                    lede=lede,
+                    claims=[{"kind": "predicted", "value": "83.0"}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(rejected, [], (lede, rejected))
+            self.assertEqual(retained, ["pred"])
+        retained, rejected = _assess(
+            _event(
+                "free",
+                [_source(URL, support=_support(excerpt="The Free plan costs 30 dollars per month at the lab."))],
+                lede="Free 计划每月 30 美元。",
+                claims=[{"kind": "measured", "value": "30 美元"}],
+                placement="lead",
+            )
+        )
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["free"])
+
+    def test_require_result_head_blocks_failed_replaced_and_bad_oids(self):
+        head = "a" * 40
+        produced = "b" * 40
+        log = RunLog()
+        log.dispatch({"run_id": "run-A", "edition_id": "2026-11-13", "base_head": head})
+        done = log.complete(
+            {
+                "run_id": "run-A",
+                "terminal_state": "finished",
+                "source": "wake_payload",
+                "result_head": produced,
+                "content_hash": "sha256:" + "1" * 64,
+            }
+        )
+        self.assertEqual(done["status"], "accepted")
+        self.assertEqual(log.require_result_head("run-A", None)["status"], "blocked")
+        self.assertEqual(log.require_result_head("run-A", "")["status"], "blocked")
+        self.assertEqual(log.require_result_head("run-A", "B" * 40)["status"], "blocked")
+        failed = RunLog()
+        failed.dispatch({"run_id": "run-F", "edition_id": "2026-11-13", "base_head": head})
+        failed_done = failed.complete(
+            {
+                "run_id": "run-F",
+                "terminal_state": "failed",
+                "source": "wake_payload",
+                "result_head": produced,
+                "content_hash": "sha256:" + "2" * 64,
+            }
+        )
+        self.assertEqual(failed_done["status"], "accepted")
+        self.assertEqual(failed.require_result_head("run-F", produced)["status"], "blocked")
+        replaced = RunLog()
+        replaced.dispatch({"run_id": "run-old", "edition_id": "2026-11-13", "base_head": head})
+        replaced.complete(
+            {
+                "run_id": "run-old",
+                "terminal_state": "finished",
+                "source": "wake_payload",
+                "result_head": produced,
+                "content_hash": "sha256:" + "3" * 64,
+            }
+        )
+        replaced.dispatch({"run_id": "run-new", "edition_id": "2026-11-13", "base_head": produced})
+        self.assertEqual(replaced.require_result_head("run-old", produced)["status"], "blocked")
+
 
 if __name__ == "__main__":
     unittest.main()
