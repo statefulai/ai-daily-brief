@@ -56,7 +56,7 @@ PREDICTION_MARKERS = (
     "target",
 )
 _PREDICTION_WORD = re.compile(
-    r"预期|预估|预计|预测|估计|有望|将达|(?<![周月日年])计划(?![板书表性])|目标|"
+    r"预期|预估|预计|预测|估计|有望|将达|(?<!周)计划(?![板书表性])|目标|"
     r"\b(?:forecasted|forecasting|forecasts|forecast|"
     r"projected|predictions|prediction|predicted|"
     r"estimated|estimates|estimate|"
@@ -86,7 +86,7 @@ _CLAUSE_NEGATION = re.compile(
 _CLAUSE_BOUNDARY = "，。；、,;!！？?\n"
 _PREDICTION_COMPOUND = ("条目标题", "目标检测", "目标模型", "目标函数")
 _QUANTITY_UNIT = re.compile(
-    r"(?:[KMGTPE]FLOPS|FLOPS|[KMGT]bps|bps|GHz|MHz|kHz|GW|MW|kW|PB|TB|GB|MB|nm|ms|W)\b",
+    r"(?:TFLOP/s|[KMGTPE]FLOPS|FLOPS|[KMGT]bps|bps|GWh|TWh|kWh|GiB|TiB|GHz|MHz|kHz|GW|MW|kW|TW|EB|Mtok|PB|TB|GB|MB|nm|ms|W)\b",
     re.IGNORECASE,
 )
 _CN_EXCLUDE = (
@@ -108,7 +108,7 @@ _BOILERPLATE = re.compile(
 )
 _FW_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
 _UNIT_AFTER = re.compile(
-    r"\s*(?:TB/s|GB/s|fps|tokens|token|trillion|billion|million|ms|TB|GB|MB|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|千万|百亿|十亿|百万|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
+    r"\s*(?:TFLOP/s|TB/s|GB/s|GWh|TWh|kWh|GiB|TiB|Mtok|fps|tokens|token|trillion|billion|million|GHz|MHz|GW|MW|kW|TW|EB|ms|TB|GB|MB|nm|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|千万|百亿|十亿|百万|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
     re.IGNORECASE,
 )
 _ARABIC = re.compile(r"\d+(?:\.\d+)?")
@@ -514,6 +514,14 @@ _MONTH_DAY_YEAR = re.compile(
 )
 
 
+_AFTER_YEAR_QUANTITY = re.compile(
+    r"(?:张|名|个|台|位|次|款|家|人|种|美元|美金|元|万|亿|%|％|"
+    r"(?:dollars?|GPUs?|users?|tokens?|"
+    r"GWh|TWh|kWh|GiB|TiB|TFLOP/s|Mtok|TW|EB|GW|MW|kW|PB|TB|GB|MB|nm|ms)\b)",
+    re.IGNORECASE,
+)
+
+
 def _timezone_sign(text: str, start: int, end: int) -> bool:
     """+8 and +08:00 are offsets. +30% and -15% are quantities."""
     if start == 0 or text[start - 1] not in "+-":
@@ -535,7 +543,9 @@ def _labeled_year(text: str, start: int, end: int, number: str) -> bool:
     window = text[max(0, start - 24):start]
     if _MONTH_DAY_YEAR.search(window) or _EN_MONTH.search(window):
         return True
-    return re.search(r"[A-Za-z]\s+$", window) is not None
+    if re.search(r"[A-Za-z]\s+$", window) is None:
+        return False
+    return _AFTER_YEAR_QUANTITY.match(rest) is None
 
 
 def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
@@ -1036,10 +1046,13 @@ def _mask_non_predictions(text: str) -> str:
         while found >= 0:
             blank(found, found + len(phrase))
             found = text.find(phrase, found + len(phrase))
-    for match in re.finditer(r"[A-Za-z][A-Za-z0-9]*\s*计划", text):
+    for match in re.finditer(
+        r"(?:Free|Plus|Pro|Team|Enterprise|Business|Max|Ultra)\s*计划|全计划|各计划",
+        text,
+    ):
         blank(match.end() - 2, match.end())
     for match in re.finditer(
-        r"\btarget(?=\s+(?!is\b|are\b|was\b|were\b|of\b|to\b|for\b)[A-Za-z])",
+        r"\btarget(?=\s+(?:hardware|platform|audience|market|users?|customers?|devices?)\b)",
         text,
         re.IGNORECASE,
     ):
@@ -1047,18 +1060,87 @@ def _mask_non_predictions(text: str) -> str:
     return "".join(chars)
 
 
-def _number_clause_predicts(text: str, number: str) -> bool:
+def _is_sentence_end(text: str, index: int) -> bool:
+    char = text[index]
+    if char == "\n" or char in "。！？!?":
+        return True
+    if char in ".．":
+        if 0 < index < len(text) - 1 and text[index - 1].isdigit() and text[index + 1].isdigit():
+            return False
+        return True
+    return False
+
+
+def _iter_clauses(text: str):
+    """Yield (start, end, clause) split on clause boundaries. end excludes the boundary."""
+    start = 0
+    for index, _char in enumerate(text):
+        if _clause_boundary(text, index):
+            yield start, index, text[start:index]
+            start = index + 1
+    yield start, len(text), text[start:]
+
+
+_MEASURED_CLAUSE = re.compile(r"实测|测得|\bmeasured\b|\bobserved\b", re.IGNORECASE)
+
+
+def _clause_prediction(clause: str, absolute: int, text: str) -> tuple[bool, bool]:
+    """Return whether the clause states a prediction, and whether that word ends it."""
+    masked = _mask_non_predictions(clause)
+    found_end = False
+    found = False
+    for match in _PREDICTION_WORD.finditer(masked):
+        if _clause_negates(text, absolute + match.start()):
+            continue
+        found = True
+        if clause[match.end():].strip() == "":
+            found_end = True
+    return found, found_end
+
+
+def _number_occurrences(text: str, number: str) -> list[int]:
     normalized = _norm_digits(text)
     target = _norm_digits(number)
-    index = normalized.find(target)
-    if index < 0:
-        return False
-    left, right = _clause_bounds(text, index)
-    clause = _mask_non_predictions(text)[left:right]
-    for match in _PREDICTION_WORD.finditer(clause):
-        if not _clause_negates(text, left + match.start()):
-            return True
-    return False
+    found: list[int] = []
+    start = 0
+    while True:
+        index = normalized.find(target, start)
+        if index < 0:
+            return found
+        after = index + len(target)
+        before_ok = index == 0 or normalized[index - 1] not in "0123456789."
+        after_ok = after >= len(normalized) or normalized[after] not in "0123456789"
+        if before_ok and after_ok:
+            found.append(index)
+        start = after
+
+
+def _predicted_clause_spans(text: str) -> list[tuple[int, int]]:
+    """Clauses whose number is a prediction, including one carried from the clause before.
+
+    A prediction word that ends its clause applies to later clauses in the same
+    sentence. 。！？.!? and a newline end the sentence. 实测, 测得, measured, and
+    observed end the carry.
+    """
+    spans: list[tuple[int, int]] = []
+    carry = False
+    for start, end, clause in _iter_clauses(text):
+        if start > 0 and _is_sentence_end(text, start - 1):
+            carry = False
+        own, ends = _clause_prediction(clause, start, text)
+        stops = _MEASURED_CLAUSE.search(clause) is not None
+        if (own or carry) and not (stops and not own):
+            spans.append((start, end))
+        if stops:
+            carry = False
+        elif ends:
+            carry = True
+    return spans
+
+
+def _number_clause_predicts(text: str, number: str) -> bool:
+    spans = _predicted_clause_spans(text)
+    return any(start <= index < end for index in _number_occurrences(text, number) for start, end in spans)
 
 
 def _support_excerpts(event: Mapping[str, Any]) -> list[str]:
