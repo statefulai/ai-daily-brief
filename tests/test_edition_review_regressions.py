@@ -1337,6 +1337,87 @@ class ReviewRegressionTest(unittest.TestCase):
         for text in ("AIME 2025 成绩。", "FY 2027 指引。", "SWE-bench 2025 榜单。"):
             self.assertEqual(_unit_numbers(text), set(), text)
 
+    def test_measured_clause_does_not_clear_a_future_number(self):
+        for lede in (
+            "公司预计，经实测优化后明年延迟 40 毫秒。",
+            "公司预计，实测之后，明年延迟 40 毫秒。",
+            "Expected, as measured by MLPerf, latency 40 毫秒。",
+        ):
+            retained, rejected = self._measured("wash", lede)
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+        retained, rejected = self._measured("kept", "公司预计明年更快，本次实测 40 毫秒。")
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["kept"])
+
+    def test_future_clause_inherits_an_earlier_prediction(self):
+        for lede in (
+            "公司计划扩产，明年延迟达到 40 毫秒。",
+            "计划推出新芯片，届时延迟 40 毫秒。",
+            "Max 计划明年把延迟降到 40 毫秒。",
+        ):
+            retained, rejected = self._measured("fut", lede)
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+        for lede in (
+            "公司计划明年扩产，本次实测 40 毫秒。",
+            "Team 计划已上线，实测 40 毫秒。",
+        ):
+            retained, rejected = self._measured("ok", lede)
+            self.assertEqual(rejected, [], (lede, rejected))
+            self.assertEqual(retained, ["ok"])
+
+    def test_abbreviation_period_does_not_end_the_sentence(self):
+        retained, rejected = self._measured("us", "公司预计 U.S. 市场明年延迟 40 毫秒。")
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
+        retained, rejected = self._measured(
+            "ex",
+            "实测延迟 40 毫秒。",
+            excerpt="Analysts expect U.S. latency of 40 milliseconds next year.",
+        )
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
+        retained, rejected = self._measured("dec", "预计，明年延迟 2.5 毫秒。", value="2.5 毫秒")
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
+        retained, rejected = self._measured("next", "公司预计明年更快。实测 40 毫秒。")
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["next"])
+
+    def test_comparison_phrases_do_not_start_a_prediction(self):
+        for lede in (
+            "表现超出预期，延迟 40 毫秒。",
+            "Faster than expected, latency 40 毫秒。",
+            "公司已公布计划，新模型延迟 40 毫秒。",
+            "流水线有 38 次计划外中断，间隔 40 毫秒。",
+        ):
+            retained, rejected = self._measured("cmp", lede)
+            self.assertEqual(rejected, [], (lede, rejected))
+            self.assertEqual(retained, ["cmp"])
+
+    def test_year_exemption_stops_for_classifiers_and_count_nouns(self):
+        from candidate_policy import _unit_numbers
+
+        for text, number in (
+            ("Pro 1999 起。", "1999"),
+            ("Max 2048 卡。", "2048"),
+            ("cluster 2048 块。", "2048"),
+            ("sold 2000 units。", "2000"),
+            ("with 2000 servers。", "2000"),
+            ("Pro 1999 欧元。", "1999"),
+        ):
+            self.assertIn(number, _unit_numbers(text), text)
+        for text in ("AIME 2025 成绩。", "FY 2027 指引。", "SWE-bench 2025 榜单。"):
+            self.assertEqual(_unit_numbers(text), set(), text)
+
+    def test_extra_energy_and_storage_units_are_claims(self):
+        from candidate_policy import _unit_numbers
+
+        self.assertEqual(_unit_numbers("储能 1.5 MWh。"), {"1.5"})
+        self.assertEqual(_unit_numbers("容量 1.5 PiB。"), {"1.5"})
+        self.assertEqual(_unit_numbers("算力 2.5 TOPS。"), {"2.5"})
+
 
 if __name__ == "__main__":
     unittest.main()
