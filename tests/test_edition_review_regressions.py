@@ -1390,7 +1390,7 @@ class ReviewRegressionTest(unittest.TestCase):
             "表现超出预期，延迟 40 毫秒。",
             "Faster than expected, latency 40 毫秒。",
             "公司已公布计划，新模型延迟 40 毫秒。",
-            "流水线有 38 次计划外中断，间隔 40 毫秒。",
+            "流水线发生计划外中断，间隔 40 毫秒。",
         ):
             retained, rejected = self._measured("cmp", lede)
             self.assertEqual(rejected, [], (lede, rejected))

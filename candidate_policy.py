@@ -84,9 +84,22 @@ _CLAUSE_NEGATION = re.compile(
     re.IGNORECASE,
 )
 _CLAUSE_BOUNDARY = "，。；、,;!！？?\n"
-_PREDICTION_COMPOUND = ("条目标题", "目标检测", "目标模型", "目标函数")
+_PREDICTION_COMPOUND = (
+    "条目标题",
+    "目标检测",
+    "目标模型",
+    "目标函数",
+    "超出预期",
+    "不及预期",
+    "符合预期",
+    "达成了目标",
+    "已公布计划",
+    "计划外",
+    "as expected",
+    "than expected",
+)
 _QUANTITY_UNIT = re.compile(
-    r"(?:TFLOP/s|[KMGTPE]FLOPS|FLOPS|[KMGT]bps|bps|GWh|TWh|kWh|GiB|TiB|GHz|MHz|kHz|GW|MW|kW|TW|EB|Mtok|PB|TB|GB|MB|nm|ms|W)\b",
+    r"(?:TFLOP/s|[KMGTPE]FLOPS|FLOPS|TOPS|[KMGT]bps|bps|GWh|TWh|kWh|MWh|GiB|TiB|PiB|GHz|MHz|kHz|GW|MW|kW|TW|EB|Mtok|PB|TB|GB|MB|nm|ms|W)\b",
     re.IGNORECASE,
 )
 _CN_EXCLUDE = (
@@ -108,7 +121,7 @@ _BOILERPLATE = re.compile(
 )
 _FW_DIGITS = str.maketrans("０１２３４５６７８９", "0123456789")
 _UNIT_AFTER = re.compile(
-    r"\s*(?:TFLOP/s|TB/s|GB/s|GWh|TWh|kWh|GiB|TiB|Mtok|fps|tokens|token|trillion|billion|million|GHz|MHz|GW|MW|kW|TW|EB|ms|TB|GB|MB|nm|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|千万|百亿|十亿|百万|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
+    r"\s*(?:TFLOP/s|TB/s|GB/s|GWh|TWh|kWh|MWh|GiB|TiB|PiB|TOPS|Mtok|fps|tokens|token|trillion|billion|million|GHz|MHz|GW|MW|kW|TW|EB|ms|TB|GB|MB|nm|美金|美元|分钟|小时|秒钟|秒|个百分点|%|％|千亿|万亿|千万|百亿|十亿|百万|亿元|万元|亿美元|万美元|亿|万|千|百|元|倍|分|名|家|人|[BMKxX])(?![A-Za-z])",
     re.IGNORECASE,
 )
 _ARABIC = re.compile(r"\d+(?:\.\d+)?")
@@ -382,12 +395,42 @@ def _field_shows_prediction(text: str, value: str) -> bool:
     return False
 
 
+_ABBREVIATION = {
+    "inc",
+    "corp",
+    "ltd",
+    "co",
+    "vs",
+    "etc",
+    "no",
+    "approx",
+    "dr",
+    "mr",
+    "ms",
+    "jr",
+    "st",
+}
+
+
+def _period_is_boundary(text: str, index: int) -> bool:
+    """A period ends a clause only when it is not a decimal, initial, or abbreviation."""
+    if 0 < index < len(text) - 1 and text[index - 1].isdigit() and text[index + 1].isdigit():
+        return False
+    if index + 1 < len(text) and not text[index + 1].isspace():
+        return False
+    end = index
+    while end > 0 and text[end - 1].isalpha():
+        end -= 1
+    token = text[end:index]
+    if len(token) == 1 and token.isalpha():
+        return False
+    return token.lower() not in _ABBREVIATION
+
+
 def _clause_boundary(text: str, index: int) -> bool:
     char = text[index]
-    if char in ".．" and 0 < index < len(text) - 1:
-        if text[index - 1].isdigit() and text[index + 1].isdigit():
-            return False
-        return True
+    if char in ".．":
+        return _period_is_boundary(text, index)
     return char in _CLAUSE_BOUNDARY
 
 
@@ -515,9 +558,10 @@ _MONTH_DAY_YEAR = re.compile(
 
 
 _AFTER_YEAR_QUANTITY = re.compile(
-    r"(?:张|名|个|台|位|次|款|家|人|种|美元|美金|元|万|亿|%|％|"
-    r"(?:dollars?|GPUs?|users?|tokens?|"
-    r"GWh|TWh|kWh|GiB|TiB|TFLOP/s|Mtok|TW|EB|GW|MW|kW|PB|TB|GB|MB|nm|ms)\b)",
+    r"(?:欧元|英镑|日元|人民币|美元|美金|元|张|名|个|台|位|次|款|家|人|种|块|颗|卡|片|枚|条|套|部|辆|起|万|亿|%|％|"
+    r"(?:dollars?|GPUs?|users?|units?|servers?|chips?|cards?|nodes?|employees?|customers?|tokens?|"
+    r"USD|EUR|RMB|yuan|"
+    r"GWh|TWh|kWh|MWh|GiB|TiB|PiB|TFLOP/s|Mtok|TOPS|TW|EB|GW|MW|kW|PB|TB|GB|MB|nm|ms)\b)",
     re.IGNORECASE,
 )
 
@@ -1060,14 +1104,21 @@ def _mask_non_predictions(text: str) -> str:
     return "".join(chars)
 
 
+_FUTURE_MARKER = re.compile(
+    r"明年|后年|今年底|今年晚些|下半年|届时|未来|next year|later this year|\bwill\b|by 20\d{2}|将",
+    re.IGNORECASE,
+)
+_TIER_PLAN = re.compile(
+    r"(?:Free|Plus|Pro|Team|Enterprise|Business|Max|Ultra)\s*计划",
+)
+
+
 def _is_sentence_end(text: str, index: int) -> bool:
     char = text[index]
     if char == "\n" or char in "。！？!?":
         return True
     if char in ".．":
-        if 0 < index < len(text) - 1 and text[index - 1].isdigit() and text[index + 1].isdigit():
-            return False
-        return True
+        return _period_is_boundary(text, index)
     return False
 
 
@@ -1115,32 +1166,61 @@ def _number_occurrences(text: str, number: str) -> list[int]:
         start = after
 
 
-def _predicted_clause_spans(text: str) -> list[tuple[int, int]]:
-    """Clauses whose number is a prediction, including one carried from the clause before.
-
-    A prediction word that ends its clause applies to later clauses in the same
-    sentence. 。！？.!? and a newline end the sentence. 实测, 测得, measured, and
-    observed end the carry.
-    """
-    spans: list[tuple[int, int]] = []
-    carry = False
-    for start, end, clause in _iter_clauses(text):
-        if start > 0 and _is_sentence_end(text, start - 1):
-            carry = False
-        own, ends = _clause_prediction(clause, start, text)
-        stops = _MEASURED_CLAUSE.search(clause) is not None
-        if (own or carry) and not (stops and not own):
-            spans.append((start, end))
-        if stops:
-            carry = False
-        elif ends:
-            carry = True
-    return spans
+def _clause_has_number(start: int, end: int, occurrences: list[int], text_length: int) -> bool:
+    return any(start <= index < end or (index == end and end == text_length) for index in occurrences)
 
 
 def _number_clause_predicts(text: str, number: str) -> bool:
-    spans = _predicted_clause_spans(text)
-    return any(start <= index < end for index in _number_occurrences(text, number) for start, end in spans)
+    """A measured number is a prediction when its sentence already forecast it.
+
+    Every copy of the number is checked. A prediction word that ends its clause
+    covers later clauses until a sentence end. A 实测 clause stops that carry
+    only when it contains this number and no future marker. A future clause is
+    also a prediction when any prediction word, including a tier 计划, came
+    earlier in the sentence.
+    """
+    occurrences = _number_occurrences(text, number)
+    if not occurrences:
+        return False
+    clauses = list(_iter_clauses(text))
+    for index in occurrences:
+        which = next(
+            (
+                position
+                for position, (start, end, _clause) in enumerate(clauses)
+                if _clause_has_number(start, end, [index], len(text))
+            ),
+            None,
+        )
+        if which is None:
+            continue
+        sentence = which
+        while sentence > 0:
+            boundary = clauses[sentence][0] - 1
+            if boundary >= 0 and _is_sentence_end(text, boundary):
+                break
+            sentence -= 1
+        saw_prediction = False
+        carry = False
+        for position in range(sentence, which + 1):
+            start, end, clause = clauses[position]
+            own, ends = _clause_prediction(clause, start, text)
+            tier = _TIER_PLAN.search(clause) is not None
+            future = _FUTURE_MARKER.search(clause) is not None
+            has_number = _clause_has_number(start, end, occurrences, len(text))
+            measured = _MEASURED_CLAUSE.search(clause) is not None
+            stops = measured and has_number and not future
+            if position == which and (
+                own or (carry and not stops) or (future and (saw_prediction or tier or own))
+            ):
+                return True
+            if own or tier:
+                saw_prediction = True
+            if stops:
+                carry = False
+            elif ends:
+                carry = True
+    return False
 
 
 def _support_excerpts(event: Mapping[str, Any]) -> list[str]:
