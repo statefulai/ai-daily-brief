@@ -568,6 +568,24 @@ _AFTER_YEAR_QUANTITY = re.compile(
 )
 
 
+_MAGNITUDE_WORD = re.compile(
+    r"(?:Trillions?|Billions?|Millions?|Thousands?|Hundreds?|Percent|Hours?|Minutes?|Seconds?|"
+    r"Days?|Weeks?|Months?|Years?|Times?|Points?)\b",
+    re.IGNORECASE,
+)
+
+
+def _is_clock_number(text: str, start: int, end: int, number: str) -> bool:
+    """HH, MM, or SS in H:MM or H:MM:SS. A label colon is not a clock."""
+    if not re.fullmatch(r"\d{1,2}", number):
+        return False
+    if re.match(r"[:：]\d{2}(?!\d)", text[end:]):
+        return True
+    if start >= 1 and text[start - 1] in ":：":
+        return re.search(r"\d{1,2}$", text[: start - 1]) is not None
+    return False
+
+
 def _timezone_sign(text: str, start: int, end: int) -> bool:
     """+8 and +08:00 are offsets. +30% and -15% are quantities."""
     if start == 0 or text[start - 1] not in "+-":
@@ -607,14 +625,14 @@ def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
         previous = text[start - 1]
         if previous.isascii() and previous.isalpha():
             return True
-        if previous == ":" or _timezone_sign(text, start, end):
+        if _timezone_sign(text, start, end) or _is_clock_number(text, start, end, number):
             return True
         if previous == "-" and start > 1 and (
             (text[start - 2].isdigit() and len(number) == 2)
             or (text[start - 2].isascii() and text[start - 2].isalpha())
         ):
             return True
-    if end < len(text) and text[end] == ":" and text[end + 1:end + 3].isdigit():
+    if _is_clock_number(text, start, end, number):
         return True
     if end < len(text) and text[end] == "." and end + 1 < len(text) and text[end + 1].isdigit():
         return True
@@ -629,7 +647,7 @@ def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
         return True
     if "." in number:
         after = text[end:].lstrip()
-        if _QUANTITY_UNIT.match(after):
+        if _QUANTITY_UNIT.match(after) or _MAGNITUDE_WORD.match(after):
             return False
         if re.match(r"[A-Z][A-Za-z]+", after) or re.match(r"\d+(?:\.\d+)?\s*[BMK]\b", after):
             return True
