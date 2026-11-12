@@ -83,7 +83,12 @@ _CLAUSE_NEGATION = re.compile(
     r"isn't|is not|not yet|never|without|别|勿|未|没|不|非|无|n't|\bnot\b|\bno\b",
     re.IGNORECASE,
 )
-_CLAUSE_BOUNDARY = "，。；、,!！？?\n"
+_CLAUSE_BOUNDARY = "，。；、,;!！？?\n"
+_PREDICTION_COMPOUND = ("条目标题", "目标检测", "目标模型", "目标函数")
+_QUANTITY_UNIT = re.compile(
+    r"(?:[KMGTPE]FLOPS|FLOPS|[KMGT]bps|bps|GHz|MHz|kHz|GW|MW|kW|PB|TB|GB|MB|nm|ms|W)\b",
+    re.IGNORECASE,
+)
 _CN_EXCLUDE = (
     "零一万物",
     "千万不要",
@@ -498,23 +503,52 @@ def _cn_unit_after(following: str):
 
 
 _EN_MONTH = re.compile(
-    r"(?:January|February|March|April|May|June|July|August|September|October|November|December)\s+$",
+    r"(?:January|February|March|April|May|June|July|August|September|October|November|December|"
+    r"Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+$",
+    re.IGNORECASE,
+)
+_MONTH_DAY_YEAR = re.compile(
+    r"(?:January|February|March|April|May|June|July|August|September|October|November|December|"
+    r"Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+\d{1,2},?\s+$",
     re.IGNORECASE,
 )
 
 
-def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
-    """Years, dates, clock times, versions, and model or id tokens are not claims."""
-    if _YEAR.fullmatch(number):
+def _timezone_sign(text: str, start: int, end: int) -> bool:
+    """+8 and +08:00 are offsets. +30% and -15% are quantities."""
+    if start == 0 or text[start - 1] not in "+-":
+        return False
+    rest = text[end:]
+    if rest.startswith(":") and len(rest) > 1 and rest[1].isdigit():
         return True
+    prefix = text[max(0, start - 4):start - 1]
+    return re.search(r"(?:UTC|GMT)$", prefix, re.IGNORECASE) is not None
+
+
+def _labeled_year(text: str, start: int, end: int, number: str) -> bool:
+    """A 19xx/20xx count is a claim unless it is a year label or a date."""
+    if not _YEAR.fullmatch(number):
+        return False
+    rest = text[end:].lstrip()
+    if rest.startswith(("财年", "年度", "年代", "年", "月", "日", "号")):
+        return True
+    window = text[max(0, start - 24):start]
+    if _MONTH_DAY_YEAR.search(window) or _EN_MONTH.search(window):
+        return True
+    return re.search(r"[A-Za-z]\s+$", window) is not None
+
+
+def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
+    """Dates, clocks, versions, model tokens, and labeled years are not claims."""
     if start > 0:
         previous = text[start - 1]
         if previous.isascii() and previous.isalpha():
             return True
-        if previous in "T+:":
+        if previous == ":" or _timezone_sign(text, start, end):
             return True
-        if previous == "-" and (
-            len(number) == 2 or (start > 1 and text[start - 2].isascii() and text[start - 2].isalpha())
+        if previous == "-" and start > 1 and (
+            (text[start - 2].isdigit() and len(number) == 2)
+            or (text[start - 2].isascii() and text[start - 2].isalpha())
         ):
             return True
     if end < len(text) and text[end] == ":" and text[end + 1:end + 3].isdigit():
@@ -523,20 +557,16 @@ def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
         return True
     if start > 1 and text[start - 1] == "." and text[start - 2].isdigit():
         return True
-    if _version_or_date(text, start, end):
+    if _version_or_date(text, start, end) or _labeled_year(text, start, end, number):
         return True
     rest = text[end:].lstrip()
     if rest.startswith(("月", "日", "号")):
         return True
-    if _EN_MONTH.search(text[max(0, start - 12):start]):
+    if _EN_MONTH.search(text[max(0, start - 16):start]):
         return True
     if "." in number:
         after = text[end:].lstrip()
-        if re.match(
-            r"(?:PB|TB|GB|MB|ms|tok(?:en)?s?|W|毫秒|秒钟|秒|分钟|小时|天|台|层|张|个月|trillion|billion|million|thousand)",
-            after,
-            re.IGNORECASE,
-        ):
+        if _QUANTITY_UNIT.match(after):
             return False
         if re.match(r"[A-Z][A-Za-z]+", after) or re.match(r"\d+(?:\.\d+)?\s*[BMK]\b", after):
             return True
@@ -994,6 +1024,29 @@ def _clause_bounds(text: str, index: int) -> tuple[int, int]:
     return left, right
 
 
+def _mask_non_predictions(text: str) -> str:
+    """Hide compound nouns and product names that contain a prediction word."""
+    chars = list(text)
+    def blank(start: int, stop: int) -> None:
+        for index in range(start, stop):
+            chars[index] = " "
+
+    for phrase in _PREDICTION_COMPOUND:
+        found = text.find(phrase)
+        while found >= 0:
+            blank(found, found + len(phrase))
+            found = text.find(phrase, found + len(phrase))
+    for match in re.finditer(r"[A-Za-z][A-Za-z0-9]*\s*计划", text):
+        blank(match.end() - 2, match.end())
+    for match in re.finditer(
+        r"\btarget(?=\s+(?!is\b|are\b|was\b|were\b|of\b|to\b|for\b)[A-Za-z])",
+        text,
+        re.IGNORECASE,
+    ):
+        blank(match.start(), match.end())
+    return "".join(chars)
+
+
 def _number_clause_predicts(text: str, number: str) -> bool:
     normalized = _norm_digits(text)
     target = _norm_digits(number)
@@ -1001,7 +1054,7 @@ def _number_clause_predicts(text: str, number: str) -> bool:
     if index < 0:
         return False
     left, right = _clause_bounds(text, index)
-    clause = text[left:right]
+    clause = _mask_non_predictions(text)[left:right]
     for match in _PREDICTION_WORD.finditer(clause):
         if not _clause_negates(text, left + match.start()):
             return True
@@ -1029,13 +1082,10 @@ def _measured_uses_prediction_word(event: Mapping[str, Any], claim: Mapping[str,
     value = claim.get("value")
     if not isinstance(value, str) or not value:
         return False
-    for text in _reader_fields(event):
-        if value in text and _field_shows_prediction(text, value):
-            return True
     numbers = _NUMBER.findall(_norm_digits(value)) or [value]
-    for excerpt in _support_excerpts(event):
+    for text in [*_reader_fields(event), *_support_excerpts(event)]:
         for number in numbers:
-            if _number_clause_predicts(excerpt, number):
+            if _number_clause_predicts(text, number):
                 return True
     return False
 

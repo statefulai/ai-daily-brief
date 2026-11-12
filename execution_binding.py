@@ -122,6 +122,11 @@ class RunLog:
                 "reason": "result_head does not match headRefOid",
                 "execution_id": None,
             }
+        if completion.get("terminal_state") != "finished":
+            return {"status": "blocked", "reason": "run is not finished", "execution_id": None}
+        dispatch = next((item for item in self.dispatches if item["run_id"] == run_id), None)
+        if dispatch is None or not _is_latest_in_lane(self.dispatches, dispatch):
+            return {"status": "blocked", "reason": "run is not the latest dispatch", "execution_id": None}
         return {
             "status": "accepted",
             "run_id": run_id,
