@@ -1427,6 +1427,19 @@ class ReviewRegressionTest(unittest.TestCase):
         for lede in (
             "公司预计一季度收官，年底到 50 亿美元。",
             "公司预计一季度收官，下季度到 50 亿美元。",
+        ):
+            retained, rejected = _assess(
+                _event(
+                    "fifty",
+                    [_source(URL, support=_support(excerpt="The filing guides 50 billion dollars for the next period today."))],
+                    lede=lede,
+                    claims=[{"kind": "measured", "value": "50 亿美元"}],
+                    placement="lead",
+                )
+            )
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+        for lede in (
             "公司计划扩产，2027 年达到 40 毫秒。",
             "公司计划扩产，下季度达到 40 毫秒。",
             "公司计划扩产，年内达到 40 毫秒。",

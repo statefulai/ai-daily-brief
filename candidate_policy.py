@@ -369,7 +369,9 @@ def _event_reasons(event: Mapping[str, Any], edition_id: str, attempt: int | Non
             kind = claim.get("kind")
             if kind == "predicted" and not _prediction_visible(event, claim):
                 reasons.append("prediction_not_visible")
-            if kind == "measured" and _measured_uses_prediction_word(event, claim):
+            if kind == "measured" and _measured_uses_prediction_word(
+                event, claim, _edition_year(edition_id)
+            ):
                 reasons.append("measured_describes_prediction")
     if good_original and not _verification_supports(
         event, edition_id, attempt, good_url, good_excerpt
@@ -558,7 +560,7 @@ _MONTH_DAY_YEAR = re.compile(
 
 
 _AFTER_YEAR_QUANTITY = re.compile(
-    r"(?:欧元|英镑|日元|人民币|美元|美金|元|张|名|个|台|位|次|款|家|人|种|块|颗|卡|片|枚|条|套|部|辆|起|万|亿|%|％|"
+    r"(?:新台币|港元|欧元|英镑|日元|人民币|美元|美金|元|节点|序列|小时|张|名|个|台|位|次|款|家|人|种|块|颗|卡|片|枚|条|套|部|辆|层|天|份|起|倍|万|亿|%|％|"
     r"(?:dollars?|GPUs?|users?|units?|servers?|chips?|cards?|nodes?|employees?|customers?|tokens?|"
     r"USD|EUR|RMB|yuan|"
     r"GWh|TWh|kWh|MWh|GiB|TiB|PiB|TFLOP/s|Mtok|TOPS|TW|EB|GW|MW|kW|PB|TB|GB|MB|nm|ms)\b)",
@@ -589,7 +591,14 @@ def _labeled_year(text: str, start: int, end: int, number: str) -> bool:
         return True
     if re.search(r"[A-Za-z]\s+$", window) is None:
         return False
-    return _AFTER_YEAR_QUANTITY.match(rest) is None
+    return not _quantity_follows_year(rest)
+
+
+def _quantity_follows_year(rest: str) -> bool:
+    """A year label stops being a label when a count, unit, or plural noun follows."""
+    if _AFTER_YEAR_QUANTITY.match(rest) or _QUANTITY_UNIT.match(rest):
+        return True
+    return re.match(r"[A-Za-z][A-Za-z0-9]*s\b", rest) is not None
 
 
 def _arabic_is_exempt(text: str, start: int, end: int, number: str) -> bool:
@@ -1105,9 +1114,12 @@ def _mask_non_predictions(text: str) -> str:
 
 
 _FUTURE_MARKER = re.compile(
-    r"明年|后年|今年底|今年晚些|下半年|届时|未来|next year|later this year|\bwill\b|by 20\d{2}|将",
+    r"明年|后年|今年底|今年晚些|下半年|届时|未来|下个月|下周|下季|到时|上市后|随后|后续|"
+    r"年底|年末|年内|季度|next quarter|next month|next year|later this year|"
+    r"\bupcoming\b|\bcoming\b|by the end of|at the end of|\bin 20\d{2}\b|\bwill\b|\bQ[1-4]\b|by 20\d{2}|将",
     re.IGNORECASE,
 )
+_FUTURE_YEAR = re.compile(r"(20\d{2})\s*年(?!前)")
 _TIER_PLAN = re.compile(
     r"(?:Free|Plus|Pro|Team|Enterprise|Business|Max|Ultra)\s*计划",
 )
@@ -1170,7 +1182,23 @@ def _clause_has_number(start: int, end: int, occurrences: list[int], text_length
     return any(start <= index < end or (index == end and end == text_length) for index in occurrences)
 
 
-def _number_clause_predicts(text: str, number: str) -> bool:
+def _edition_year(edition_id: object) -> int | None:
+    if isinstance(edition_id, str) and len(edition_id) >= 4 and edition_id[:4].isdigit():
+        return int(edition_id[:4])
+    return None
+
+
+def _has_future_marker(clause: str, edition_year: int | None) -> bool:
+    if _FUTURE_MARKER.search(clause):
+        return True
+    for match in _FUTURE_YEAR.finditer(clause):
+        year = int(match.group(1))
+        if edition_year is None or year >= edition_year:
+            return True
+    return False
+
+
+def _number_clause_predicts(text: str, number: str, edition_year: int | None = None) -> bool:
     """A measured number is a prediction when its sentence already forecast it.
 
     Every copy of the number is checked. A prediction word that ends its clause
@@ -1206,7 +1234,7 @@ def _number_clause_predicts(text: str, number: str) -> bool:
             start, end, clause = clauses[position]
             own, ends = _clause_prediction(clause, start, text)
             tier = _TIER_PLAN.search(clause) is not None
-            future = _FUTURE_MARKER.search(clause) is not None
+            future = _has_future_marker(clause, edition_year)
             has_number = _clause_has_number(start, end, occurrences, len(text))
             measured = _MEASURED_CLAUSE.search(clause) is not None
             stops = measured and has_number and not future
@@ -1240,14 +1268,16 @@ def _support_excerpts(event: Mapping[str, Any]) -> list[str]:
     return excerpts
 
 
-def _measured_uses_prediction_word(event: Mapping[str, Any], claim: Mapping[str, Any]) -> bool:
+def _measured_uses_prediction_word(
+    event: Mapping[str, Any], claim: Mapping[str, Any], edition_year: int | None = None
+) -> bool:
     value = claim.get("value")
     if not isinstance(value, str) or not value:
         return False
     numbers = _NUMBER.findall(_norm_digits(value)) or [value]
     for text in [*_reader_fields(event), *_support_excerpts(event)]:
         for number in numbers:
-            if _number_clause_predicts(text, number):
+            if _number_clause_predicts(text, number, edition_year):
                 return True
     return False
 
