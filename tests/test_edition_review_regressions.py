@@ -1237,6 +1237,106 @@ class ReviewRegressionTest(unittest.TestCase):
         replaced.dispatch({"run_id": "run-new", "edition_id": "2026-11-13", "base_head": produced})
         self.assertEqual(replaced.require_result_head("run-old", produced)["status"], "blocked")
 
+    def _measured(self, event_id, lede, excerpt=None, value="40 毫秒"):
+        if excerpt is None:
+            excerpt = "The lab measured 40 milliseconds of latency on its public benchmark suite."
+        return _assess(
+            _event(
+                event_id,
+                [_source(URL, support=_support(excerpt=excerpt))],
+                lede=lede,
+                claims=[{"kind": "measured", "value": value}],
+                placement="lead",
+            )
+        )
+
+    def test_every_number_occurrence_can_mark_measured(self):
+        retained, rejected = self._measured("twice", "40 毫秒级响应已上线，预计明年延迟 40 毫秒。")
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
+        retained, rejected = self._measured("later", "实测 40 毫秒；预计明年 40 毫秒。")
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
+
+    def test_plan_mask_is_only_a_tier_name(self):
+        for lede in (
+            "OpenAI 计划明年把延迟降到 40 毫秒。",
+            "xAI 计划明年延迟 40 毫秒。",
+            "Meta 计划，明年延迟 40 毫秒。",
+        ):
+            retained, rejected = self._measured("co", lede)
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+        retained, rejected = self._measured(
+            "free",
+            "Free 计划每月 40 美元。",
+            excerpt="The Free plan costs 40 dollars per month at the lab.",
+            value="40 美元",
+        )
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["free"])
+
+    def test_target_latency_is_a_prediction(self):
+        for lede in ("Target latency of 40 毫秒。", "target revenue 40 毫秒。"):
+            retained, rejected = self._measured("lat", lede)
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+        retained, rejected = self._measured("hw", "On target hardware it measured 40 毫秒。")
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["hw"])
+
+    def test_prediction_at_the_end_of_a_clause_carries(self):
+        for lede in (
+            "公司预计，明年延迟 40 毫秒。",
+            "公司给出预测; 明年延迟 40 毫秒。",
+            "预期、延迟 40 毫秒。",
+            "Expected, latency 40 毫秒。",
+        ):
+            retained, rejected = self._measured("carry", lede)
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+        retained, rejected = self._measured(
+            "split",
+            "实测延迟 40 毫秒。",
+            excerpt="The lab expects, by next year, 40 milliseconds of latency.",
+        )
+        self.assertEqual(retained, [])
+        self.assertIn("measured_describes_prediction", rejected[0]["reasons"])
+        retained, rejected = self._measured("kept", "公司计划明年扩产，本次实测 40 毫秒。")
+        self.assertEqual(rejected, [], rejected)
+        self.assertEqual(retained, ["kept"])
+
+    def test_next_year_plan_is_a_prediction(self):
+        for lede in (
+            "公司明年计划把延迟降到 40 毫秒。",
+            "公司今年计划延迟 40 毫秒。",
+            "公司下个月计划延迟 40 毫秒。",
+            "公司下月计划延迟 40 毫秒。",
+        ):
+            retained, rejected = self._measured("plan", lede)
+            self.assertEqual(retained, [], lede)
+            self.assertIn("measured_describes_prediction", rejected[0]["reasons"], lede)
+
+    def test_latin_year_exemption_stops_when_a_quantity_follows(self):
+        from candidate_policy import _unit_numbers
+
+        for text, number in (
+            ("GPUs 2048 张。", "2048"),
+            ("users 2000 名。", "2000"),
+            ("Vision Pro 1999 美元起。", "1999"),
+            ("with 2000 GPUs。", "2000"),
+            ("储能 1.5 GWh。", "1.5"),
+            ("用电 1.2 TWh。", "1.2"),
+            ("功率 1.5 TW。", "1.5"),
+            ("数据 1.2 EB。", "1.2"),
+            ("内存 2.5 GiB。", "2.5"),
+            ("算力 1.5 TFLOP/s。", "1.5"),
+            ("上下文 1.5 Mtok。", "1.5"),
+        ):
+            self.assertIn(number, _unit_numbers(text), text)
+        for text in ("AIME 2025 成绩。", "FY 2027 指引。", "SWE-bench 2025 榜单。"):
+            self.assertEqual(_unit_numbers(text), set(), text)
+
 
 if __name__ == "__main__":
     unittest.main()
