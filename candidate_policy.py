@@ -569,20 +569,44 @@ _AFTER_YEAR_QUANTITY = re.compile(
 
 
 _MAGNITUDE_WORD = re.compile(
-    r"(?:Trillions?|Billions?|Millions?|Thousands?|Hundreds?|Percent|Hours?|Minutes?|Seconds?|"
-    r"Days?|Weeks?|Months?|Years?|Times?|Points?)\b",
+    r"(?:Trillions?|Billions?|Millions?|Thousands?|Hundreds?|Percentage|Percent|"
+    r"Hours?|Minutes?|Seconds?|Days?|Weeks?|Months?|Years?|Times?|Points?|"
+    r"Tokens?|Dollars?|Euros?|Yuan|Pages?|"
+    r"(?:Kilo|Mega|Giga|Tera|Peta)?(?:watts?|flops|bytes)|"
+    r"Bn|Mn|Tn)\b",
     re.IGNORECASE,
 )
 
 
+def _clock_in_range(hour: str, minute: str, second: str | None) -> bool:
+    if not re.fullmatch(r"\d{1,2}", hour) or not (0 <= int(hour) <= 24):
+        return False
+    if not re.fullmatch(r"\d{2}", minute) or not (0 <= int(minute) <= 59):
+        return False
+    if second is None:
+        return True
+    return re.fullmatch(r"\d{2}", second) is not None and 0 <= int(second) <= 59
+
+
 def _is_clock_number(text: str, start: int, end: int, number: str) -> bool:
-    """HH, MM, or SS in H:MM or H:MM:SS. A label colon is not a clock."""
+    """A label colon is not a clock. Hours are 0-24. Minutes and seconds are 00-59."""
     if not re.fullmatch(r"\d{1,2}", number):
         return False
-    if re.match(r"[:：]\d{2}(?!\d)", text[end:]):
-        return True
+    rest = text[end:]
     if start >= 1 and text[start - 1] in ":：":
-        return re.search(r"\d{1,2}$", text[: start - 1]) is not None
+        before = text[: start - 1]
+        second_field = re.search(r"(\d{1,2})[:：](\d{2})$", before)
+        if second_field and re.fullmatch(r"\d{2}", number):
+            return _clock_in_range(second_field.group(1), second_field.group(2), number)
+        hour = re.search(r"(\d{1,2})$", before)
+        if hour and re.fullmatch(r"\d{2}", number):
+            tail = re.match(r"[:：](\d{2})(?!\d)", rest)
+            return _clock_in_range(hour.group(1), number, tail.group(1) if tail else None)
+        if hour and re.fullmatch(r"\d", number):
+            return True
+    matched = re.match(r"[:：](\d{2})(?:[:：](\d{2}))?(?!\d)", rest)
+    if matched and (start == 0 or not text[start - 1].isdigit()):
+        return _clock_in_range(number, matched.group(1), matched.group(2))
     return False
 
 
