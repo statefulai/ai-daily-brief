@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 11 月 12 日 AI 日报，含 4 条已策展内容。">
+  <title>AI 日报 · 2026 年 11 月 12 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-11-12">2026 年 11 月 12 日</time> · 星期四</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 11 月 12 日 08:00（北京时间）。本期收录 4 条窗口内动态。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">产品 · Google</span><time datetime="2026-11-12T02:00:00+08:00">11.12 02:00 北京时间</time></div><h2 id="event-1-title">Google 放出 Gemini Decisions API，输入价每百万 token 0.10 美元</h2><div class="lead-copy"><p>Google 放出 Gemini Decisions API，模型 ID 是 gemini-decision-1。一次最多评 1000 道封闭题，输入每百万 token 0.10 美元，输出不计费。开发者已可用 Google AI Studio 的密钥调用。</p><p class="caveat">限定：150 到 250 毫秒和近 5 倍价差，是谷歌自己的对照。</p><div class="source"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/" target="_blank" rel="noopener noreferrer">原文 · Google</a></div><details><summary>详细与核验</summary><p>Google 博客的发布时间是 2026-11-11T18:00:00+00:00。页面宣布 Gemini Decisions API，模型名 Gemini Decision 1，模型 ID 是 gemini-decision-1。</p><p>一次请求最多带 1000 个独立问题，题型包括是非、2 到 255 个选项的选择，以及从 0 起算的有序量表。输入可以是文本、图像、音频、视频和 PDF，上限 256K token。每个答案带 0 到 1 的置信度。</p><p>页面写价格是每百万输入 token 0.10 美元，输出 token 不计费。端到端延迟写成 150 到 250 毫秒，模型计算的中位延迟写成 50 到 100 毫秒。</p><p>页面写，在共享基准上，Gemini Decision 1 配 Decisions API 比 Gemini 3.5 Flash-Lite 配 Interactions API 便宜近 5 倍。</p><p>页面写开发者可以在 Google AI Studio 取 API 密钥，并有 Python、JavaScript 和 REST 文档。</p><p class="condition"><strong>适用范围：</strong>延迟和近 5 倍价差是博客里的公司数字，本期没有复测。</p><details><summary>展开：背景与补充</summary><ul><li>OpenAI 的 Decisions API 已在 10 月 7 日和 10 月 23 日正刊写过。那是另一家公司的接口，当时只接 gpt-6-luna。这次是谷歌自己的模型和标价。</li></ul></details><div class="source"><a href="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：核验说明（Google 博客）：发布时间是 2026-11-11T18:00:00+00:00。模型 ID gemini-decision-1、一次最多 1000 题、输入上限 256K token、每百万输入 token 0.10 美元、输出不计费、端到端 150 到 250 毫秒、相对 Gemini 3.5 Flash-Lite 近 5 倍，以及 Google AI Studio 密钥，均取自这篇博客。本期没有调用接口。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">研究 · DeepMind</span><time datetime="2026-11-11T23:00:00+08:00">11.11 23:00 北京时间</time></div><h3 id="event-2-title">DeepMind 发布 AlphaGenome 2，免疫细胞因果变异检出 30%</h3><div><p>DeepMind 发布 AlphaGenome 2，用来预测 DNA 变异在具体细胞类型里如何改变基因表达。TenK10K 的 28 种免疫细胞上，因果变异检出是 30%，上一代微调后是 16%。非商业研究已可走 AlphaGenome API。</p><p class="caveat">限定：30% 对 16% 是公司在 TenK10K 上的结果。商业用途仍是私人预览。</p><div class="source"><a href="https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/" target="_blank" rel="noopener noreferrer">原文 · Google DeepMind</a></div><details><summary>详细与核验</summary><p>DeepMind 博客的发布时间是 2026-11-11T15:00:00+00:00。当天宣布 AlphaGenome 2，按具体细胞类型预测 DNA 变异对基因表达的影响。</p><p>页面写，相对上一代最好模型，AlphaGenome 2 识别出近两倍会改变细胞中基因表达的变异。训练用了超过 1 亿个单细胞图谱，覆盖 68 种组织。后文写训练数据包括人和小鼠、超过 1.07 亿个单细胞图谱。</p><p>在 TenK10K 的 28 种原代免疫细胞上，因果变异检出是 30% 对 16%，方向性基因效应是 43% 对 23%。对照是在单细胞数据上微调过的原版 AlphaGenome，以及其他专用工具。</p><p>非商业研究从当天起可通过 AlphaGenome API 使用。商业研究是私人预览。页面写两代模型只供研究，没有经过临床或诊断批准。</p><p>页面写 Google Antigravity 里的 AlphaGenome 2 Skills 会稍后放出，宣布当天还没有。</p><div class="condition"><strong>适用范围：</strong><ul><li>非商业研究可经由 AlphaGenome API。商业研究是私人预览。</li><li>未批准用于临床或诊断。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>The Verge 引 Žiga Avsec 说，AlphaGenome 2 短期内不会换掉上一代，因为更细的预测更贵。9 月那份覆盖人类基因组每个单字母变化的图谱，仍是用上一代做的。</li></ul></details><div class="source"><a href="https://deepmind.google/blog/alphagenome-2-deciphering-how-cells-read-dna-to-better-understand-disease/" target="_blank" rel="noopener noreferrer">Google DeepMind · 一手来源 · 已核对</a><a href="https://www.theverge.com/ai-artificial-intelligence/1031524/google-deepmind-alphagenome-2-genetic-ai-model" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（Google DeepMind）：核验说明（Google DeepMind）：发布时间是 2026-11-11T15:00:00+00:00。超过 1 亿个单细胞、68 种组织、TenK10K 上 30% 对 16% 和 43% 对 23%、非商业 API、商业私人预览，以及未做临床批准，取自这篇博客。本期没有跑模型。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：发布时间是 2026-11-11T15:00:00+00:00。关于短期内不替换上一代、以及 9 月全基因组图谱仍用上一代，取自这篇对 Avsec 的采访。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">行业 · 航空</span><time datetime="2026-11-12T03:37:38+08:00">11.12 03:37 北京时间</time></div><h3 id="event-3-title">美联航限制第三方 AI 助手代客订票</h3><div><p>美联航周三起限制未经授权的第三方个人 AI 助手代客订票。公司称，把账号交给这类助手可能泄露资料、买错票或动用里程。值机还可能违反联邦行李声明规定，公司会同时更新订票和出票政策。</p><p class="caveat">限定：助手仍可展示航班，但不能代为完成交易。</p><div class="source"><a href="https://www.cbsnews.com/news/united-airlines-bans-ai-agents-booking-flights/" target="_blank" rel="noopener noreferrer">原文 · CBS News</a></div><details><summary>详细与核验</summary><p>CBS 写美联航于周三表示，禁止人工智能代理代表旅客预订航班。文章发布时间是 2026-11-11T14:37:38-05:00。</p><p>CBS 引美联航的话：把账号凭据交给个人的第三方 AI 助手，可能暴露敏感信息，这些工具的操作可能导致未打算的购买、账号变更，或使用 MileagePlus 里程。</p><p>CBS 引美联航：将在自己的数字平台上直接限制，并通过旅行社和聚合商间接限制，禁止未经授权的第三方个人 AI 代理或助手使用。公司正在更新订票和出票政策。</p><p>CBS 写，用 AI 代理值机可能违反联邦规定，包括旅客须当面确认行李不含违禁物。</p><p>The Verge 同题文章的发布时间是 2026-11-11T21:54:21+00:00。它写，代理仍可向用户展示美联航航班，但不能代为完成交易。</p><div class="condition"><strong>适用范围：</strong><ul><li>限制对象是未经授权的第三方个人 AI 助手。</li><li>美联航政策原文页没有打开，引语来自 CBS。</li></ul></div><div class="source"><a href="https://www.cbsnews.com/news/united-airlines-bans-ai-agents-booking-flights/" target="_blank" rel="noopener noreferrer">CBS News · 一手来源 · 已核对</a><a href="https://www.theverge.com/ai-artificial-intelligence/1031623/united-unauthorized-ai-agents" target="_blank" rel="noopener noreferrer">The Verge · 补充来源 · 已核对</a></div><p class="source-note">核验说明（CBS News）：核验说明（CBS News）：发布时间是 2026-11-11T14:37:38-05:00。禁止代订、凭据与里程风险、值机与联邦行李规定、更新订票政策，取自 CBS 对美联航的引述。政策原文页没有打开。</p><p class="source-note">核验说明（The Verge）：核验说明（The Verge）：发布时间是 2026-11-11T21:54:21+00:00。展示航班但不能完成交易，取自这篇。它还转述《华尔街日报》称公司还没看到很多此类订票，本期没有打开《华尔街日报》原文。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">产业 · 英国</span><time datetime="2026-11-11T21:00:03+08:00">11.11 21:00 北京时间</time></div><h3 id="event-4-title">英国政府参与 Fractile 超过 5 亿英镑的 C 轮</h3><div><p>英国政府周三宣布，Sovereign AI 和英国商业银行参与 Fractile 的 C 轮，金额超过 5 亿英镑，估值超过 50 亿英镑。政府稿点名的其他投资方还有 CapitalG、Lightspeed 和 Redpoint。</p><p class="caveat">限定：TechCrunch 写成 7.2 亿美元，政府稿写超过 5 亿英镑。</p><div class="source"><a href="https://www.gov.uk/government/news/sovereign-ai-and-british-business-bank-invest-in-british-firm-developing-the-next-generation-of-ai-hardware" target="_blank" rel="noopener noreferrer">原文 · 英国政府</a></div><details><summary>详细与核验</summary><p>英国政府新闻稿的发布时间是 2026-11-11T13:00:03+00:00。稿件写这项投资于周三 11 月 11 日宣布。Sovereign AI Venture Fund 和 British Business Bank 参与 Fractile 的 Series C，这一轮价值超过 5 亿英镑，公司估值超过 50 亿英镑。</p><p>政府稿写，同一轮的投资方还包括 CapitalG、Lightspeed 和 Redpoint。公司位于 Bristol 和 London。</p><p>TechCrunch 的发布时间是 2026-11-11T19:34:55+00:00。它把同一轮写成 7.2 亿美元的 Series C，领投方写成 Thrive Capital、Founders Fund、Lightspeed Venture Partners 和 Redpoint。</p><p>TechCrunch 把超过 50 亿英镑的估值归于英国政府，并写很有可能是 70 亿美元，该数字来自《金融时报》和一名路透来源。本期没有打开这两处。</p><p>TechCrunch 写，首席执行官 Walter Goodwin 在 LinkedIn 说，新资金使公司能在明年交付第一批芯片和系统。本期没有打开那条 LinkedIn。公司主页没有写出这一轮金额。</p><div class="condition"><strong>适用范围：</strong><ul><li>金额以政府稿的超过 5 亿英镑为准。</li><li>芯片交付时间只见于 TechCrunch 对 LinkedIn 的转述。</li></ul></div><div class="source"><a href="https://www.gov.uk/government/news/sovereign-ai-and-british-business-bank-invest-in-british-firm-developing-the-next-generation-of-ai-hardware" target="_blank" rel="noopener noreferrer">英国政府 · 一手来源 · 已核对</a><a href="https://techcrunch.com/2026/11/11/with-720m-round-britains-fractile-gets-a-leg-up-in-the-race-for-ai-chips/" target="_blank" rel="noopener noreferrer">TechCrunch · 补充来源 · 已核对</a></div><p class="source-note">核验说明（英国政府）：核验说明（英国政府）：发布时间是 2026-11-11T13:00:03+00:00。超过 5 亿英镑、估值超过 50 亿英镑、周三宣布，以及 Sovereign AI、British Business Bank、CapitalG、Lightspeed、Redpoint，取自这篇新闻稿。</p><p class="source-note">核验说明（TechCrunch）：核验说明（TechCrunch）：发布时间是 2026-11-11T19:34:55+00:00。7.2 亿美元、Thrive Capital 与 Founders Fund 领投，以及 Goodwin 关于明年交付芯片的话，取自这篇。70 亿美元没有回源。《金融时报》和路透没有打开。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
