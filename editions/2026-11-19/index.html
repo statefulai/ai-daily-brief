@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="2026 年 11 月 19 日 AI 日报，含 5 条已策展内容。">
+  <title>AI 日报 · 2026 年 11 月 19 日</title>
+  <style>
+    :root {
+      --desk:#e7e3db; --paper:#faf7f0; --ink:#252621; --body:#45463f;
+      --muted:#65665c; --rule:#c7c2b7; --accent:#91472f; --wash:#f0ebe0;
+      --serif:"Songti SC","STSong","Noto Serif CJK SC","SimSun",serif;
+      --display-latin:"Didot","Bodoni 72","Times New Roman",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    }
+    * { box-sizing:border-box; }
+    html { color-scheme:light; scroll-padding-top:24px; }
+    body { margin:0; color:var(--body); background:var(--desk); font:17px/1.85 var(--sans); -webkit-text-size-adjust:100%; }
+    a { color:var(--accent); text-decoration-thickness:1px; text-underline-offset:4px; }
+    a:hover { color:var(--ink); }
+    a:focus-visible, summary:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
+    p { margin:0 0 14px; }
+    h1,h2,h3 { color:var(--ink); font-family:var(--serif); font-weight:700; }
+    h1,h2,h3,p,li { overflow-wrap:anywhere; }
+    time { font-variant-numeric:tabular-nums; }
+    .skip-link { position:absolute; top:-80px; left:16px; padding:8px 16px; background:var(--paper); z-index:1; }
+    .skip-link:focus { top:12px; }
+    .paper { width:min(1120px,calc(100% - 64px)); margin:32px auto; padding:28px 48px 20px; background:var(--paper); border:1px solid #b9b4a9; box-shadow:0 8px 36px #2526210b; }
+    .edition { color:var(--muted); font-size:13px; letter-spacing:.03em; }
+    .masthead { padding:20px 0 19px; text-align:center; border-bottom:4px double var(--ink); }
+    .masthead h1 { display:flex; justify-content:center; align-items:center; gap:.18em; margin:0; padding-left:3px; font-size:60px; font-weight:400; line-height:1; }
+    .masthead-latin { position:relative; top:.1em; font-family:var(--display-latin); font-size:1.18em; line-height:1; letter-spacing:.035em; margin-right:-.035em; }
+    .masthead-han { font-family:var(--serif); line-height:1; letter-spacing:.04em; margin-right:-.04em; }
+    .masthead p { margin:10px 0 0; padding-left:.26em; color:var(--muted); font-size:11px; letter-spacing:.26em; }
+    .edition-note { margin:15px 0 0; padding:10px 14px; background:var(--wash); border-left:2px solid var(--accent); color:var(--muted); font-size:13px; line-height:1.8; }
+    .reading-index { display:flex; flex-wrap:wrap; align-items:center; gap:0 20px; padding:8px 0 0; font-size:13px; }
+    .reading-index span { color:var(--muted); font-size:12px; }
+    .reading-index a { display:inline-flex; align-items:center; min-height:44px; color:var(--body); text-decoration:none; }
+    .lead { padding:22px 0 25px; border-bottom:2px solid var(--ink); }
+    .kicker { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 11px; color:var(--muted); font-size:13px; line-height:1.6; }
+    .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:center; }
+    .tag { color:var(--accent); font-weight:600; letter-spacing:.05em; }
+    .lead h2 { margin:0 auto 19px; text-align:center; text-wrap:balance; font-size:34px; line-height:1.45; letter-spacing:-.015em; }
+    .lead-copy { max-width:810px; margin:auto; }
+    .condition { margin:16px 0 13px; padding:1px 0 1px 13px; border-left:2px solid var(--rule); font-size:15px; line-height:1.85; }
+    .condition strong { color:var(--ink); }
+    .condition ul { margin:6px 0 0; padding-left:1.15em; }
+    .condition li + li { margin-top:4px; }
+    .source { display:flex; flex-wrap:wrap; align-items:center; gap:2px 18px; margin:5px 0 0; font-size:13px; line-height:1.6; }
+    .source a { display:inline-flex; align-items:center; min-height:40px; gap:7px; }
+    .source a::after { content:"↗"; font-size:12px; }
+    .source-note { margin:0; color:var(--muted); font-size:12px; }
+    .columns { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); gap:32px; padding-top:27px; }
+    .columns--single { display:block; max-width:810px; margin:auto; }
+    .news-column,.desk-column { min-width:0; }
+    .desk-column { padding-left:32px; border-left:1px solid var(--rule); font-size:16px; }
+    .columns--single .desk-column { padding-left:0; border-left:0; }
+    .section-heading { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:21px; padding-bottom:10px; border-bottom:1px solid var(--ink); }
+    .section-heading h2 { margin:0; font-size:24px; line-height:1.35; }
+    .section-heading span { color:var(--muted); font-size:10px; letter-spacing:.1em; }
+    .story + .story,.desk-story + .desk-story { margin-top:22px; padding-top:23px; border-top:1px dashed var(--rule); }
+    .story h3,.desk-story h3 { margin:0 auto 13px; text-align:center; text-wrap:balance; font-size:23px; line-height:1.5; }
+    details { border-top:1px solid var(--rule); margin:15px 0 4px; font-size:15px; }
+    summary { cursor:pointer; min-height:44px; padding:9px 2px; color:var(--accent); font-size:14px; }
+    details[open] summary { margin-bottom:7px; }
+    details ul { margin:0 0 14px; padding-left:21px; }
+    .paper-footer { margin-top:28px; padding-top:15px; border-top:4px double var(--ink); color:var(--muted); font-size:12px; line-height:1.85; }
+    .footer-line { display:flex; justify-content:flex-end; align-items:center; min-height:44px; font-size:11px; }
+    .footer-line a { display:inline-flex; align-items:center; min-height:44px; font-size:12px; letter-spacing:0; }
+    @media (max-width:820px) {
+      .paper { width:calc(100% - 32px); margin:16px auto; padding:24px 28px 16px; }
+      .columns { gap:24px; } .desk-column { padding-left:24px; } .lead h2 { font-size:32px; }
+    }
+    @media (max-width:680px) {
+      body { background:var(--paper); font-size:16px; }
+      .paper { width:100%; margin:0; padding:19px 22px 10px; border:0; box-shadow:none; }
+      .edition { font-size:11px; }
+      .masthead { padding:23px 0 17px; } .masthead h1 { font-size:45px; }
+      .masthead p { padding-left:.2em; font-size:9px; letter-spacing:.2em; }
+      .edition-note { margin-top:13px; padding:10px 12px; font-size:12px; }
+      .reading-index { gap:0 16px; padding-top:4px; } .reading-index span { width:100%; margin-top:12px; }
+      .lead { padding:20px 0; }
+      .lead .kicker,.story .kicker,.desk-story .kicker { justify-content:flex-start; }
+      .lead h2 { text-align:left; font-size:28px; line-height:1.5; margin-bottom:17px; }
+      .story h3,.desk-story h3 { text-align:left; margin-left:0; margin-right:0; }
+      .condition { font-size:14px; padding-left:11px; }
+      .source { gap:0 16px; } .source a { min-height:44px; }
+      .columns { grid-template-columns:minmax(0,1fr); gap:28px; padding-top:24px; }
+      .desk-column { padding-left:0; border-left:0; }
+      .section-heading { margin-bottom:19px; } .section-heading h2 { font-size:23px; }
+      .story h3,.desk-story h3 { font-size:22px; }
+    }
+    @media print {
+      body { background:white; font-size:12pt; }
+      .paper { width:100%; margin:0; padding:0; border:0; box-shadow:none; }
+      .columns { display:block; } .desk-column { border:0; padding:20px 0 0; }
+      .story,.desk-story { break-inside:avoid; } .skip-link,.footer-line a { display:none; }
+    }
+  </style>
+<style>.caveat{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.7}</style></head>
+<body id="top">
+  <a class="skip-link" href="#main">跳到正文</a>
+  <div class="paper">
+    <header>
+      <div class="edition"><time datetime="2026-11-19">2026 年 11 月 19 日</time> · 星期四</div>
+      <div class="masthead"><h1><span class="masthead-latin">AI</span> <span class="masthead-han">日报</span></h1><p lang="en">ARTIFICIAL INTELLIGENCE DAILY</p></div>
+      <p class="edition-note">截至 11 月 19 日 08:00（北京时间）。本期收录 5 条窗口内动态；另有 1 个来源采集失败，本期覆盖可能不完整。</p>
+    </header>
+    <nav class="reading-index" aria-label="本期阅读目录"><span>本期阅读</span><a href="#event-1">今日焦点</a><a href="#news">新闻速览</a></nav>
+    <main id="main" tabindex="-1"><article class="lead" id="event-1" aria-labelledby="event-1-title"><div class="kicker"><span class="tag">模型 · 谷歌</span><time datetime="2026-11-19T05:00:00+08:00">11.19 05:00 北京时间</time></div><h2 id="event-1-title">谷歌推出 Gemini 4 Neon，输入价每百万 token 3 美元</h2><div class="lead-copy"><p>谷歌推出 Gemini 4 Neon。每百万 token 输入 3 美元、缓存输入 0.15 美元、输出 15 美元，上下文 100 万 token。xhigh 档在 Artificial Analysis Intelligence Index 得 61 分，总排名第 3。Pro 与 Ultra 可在 Gemini 应用里选用。</p><p class="caveat">限定：61 分来自页面引用的第三方榜，本期没有复跑。</p><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/" target="_blank" rel="noopener noreferrer">原文 · Google</a></div><details><summary>详细与核验</summary><p>Google 博客 Introducing Gemini 4 Neon 的 datePublished 是 2026-11-18T21:00:00+00:00。作者是 Koray Kavukcuoglu。页面称当天推出 Gemini 4 Neon。</p><p>页面写模型价格是每百万输入 token 3 美元，缓存输入每百万 token 0.15 美元（标为 95% 折扣），输出每百万 token 15 美元，上下文窗口 100 万 token。</p><p>页面写 Neon 在 xhigh 思考档的 Artificial Analysis Intelligence Index 得 61 分，总排名第 3。Vals Index 排名第 2，页面写的分数是 70.9%。</p><p>页面写当天可在 Gemini API 的 Google AI Studio、Gemini for business 的 API 和模型下拉、付费 Google AI Pro 与 Ultra 订阅者的 Google Antigravity，以及 Pro 与 Ultra 订阅者的 Gemini 应用中使用。</p><p>页面写默认 high 思考档的单任务成本比 Carbon 低 32%。榜单分数是页面引用的第三方结果，本期没有复跑。</p><div class="condition"><strong>适用范围：</strong><ul><li>应用和 Antigravity 面向 Google AI Pro 与 Ultra 订阅者。后文写开发者使用 Google AI Studio 的付费档。</li><li>61 分、70.9% 和比 Carbon 低 32% 都是页面引用的第三方结果，本期没有复跑。</li></ul></div><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：核验说明（Google）：3 美元、0.15 美元、15 美元、100 万 token 上下文、xhigh 档 61 分排第 3、Vals Index 第 2 的 70.9%，以及比 Carbon 单任务成本低 32%，取自这篇。datePublished 是 2026-11-18T21:00:00+00:00。可用范围包括 Gemini API 的 Google AI Studio、Gemini for business、付费 Pro 与 Ultra 的 Antigravity，以及 Pro 与 Ultra 的 Gemini 应用。分数没有复跑。</p></details></div></article><div class="columns columns--single"><section class="news-column" id="news" aria-labelledby="news-heading"><div class="section-heading"><h2 id="news-heading">新闻速览</h2><span lang="en">IN BRIEF</span></div><article class="story" id="event-2" aria-labelledby="event-2-title"><div class="kicker"><span class="tag">行业 · 上市</span><time datetime="2026-11-18T08:00:00+08:00">11.18 08:00 北京时间</time></div><h3 id="event-2-title">Anthropic 把 IPO 定价为每股 83.00 美元</h3><div><p>Anthropic 把 IPO 定价为每股 83.00 美元，发行 980,000,000 股 A 类普通股，公司自己出售 956,351,354 股。股票预计 11 月 19 日在纳斯达克以代码 ANT 开始交易。</p><p class="caveat">限定：交易和交割都还没发生，页面也没写估值。</p><div class="source"><a href="https://www.anthropic.com/news/anthropic-prices-initial-public-offering" target="_blank" rel="noopener noreferrer">原文 · Anthropic</a></div><details><summary>详细与核验</summary><p>Anthropic 新闻页的 datePublished 是 2026-11-18T00:00:00.000Z，可见日期是 Nov 18, 2026。Anthropic, PBC 把首次公开发行的 A 类普通股定价为每股 83.00 美元。</p><p>发行共 980,000,000 股。Anthropic 出售 956,351,354 股，若干售股股东出售 23,648,646 股。Anthropic 不从售股股东出售的股份获得收益。</p><p>股票预计 2026 年 11 月 19 日在 Nasdaq Global Select Market 以代码 ANT 开始交易。发行预计 2026 年 11 月 20 日完成，取决于惯常交割条件。承销商有 30 天期权，可再购买最多 147,000,000 股。</p><p>证券交易委员会于 2026 年 11 月 18 日宣布相关注册声明生效。最终招股书可向 Goldman Sachs &amp; Co. LLC 和 Morgan Stanley &amp; Co. LLC 索取。</p><div class="condition"><strong>适用范围：</strong><ul><li>页面写预计 11 月 19 日开始交易、11 月 20 日完成发行，完成仍取决于惯常交割条件。</li><li>公司页面没有写估值。交易本身还没在这篇公告里发生。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>10 月 27 日正刊写过 Anthropic 提交 S-1 和上半年营收。这次是定价，不是那次申报。</li></ul></details><div class="source"><a href="https://www.anthropic.com/news/anthropic-prices-initial-public-offering" target="_blank" rel="noopener noreferrer">Anthropic · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Anthropic）：核验说明（Anthropic）：每股 83.00 美元、980,000,000 股、公司出售 956,351,354 股、售股股东出售 23,648,646 股、代码 ANT、承销商 30 天内最多再买 147,000,000 股，以及注册声明于 11 月 18 日生效，取自这篇。datePublished 是 2026-11-18T00:00:00.000Z。页面没有写估值。</p></details></div></article><article class="story" id="event-3" aria-labelledby="event-3-title"><div class="kicker"><span class="tag">开源 · 模型</span><time datetime="2026-11-18T20:00:00+08:00">11.18 20:00 北京时间</time></div><h3 id="event-3-title">RadixArk 放出 DaisyRose-27B，Terminal-Bench 4.1 到 12.0%</h3><div><p>RadixArk 放出 DaisyRose-27B。它基于 Qwen3.8-27B，用 1200 个任务在 144 张 H200 上训了 18 天。作者写 Terminal-Bench 4.1 的 pass@1 从 5.6% 升到 12.0%，权重许可证是 Apache 2.0。</p><p class="caveat">限定：12.0% 是作者自测，本期没有复跑。</p><div class="source"><a href="https://www.radixark.com/blog/daisyrose-27b" target="_blank" rel="noopener noreferrer">原文 · RadixArk</a></div><details><summary>详细与核验</summary><p>RadixArk 博客的 article:published_time 是 2026-11-18T12:00:00.000Z，可见日期是 November 18, 2026。当天发布 DaisyRose-27B，基于 Qwen3.8-27B，用开源强化学习框架 Miles 训练。训练用 1200 个筛选任务，18 天，144 张 H200。</p><p>博客写 Terminal-Bench 4.1 的 pass@1 从 5.6% 升到 12.0%。评测说明是每个任务平均 8 次，使用内部 mini-swe-agent，并打开摘要。这是作者数字，本期没有复跑。</p><p>博客放出 BF16、FP8 和 NVFP4 检查点。Hugging Face 上 RadixArk/DaisyRose-27B 的 createdAt 是 2026-11-18T05:31:35.000Z，license 字段是 apache-2.0。同文的 Hugging Face 博客写检查点以 Apache 2.0 提供。</p><p>训练时 128 张 H200 跑智能体推理，另外 16 张跑训练器。博客写发布这一轮一共用了 63000 GPU 小时。</p><div class="condition"><strong>适用范围：</strong><ul><li>12.0% 是作者用内部 mini-swe-agent 跑的，每个任务 8 次并打开摘要。本期没有复跑。</li><li>Apache 2.0 取自模型卡的 license 字段，不是对许可证正文的法律结论。</li></ul></div><div class="source"><a href="https://www.radixark.com/blog/daisyrose-27b" target="_blank" rel="noopener noreferrer">RadixArk · 一手来源 · 已核对</a><a href="https://huggingface.co/RadixArk/DaisyRose-27B" target="_blank" rel="noopener noreferrer">Hugging Face · 一手来源 · 已核对</a></div><p class="source-note">核验说明（RadixArk）：核验说明（RadixArk）：基于 Qwen3.8-27B、1200 个任务、18 天、144 张 H200、pass@1 从 5.6% 到 12.0%、128 张跑推理和 16 张跑训练、63000 GPU 小时，取自这篇。article:published_time 是 2026-11-18T12:00:00.000Z。分数没有复跑。</p><p class="source-note">核验说明（Hugging Face）：核验说明（Hugging Face）：模型卡 license 字段是 apache-2.0，createdAt 是 2026-11-18T05:31:35.000Z。博客页面正文里没有出现 Apache 这几个字，许可证以这张模型卡为准。</p></details></div></article><article class="story" id="event-4" aria-labelledby="event-4-title"><div class="kicker"><span class="tag">产品 · 谷歌</span><time datetime="2026-11-19T02:00:00+08:00">11.19 02:00 北京时间</time></div><h3 id="event-4-title">Genie 4 向 Google AI Ultra 订阅者开放</h3><div><p>谷歌向 Google AI Ultra 订阅者开放 Genie 4，并称这是 Project Genie 里第一次能用它。订阅者可以用文字实时改场景，再把作品放进社区画廊。Pro 订阅者还在候补名单。</p><p class="caveat">限定：10 月 28 日只给受信任测试者。</p><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/" target="_blank" rel="noopener noreferrer">原文 · Google</a></div><details><summary>详细与核验</summary><p>Google 博客的 datePublished 是 2026-11-18T18:00:00+00:00。作者是 Diego Rivas 和 Pavan Kumar。页面称向符合条件的 Google AI Ultra 订阅者推出 Genie 4，并写这是 Project Genie 里第一次开放 Genie 4。</p><p>页面写可以用自然语言实时修改环境、加入原生音频，并把作品发到社区画廊。Google AI Pro 用户可以加入候补名单。</p><p>页面同时写 Genie 3 仍留在模型选择器里，本次更新包括更长的运行、全景种子空间。这些是 Genie 3 的更新，不是 Genie 4 的新基准分数。页面没有写价格或分辨率。</p><div class="condition"><strong>适用范围：</strong><ul><li>现在给符合条件的 Google AI Ultra 订阅者。Google AI Pro 仍是候补。</li><li>页面没有写价格、分辨率或帧率。</li></ul></div><details><summary>展开：背景与补充</summary><ul><li>10 月 28 日正刊写过 Genie 4 先给受信任测试者，并计划之后进入 Google AI Ultra 的 Project Genie。这次是 Ultra 订阅者开始能用。</li></ul></details><div class="source"><a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/" target="_blank" rel="noopener noreferrer">Google · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Google）：核验说明（Google）：向符合条件的 Ultra 订阅者开放、Project Genie 里第一次能用 Genie 4、文字实时改环境、社区画廊，以及 Pro 可加入候补，取自这篇。datePublished 是 2026-11-18T18:00:00+00:00。页面没有写价格或分辨率。</p></details></div></article><article class="story" id="event-5" aria-labelledby="event-5-title"><div class="kicker"><span class="tag">产品 · Snap</span><time datetime="2026-11-19T01:00:14.113000+08:00">11.19 01:00 北京时间</time></div><h3 id="event-5-title">Snap 推出 Easy Lens CLI，可用现有编程助手做 Lens</h3><div><p>Snap 推出 Easy Lens CLI，有 Snapchat 账号就能免费用。开发者可以用 Claude Code、Codex 或 Cursor 调用 100 多个 AR 积木和 50 多个素材生成器，把 Lens 发到 Snapchat。</p><p class="caveat">限定：180 万美元是上月 Lens+ 分成，不是这次工具的收入。</p><div class="source"><a href="https://newsroom.snap.com/introducing-easy-lens-cli" target="_blank" rel="noopener noreferrer">原文 · Snap</a></div><details><summary>详细与核验</summary><p>Snap 新闻室的 datePublished 是 2026-11-18T17:00:14.113Z，页面另有时间 2026-11-18T09:00:00.000-08:00，可见日期是 November 18, 2026。当天推出 Easy Lens CLI，页面写现在可用，有 Snapchat 账号即可免费使用。</p><p>页面写开发者可以用已经在用的 AI 编程助手，例子包括 Claude Code、Codex 和 Cursor。助手可调用超过 100 个 AR 积木和超过 50 个 AI 素材生成器。</p><p>Easy Lens CLI 支持 Mac、Windows 和 Linux。安装页是 https://easylens.snapchat.com/cli。做出的 Lens 走和 Easy Lens 应用相同的内容检查、审核和发布。</p><p>页面写上月向 Lens+ 社区创作者发放了 180 万美元分成。这是上月的分成，不是这次 CLI 单独的收入数字。</p><div class="condition"><strong>适用范围：</strong><ul><li>需要 Snapchat 账号。页面写工具免费。</li><li>180 万美元是上月 Lens+ 社区分成，不是 Easy Lens CLI 单独的收入。</li></ul></div><div class="source"><a href="https://newsroom.snap.com/introducing-easy-lens-cli" target="_blank" rel="noopener noreferrer">Snap · 一手来源 · 已核对</a></div><p class="source-note">核验说明（Snap）：核验说明（Snap）：Easy Lens CLI 现在可用、有账号即免费、可配合 Claude Code、Codex 和 Cursor、超过 100 个 AR 积木和超过 50 个素材生成器、支持 Mac、Windows 和 Linux，以及上月 Lens+ 分成 180 万美元，取自这篇。datePublished 是 2026-11-18T17:00:14.113Z。安装页写的是 easylens.snapchat.com/cli。</p></details></div></article></section></div></main>
+    <footer class="paper-footer">
+      <div class="footer-line"><a href="#top">回到报头 ↑</a></div>
+    </footer>
+  </div>
+</body>
+</html>
