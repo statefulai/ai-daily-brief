@@ -1521,6 +1521,31 @@ class ReviewRegressionTest(unittest.TestCase):
         self.assertEqual(_unit_numbers("25:99 比分。"), {"25", "99"})
         self.assertEqual(_unit_numbers("99:99 比分。"), {"99"})
 
+    def test_magnitude_word_before_cjk_requires_claims(self):
+        from candidate_policy import _unit_numbers
+
+        for text, number in (
+            ("3.5 Billion美元", "3.5"),
+            ("1.5 Trillion元", "1.5"),
+            ("2.5 Million用户", "2.5"),
+            ("4.2 Tokens每秒", "4.2"),
+            ("2.5 Exaflops", "2.5"),
+            ("2.5 Exabytes", "2.5"),
+            ("100 Gigabits", "100"),
+            ("2.5 Gigabits", "2.5"),
+            ("3.5 Terabits", "3.5"),
+        ):
+            self.assertIn(number, _unit_numbers(text), text)
+        for text in (
+            "Claude 3.5 Sonnet 更新。",
+            "Gemini 2.5 Pro 上线。",
+            "Qwen 2.5 Max 发布。",
+            "DeepSeek V3.2 发布。",
+            "GPT 4.5 Turbo 发布。",
+            "Claude 3.5 Sonnet发布",
+        ):
+            self.assertEqual(_unit_numbers(text), set(), text)
+
 
 if __name__ == "__main__":
     unittest.main()
