@@ -34,8 +34,9 @@
 - 汇集候选：公开一手来源，并可并入已核验、标明可公开的供稿。窗口为北京时间 `[前一日 08:00, 当日 08:00)`。
 - Jev 辅助判断有没有新变化、值不值得读；分数不能单独入选、淘汰或裁定空刊。调用与关闭见 [`generation/CA-JEV-ASSIST.md`](generation/CA-JEV-ASSIST.md)。
 - Cloud Agent 回源核验并最终选稿，写成 `edition.json`，再用固定模板生成 HTML。公开期次不手写 HTML。
-- Pull request 上 CI 校验 schema、来源、内容 hash 和 HTML；合入 `main` 后发布到 [https://brief.sanze.dev/](https://brief.sanze.dev/)。
-- 投递同一期，契约在 [`delivery/`](delivery/)：邮件是完整 `email.html`，群是完整纯文本。
+- Pull request 上 CI 校验 schema、来源、内容 hash 和 HTML；合入 `main` 后发布到 [https://brief.sanze.dev/](https://brief.sanze.dev/)。新改或新写的 `edition.json` 要带主张支持记录。CI 只检查这组记录的形状。`original`、`read` 和摘录是填写值，非空摘录不证明它支撑主张，也不证明页面是原文。生成阶段可以记下一次有界读取。主张是否成立仍由编辑核对。标成 `predicted` 的数值和预测字样必须出现在同一个读者字段。标成 `measured` 的数字，机器不会改判。未改动的已发布期次仍走原来的校验。缺记录的旧稿不能原样当成新候选。
+- 定向修订只删除策略拒绝或编辑拒绝清单中的事件，或按编辑拒绝清单澄清措辞。它不把 `primary` 降成 `secondary`。修订号在单写锁内预留。没拿到锁的一方不写共享记录。日刊自己的派发账本不在本仓库里。
+- 投递同一期，契约在 [`delivery/`](delivery/)：邮件是完整 `email.html`，群是完整纯文本。任一正式渠道一旦 `sent`，该期冻结在当时的 `content_hash`。另一渠道只能补发这一版。新 hash 不会自动再发。直接 `record` 也不能在另一 hash 仍为 `unknown` 时把新 hash 标成 `sent`。`unknown` 先核对回执，不自动重试。`sent` 不能降级。
 - `published_candidate` 只表示期次已写成可发布稿，才会写入 `editions/YYYY-MM-DD/`；不等于网页已上线，也不等于邮件或群已发出。`no_new_value` 与 `failed` 都不创建公开期次，也不能互相冒充。
 
 ### 本地开发

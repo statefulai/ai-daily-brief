@@ -1,0 +1,318 @@
+{
+  "schema_version": "1",
+  "edition_id": "2026-11-07",
+  "timezone": "Asia/Shanghai",
+  "cutoff_at": "2026-11-07T08:00:00+08:00",
+  "generated_at": "2026-11-07T08:07:29.893419+08:00",
+  "attempt": 1,
+  "status": "published_candidate",
+  "sources": [
+    {
+      "id": "hackernews",
+      "status": "success",
+      "item_count": 30,
+      "error": null
+    },
+    {
+      "id": "github_trending",
+      "status": "success",
+      "item_count": 16,
+      "error": null
+    },
+    {
+      "id": "huggingface",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "hf_papers",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "openai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "anthropic",
+      "status": "success",
+      "item_count": 24,
+      "error": null
+    },
+    {
+      "id": "anthropic_news",
+      "status": "success",
+      "item_count": 25,
+      "error": null
+    },
+    {
+      "id": "google_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "huggingface_blog",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "github",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "theverge",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "techcrunch",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "jiqizhixin",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "arxiv_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "mistral",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "xai",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "deepseek",
+      "status": "success",
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "id": "ms_ai",
+      "status": "success",
+      "item_count": 10,
+      "error": null
+    },
+    {
+      "id": "parliament",
+      "status": "skipped",
+      "item_count": 0,
+      "error": null
+    },
+    {
+      "id": "ruanyf_weekly",
+      "status": "success",
+      "item_count": 20,
+      "error": null
+    },
+    {
+      "id": "reddit",
+      "status": "success",
+      "item_count": 15,
+      "error": null
+    }
+  ],
+  "events": [
+    {
+      "id": "biobasics-bench",
+      "placement": "lead",
+      "window": "in_window",
+      "title": "OpenAI 放出 BioBasicsBench，Astra 得到 66.7%",
+      "kicker": "研究 · 评测",
+      "facts": [
+        "OpenAI 新闻 RSS 的 pubDate 是 Fri, 06 Nov 2026 00:00:00 GMT。页面日期行是 November 6, 2026。页面介绍 BioBasicsBench，和生物技术公司 Ligo 一起做，用来测智能体能不能读懂日常湿实验的原始数据。一共 100 个任务，分五类：蛋白方法、成像和流式、定量和检测、核酸方法、分子克隆。",
+        "页面写 xhigh 设置下 GPT-6 Astra 平均拿到可用分数的 66.7%，95% 置信区间 60.3% 到 73.1%，每题平均输出 4704 token。GPT-5.6 Sol 是 43.8%，区间 37.6% 到 50.0%，每题 9099 token。同表还有 GPT-6.1 Sol 62.0%、GPT-6 Luna 38.3%、GPT-5.5 35.4%、GPT-5.4 33.2%、GPT-5.2 31.2%。评测覆盖 7 个模型、37 组模型和推理档、每题 5 次，共 18500 条结果。",
+        "页面写任务来自科学家自己的实验数据，每题有专家写的评分标准。审稿是一位没出题的 Ligo 科学家内审、一位在湿实验工作的博士外审，再加一次内审。输入包括凝胶、菌落平板、显微镜和仪器读数，也包含失败实验和互相冲突的观察。",
+        "页面写更高分数还不等于能在实验室做可靠判断。举例里 Astra 会把菌落数多计大约 12%，也会在克隆电泳里选错菌落。这些是 OpenAI 页面上的失败例子，本期没有复跑。"
+      ],
+      "conditions": [
+        "66.7%、43.8% 和大约 12% 都是 OpenAI 的自测，本期没有复跑。",
+        "这是一道基准，不是已经交给实验室使用的产品。"
+      ],
+      "background": [
+        "OpenAI 新闻 RSS 里另有 2025 年 12 月 16 日的一篇湿实验测量，链接不同。这一篇的 pubDate 是 2026 年 11 月 6 日，介绍的是 BioBasicsBench。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/measuring-how-ai-agents-handle-wet-lab-science",
+          "kind": "primary",
+          "published_at": "2026-11-06T00:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（OpenAI）：100 题、五类任务、66.7% 与 43.8%、4704 与 9099 token、18500 条结果，以及菌落多计大约 12%，取自这篇发布页。RSS 的 pubDate 是 Fri, 06 Nov 2026 00:00:00 GMT。页面日期行是 November 6, 2026。"
+        }
+      ],
+      "lede": "OpenAI 和 Ligo 放出湿实验基准 BioBasicsBench，共 100 题。xhigh 档下 GPT-6 Astra 得到 66.7% 的分数，GPT-5.6 Sol 是 43.8%。页面写模型仍会把菌落多计大约 12%。",
+      "caveat": "分数和 12% 的误差都是 OpenAI 自己的评测。"
+    },
+    {
+      "id": "anthropic-agent-memory",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Anthropic 用 wiki 把内部题从 13% 做到 48%",
+      "kicker": "研究 · 记忆",
+      "facts": [
+        "Anthropic 研究页 article:published_time 是 2026-11-06T00:00:00.000Z，dateModified 是 2026-11-06T21:15:32.000Z。页面日期是 Nov 6, 2026。文章把智能体记忆定义成跨会话保留的经验，不含改权重、单次对话里的上下文学习，也不含把旧回合压成摘要。",
+        "页面写在 Continual Learning Bench 1.0 的一个查库任务上使用 Claude Managed Agents。每题开新会话，但可以读上一会话留下的记忆目录。提示模型先读记忆并检验自己的假设后，分数将近翻倍。Sonnet 5 不经提示也会在 10 次里有 9 次先读记忆，Sonnet 4.6 不到一半。",
+        "页面写用 Stainless 约 35 万份内部文件、大约 4.2 亿 token，做了 25 道题。Opus 5 用 dreaming 建 wiki，会话从 2 个加到 128 个，按评分标准计的成绩从 13% 升到 48%。只靠 wiki 的最好成绩是 48%。搜索加 wiki 从 54% 升到 61%，只搜索是 53%，每题大约少用 2 万 token。",
+        "页面写一组并购问题共 24 道。需要跨文件或做判断的那些题，查 wiki 是 87%，只搜索是 73%。另一份合同题里，多个智能体同时改一张共享表，简报只写进 57 条事实里的 41 条。改成每份合同单独一页并逐字引用后，评分标准从 72% 升到可以全部满足。",
+        "这些数字来自 Anthropic 自己的内部评测。页面指向 dreaming 和 knowledge wiki 的 cookbook，没有宣布一个面向所有用户的新开关。"
+      ],
+      "conditions": [
+        "13% 到 48%、87% 和 73% 都是 Anthropic 的内部评测，本期没有复跑。",
+        "材料来自收购来的 Stainless 内部文件，不是公开数据集。"
+      ],
+      "background": [
+        "页面把 dreaming 写成会话之间整理日志和笔记的过程，并提到 Letta 与 UC Berkeley 更早提出的 sleep-time compute。那是方法来源，不是这次新测的数字。"
+      ],
+      "sources": [
+        {
+          "label": "Anthropic",
+          "url": "https://www.anthropic.com/research/components-of-agent-memory",
+          "kind": "primary",
+          "published_at": "2026-11-06T00:00:00.000Z",
+          "verified": true,
+          "note": "核验说明（Anthropic）：35 万份文件、约 4.2 亿 token、25 题从 13% 到 48%、搜索 53% 与搜索加 wiki 的 54% 到 61%、24 道并购题里跨文件题目的 87% 与 73%，以及 57 条里的 41 条，取自这篇研究页。article:published_time 是 2026-11-06T00:00:00.000Z。"
+        }
+      ],
+      "lede": "Anthropic 写 Claude 怎样在两次会话之间留下记忆。约 35 万份文件做成 wiki 后，25 道题的成绩从 13% 升到 48%。只搜索是 53%，加上 wiki 升到 61%。",
+      "caveat": "这些是内部评测，不是已经对所有人打开的开关。"
+    },
+    {
+      "id": "muse-spaces",
+      "placement": "story",
+      "window": "in_window",
+      "title": "Muse 可以用一句话生成 spaces",
+      "kicker": "产品 · 助手",
+      "facts": [
+        "Meta 新闻室 datePublished 是 2026-11-06T18:00:58+00:00。页面日期行是 November 6, 2026。页面写今天推出 spaces，在 Muse 里用一句话描述想法，就能生成自定义界面，例如节日礼物清单、每日文字游戏或 DIY 计划板。",
+        "页面写可以把 space 放在侧栏或主标签，也可以先藏起来，并安排它什么时候出现。例子是工作日把周计划放在前面，周六换成周末安排。",
+        "页面写接上常用应用后，space 会在后台更新，例如新的演出日期、价格变化或储蓄进度。用户可以在 space 里打勾、加备注和修改。",
+        "页面写从今天起，spaces 在 Muse 已经开放的所有地方可用。公司还在探索把 space 分享给别人。同时把用 Muse Wonder 的经验训练出来的专用模型版本推向 Muse。"
+      ],
+      "conditions": [
+        "分享给其他用户还在探索，页面没有说已经可以协作。",
+        "可用范围写成 Muse 已经开放的地方，不是新的国家名单。"
+      ],
+      "background": [
+        "11 月 5 日的正刊写过 Muse 在美国应用里开放实时语音。spaces 是 11 月 6 日新闻室的另一篇，日期行和 datePublished 都在这个窗口。"
+      ],
+      "sources": [
+        {
+          "label": "Meta",
+          "url": "https://about.fb.com/news/2026/11/introducing-spaces-customize-muse-app/",
+          "kind": "primary",
+          "published_at": "2026-11-06T18:00:58+00:00",
+          "verified": true,
+          "note": "核验说明（Meta）：一句话生成 space、侧栏和主标签、后台更新演出日期和价格，以及 Muse 已开放地区今天可用，取自这篇新闻室文章。datePublished 是 2026-11-06T18:00:58+00:00。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/tech/1028871/meta-muse-ai-spaces",
+          "kind": "secondary",
+          "published_at": "2026-11-06T18:10:10+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：datePublished 是 2026-11-06T18:10:10+00:00。稿件写向所有 Muse 用户推出，并提到 Active Memory 与 Active Focus。开放范围和功能名称以 Meta 新闻室原文为准。"
+        }
+      ],
+      "lede": "Meta 在 Muse 里推出 spaces。说一句话就能做成礼物清单或计划板，也可以放进侧栏或主标签。接上别的应用后，演出日期和价格会自己更新。已经开放 Muse 的地方，今天都能用。",
+      "caveat": "分享给别人还在探索，不是已经上线的功能。"
+    },
+    {
+      "id": "openai-funding-round",
+      "placement": "story",
+      "window": "in_window",
+      "title": "报道称 OpenAI 新一轮已到 110 亿美元",
+      "kicker": "行业 · 融资",
+      "facts": [
+        "TechCrunch 的 datePublished 是 2026-11-06T22:53:46+00:00。稿件写 Bloomberg 在周五报道，引述知情人士，OpenAI 新一轮目前已募到 110 亿美元，估值 1.25 万亿美元。这一轮还没结束，预计未来数周交割，总额可能大约 200 亿美元。",
+        "The Verge 的 datePublished 是 2026-11-06T23:46:18+00:00。稿件也写根据 Bloomberg，新一轮又募到 110 亿美元，估值 1.25 万亿美元，并写公司仍在追追加投资，金额可能增到 200 亿美元。稿件还写公司原先希望募到 300 亿美元、估值 1.4 万亿美元。",
+        "TechCrunch 写已经向 OpenAI 求证，如果对方回复会更新。两篇都没有 OpenAI 自己的确认稿。这一窗口里新写明的数字是目前 110 亿美元和 1.25 万亿美元估值，而且轮次未关。"
+      ],
+      "conditions": [
+        "110 亿美元和 1.25 万亿美元来自 Bloomberg 的知情人士，不是 OpenAI 公告。",
+        "这一轮还没交割。大约 200 亿美元是可能的总额，不是已经到账的数字。"
+      ],
+      "background": [
+        "11 月 1 日的正刊已经写过报道称新一轮目标降到 200 亿美元。这次多出来的是目前到账 110 亿美元，以及 1.25 万亿美元的估值说法。",
+        "The Verge 还把 3 月的 1220 亿美元、8520 亿美元估值写进来当对照。那是稿件里的旧数字，不是这一轮的新事实。"
+      ],
+      "sources": [
+        {
+          "label": "TechCrunch",
+          "url": "https://techcrunch.com/2026/11/06/openai-reportedly-raises-an-additional-11-billion-at-a-1-25-trillion-valuation/",
+          "kind": "primary",
+          "published_at": "2026-11-06T22:53:46+00:00",
+          "verified": true,
+          "note": "核验说明（TechCrunch）：110 亿美元、1.25 万亿美元、轮次未关、未来数周可能大约 200 亿美元，以及已向 OpenAI 求证，取自这篇稿对 Bloomberg 知情人士的转述。datePublished 是 2026-11-06T22:53:46+00:00。"
+        },
+        {
+          "label": "The Verge",
+          "url": "https://www.theverge.com/ai-artificial-intelligence/1029380/openai-1-25-trillion-investment-valuation",
+          "kind": "secondary",
+          "published_at": "2026-11-06T23:46:18+00:00",
+          "verified": true,
+          "note": "核验说明（The Verge）：同样把 110 亿美元和 1.25 万亿美元归于 Bloomberg，并写原先希望 300 亿美元、估值 1.4 万亿美元。datePublished 是 2026-11-06T23:46:18+00:00。"
+        }
+      ],
+      "lede": "Bloomberg 称 OpenAI 新一轮目前募到 110 亿美元，估值 1.25 万亿美元。TechCrunch 写这一轮还没结束，总额可能到大约 200 亿美元。公司还没有公开确认。",
+      "caveat": "数字来自知情人士，轮次未关，OpenAI 未回应。"
+    },
+    {
+      "id": "hacktron-partnership",
+      "placement": "story",
+      "window": "in_window",
+      "title": "OpenAI 让 Hacktron 检查自己的系统",
+      "kicker": "安全 · 合作",
+      "facts": [
+        "OpenAI 新闻 RSS 的 pubDate 是 Fri, 06 Nov 2026 08:00:00 GMT。页面日期行是 November 6, 2026。页面写今天宣布和 Hacktron 合作，在 OpenAI 自己的系统里找漏洞。两边一起选优先测试的部分，重点是系统和第三方服务怎么衔接。",
+        "页面写合作包括通过 Daybreak Red 扩大 Hacktron 对前沿模型的访问。OpenAI 称是通过自己的 Security Bug Bounty 认识 Hacktron 的。公告引用了 CEO Zayne Zhang，但没有给出这次合作新发现的漏洞数量。",
+        "页面另写本周早些时候 Cathedral 的研究人员会参加下一次安全冲刺，并且提高了漏洞赏金。这两句不是这次公告里的新数字。11 月 5 日已经报道过 Daybreak Red 这个组别。这次新写的是 Hacktron 进入这个访问范围。"
+      ],
+      "conditions": [
+        "公告没有公布新发现了多少漏洞，也没有公布赏金的新金额。",
+        "Daybreak Red 的组别本身不是这次才设立的。"
+      ],
+      "background": [
+        "GPT-6 Cyber 和 Daybreak Red 的开放范围写在 11 月 6 日正刊。这篇是同一天窗口里的另一则公告，对象换成 Hacktron。"
+      ],
+      "sources": [
+        {
+          "label": "OpenAI",
+          "url": "https://openai.com/index/partnering-with-hacktron",
+          "kind": "primary",
+          "published_at": "2026-11-06T08:00:00+00:00",
+          "verified": true,
+          "note": "核验说明（OpenAI）：合作范围、第三方服务衔接，以及通过 Daybreak Red 扩大模型访问，取自这篇发布页。RSS 的 pubDate 是 Fri, 06 Nov 2026 08:00:00 GMT。页面日期行是 November 6, 2026。页面没有给出新漏洞数量。"
+        }
+      ],
+      "lede": "OpenAI 宣布和 Hacktron 一起查自己系统上的漏洞，两边共同选择要测的部分，重点是和第三方服务的衔接。Hacktron 可以通过 Daybreak Red 使用前沿模型。",
+      "caveat": "公告没有公布新发现的漏洞数量。"
+    }
+  ],
+  "contribution_count": 0,
+  "failure": null,
+  "content_hash": "sha256:e93648b7cf62b7ca6a3a5ff5f4b85d2cab3f9f2aedacfd87408fdf5e28ef975c"
+}
