@@ -572,8 +572,8 @@ _MAGNITUDE_WORD = re.compile(
     r"(?:Trillions?|Billions?|Millions?|Thousands?|Hundreds?|Percentage|Percent|"
     r"Hours?|Minutes?|Seconds?|Days?|Weeks?|Months?|Years?|Times?|Points?|"
     r"Tokens?|Dollars?|Euros?|Yuan|Pages?|"
-    r"(?:Kilo|Mega|Giga|Tera|Peta)?(?:watts?|flops|bytes)|"
-    r"Bn|Mn|Tn)\b",
+    r"(?:Exa|Kilo|Mega|Giga|Tera|Peta)?(?:watts?|flops|bytes|bits?)|"
+    r"Bn|Mn|Tn)(?![A-Za-z])",
     re.IGNORECASE,
 )
 
